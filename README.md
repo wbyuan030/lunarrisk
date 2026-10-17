@@ -1,16 +1,12 @@
 # LunarRisk: RX 7900 XT First Experiments
 
-> **Active Coding Agent sprint: [P1.8 — safe dataset expansion and held-out validation](docs/P1_8_NEXT_STEPS.md).** Start with `P18-01/02`: fix no-op `--resume` and atomic CSV/schema-safe labels. Do **not** expand downloads before tests prove the old 760 tiles, provenance and split assignments are unchanged.
+> **Current Coding Agent sprint (2026-10-17):** [P1.8 continuation — fixed-mask ablation + new independent-data audit](docs/P1_8_CONTINUE.md). Start with P18-04a and a public-source index audit; the old hydration/CSV/statistics fixes **already passed**.
 >
-> **Latest completed experiments:** [P1.7 12-run ablations](reports/p1_7_ablation.md) on RX 7900 XT, 96 tests passed at that commit. The new P1.8 actions are *planned*, not executed. See [AGENTS.md](AGENTS.md) for coding agent instructions.
+> **Evidence:** [P1.8 progress](reports/p1_8_progress.md) reports 148 passing tests for P18-01/02/03; [heldout review](reports/p1_8_heldout_protocol.md) reports **BLOCKED** for strict group-disjoint V2 because all 272 groups were previously touched. The frozen 64-tile, 22-new-NAC-product candidate overlaps 4 previously used groups and is **not** strict geographic/source OOD. [P1.7 ablation](reports/p1_7_ablation.md) remains exploratory.
 >
+> **Current decision:** proceed with fixed-parameter-count modality masking and a scientifically legal augmentation comparison on the development set. Preserve frozen V2 files and do not claim NAC increment or independent landing safety until external holdout evidence exists.
 
-> **Current research status (2026-10-17): P1.7 controlled ablations have been run on the ROCm host (12 trainings + 4 aggregates, seeds 42/43/44); 96 tests pass.**
-> Latest evidence: [P1.7 ablation report](reports/p1_7_ablation.md); earlier baseline: [P1.6 baseline report](reports/p1_baseline.md).
-> Headline: the P1.6 "NAC increment" does **not** replicate under the corrected protocol (spatial augmentation removed because it conflicts with the fixed solar-azimuth scalar); no ablation config gives a monotone, capacity-controlled NAC story.
-> Coding Agent's current execution order: [P1.7 next steps](docs/P1_7_NEXT_STEPS.md) — next is section D (freeze `heldout_v2`, then scale training).
-> The original P0 scaffold instructions below are historical. The public S3 SomBench 100k release is available and the initial 760 physical tiles are hydrated.
-
+**Historical P0 scaffold notes below (superseded by [AGENTS.md](AGENTS.md) and the current sprint).**
 
 **Status:** ready-to-run scaffold. The scripts are CPU-tested locally, **not validated on your ROCm host or on the complete lunar dataset**. They are designed to fail clearly when real inputs are missing; nothing silently substitutes synthetic lunar data.
 
