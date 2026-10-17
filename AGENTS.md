@@ -1,3 +1,17 @@
+# 当前任务：P1.8 续篇（2026-10-17）
+
+**请先阅读 [`docs/P1_8_CONTINUE.md`](docs/P1_8_CONTINUE.md)，按其 B→C→D 的 Gate 顺序直接开展工作。**
+
+最近进展：P18-01 Resume、P18-02 原子 CSV、P18-03 统计协议检查已由 Coding Agent 实施，实测记录为 **148/148 PASS**；P18-05 严格 Group-OOD 测试集冻结返回 BLOCKED（当前 100k Manifest 的 272/272 个 Group 已被历史 760 Tile 触及）。留有 **64 Tile / 22 新 NAC 产品 / 4 个已使用 Group** 的产品级冻结候选，**不是严格 Group-OOD**。依据 [`reports/p1_8_progress.md`](reports/p1_8_progress.md) 与 [`reports/p1_8_heldout_protocol.md`](reports/p1_8_heldout_protocol.md)。
+
+当前首要任务：**P18-04a fixed-mask 固定参数量的训练/消融实现及测试**；并行做官方/公开新立体 DTM/NAC 源数据索引、ID/地理独立性调查。然后用 7900 XT 做三种子、合法增强对照。**不要重复已完成 P18-01/02/03，不要改写 64 Tile 冻结清单，也不要冒充已有严格 OOD 评估**。
+
+历史约束仍有效：旧 110 Tile 只能作为 `development_test`；不买云卡、不使用 4×4090、不修改原始 NAC/DTM、不覆盖既有 ROCm PyTorch、不训练大型 LFM / 联合后验。每项新增成果请附测试/真实证据并按用户既定要求推送 `main`。
+
+---
+
+## 历史任务指令（P1.8 初版和 P1.7 / P0，仅保留作追溯）
+
 # 当前执行任务（P1.8，2026-10-17）
 
 **立即阅读 [`docs/P1_8_NEXT_STEPS.md`](docs/P1_8_NEXT_STEPS.md) 并按 P18-01 → P18-07 的依赖顺序实施。** 本文件下面的 P1.7、P0 文字仅作历史溯源，**不再是当前执行任务**。最近一次已完成实测是 P1.7 的 12-run 消融，见 [`reports/p1_7_ablation.md`](reports/p1_7_ablation.md)。
