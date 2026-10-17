@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""P18-05b: audit the LROC NAC DTM archive against the SomBench product set.
+"""P18-05b: screen LROC NAC DTMs as provisional external holdout candidates.
 
 The official LROC ``NAC_DTMS_360.ZIP`` shapefile lists every produced NAC DTM with its
 stereo source images, resolution and footprint. This script answers one question: how
 many DTMs are built from NAC products that SomBench never used, i.e. how large is the
-pool for a strictly source-independent held-out set?
+pool of possible source-independent candidates. Source completeness and actual
+footprint separation must be verified before a strict OOD claim.
 
 Reads only the shapefile + local manifest; downloads nothing (except the shapefile, which
 must already be present) and reads no model metric.
@@ -21,12 +22,43 @@ import pandas as pd
 from scipy.spatial import cKDTree
 
 LUNAR_RADIUS_KM = 1737.4
-PRODUCT_RE = re.compile(r"(M\d{9,10})")
+PRODUCT_RE = re.compile(r"(M\d{9,10})(?!\d)", re.IGNORECASE)
+MENTION_RE = re.compile(r"M\d+", re.IGNORECASE)
 
 
 def normalise_products(images: str) -> list[str]:
-    """'M1503229434, M1503250470' -> ['M1503229434', 'M1503250470'] (suffixes stripped)."""
-    return sorted(set(PRODUCT_RE.findall(str(images))))
+    """Canonical NAC EDR IDs (left/right suffixes are not part of the ID)."""
+    return sorted({p.upper() for p in PRODUCT_RE.findall(str(images))})
+
+
+def source_id_metadata_valid(images: str) -> bool:
+    """Require nonempty, well-formed DBF numeric IDs; README still required."""
+    mentions = MENTION_RE.findall(str(images or ""))
+    return bool(mentions) and all(len(m) in (10, 11) for m in mentions)
+
+
+def unit_sphere(lat_deg, lon_deg) -> np.ndarray:
+    lat = np.radians(np.asarray(lat_deg, dtype=np.float64))
+    lon = np.radians(np.asarray(lon_deg, dtype=np.float64))
+    return np.column_stack([
+        LUNAR_RADIUS_KM * np.cos(lat) * np.cos(lon),
+        LUNAR_RADIUS_KM * np.cos(lat) * np.sin(lon),
+        LUNAR_RADIUS_KM * np.sin(lat),
+    ])
+
+
+def vertex_outer_radius_km(center_lat: float, center_lon: float, vertices) -> float | None:
+    """Max spherical chord to vertices; NOT a guarantee of polygon clearance."""
+    vertices = np.asarray(vertices, dtype=np.float64)
+    if vertices.ndim != 2 or vertices.shape[1] != 2 or len(vertices) < 3:
+        return None
+    if not np.isfinite(vertices).all() or not np.isfinite([center_lat, center_lon]).all():
+        return None
+    if abs(center_lat) > 90 or np.any(np.abs(vertices[:, 1]) > 90):
+        return None
+    center = unit_sphere([center_lat], [center_lon])[0]
+    points = unit_sphere(vertices[:, 1], vertices[:, 0])
+    return float(np.linalg.norm(points - center, axis=1).max())
 
 
 def main(argv=None) -> int:
@@ -43,16 +75,25 @@ def main(argv=None) -> int:
     import shapefile  # pyshp
 
     manifest = pd.read_parquet(args.manifest, columns=["NAC_EDR_ID"])
-    sombench = {PRODUCT_RE.sub(r"\1", str(value)) for value in manifest["NAC_EDR_ID"].unique()}
-    sombench |= {str(value) for value in manifest["NAC_EDR_ID"].unique()}
+    sombench = {p for raw in manifest["NAC_EDR_ID"].dropna()
+                for p in normalise_products(raw)}
 
     reader = shapefile.Reader(str(args.shapefile))
     fields = [field[0] for field in reader.fields[1:]]
     records = []
     for index in range(len(reader)):
         row = reader.record(index).as_dict()
-        products = normalise_products(row.get("images", ""))
+        raw_sources = row.get("images", "")
+        source_valid = source_id_metadata_valid(raw_sources)
+        products = normalise_products(raw_sources) if source_valid else []
+        vertex_radius = vertex_outer_radius_km(
+            float(row.get("center_lat") or 0.0),
+            float(row.get("center_lon") or 0.0),
+            reader.shape(index).points,
+        )
         records.append({
+            "source_ids_nonempty_and_wellformed": source_valid,
+            "vertex_outer_radius_km": vertex_radius,
             "dtm_name": str(row.get("DTM_NAME", "")),
             "sitename": str(row.get("sitename", "")),
             "resolution_m": float(row.get("resolution") or 0.0),
@@ -67,7 +108,11 @@ def main(argv=None) -> int:
             "url": str(row.get("url", "")),
         })
     frame = pd.DataFrame(records)
-    frame["all_products_unseen"] = frame["products_unseen"].apply(len) == frame["products"].apply(len)
+    frame["all_products_unseen"] = (
+        frame["source_ids_nonempty_and_wellformed"]
+        & frame["products"].apply(lambda ids: len(ids) > 0)
+        & (frame["products_unseen"].apply(len) == frame["products"].apply(len))
+    )
     frame["any_product_unseen"] = frame["products_unseen"].apply(len) > 0
 
     # Spatial isolation: a DTM is kept only if its (conservative) footprint radius plus the
