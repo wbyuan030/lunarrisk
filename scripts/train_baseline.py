@@ -206,7 +206,7 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
                 ids = rows["sample_id"].iloc[start:start + args.batch].tolist()
                 outputs.append(model(batch_tensor(ids, cache, device, channels)).cpu().numpy())
         out = np.concatenate(outputs)
-        return 1 / (1 + np.exp(-out[:, :2])), out[:, 2]
+        return 1 / (1 + np.exp(-out[:, :2])), out[:, 2:4]
 
     best = {"val_mae": float("inf"), "state": None, "epoch": 0}
     history = []
@@ -260,7 +260,7 @@ def predict_variant(result, rows, cache, channels, batch, device) -> tuple[np.nd
             ids = rows["sample_id"].iloc[start:start + batch].tolist()
             outputs.append(model(batch_tensor(ids, cache, device, channels)).cpu().numpy())
     out = np.concatenate(outputs)
-    return 1 / (1 + np.exp(-out[:, :2])), out[:, 2]
+    return 1 / (1 + np.exp(-out[:, :2])), out[:, 2:4]
 
 
 def platt_scale(scores: np.ndarray, targets: np.ndarray) -> tuple[float, float, bool]:
