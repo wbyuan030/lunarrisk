@@ -1,0 +1,147 @@
+{
+  "status": "p0_executed_2026-10-17",
+  "date": "2026-10-17",
+  "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 88,
+      "sha256": "07e5ffd88ee2fc5ffe016d90de239ed08820ba8a06566f235e0426782d712298"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2957,
+      "sha256": "45780154514a4662594934ebf0afd51f91b7e3925f360055d584b739201747db"
+    },
+    {
+      "path": "CODING_AGENT_PROMPT.md",
+      "bytes": 1051,
+      "sha256": "b72795ec1617953b5aaaf2d6e06e8b9ab5462aa339265443db8bcf9b900df017"
+    },
+    {
+      "path": "EXPERIMENTS.md",
+      "bytes": 4059,
+      "sha256": "3de6d1ca2b99fa11e4b3eb1becf9a7329f51b927ab0656606071e44e025e41a7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5861,
+      "sha256": "3a161ab3f3a941f097c54a05147a98d739671227d9f44eca70ba0463c715b36e"
+    },
+    {
+      "path": "START_HERE.md",
+      "bytes": 2206,
+      "sha256": "e6433142e8aad49fa49e3dbaf90130a4993cd88cfebb5c090e31de89f9ed6289"
+    },
+    {
+      "path": "docs/DATA_PROTOCOL.md",
+      "bytes": 2586,
+      "sha256": "c91225f860ad9e5946b6206ce9b82997af404655de6cb8cbc7cf66876eebf504"
+    },
+    {
+      "path": "docs/KNOWN_GAPS.md",
+      "bytes": 1322,
+      "sha256": "2d48aa0862355610e2e670c132c64333f94a4e9697ef6de792d4ee723f83861d"
+    },
+    {
+      "path": "docs/RUNBOOK.md",
+      "bytes": 5140,
+      "sha256": "1e7d3b736293a46b9d94b96843e45e3ff925de696458c8124d542e97abf2b090"
+    },
+    {
+      "path": "docs/TASKS.md",
+      "bytes": 3337,
+      "sha256": "9e1ba6c120b6267b8622ed6298e6c45de066796cff57b36fae13f98c1ac4ca55"
+    },
+    {
+      "path": "optional_gpuflow/PROJECT.md",
+      "bytes": 27115,
+      "sha256": "b37c6ccdd0e2aee38648e34780eccaed8cd6f4921da96c5363e294647160f620"
+    },
+    {
+      "path": "optional_gpuflow/README.md",
+      "bytes": 6214,
+      "sha256": "dc8edb4b5c3bc6228b9f7819ce537418fe3ceeae4255f586b76d9bfbf044c708"
+    },
+    {
+      "path": "optional_gpuflow/config.json",
+      "bytes": 2037,
+      "sha256": "ed96168e29383ca95844aadab1709f18ff8db4f59d643c2e176f00ba448c03fe"
+    },
+    {
+      "path": "optional_gpuflow/gpuflow.py",
+      "bytes": 9265,
+      "sha256": "4fddfc158aa5c2da4dd8aa648ff69b9e18310681ebbef7f18d9e5a7121474cc4"
+    },
+    {
+      "path": "optional_gpuflow/tests/test_gpuflow.py",
+      "bytes": 1493,
+      "sha256": "05f133448e367f7067e7e789ba052c999c18b929ee3b0992147696298345bbd9"
+    },
+    {
+      "path": "references/PROJECT_CONTEXT.md",
+      "bytes": 27115,
+      "sha256": "b37c6ccdd0e2aee38648e34780eccaed8cd6f4921da96c5363e294647160f620"
+    },
+    {
+      "path": "references/RESEARCH_PLAN.md",
+      "bytes": 13732,
+      "sha256": "6fa22f3214dfa35b8920f1885f229953d753e9a918c1e55a887726f66f492d96"
+    },
+    {
+      "path": "reports/FIRST_RUN_TEMPLATE.md",
+      "bytes": 762,
+      "sha256": "a44bad478c883761f7be6fc66bf4cfcbe63c1367f3c5603fad9f60721c8fb101"
+    },
+    {
+      "path": "reports/data_audit.md",
+      "bytes": 5549,
+      "sha256": "8a7f1ceb8c7dea99597c11252f8814e502b387d3772ffa0137ade95446716b97"
+    },
+    {
+      "path": "reports/first_run_report.md",
+      "bytes": 9281,
+      "sha256": "34993fec8a6a06567a61843dec02f491d32170274efaaff65e15c3e7a6211351"
+    },
+    {
+      "path": "reports/physics_audit.md",
+      "bytes": 5690,
+      "sha256": "1206c61a0465a231ffd05d64c2bc71de877b7ac45a7e6aa3f74319beb81a976a"
+    },
+    {
+      "path": "requirements-extra.txt",
+      "bytes": 248,
+      "sha256": "ece378a54a9297bb56c5a9d17486dedc5d598fb9ec2014560f8f0c58c7b2ada4"
+    },
+    {
+      "path": "scripts/crater_pilot.py",
+      "bytes": 12688,
+      "sha256": "153a9fc51b024340402199386f15b0f0c3f29b753304a0820bae0d08a79fd232"
+    },
+    {
+      "path": "scripts/hf_audit.py",
+      "bytes": 15362,
+      "sha256": "0b2a74a9f786271f54ee57b449b00ae26d93304bf67a17fd87cbc3a730738e18"
+    },
+    {
+      "path": "scripts/make_slope_labels.py",
+      "bytes": 12405,
+      "sha256": "6441350951e821fa9e0a17b226721cbb3b2f08593dd000f06320d189a49626e9"
+    },
+    {
+      "path": "scripts/rocm_smoke.py",
+      "bytes": 5596,
+      "sha256": "a14ae2db5f8007fd83c6bf426b4553b6082b07330e532760f0ea303cc07fd431"
+    },
+    {
+      "path": "scripts/s3_sample.py",
+      "bytes": 13067,
+      "sha256": "d09f24df81f757fba00cbbd52d8d244d7c05f3a059a7a231dc470da2d6216a62"
+    },
+    {
+      "path": "tests/test_slope_labels.py",
+      "bytes": 7552,
+      "sha256": "c02ae1931df845565fc0034537951f3c3bbb9a20482289d0a24ac81297f2a0ee"
+    }
+  ]
+}

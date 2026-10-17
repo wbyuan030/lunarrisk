@@ -1,0 +1,11 @@
+data/
+outputs/
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.parquet
+.env
+.env.*

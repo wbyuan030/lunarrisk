@@ -1,0 +1,73 @@
+{
+  "timezone": "Asia/Shanghai",
+  "nodes": [
+    {
+      "name": "home_7900xt",
+      "type": "local",
+      "accelerator": "rocm",
+      "gpus": 1,
+      "vram_gb": 20,
+      "availability": "always",
+      "workdir": "/workspace/lunarrisk",
+      "data_ready_marker": "/workspace/lunarrisk/data/READY"
+    },
+    {
+      "name": "lab_weekend_4090x4",
+      "type": "ssh",
+      "ssh_host": "CHANGE_ME@CHANGE_ME",
+      "accelerator": "cuda",
+      "gpus": 4,
+      "vram_gb": 24,
+      "availability": "weekend",
+      "workdir": "/workspace/lunarrisk",
+      "data_ready_marker": "/workspace/lunarrisk/data/READY"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "smoke_test",
+      "gpus": 1,
+      "min_vram_gb": 12,
+      "accelerator": "any",
+      "require_dataset": false,
+      "prefer": ["home_7900xt", "lab_weekend_4090x4"],
+      "commands": {
+        "any": "python3 -c 'import torch; print(torch.__version__,torch.cuda.get_device_name(0))'"
+      }
+    },
+    {
+      "id": "attribute_baseline",
+      "gpus": 1,
+      "min_vram_gb": 18,
+      "accelerator": "any",
+      "require_dataset": true,
+      "prefer": ["home_7900xt", "lab_weekend_4090x4"],
+      "commands": {
+        "rocm": "python3 train.py --model attribute --device rocm --seed 42 --resume auto",
+        "cuda": "CUDA_VISIBLE_DEVICES=0 python3 train.py --model attribute --device cuda --seed 42 --resume auto"
+      }
+    },
+    {
+      "id": "joint_seed42",
+      "gpus": 1,
+      "min_vram_gb": 21,
+      "accelerator": "cuda",
+      "require_dataset": true,
+      "prefer": ["lab_weekend_4090x4"],
+      "commands": {
+        "cuda": "CUDA_VISIBLE_DEVICES=0 python3 train.py --model joint --seed 42 --resume auto"
+      }
+    },
+    {
+      "id": "joint_4gpu_ddp",
+      "gpus": 4,
+      "min_vram_gb": 21,
+      "accelerator": "cuda",
+      "require_dataset": true,
+      "prefer": ["lab_weekend_4090x4"],
+      "commands": {
+        "cuda": "torchrun --standalone --nnodes=1 --nproc_per_node=4 train_ddp.py --model joint --resume auto"
+      }
+    }
+  ]
+}
