@@ -187,3 +187,40 @@ python3 scripts/aggregate_seeds.py           # 默认读取 outputs/baseline_v3_
 ```
 
 数据缓存新版本为 `outputs/cache_v3.npz`（3 通道），旧 `cache_v2.npz` 不再使用。
+
+## K. P1.8 数据治理与 held-out 协议（2026-10-17）
+
+新增/修改：
+
+- `scripts/hydrate_tiles.py`：`run_hydration()` 可注入 driver；`--resume` 全量已存在时 **exit 0**，
+  `todo` 为空与全部下载失败是两种不同情形（后者 exit 2）；计数器写入 summary；
+  已存在行与 manifest 的 split/group/产品/zone/block 不符、`sample_id` 重复、本地源文件缺失、
+  旧 cohort 不在新 selection 内 → 一律拒绝。
+- 标签写入改为**原子合并**：读既有 → 按 `sample_id` 合并 → 列并集（原顺序保留、新列追加）→ 临时文件 + fsync
+  → `os.replace`。`--enrich` 同样原子且要求 `one_to_one`。
+- `scripts/aggregate_seeds.py` / `scripts/compare_ablations.py`：新增真值/事件/分组/zone 一致性、
+  概率质量、seed/config 协议与 provenance 校验（缺失记 UNKNOWN，不猜测）；NLL 拆分为
+  `NLL(primary)` 与 `NLL(raw)` 并做 Brier 交叉校验。
+- `scripts/freeze_heldout.py`：`--exclusion {group,product}`、`--max-per-product`、`--min-tiles`、
+  `--out-prefix`。严格模式在本 100k 语料上返回 `BLOCKED_NEW_HELDOUT`（272/272 组已被覆盖）。
+
+常用命令：
+
+```bash
+python3 -m unittest discover -s tests -v          # 148 tests
+# 断点续下（全量已存在时 exit 0，不重写 labels）
+python3 scripts/hydrate_tiles.py --resume
+# 在已下载数据上补几何 + DTM 属性（原子写回）
+python3 scripts/hydrate_tiles.py --enrich
+# 冻结严格 held-out（当前 BLOCKED）与产品级候选
+python3 scripts/freeze_heldout.py
+python3 scripts/freeze_heldout.py --exclusion product --out-prefix heldout_v2_product_level --n 120
+# 统计复检（不覆盖旧结果）
+for cfg in p17_full p17_no_geo p17_no_photo p17_no_both; do
+  python3 scripts/aggregate_seeds.py --pattern "outputs/${cfg}_seed{seed}" \
+    --out "outputs/p18_recheck/${cfg}_summary"
+done
+python3 scripts/compare_ablations.py --out outputs/p18_recheck/cross_config
+```
+
+注意：`outputs/` 与 `data/` 被 `.gitignore` 排除；`protocols/` 入库。**V2 冻结后不得因结果好坏更换站点。**

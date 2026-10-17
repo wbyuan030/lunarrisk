@@ -1,8 +1,7 @@
 {
-  "status": "p1_7_ablation_run_2026-10-17",
+  "status": "p1_8_partial_2026-10-17",
   "date": "2026-10-17",
-  "code_state_at_run": "e17efdf",
-  "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
+  "code_state": "a53937e",
   "files": [
     {
       "path": ".gitignore",
@@ -11,8 +10,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 4237,
-      "sha256": "42e283438ee5e27db734daed311a9b4788384d06a31855aff15bad79871b4d99"
+      "bytes": 5943,
+      "sha256": "8ff6a4c6535e437ff25e4cba3d9e80c39e67e37a59171236d84b6e94bb870085"
     },
     {
       "path": "CODING_AGENT_PROMPT.md",
@@ -26,8 +25,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6718,
-      "sha256": "18f00042d200f11a0e247fe34c15c40dfe315059042aab3ba6cd8f9fff43cfc0"
+      "bytes": 7276,
+      "sha256": "e1956a845f54b088420e661c257281edcba6e7026065206f9162c99925fb441e"
     },
     {
       "path": "START_HERE.md",
@@ -55,9 +54,14 @@
       "sha256": "0589b4a6dbec16f26597f9e15d8a111466a7a51c118bbe056a7b45dbc1138658"
     },
     {
+      "path": "docs/P1_8_NEXT_STEPS.md",
+      "bytes": 14539,
+      "sha256": "4af8abdad4e27ef97bde1631bd4fac5a9c5e6672f9e72e5a4e47e3c504256c02"
+    },
+    {
       "path": "docs/RUNBOOK.md",
-      "bytes": 9248,
-      "sha256": "36a91837c8dfbabdf2ecc58e95519c00b28d3b9f9aa660b4e6332ae9e1bf756b"
+      "bytes": 11373,
+      "sha256": "7c9e305df1de909d9b25a50a65120ea2c7298c528342c19501d2b6892eee74cb"
     },
     {
       "path": "docs/TASKS.md",
@@ -90,6 +94,21 @@
       "sha256": "05f133448e367f7067e7e789ba052c999c18b929ee3b0992147696298345bbd9"
     },
     {
+      "path": "protocols/heldout_v2_product_level_manifest.csv",
+      "bytes": 33950,
+      "sha256": "33f0898fca6b4a6c95cf5bda7a19c8181674723f386bae88fd2366184963ed97"
+    },
+    {
+      "path": "protocols/heldout_v2_product_level_protocol.json",
+      "bytes": 2630,
+      "sha256": "93ae6c730c34cc3ad73ef2881366679bee0c1f4a08ca05500ced2af94e12da78"
+    },
+    {
+      "path": "protocols/heldout_v2_protocol.json",
+      "bytes": 1115,
+      "sha256": "3c3a1029b1c79a908201aedbc47d2a73e30b031549bc427648033dfd35f2d96d"
+    },
+    {
       "path": "references/PROJECT_CONTEXT.md",
       "bytes": 27115,
       "sha256": "b37c6ccdd0e2aee38648e34780eccaed8cd6f4921da96c5363e294647160f620"
@@ -120,6 +139,16 @@
       "sha256": "815891469ad311d0580c253d16006aef5eabe28855f787abe4a51f1df3552a70"
     },
     {
+      "path": "reports/p1_8_heldout_protocol.md",
+      "bytes": 4147,
+      "sha256": "039ba371028ea3d59bef2ede243f9ab54d11b9ebea25a8ad6d585ce590118946"
+    },
+    {
+      "path": "reports/p1_8_progress.md",
+      "bytes": 6604,
+      "sha256": "b351bd695a6933fc97a172b1888e0a6b121aef0c75a038d5620064f438ae1cb0"
+    },
+    {
       "path": "reports/p1_baseline.md",
       "bytes": 23817,
       "sha256": "4627e9c25eec4e68fdbff6a6011fb2785086040604e7ee238ac7b65a632e1f3b"
@@ -141,8 +170,8 @@
     },
     {
       "path": "scripts/aggregate_seeds.py",
-      "bytes": 21177,
-      "sha256": "c424c8c77a7383e8b27e1430fdb1547458d7f06a0ba8ffff5acdc729aabccf60"
+      "bytes": 28276,
+      "sha256": "80c865497d0b4b9e9ce244a5a938753f868245ca52c15a23a0c116121d363889"
     },
     {
       "path": "scripts/build_manifest.py",
@@ -151,8 +180,8 @@
     },
     {
       "path": "scripts/compare_ablations.py",
-      "bytes": 13759,
-      "sha256": "cf23db5e250a040d0f6fd7b1c2d8ad421e45f439d885e291e1ea6b9a3561c27b"
+      "bytes": 22151,
+      "sha256": "3696f9534870e2f59ed3482256bad1403d8a6aac8e8b810affea14ce8913b7c9"
     },
     {
       "path": "scripts/crater_pilot.py",
@@ -165,14 +194,19 @@
       "sha256": "7fff1e7481f84ed4002a56831c5fcd6f9984b5e21099a07f5db823fe2562b36f"
     },
     {
+      "path": "scripts/freeze_heldout.py",
+      "bytes": 14869,
+      "sha256": "48653a94f482234bea22496fca1b4867041836c82f6e2371b5948d1d4e98ef3c"
+    },
+    {
       "path": "scripts/hf_audit.py",
       "bytes": 15362,
       "sha256": "0b2a74a9f786271f54ee57b449b00ae26d93304bf67a17fd87cbc3a730738e18"
     },
     {
       "path": "scripts/hydrate_tiles.py",
-      "bytes": 17392,
-      "sha256": "216e88625a9f1242d85120845330d01ddae8c1046210534e1fc905dbd1a82e9e"
+      "bytes": 25168,
+      "sha256": "b91ef12ad217f129ebd230fa1d2d70397335c1cee4ed746cc6fa93f4991a4552"
     },
     {
       "path": "scripts/make_slope_labels.py",
@@ -196,13 +230,13 @@
     },
     {
       "path": "scripts/train_baseline.py",
-      "bytes": 50061,
-      "sha256": "d3361740c4512f85fd44eeb282bb21083a1706aacad6230114aaaeb8a8e791b4"
+      "bytes": 50903,
+      "sha256": "912e3635a351d31de3009a955c517a11d391a25d33f260c0a32482d8214de7ff"
     },
     {
       "path": "tests/test_aggregate_seeds.py",
-      "bytes": 6113,
-      "sha256": "ddad1badbf64f2979739630f45e1c163f5d0f31296512b71e042719c0e97fde8"
+      "bytes": 11650,
+      "sha256": "a0e2eb26fd8ddced79fd942db0f3f7cedab16e4b41b5859d58e8666265e36ea0"
     },
     {
       "path": "tests/test_build_manifest.py",
@@ -211,13 +245,23 @@
     },
     {
       "path": "tests/test_compare_ablations.py",
-      "bytes": 6737,
-      "sha256": "d1758a62fd87caa086efe6081fd3ca7a20aa93e3a7f4945edd75b792aae713b9"
+      "bytes": 13581,
+      "sha256": "f66e3e131697a72ac22ce4bc693f7d8d94737edf1c7abd8f5d10ca540fade6bc"
     },
     {
       "path": "tests/test_finalize_split.py",
       "bytes": 5369,
       "sha256": "8087b2a2e963c6f501f242be719ce0541494d8d90dc66b9d1dcd29b66ed59f6d"
+    },
+    {
+      "path": "tests/test_freeze_heldout.py",
+      "bytes": 7232,
+      "sha256": "7bc8d13eee23396b86967345af3408a85b3e232fc57317ea21e4453ffc2a4750"
+    },
+    {
+      "path": "tests/test_hydrate_tiles.py",
+      "bytes": 20240,
+      "sha256": "68821ce7516b5eedffc0d5005f82d1e17eac5209b94b64a9d90e6f73b6420ac3"
     },
     {
       "path": "tests/test_slope_labels.py",

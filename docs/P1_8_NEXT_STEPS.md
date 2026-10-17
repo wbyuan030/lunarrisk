@@ -128,3 +128,20 @@ git status --short
 
 先给出简短的“现有 main SHA / 本轮要修改的文件 / 预计先完成哪两项”，然后**立即实施 P18-01/02**；运行回归测试、验证 no-op resume 和 CSV schema 扩容安全，再推进 P18-03/04 和 V2。不要只提供设计意见，不要以“等待用户确认”替代已有授权范围内的本地代码修复。
 
+
+## 执行状态（2026-10-17，本机实测）
+
+代码 `a53937e`，148/148 测试通过。
+
+- **P18-01 PASS**：no-op resume 死分支修复；exit 0/2 语义与计数器到位；真实数据 400→401 dry-run
+  网络禁用时 exit 2 且 labels 逐字节不变。
+- **P18-02 PASS**：原子合并 + 列并集 + 去重；dry-run 后原 760 行所有列值完全一致，cal/val/test 选样未被重排。
+- **P18-03 PASS**：真值/事件/分组/zone、协议/provenance、概率质量 fail-fast；NLL 拆为 primary/raw 并交叉校验；
+  在 P1.7 的 12 次运行上复检通过（缺失字段标 UNKNOWN，未覆盖旧结果）。
+- **P18-05 BLOCKED（严格）**：272/272 泄漏组已全部被 760 Tile 覆盖 → `BLOCKED_NEW_HELDOUT`；
+  另冻结 `protocols/heldout_v2_product_level_manifest.csv`（64 Tile / 22 未用产品 / 4 个已用 group，
+  缓冲 ≥10.078 km，SHA256 `33f0898f…`），明确标注非组级独立。
+- **P18-04 / P18-06 / P18-07 未开始**：04 的 fixed-mask 设计见 `reports/p1_8_progress.md`；
+  06/07 依赖 04/05，且 V2 的严格定义需要先决定是否引入语料外 NAC 产品。
+
+详见 `reports/p1_8_progress.md` 与 `reports/p1_8_heldout_protocol.md`。
