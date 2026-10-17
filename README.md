@@ -1,9 +1,10 @@
 # LunarRisk: RX 7900 XT First Experiments
 
-> **Current research status (2026-10-17): P1.6 completed; P1.7 evaluation hardening and ablation flags committed, real rerun pending.**
-> Latest evidence: [P1.6 baseline report](reports/p1_baseline.md).
-> Coding Agent's current execution order: [P1.7 next steps](docs/P1_7_NEXT_STEPS.md).
-> The original P0 scaffold instructions below are historical. The public S3 SomBench 100k release is available, the initial 760 physical tiles have been hydrated, and 81 tests passed at P1.6. Those results do not establish that P1.7's new changes have passed ROCm testing.
+> **Current research status (2026-10-17): P1.7 controlled ablations have been run on the ROCm host (12 trainings + 4 aggregates, seeds 42/43/44); 96 tests pass.**
+> Latest evidence: [P1.7 ablation report](reports/p1_7_ablation.md); earlier baseline: [P1.6 baseline report](reports/p1_baseline.md).
+> Headline: the P1.6 "NAC increment" does **not** replicate under the corrected protocol (spatial augmentation removed because it conflicts with the fixed solar-azimuth scalar); no ablation config gives a monotone, capacity-controlled NAC story.
+> Coding Agent's current execution order: [P1.7 next steps](docs/P1_7_NEXT_STEPS.md) — next is section D (freeze `heldout_v2`, then scale training).
+> The original P0 scaffold instructions below are historical. The public S3 SomBench 100k release is available and the initial 760 physical tiles are hydrated.
 
 
 **Status:** ready-to-run scaffold. The scripts are CPU-tested locally, **not validated on your ROCm host or on the complete lunar dataset**. They are designed to fail clearly when real inputs are missing; nothing silently substitutes synthetic lunar data.
