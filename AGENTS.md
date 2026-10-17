@@ -1,3 +1,17 @@
+# 当前执行任务（P1.8，2026-10-17）
+
+**立即阅读 [`docs/P1_8_NEXT_STEPS.md`](docs/P1_8_NEXT_STEPS.md) 并按 P18-01 → P18-07 的依赖顺序实施。** 本文件下面的 P1.7、P0 文字仅作历史溯源，**不再是当前执行任务**。最近一次已完成实测是 P1.7 的 12-run 消融，见 [`reports/p1_7_ablation.md`](reports/p1_7_ablation.md)。
+
+本次用户授权 Coding Agent 完成以下范围：修复 `hydrate_tiles.py` 已知 Resume no-op/CSV schema 安全问题并回归测试；增强跨配置统计一致性与 NLL 口径；准备固定网络参数量的模态 masking 消融与合法空间增强对照；**先冻结新的独立 `heldout_v2` 测试协议**，再决定本地增量扩容到 3,000–5,000 train Tile。
+
+**前两项必须立即动手**：P18-01 修复 `--resume` 已全部下载时的错误退出；P18-02 改造标签 CSV 原子合并与 schema 演进。旧 760 Tile 的标签、split、group、source 不能改变；在合成 fixture 和旧标签备份上完成验证前，禁止实际执行大规模追加下载。
+
+科研底线：旧 110 Test 已被用于多轮模型分析，只能用作 `development_test`；不要把 P1.6 的 NAC 正增益或 P1.7 的无显著差异表述为最终因果结论。真实 stereo DTM 来源 ID 仍是 UNKNOWN，不能声称完全独立的 DTM 源级 OOD。
+
+资源底线：本地 7900 XT 优先，保留既有 ROCm PyTorch；不得自行购买付费云卡、使用周末 4×4090、覆盖共享数据或训练大模型。每项代码修复完成后添加测试和 `reports/p1_8_progress.md` 的可复验证据，按用户偏好直接 push `main`；推送前先 `git pull --ff-only`，出现冲突及时停止。
+
+---
+
 # 当前任务覆盖（2026-10-17，P1.7）
 
 **本仓库已完成 P0/P1/P1.5/P1.6；以下历史 P0 约束保留作溯源，不应再阻止当前 P1.7 任务。**
