@@ -115,43 +115,47 @@ def main(argv=None) -> int:
     )
     frame["any_product_unseen"] = frame["products_unseen"].apply(len) > 0
 
-    # Spatial isolation: a DTM is kept only if its (conservative) footprint radius plus the
-    # buffer clears every hydrated tile centre.
-    spatial = {"checked": False}
+    # Stage-one screening using actual listed vertices. This does not yet
+    # establish true DTM/used-tile footprint clearance or validate shape CRS.
+    spatial = {"checked": False, "footprint_verified": False}
     if args.labels.exists():
         used = pd.read_csv(args.labels, usecols=["center_lat", "center_lon"])
-        used_points = np.column_stack([
-            LUNAR_RADIUS_KM * np.cos(np.radians(used["center_lat"])) * np.cos(np.radians(used["center_lon"])),
-            LUNAR_RADIUS_KM * np.cos(np.radians(used["center_lat"])) * np.sin(np.radians(used["center_lon"])),
-            LUNAR_RADIUS_KM * np.sin(np.radians(used["center_lat"])),
-        ])
-        tree = cKDTree(used_points)
-        strict = frame["all_products_unseen"]
-        centers = frame.loc[strict, ["center_lat", "center_lon"]].to_numpy(dtype=np.float64)
-        points = np.column_stack([
-            LUNAR_RADIUS_KM * np.cos(np.radians(centers[:, 0])) * np.cos(np.radians(centers[:, 1])),
-            LUNAR_RADIUS_KM * np.cos(np.radians(centers[:, 0])) * np.sin(np.radians(centers[:, 1])),
-            LUNAR_RADIUS_KM * np.sin(np.radians(centers[:, 0])),
-        ])
-        distances, _ = tree.query(points, k=1)
-        radius = np.sqrt(frame.loc[strict, "coverage_sqkm"].to_numpy(dtype=np.float64) / np.pi)
-        clear = distances >= (radius + args.buffer_km)
-        spatial = {
-            "checked": True,
-            "buffer_km": args.buffer_km,
-            "used_tiles": int(len(used)),
-            "strict_candidates_center_clear": int(clear.sum()),
-            "min_center_distance_km": float(distances.min()) if len(distances) else None,
-            "rule": "centre distance >= footprint_radius + buffer (conservative bound)",
-        }
-        frame.loc[strict, "center_to_used_km"] = distances
-        frame.loc[strict, "spatially_clear"] = clear
+        used = used.replace([np.inf, -np.inf], np.nan).dropna()
+        if len(used):
+            tree = cKDTree(unit_sphere(used["center_lat"], used["center_lon"]))
+            candidates = frame["all_products_unseen"] & frame["vertex_outer_radius_km"].notna()
+            centers = frame.loc[candidates, ["center_lat", "center_lon"]].to_numpy(dtype=np.float64)
+            distances = np.array([], dtype=np.float64)
+            passed = 0
+            if len(centers):
+                distances, _ = tree.query(unit_sphere(centers[:, 0], centers[:, 1]), k=1)
+                radii = frame.loc[candidates, "vertex_outer_radius_km"].to_numpy(dtype=np.float64)
+                clear = distances >= (radii + args.buffer_km)
+                frame.loc[candidates, "center_to_used_chord_km"] = distances
+                frame.loc[candidates, "vertex_screen_clear"] = clear
+                passed = int(clear.sum())
+            spatial = {
+                "checked": True,
+                "footprint_verified": False,
+                "buffer_km": args.buffer_km,
+                "used_tiles": int(len(used)),
+                "candidates_with_vertices": int(candidates.sum()),
+                "provisional_vertex_screen_clear": passed,
+                "min_center_chord_km": float(distances.min()) if len(distances) else None,
+                "rule": "center-to-used chord >= maximum listed vertex chord radius + buffer",
+                "caveat": "Metadata screen only: verify shape CRS, true polygon-to-polygon "
+                          "distances (including used tile footprints), and PDS source README.",
+            }
 
     report = {
         "shapefile": {"path": str(args.shapefile), "fields": fields, "dtms": int(len(frame))},
         "sombench_products": len(sombench),
         "dtm_coverage": {
             "all_products_unseen": int(frame["all_products_unseen"].sum()),
+            "empty_or_malformed_source_records": int(
+                (~frame["source_ids_nonempty_and_wellformed"]).sum()),
+            "missing_or_invalid_vertex_geometry": int(
+                frame["vertex_outer_radius_km"].isna().sum()),
             "any_product_unseen": int(frame["any_product_unseen"].sum()),
             "all_products_seen": int((~frame["any_product_unseen"]).sum()),
         },
@@ -177,16 +181,18 @@ def main(argv=None) -> int:
             .to_dict("records"),
         },
         "spatial_isolation": spatial,
-        "strict_candidates_after_spatial": (
-            int(frame.loc[frame["all_products_unseen"], "spatially_clear"].sum())
-            if spatial["checked"] else None),
-        "verdict": ("GO_STRICT_OOD" if (spatial["checked"] and spatial["strict_candidates_center_clear"] >= 10)
-                    else "PRODUCT_ONLY"),
+        # Strict footprint-verified count remains UNKNOWN until polygon QA.
+        "strict_candidates_after_spatial": None,
+        "provisional_candidates_after_vertex_screen": (
+            spatial.get("provisional_vertex_screen_clear") if spatial["checked"] else None),
+        "verdict": ("CANDIDATES_REQUIRE_POLYGON_AND_SOURCE_QA"
+                    if spatial.get("provisional_vertex_screen_clear", 0) > 0
+                    else "BLOCKED_OR_UNVERIFIED"),
         "notes": [
-            "DTMs whose every stereo product is unused by SomBench are source-independent at the "
-            "NAC-product level; the per-DTM README/DBF also fixes the DTM_source_ID gap.",
-            "Resolution is 3-4 m for these products, comparable to the SomBench slope_3m grid.",
-            "Footprint-level projection and licensing still need a manual check before freezing.",
+            "DBF image IDs are preliminary; verify the complete stereo source list with PDS README.",
+            "Vertex screen replaces the unsafe equal-area-circle radius, but is not polygon clearance.",
+            "Native DTM resolution varies; define labels and resampling before final testing.",
+            "No GO_STRICT_OOD until source provenance, polygon distances and CRS QA pass.",
         ],
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
