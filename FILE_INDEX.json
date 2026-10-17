@@ -1,7 +1,7 @@
 {
- "status": "p1_9_gate0_gate1_pass_gate2_partial_gate3_blocked_2026-10-17",
+ "status": "p1_9_gate0_gate1_pass_gate2_dtm_pass_optical_blocked_gate3_blocked_policy_preregistered_2026-10-17",
  "date": "2026-10-17",
- "git_sha": "20d5716c48aaa4e3656860e6898a093ef2c9cb9c",
+ "git_sha": "ca7d2039d6d200bb462f0e6b4e513976c5a662c4",
  "files": [
   {
    "path": ".gitignore",
@@ -25,8 +25,8 @@
   },
   {
    "path": "FILE_INDEX.json",
-   "bytes": 10490,
-   "sha256": "fde7c6ea19c768dfd38b0a0bbf66753fdca42a30dc8ac96d96094e40f2df21dc"
+   "bytes": 10971,
+   "sha256": "89812e4ba1b15741fe7bea4895571b3841857031af31ebd515a3f71dbfdadb76"
   },
   {
    "path": "README.md",
@@ -67,6 +67,11 @@
    "path": "docs/P1_8_NEXT_STEPS.md",
    "bytes": 14539,
    "sha256": "4af8abdad4e27ef97bde1631bd4fac5a9c5e6672f9e72e5a4e47e3c504256c02"
+  },
+  {
+   "path": "docs/P1_9_EDR_ORTHO_RUNBOOK.md",
+   "bytes": 6488,
+   "sha256": "deea72f52b9d1161a6dcc713fc2b6dee64fb557f79f3828a7a303a0385fc9914"
   },
   {
    "path": "docs/P1_9_HELDOUT_BUILD.md",
@@ -122,6 +127,11 @@
    "path": "protocols/heldout_v2_protocol.json",
    "bytes": 1115,
    "sha256": "3c3a1029b1c79a908201aedbc47d2a73e30b031549bc427648033dfd35f2d96d"
+  },
+  {
+   "path": "protocols/p19_external_policy.json",
+   "bytes": 3224,
+   "sha256": "136c57e93fa8b05579e1d6899027781c0c06c4b78c0c67024ce70e9d71acce4f"
   },
   {
    "path": "references/PROJECT_CONTEXT.md",
@@ -180,8 +190,8 @@
   },
   {
    "path": "reports/p1_9_io_label_probe.md",
-   "bytes": 11399,
-   "sha256": "1eed19a1b2c201d225da7ba675f609a702802aa3fac78ead2b3abafaa6917d44"
+   "bytes": 11170,
+   "sha256": "2649e19b412c532564dd4a8e42f62a9d709fc9d479f3b313d092ba072b5dff16"
   },
   {
    "path": "reports/p1_9_metadata_audit.md",
@@ -190,8 +200,8 @@
   },
   {
    "path": "reports/p1_9_progress.md",
-   "bytes": 5186,
-   "sha256": "28fb24cc9ae0913440ded1b1eeee349d39876eb257bc7042e2d7de18da768d27"
+   "bytes": 5963,
+   "sha256": "d8ccfe763630db0925e9d84816cd5f0ff3ef1436140b93023c7996fa44ce2247"
   },
   {
    "path": "reports/p1_baseline.md",
@@ -252,6 +262,11 @@
    "path": "scripts/crater_pilot.py",
    "bytes": 12688,
    "sha256": "153a9fc51b024340402199386f15b0f0c3f29b753304a0820bae0d08a79fd232"
+  },
+  {
+   "path": "scripts/export_edr_acquisition.py",
+   "bytes": 2550,
+   "sha256": "0cf20b1d5741fd3523a517de4745153007a3f77c4ffa7d8654fcd78a54955b54"
   },
   {
    "path": "scripts/finalize_split.py",

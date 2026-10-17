@@ -1,0 +1,75 @@
+{
+  "record": "p19_external_policy",
+  "date": "2026-10-17",
+  "decided_by": "user",
+  "code_baseline": "ca7d2039d6d200bb462f0e6b4e513976c5a662c4",
+  "decisions": {
+    "scale_policy": {
+      "id": "A",
+      "rule": "accept only DTM scenes whose native post spacing is <= 3.0 m; keep the g10/g15 area-fraction targets and the 1[g10>0.05] proxy rule at the same scale",
+      "rationale": "native 2-7 m products are not automatically equivalent to the 3 m label definition; option A avoids relabelling the development set and keeps the external task comparable to the existing definition"
+    },
+    "optical_route": {
+      "id": "INSTITUTIONAL_EDR_ISIS",
+      "rule": "fetch the raw LROC NAC EDR volumes through the institution network and orthorectify them with ISIS/SPICE onto each DTM grid; DTM-derived shade/slope/browse products must never be used as optical input",
+      "rationale": "the reachable public mirrors publish optical imagery for 8 of 181 candidates and 0 of the 128 passing scenes, so strict source verifiability cannot be preserved from those mirrors"
+    }
+  },
+  "candidate_pool": {
+    "filter": "source_disjoint AND footprint_disjoint AND resolution_m <= 3.0 (Gate 1 audit)",
+    "scenes": 84,
+    "scene_groups": 52,
+    "stereo_edr_ids": 168,
+    "resolution_counts": {
+      "2.0": 76,
+      "3.0": 8
+    },
+    "latitude_bands": {
+      "(-90, -60]": 2,
+      "(-60, -30]": 23,
+      "(-30, 0]": 5,
+      "(0, 30]": 34,
+      "(30, 60]": 19,
+      "(60, 90]": 1
+    },
+    "clearance_km": {
+      "min": 11.1357,
+      "p10": 17.0557,
+      "median": 93.5961
+    },
+    "coverage_sqkm": 13780.59,
+    "group_size_histogram": {
+      "1": 42,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "13": 1
+    },
+    "multi_scene_groups": {
+      "CDTM_0055": 13,
+      "CDTM_0043": 4,
+      "CDTM_0010": 4,
+      "CDTM_0075": 4,
+      "CDTM_0108": 4,
+      "CDTM_0050": 3,
+      "CDTM_0063": 3,
+      "CDTM_0109": 3,
+      "CDTM_0031": 2,
+      "CDTM_0070": 2
+    }
+  },
+  "inputs_sha256": {
+    "outputs/p19_lroc_footprint_audit.csv": "de88739797418a825b7a08e0f6f40a32e8ae7d08604ce05455fdbabcd1c1d620",
+    "outputs/p19_optical_audit_all.json": "c7ce3e22cb04a9aacc1de0fc6a0880e10658ebeb86829c05b65b9d74eb66957e",
+    "outputs/p19_io_probe.json": "36766abc98668aeb5575120918d9ba226b2b46d652741a8fcf5f27110a1c138d",
+    "outputs/manifest_100k_final_v2.parquet": "b7484fcc4b94d4f37ae2657082aa7967daee8df787a260557da43c43647de320",
+    "outputs/p19_edr_acquisition_list.csv": "496db68bf534f209baabdb1379e7fc0f3251a774a11d5409dbe48b407bb48121"
+  },
+  "rules": [
+    "Gate 3 samples scene groups, never individual adjacent scenes that sit <10 km apart, and never reuses any of the 760 hydrated + 64 protected tiles.",
+    "No model prediction and no held-out metric has been computed at this point; Gate 4 remains unauthorized.",
+    "Relaxing the README source-list requirement or the 10 km clearance requires a new explicit user decision.",
+    "Raw EDR products must be archived with SHA256; SPICE kernel versions and ISIS version must be recorded per cube."
+  ],
+  "status": "policy recorded, manifest not frozen: Gate 3 stays BLOCKED until orthorectified optical cubes pass the runbook QA gates"
+}

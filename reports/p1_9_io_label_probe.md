@@ -132,13 +132,15 @@ python3 scripts/probe_p19_io.py --scales 1 2 4 8      # 6.4 s
 python3 -m pytest tests/test_probe_p19_io.py -q       # 13 passed
 ```
 
-## 下一步（需要明确决策）
+## 决策记录与下一步
 
-按计划口径，Gate 3 当前为 **`BLOCKED_NEW_HELDOUT`**：可用的「源可验证 + 空间独立」光学景数为 0，不允许为凑数放宽独立性。可行路线：
+用户在 2026-10-17 已就两处阻塞作出决定，并写入 `protocols/p19_external_policy.json`（预注册，早于任何预测）：
 
-1. **补齐光学来源（保持严格口径）**：在具备机构网络/白名单的环境访问 LROC EDR 卷（权威入口见上），
-   或用 ISIS + SPICE 自行对 EDR 做正射校正。代价：NAC EDR ≈ 1 GB/景（左右相机成对）→ 30–40 景约 100–200 GB 下载与一条正射处理链。
-2. **放宽「README 源清单」这一来源要求**：使用 7 个有光学镶嵌图的 mosaic 景（其 README 该节为空、DBF 清单被截断），
-   改用其它 provenance 锚点（DTM label/PDS4 元数据）——**需要用户明确批准**，因为计划禁止降低独立条件。
-3. **改变任务定义**：放弃 NAC 光学输入，改为「仅有粗地形 → 3m 坡度分布」的地形到地形任务——同样需要用户批准，且不与现有 SomBench 输入定义可比。
-4. 与此独立的一项待决输入：尺度政策 (A) 仅原生 ≈3 m 景（84 景可用）/ (B) 定义共同可实现的尺度并在开发集重算标签。
+1. **光学路线 = `INSTITUTIONAL_EDR_ISIS`**：在机构网络取原始 NAC EDR 卷，用 ISIS/SPICE 自行正射校正到 DTM 网格，
+   **不放宽** README 源清单与 10 km 净空口径。执行手册：`docs/P1_9_EDR_ORTHO_RUNBOOK.md`；
+   待取清单：`outputs/p19_edr_acquisition_list.csv`（84 景 / 168 条立体 EDR）。
+2. **尺度政策 = `A`**：只接受原生 post spacing ≤ 3.0 m 的景，`g10/g15` 与 `1[g10>0.05]` 规则保持同尺度。
+
+按此政策，严格候选池为 **84 景 / 52 个景级地理组**（2 m ×76、3 m ×8；净空最小 11.14 km、中位 93.60 km；
+标称覆盖 13 781 km²；10 个多景组，最大 13 景）。Gate 3 仍为 **BLOCKED**
+（等机构环境的正射光学产物通过手册第 4 节 QA 门槛）；Gate 4 未授权。

@@ -8,7 +8,7 @@
 | Gate 0 — P19-00 审计修复回归 | **PASS** | `reports/p1_9_metadata_audit.md` · `outputs/p19_lroc_metadata_audit.json` |
 | Gate 1 — P19-01 footprint/来源独立性 | **PASS（索引层）** | `reports/p1_9_footprint_audit.md` · `outputs/p19_lroc_footprint_audit.{csv,json}` |
 | Gate 2 — P19-02 物理标签与 I/O 探针 | **部分 PASS** | `reports/p1_9_io_label_probe.md` · `outputs/p19_io_probe.json`（DTM/label 侧 PASS；光学 NAC 供给 BLOCKED：**128 个 PASS 景中 0 景发布光学影像**） |
-| Gate 3 — P19-03 冻结 `heldout_v2_external` | **BLOCKED_NEW_HELDOUT** | 按计划规则不得降条件凑数；需先解决光学来源（`reports/p1_9_io_label_probe.md` 第「下一步」节） |
+| Gate 3 — P19-03 冻结 `heldout_v2_external` | **BLOCKED**（等正射光学产物） | 政策与路线已预注册：`protocols/p19_external_policy.json`；执行手册 `docs/P1_9_EDR_ORTHO_RUNBOOK.md`；严格池 84 景 / 52 组 |
 | Gate 4 — P19-04 一次性评估 | HOLD | 未授权 |
 
 ## 验证命令与结果（容器 `rocm-lab`，`/data/lunarrisk`）
@@ -40,9 +40,15 @@ python3 scripts/audit_lroc_footprints.py       # 冷 173 s / 热 11 s
   `bounds_crs_status = PER_ZONE_LTM_UNVERIFIED`；发现索引单一 CRS 字符串无法描述按 LTM 分带的 `BOUNDS_*`
   （90 786 张 Tile 中仅 321 张与该 CRS 自洽）。
 - `scripts/audit_lroc_footprints.py`（新）+ `tests/test_audit_lroc_footprints.py`（23 项）。
+- `scripts/export_edr_acquisition.py`（新）：导出待取 EDR 清单（政策 A 池 → 84 景 / 168 条立体 EDR）。
+- `scripts/audit_lroc_optical.py`（新）+ 6 项离线测试：场景页兄弟产品发现 + HEAD 实证光学文件存在；
+  一次真实方法修正（第一版只解析产品页导致假阴性）已记录在 `reports/p1_9_io_label_probe.md`。
+- `scripts/verify_clearance_spherical.py`（新）：球面无投影复算净空，与 aeqd 审计在 12 个最紧景一致到 0.3 m。
+- `protocols/p19_external_policy.json`（新）：用户决策预注册（尺度政策 A、光学路线、候选池与规则）。
+- `docs/P1_9_EDR_ORTHO_RUNBOOK.md`（新）：EDR→ISIS 正射手册（含 QA 门槛与预算）。
 - `scripts/probe_p19_io.py`（新）+ `tests/test_probe_p19_io.py`（13 项）：PDS label 解析（含跨行续行拼接、
   `^IMAGE` 1 基指针、散文里的 NoDATA 恢复）、GeoTIFF GeoKey/NoData 核对、原生与块平均坡面标签统计。
-- 测试总数 175 → **211**（`python3 -m unittest discover -s tests` 全绿；`compileall` 通过）。
+- 测试总数 175 → **217**（`python3 -m unittest discover -s tests` 全绿；`compileall` 通过）。
 
 ## 下一步（Gate 2 剩余项 → Gate 3）
 
