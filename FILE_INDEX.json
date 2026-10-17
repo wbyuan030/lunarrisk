@@ -1,5 +1,5 @@
 {
-  "status": "p0_executed_2026-10-17",
+  "status": "p1_manifest_built_2026-10-17",
   "date": "2026-10-17",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
   "files": [
@@ -104,6 +104,11 @@
       "sha256": "34993fec8a6a06567a61843dec02f491d32170274efaaff65e15c3e7a6211351"
     },
     {
+      "path": "reports/p1_manifest.md",
+      "bytes": 5230,
+      "sha256": "5a61a0d47ed4b03df1e23dec2bc90405a80d1534cb24c7581cf0d8f949f47999"
+    },
+    {
       "path": "reports/physics_audit.md",
       "bytes": 5690,
       "sha256": "1206c61a0465a231ffd05d64c2bc71de877b7ac45a7e6aa3f74319beb81a976a"
@@ -112,6 +117,11 @@
       "path": "requirements-extra.txt",
       "bytes": 248,
       "sha256": "ece378a54a9297bb56c5a9d17486dedc5d598fb9ec2014560f8f0c58c7b2ada4"
+    },
+    {
+      "path": "scripts/build_manifest.py",
+      "bytes": 15165,
+      "sha256": "e885857f351501a17349a62f08044258306a82cab8a6709b9c27b6b8f816b954"
     },
     {
       "path": "scripts/crater_pilot.py",
@@ -137,6 +147,11 @@
       "path": "scripts/s3_sample.py",
       "bytes": 13067,
       "sha256": "d09f24df81f757fba00cbbd52d8d244d7c05f3a059a7a231dc470da2d6216a62"
+    },
+    {
+      "path": "tests/test_build_manifest.py",
+      "bytes": 4897,
+      "sha256": "238a0cccaaf77f6db590cf63cb360304b14f507d2f99cf2794c0a7ae7382fed3"
     },
     {
       "path": "tests/test_slope_labels.py",
