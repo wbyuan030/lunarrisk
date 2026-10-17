@@ -7,7 +7,7 @@
 |---|---|---|
 | Gate 0 — P19-00 审计修复回归 | **PASS** | `reports/p1_9_metadata_audit.md` · `outputs/p19_lroc_metadata_audit.json` |
 | Gate 1 — P19-01 footprint/来源独立性 | **PASS（索引层）** | `reports/p1_9_footprint_audit.md` · `outputs/p19_lroc_footprint_audit.{csv,json}` |
-| Gate 2 — P19-02 物理标签与 I/O 探针 | PENDING | 未下载任何 DEM/NAC 载荷 |
+| Gate 2 — P19-02 物理标签与 I/O 探针 | **部分 PASS** | `reports/p1_9_io_label_probe.md` · `outputs/p19_io_probe.json`（DTM/label 侧 PASS；光学 NAC 供给 BLOCKED） |
 | Gate 3 — P19-03 冻结 `heldout_v2_external` | PENDING | 等 Gate 2；不得在预测后改动 |
 | Gate 4 — P19-04 一次性评估 | HOLD | 未授权 |
 
@@ -40,20 +40,28 @@ python3 scripts/audit_lroc_footprints.py       # 冷 173 s / 热 11 s
   `bounds_crs_status = PER_ZONE_LTM_UNVERIFIED`；发现索引单一 CRS 字符串无法描述按 LTM 分带的 `BOUNDS_*`
   （90 786 张 Tile 中仅 321 张与该 CRS 自洽）。
 - `scripts/audit_lroc_footprints.py`（新）+ `tests/test_audit_lroc_footprints.py`（23 项）。
-- 测试总数 175 → 198（`unittest discover` 全绿）。
+- `scripts/probe_p19_io.py`（新）+ `tests/test_probe_p19_io.py`（13 项）：PDS label 解析（含跨行续行拼接、
+  `^IMAGE` 1 基指针、散文里的 NoDATA 恢复）、GeoTIFF GeoKey/NoData 核对、原生与块平均坡面标签统计。
+- 测试总数 175 → **211**（`python3 -m unittest discover -s tests` 全绿；`compileall` 通过）。
 
-## 下一步（Gate 2，需用户确认后下载）
+## 下一步（Gate 2 剩余项 → Gate 3）
 
-- 选 2–3 个**不会进入最终 V2 冻结**的单景产品做文件级探针：DTM/NAC/Label 实际下载、文件体积、
-  格式、轴序、投影、NoData、水平/垂直单位、三角测量 RMS、有效像素比例。
-- 明确原生 2–7 m 与现有 3 m 标签尺度不可自动等价；需在观测冻结集成绩之前选择 (A) 仅 3 m 原生景 或
-  (B) 共同可实现的尺度并先重算开发集标签。
-- 磁盘预算：先统计所需体积与本机剩余空间，仅下载明确需要的产品。
+- **光学 NAC 供给未解决（当前唯一硬阻塞）**：RDR/5 bundle 只提供 DTM + `_SHADE.TIF`（DTM 派生，禁止当光学输入）；
+  在本镜像上 12 种 EDR 路径组合与 LROC im-ldi EDR 页面均 404。下一步试 LROC ASU SDP 下载服务、
+  USGS `pdsimage2` 镜像、PDS4 registry API 反查 EDR bundle 路径。
+- 研究人员需在观测冻结集成绩之前选择尺度政策：(A) 仅采原生 ≈3 m 景 并保持 `g10/g15` 同尺度目标；
+  (B) 定义共同可实现的尺度并在开发集先重算标签。探针已给出 3 景在 2–16 m 块平均下的 `g10` 漂移（≤2% 相对），
+  但块平均**不等于**独立粗分辨率真值，不作为等价性证据。
+- Gate 3 从 Gate 1 的 **128 景 / 91 组**中分层抽样（纬度/地貌/原生分辨率/净空），冻结前不得查看任何预测成绩。
+- 磁盘：已用探针数据 242 MB（`data/probe_p19/`）；本机 `/` 剩余 544 GB。
 
 ## 约束遵守
 
 - 只用本机 RX 7900 XT + 免费公开资源；未购买/创建任何付费实例，未使用 4×4090 节点。
+- 新增纯 Python 读取库 `tifffile`（用于 float32 GeoTIFF 与 GeoKey），`torch`/ROCm 环境未改动。
 - 未改动 ROCm/PyTorch 环境；仅新增纯 Python 辅助库（`pyshp`、`pyproj`、`shapely`、`netCDF4`、`h5py`），
   不触及 `torch`。
 - 未覆盖既有 `protocols/heldout_v2_product_level_*` 与其 SHA256；新 manifest 写入 `_v2` 新文件。
-- 未下载整批 DEM/NAC 大影像；仅抓取 181 个 README 文本（缓存可复现）。
+- 未下载整批 DEM/NAC 大影像；抓取 181 个 README 文本（缓存可复现）+ 3 个 Gate 2 探针 DTM（242 MB，
+  全部来自「永不入冻结集」的景）；SLDEM2015 粗地形仅做可用性 HEAD/魔数校验，未下载 167 MB 瓦片。
+- 未读取/写入任何冻结集合的成绩，也未运行任何模型预测。

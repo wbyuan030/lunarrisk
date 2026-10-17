@@ -1,7 +1,7 @@
 {
- "status": "p1_9_gate0_gate1_pass_2026-10-17",
+ "status": "p1_9_gate0_gate1_pass_gate2_partial_2026-10-17",
  "date": "2026-10-17",
- "git_sha": "fa0719a6cdf5b64caca3add487dec9db41cce63b",
+ "git_sha": "a880f4086d2b3aa521cefe27095b68ead897078d",
  "files": [
   {
    "path": ".gitignore",
@@ -25,8 +25,8 @@
   },
   {
    "path": "FILE_INDEX.json",
-   "bytes": 10028,
-   "sha256": "ffa0331f466d6591faaf750ead24049058c843a641b0882c1597f1c2d6d0ea72"
+   "bytes": 10029,
+   "sha256": "9c8f130751958a3b3894fd21e2736479d15431ef7ce7c0ec5c883550a1d4bf0f"
   },
   {
    "path": "README.md",
@@ -179,14 +179,19 @@
    "sha256": "47abaf369d49d825efc830afdc42bf4b4494e657860a982f095076a893e07754"
   },
   {
+   "path": "reports/p1_9_io_label_probe.md",
+   "bytes": 8001,
+   "sha256": "80d64ac3630ffcd275ecd2b84ffb0c28f4693b97ac0b60c6c65d624c9a0f1486"
+  },
+  {
    "path": "reports/p1_9_metadata_audit.md",
    "bytes": 5550,
    "sha256": "ab771cd580a9616035d789ba8c0dbe99a88f99d4a6eebf1accd902c1c3eef713"
   },
   {
    "path": "reports/p1_9_progress.md",
-   "bytes": 3655,
-   "sha256": "27977a87433eddf21ae103457938a6b889c683334056af7367543161b8ea2c67"
+   "bytes": 4824,
+   "sha256": "01a5d0bbcf358bc39f076a764535d6f96202ce61fbabfd5ca6dae514d66a0276"
   },
   {
    "path": "reports/p1_baseline.md",
@@ -274,6 +279,11 @@
    "sha256": "a40748b7408f64fe3da66f1cd00bc7f77b1a54174b0b6763b029e62c5ecf3640"
   },
   {
+   "path": "scripts/probe_p19_io.py",
+   "bytes": 19247,
+   "sha256": "f0ad8d6fe66cb813488f071c2cb9b7c49c0aca3c9537352abe4c14c88bb9b3b3"
+  },
+  {
    "path": "scripts/rocm_smoke.py",
    "bytes": 5596,
    "sha256": "a14ae2db5f8007fd83c6bf426b4553b6082b07330e532760f0ea303cc07fd431"
@@ -327,6 +337,11 @@
    "path": "tests/test_hydrate_tiles.py",
    "bytes": 20240,
    "sha256": "68821ce7516b5eedffc0d5005f82d1e17eac5209b94b64a9d90e6f73b6420ac3"
+  },
+  {
+   "path": "tests/test_probe_p19_io.py",
+   "bytes": 11949,
+   "sha256": "2405394a55367dd40ce80f8dd8678477e1d9267232244f5467119af9c1b48603"
   },
   {
    "path": "tests/test_slope_labels.py",
