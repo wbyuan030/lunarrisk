@@ -73,3 +73,17 @@ coverage 与 next_options 一并记录），进程退出码 2。
 3. **暂不评估**：保持 P18-07 未执行，直到 1 或 2 被明确。
 
 无论选哪条，**冻结的 ID 清单与 SHA256 不得因后续表现而更换**；旧 110 Tile 继续作为 `development_test`。
+
+
+## 7. 协议元数据勘误（2026-10-17，冻结 ID 与哈希保持不变）
+
+历史冻结产物 `protocols/heldout_v2_product_level_protocol.json` 的
+`algorithm.exclusions` 误写了 `used group_id`。这**不是**产品级筛选算法真正执行的条件：
+在 `scripts/freeze_heldout.py` 的 `exclusion="product"` 模式下，只排除已用 NAC 产品，
+允许 Group 重叠；原报告中「4 个已使用 Group」的审计事实是正确的。
+
+后续生成器已经改为根据 `--exclusion group|product` 分别记录实际约束，并附有产品级回归测试。
+**不回写历史冻结 JSON、CSV 或其 SHA256**；需要引用旧冻结结果时，必须同时引用本勘误。
+旧 JSON 内 `git_sha: UNKNOWN` 仍然保持 UNKNOWN，不能通过推测补造生成时 SHA。
+
+该更改仅修正代码和文档表达，**没有重新抽样、下载 V2、训练模型或评估冻结候选集**。
