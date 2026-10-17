@@ -135,5 +135,127 @@ class TestP17AuditGuards(unittest.TestCase):
             agg.event_head_divergence({42: pd.DataFrame({"x": [1, 2]})}, [42])
 
 
+class TestNewConsistencyGuards(unittest.TestCase):
+    """P18-03: truth/probability/protocol fail-fast and explicit NLL provenance."""
+
+    def frame(self, seed=42):
+        size = 4
+        rows = pd.DataFrame({
+            "sample_id": [f"s{i}" for i in range(size)],
+            "group_id": ["g1", "g1", "g2", "g2"],
+            "LTM_CODE": ["L1"] * size,
+            "y_g10": [0.0, 0.1, 0.6, 0.9],
+            "y_g15": [0.0, 0.0, 0.3, 0.5],
+        })
+        for rule in agg.RULES:
+            rows[f"event_{rule}"] = np.zeros(size, dtype=int)
+        for model in agg.MODELS:
+            for rule in agg.RULES:
+                rows[f"{model}_prob_{rule}"] = np.full(size, 0.5)
+        for variant in agg.CNN_VARIANTS:
+            for rule in agg.HEAD_RULES:
+                rows[f"cnn_{variant}_raw_event_prob_{rule}"] = np.full(size, 0.5)
+        return rows
+
+    def metrics(self, seed=42):
+        rule_payload = {rule: {"primary": "raw", "metrics_calibrated": None,
+                               "metrics_raw": {"nll": 0.5}} for rule in agg.RULES}
+        model_payload = {model: {"test": rule_payload} for model in agg.MODELS}
+        return {seed: {"models": model_payload}}
+
+    def test_nll_matches_manual_computation(self):
+        truth = np.array([0.0, 1.0])
+        probability = np.array([0.25, 0.75])
+        # probability is P(class=1); truth 0 uses log(1 - p)
+        expected = -(np.log(1 - 0.25) + np.log(0.75)) / 2
+        self.assertAlmostEqual(agg.nll(probability, truth), float(expected), places=8)
+
+    def test_nll_clips_extreme_probabilities(self):
+        self.assertTrue(np.isfinite(agg.nll(np.array([0.0, 1.0]), np.array([0.0, 1.0]))))
+
+    def test_identical_seeds_pass(self):
+        frames = {42: self.frame(), 43: self.frame()}
+        audit = agg.assert_truth_consistency(frames, [42, 43])
+        self.assertIn("event_g10_gt_0.05", audit)
+
+    def test_truth_drift_is_fatal(self):
+        frames = {42: self.frame(), 43: self.frame()}
+        frames[43].loc[2, "y_g10"] = 0.7
+        with self.assertRaises(SystemExit):
+            agg.assert_truth_consistency(frames, [42, 43])
+
+    def test_event_label_drift_is_fatal(self):
+        frames = {42: self.frame(), 43: self.frame()}
+        frames[43].loc[1, "event_g10_gt_0.05"] = 1
+        with self.assertRaises(SystemExit):
+            agg.assert_truth_consistency(frames, [42, 43])
+
+    def test_group_drift_is_fatal(self):
+        frames = {42: self.frame(), 43: self.frame()}
+        frames[43].loc[0, "group_id"] = "g9"
+        with self.assertRaises(SystemExit):
+            agg.assert_truth_consistency(frames, [42, 43])
+
+    def test_probability_quality_accepts_valid_frames(self):
+        frames = {42: self.frame()}
+        audit = agg.assert_probability_quality(frames, [42], self.metrics(42))
+        self.assertGreater(audit["checked"], 0)
+
+    def test_probability_quality_rejects_nan(self):
+        frames = {42: self.frame()}
+        frames[42].loc[0, "cnn_fusion_prob_g10_gt_0.05"] = np.nan
+        with self.assertRaises(SystemExit):
+            agg.assert_probability_quality(frames, [42], self.metrics(42))
+
+    def test_probability_quality_rejects_claimed_calibration_without_metrics(self):
+        frames = {42: self.frame()}
+        metrics = self.metrics(42)
+        metrics[42]["models"]["cnn_fusion"]["test"]["g10_gt_0.05"]["primary"] = "calibrated"
+        metrics[42]["models"]["cnn_fusion"]["test"]["g10_gt_0.05"]["metrics_calibrated"] = None
+        with self.assertRaises(SystemExit):
+            agg.assert_probability_quality(frames, [42], metrics)
+
+    def _seed_metrics(self, seed, ablation=None, provenance=None, batch=16):
+        protocol = {
+            "seed": seed, "input_size": 128, "augment": False, "augmentation_policy": "none",
+            "epochs_max": 60, "patience": 10, "batch": batch, "lr": 0.001,
+            "min_nac_valid": 0.99, "channels": ["a"], "scalar_scaling": "train-only",
+            "calibration": "cal", "rules": {}, "composite_rule": "r", "contrast_channel": "c",
+            "ablation": ablation or {"use_geometry": True, "use_nac_photometry": True},
+            "provenance": provenance or {"labels": {"sha256": "abc"}},
+        }
+        return {seed: {"protocol": protocol}}
+
+    def test_seed_protocol_consistency_passes(self):
+        metrics = {}
+        for seed in (42, 43):
+            metrics.update(self._seed_metrics(seed))
+        audit = agg.assert_seed_protocol_consistency(metrics, [42, 43])
+        self.assertEqual(audit["missing"], [])
+
+    def test_seed_batch_drift_is_fatal(self):
+        metrics = self._seed_metrics(42)
+        metrics.update(self._seed_metrics(43, batch=32))
+        with self.assertRaises(SystemExit):
+            agg.assert_seed_protocol_consistency(metrics, [42, 43])
+
+    def test_seed_provenance_drift_is_fatal(self):
+        metrics = self._seed_metrics(42)
+        metrics.update(self._seed_metrics(43, provenance={"labels": {"sha256": "def"}}))
+        with self.assertRaises(SystemExit):
+            agg.assert_seed_protocol_consistency(metrics, [42, 43])
+
+    def test_wrong_seed_label_is_fatal(self):
+        metrics = self._seed_metrics(42)
+        with self.assertRaises(SystemExit):
+            agg.assert_seed_protocol_consistency(metrics, [43])
+
+    def test_missing_hyperparameters_are_reported_not_guessed(self):
+        metrics = self._seed_metrics(42)
+        del metrics[42]["protocol"]["batch"]
+        audit = agg.assert_seed_protocol_consistency(metrics, [42])
+        self.assertIn("batch", audit["missing"])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,33 @@
+{
+  "status": "BLOCKED_NEW_HELDOUT",
+  "reason": "no candidate tiles survive the product/group exclusion",
+  "created_utc": "2026-10-17T08:20:41.185259+00:00",
+  "git_sha": "UNKNOWN",
+  "exclusion": "group",
+  "coverage": {
+    "manifest_groups": 272,
+    "used_groups": 272,
+    "unused_groups": 0,
+    "manifest_products": 1090,
+    "used_products": 336,
+    "unused_products": 754
+  },
+  "audit": {
+    "exclusion": "group",
+    "error": "no candidate tiles survive the product/group exclusion"
+  },
+  "sources": {
+    "manifest": {
+      "path": "outputs/manifest_100k_final.parquet",
+      "sha256": "b2e3841be1dae4005e6977e27ffbec970691d62bc5eecfa2b202f22b6752f6cd"
+    },
+    "used_labels": {
+      "path": "outputs/labels_hydrated.csv",
+      "sha256": "eb2ff9326cd3d3180409355b53b2cf135c02ddd324cec87e583686abccdaafb5"
+    }
+  },
+  "next_options": [
+    "Use a corpus with NAC products outside this 100k release (the hydrated cohort already spans every leakage group here).",
+    "Explicitly accept a product/spatial holdout with --exclusion product and label the transfer limitation in every claim."
+  ]
+}

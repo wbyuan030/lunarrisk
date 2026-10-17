@@ -26,6 +26,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import train_baseline as tb  # noqa: E402
+import aggregate_seeds as agg  # noqa: E402  (single definition of the NLL formula)
 
 MODELS = ("constant", "coarse_ridge", "cnn_nac", "cnn_coarse_grid", "cnn_fusion")
 FRACTION_COLUMNS = {
@@ -55,15 +56,115 @@ def load_configs(pattern: str, configs: list[str], seeds: list[int]) -> tuple[di
             if reference_ids is None:
                 reference_ids = frame["sample_id"].astype(str)
                 group_ids = frame["group_id"].astype(str).to_numpy()
+                reference_frame = frame
             else:
                 if not frame["sample_id"].astype(str).equals(reference_ids):
                     raise SystemExit(f"{directory} covers a different cohort/order")
                 if not np.array_equal(frame["group_id"].astype(str).to_numpy(), group_ids):
                     raise SystemExit(f"{directory} has a different group assignment")
+                if not frame["LTM_CODE"].astype(str).equals(reference_frame["LTM_CODE"].astype(str)):
+                    raise SystemExit(f"{directory} has different LTM zones")
+                for column in ("y_g10", "y_g15"):
+                    if not np.allclose(frame[column].to_numpy(dtype=np.float64),
+                                       reference_frame[column].to_numpy(dtype=np.float64),
+                                       rtol=0, atol=1e-12):
+                        raise SystemExit(f"{directory} has different truth values in {column}")
+                for column in [c for c in reference_frame.columns if c.startswith("event_")]:
+                    if column not in frame.columns:
+                        raise SystemExit(f"{directory} is missing {column}")
+                    if not np.array_equal(frame[column].to_numpy(), reference_frame[column].to_numpy()):
+                        raise SystemExit(f"{directory} has different event labels in {column}")
             frames[(config, seed)] = frame
             metrics[(config, seed)] = payload
             ablation[config] = payload.get("protocol", {}).get("ablation", {})
     return frames, metrics, ablation
+
+
+COMPARABLE_PROTOCOL = (
+    "input_size", "augment", "augmentation_policy", "epochs_max", "patience", "batch", "lr",
+    "min_nac_valid", "channels", "scalar_scaling", "calibration", "rules", "composite_rule",
+    "contrast_channel",
+)
+
+
+def assert_config_protocol_consistency(metrics: dict, ablation: dict, configs: list[str],
+                                       seeds: list[int]) -> dict:
+    """Only the geometry/photometry switches may differ between configs.
+
+    Everything else (hyperparameters, rules, input size, augmentation policy) must match,
+    provenance must be identical, and the recorded channel/scalar lists must mirror the
+    recorded ablation flags for every variant.
+    """
+    reference = metrics[(configs[0], seeds[0])]["protocol"]
+    audit = {"missing": [], "configs": {}}
+    for config in configs:
+        for seed in seeds:
+            protocol = metrics[(config, seed)]["protocol"]
+            if int(protocol.get("seed", -1)) != int(seed):
+                raise SystemExit(f"{config}/seed{seed} recorded protocol.seed="
+                                 f"{protocol.get('seed')}")
+            for key in COMPARABLE_PROTOCOL:
+                if key not in reference or key not in protocol:
+                    audit["missing"].append(f"{config}/{seed}:{key}")
+                    continue
+                if protocol[key] != reference[key]:
+                    raise SystemExit(f"{config}/seed{seed} differs from the reference config on "
+                                     f"protocol.{key}: {protocol[key]!r} vs {reference[key]!r}")
+            if protocol.get("provenance") != reference.get("provenance"):
+                raise SystemExit(f"{config}/seed{seed} was trained on different data provenance")
+            if protocol.get("ablation") != ablation.get(config):
+                raise SystemExit(f"{config}/seed{seed} ablation flags disagree with the audit")
+            flags = ablation.get(config) or {}
+            for variant in tb.CNN_VARIANTS:
+                expected_channels, expected_scalars = tb.ablation_features(
+                    variant,
+                    use_geometry=flags.get("use_geometry", True),
+                    use_nac_photometry=flags.get("use_nac_photometry", True))
+                if protocol.get("variant_channels", {}).get(variant) != [tb.CHANNELS[c] for c in expected_channels]:
+                    raise SystemExit(f"{config}/seed{seed} variant_channels for {variant} do not "
+                                     "match the recorded ablation flags")
+                if protocol.get("variant_scalars", {}).get(variant) != list(expected_scalars):
+                    raise SystemExit(f"{config}/seed{seed} variant_scalars for {variant} do not "
+                                     "match the recorded ablation flags")
+            audit["configs"].setdefault(config, set()).add(json.dumps(protocol.get("ablation"), sort_keys=True))
+    for config, seen in audit["configs"].items():
+        if len(seen) > 1:
+            raise SystemExit(f"{config} mixes several ablation flags across seeds: {sorted(seen)}")
+        audit["configs"][config] = json.loads(next(iter(seen)))
+    audit["missing"] = sorted(set(audit["missing"]))
+    audit["provenance"] = reference.get("provenance", "UNKNOWN")
+    return audit
+
+
+def assert_probability_quality(frames: dict, metrics: dict, configs: list[str],
+                               seeds: list[int]) -> dict:
+    """Refuse missing, non-finite or out-of-range probabilities before combining configs."""
+    audit = {"checked": 0}
+    for config in configs:
+        for seed in seeds:
+            frame = frames[(config, seed)]
+            for model in MODELS:
+                for rule_name in tb.RULES:
+                    column = f"{model}_prob_{rule_name}"
+                    if column not in frame.columns:
+                        raise SystemExit(f"{config}/seed{seed}: missing probability column {column}")
+                    values = frame[column].to_numpy(dtype=np.float64)
+                    if not np.isfinite(values).all() or values.min() < 0 or values.max() > 1:
+                        raise SystemExit(f"{config}/seed{seed}: invalid probabilities in {column}")
+                    payload = metrics[(config, seed)]["models"][model]["test"][rule_name]
+                    if payload.get("primary") == "calibrated" and payload.get("metrics_calibrated") is None:
+                        raise SystemExit(f"{config}/seed{seed}: {model}/{rule_name} claims calibrated "
+                                         "primary without calibrated metrics")
+                    audit["checked"] += int(len(values))
+            for variant in tb.CNN_VARIANTS:
+                for rule_name in tb.HEAD_RULES:
+                    column = f"cnn_{variant}_raw_event_prob_{rule_name}"
+                    if column not in frame.columns:
+                        raise SystemExit(f"{config}/seed{seed}: missing {column}")
+                    values = frame[column].to_numpy(dtype=np.float64)
+                    if not np.isfinite(values).all() or values.min() < 0 or values.max() > 1:
+                        raise SystemExit(f"{config}/seed{seed}: invalid raw event probabilities in {column}")
+    return audit
 
 
 def cohort_table(frames: dict, metrics: dict, configs: list[str], seeds: list[int]) -> dict:
@@ -72,15 +173,23 @@ def cohort_table(frames: dict, metrics: dict, configs: list[str], seeds: list[in
     for config in configs:
         table[config] = {}
         for model in MODELS:
-            rows = {"mae": [], "brier": [], "brier_raw": [], "nll": [], "auc": [],
-                    "uar20": [], "uar40": []}
+            rows = {"mae": [], "brier": [], "brier_raw": [], "nll_primary": [], "nll_raw": [],
+                    "auc": [], "uar20": [], "uar40": []}
             for seed in seeds:
                 frame = frames[(config, seed)]
                 payload = metrics[(config, seed)]["models"][model]["test"][PRIMARY]
                 rows["mae"].append(payload["metrics"]["mae"])
                 rows["brier"].append(payload["metrics"]["brier"])
                 rows["brier_raw"].append(payload["metrics_raw"]["brier"])
-                rows["nll"].append(payload["metrics_raw"]["nll"])
+                truth = frame[f"event_{PRIMARY}"].to_numpy(dtype=np.float64)
+                probability = frame[PROBABILITY_COLUMNS[model]].to_numpy(dtype=np.float64)
+                recomputed = float(((probability - truth) ** 2).mean())
+                if abs(recomputed - float(payload["metrics"]["brier"])) > 1e-6:
+                    raise SystemExit(f"{config}/seed{seed} {model}: exported probabilities give "
+                                     f"Brier {recomputed:.6f} but metrics.json reports "
+                                     f"{payload['metrics']['brier']:.6f}")
+                rows["nll_primary"].append(agg.nll(probability, truth))
+                rows["nll_raw"].append(payload["metrics_raw"]["nll"])
                 rows["auc"].append(payload["metrics_raw"]["auc"])
                 y = frame[TARGET_COLUMN].to_numpy(dtype=np.float64)
                 probability = frame[PROBABILITY_COLUMNS[model]].to_numpy(dtype=np.float64)
@@ -196,16 +305,16 @@ def render(payload: dict) -> str:
              f"- ablation flags: {json.dumps(payload['ablation'], sort_keys=True)}",
              f"- bootstrap resamples: {payload['bootstrap_resamples']}", "",
              "## Headline metrics by config (mean (std) over seeds)", "",
-             "| config | model | MAE g10 | Brier (cal) | Brier (raw) | NLL | AUC | UAR@20 | UAR@40 |",
-             "|---|---|---|---|---|---|---|---|---|"]
+             "| config | model | MAE g10 | Brier (primary) | Brier (raw) | NLL (primary) | NLL (raw) | AUC | UAR@20 | UAR@40 |",
+             "|---|---|---|---|---|---|---|---|---|---|"]
     for config, models in payload["per_config"].items():
         for model, values in models.items():
             lines.append(
                 f"| {config} | {model} | {values['mae']['mean']:.4f} ({values['mae']['std']:.4f}) | "
                 f"{values['brier']['mean']:.4f} ({values['brier']['std']:.4f}) | "
-                f"{values['brier_raw']['mean']:.4f} | {values['nll']['mean']:.4f} | "
-                f"{values['auc']['mean']:.4f} | {values['uar20']['mean']:.3f} | "
-                f"{values['uar40']['mean']:.3f} |")
+                f"{values['brier_raw']['mean']:.4f} | {values['nll_primary']['mean']:.4f} | "
+                f"{values['nll_raw']['mean']:.4f} | {values['auc']['mean']:.4f} | "
+                f"{values['uar20']['mean']:.3f} | {values['uar40']['mean']:.3f} |")
     lines += ["", "## NAC increment per config (cnn_fusion minus cnn_coarse_grid, paired group bootstrap)", "",
               "| config | statistic | mean [95% CI] | excludes 0 |", "|---|---|---|---|"]
     for entry in payload["fusion_minus_coarse_grid"]:
@@ -244,6 +353,8 @@ def main(argv=None) -> int:
         "unsafe": int(((frames[(configs[0], seeds[0])][TARGET_COLUMN] > THRESHOLD)).sum()),
     }
 
+    protocol_audit = assert_config_protocol_consistency(metrics, ablation, configs, seeds)
+    probability_audit = assert_probability_quality(frames, metrics, configs, seeds)
     per_config = cohort_table(frames, metrics, configs, seeds)
     fusion_differences, dod = [], []
     for config in configs:
@@ -261,6 +372,24 @@ def main(argv=None) -> int:
         "seeds": seeds,
         "cohort": cohort,
         "ablation": ablation,
+        "protocol_consistency": protocol_audit,
+        "probability_quality": probability_audit,
+        "field_sources": {
+            "mae": "metrics.json metrics.mae (primary probability)",
+            "brier_primary": "metrics.json metrics.brier + recomputed cross-check from the CSV",
+            "brier_raw": "metrics.json metrics_raw.brier",
+            "nll_primary": "recomputed from {model}_prob_{rule} vs event_{rule} (aggregate_seeds.nll)",
+            "nll_raw": "metrics.json metrics_raw.nll",
+            "auc": "metrics.json metrics_raw.auc (raw ranking)",
+            "uar20_uar40": "train_baseline.risk_coverage on the primary probability (tie-aware)",
+        },
+        "caveats": [
+            "CIs are a 25-group cluster bootstrap averaged over 3 fixed seeds; this is not a "
+            "coverage guarantee for new regions or random initialisations.",
+            "The 110-tile test set has been inspected across several rounds: treat all "
+            "comparisons as exploratory (development_test).",
+            "Multi-config / multi-rule comparisons are exploratory and not pre-registered.",
+        ],
         "bootstrap_resamples": args.bootstrap,
         "per_config": per_config,
         "fusion_minus_coarse_grid": fusion_differences,

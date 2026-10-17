@@ -91,6 +91,105 @@ def check_split_independence(labels: pd.DataFrame) -> dict:
     }
 
 
+def nll(probability: np.ndarray, truth: np.ndarray) -> float:
+    """Binary NLL with clipping; the probability is the *primary* (calibrated) one."""
+    p = np.clip(np.asarray(probability, dtype=np.float64), 1e-7, 1 - 1e-7)
+    t = np.asarray(truth, dtype=np.float64)
+    return float(-(t * np.log(p) + (1 - t) * np.log(1 - p)).mean())
+
+
+def assert_truth_consistency(frames: dict[int, pd.DataFrame], seeds: list[int]) -> dict:
+    """Every seed must carry identical truths, event labels, groups and zones."""
+    reference = frames[seeds[0]]
+    audit = {}
+    for column in [c for c in reference.columns if c.startswith("event_")] + ["group_id", "LTM_CODE"]:
+        if column not in reference.columns:
+            raise SystemExit(f"test_predictions.csv is missing {column}; rerun the trainer")
+        values = reference[column]
+        for seed in seeds[1:]:
+            other = frames[seed]
+            if column not in other.columns:
+                raise SystemExit(f"seed {seed} is missing {column}")
+            if column in ("group_id", "LTM_CODE"):
+                same = other[column].astype(str).equals(values.astype(str))
+            else:
+                same = np.array_equal(other[column].to_numpy(), values.to_numpy())
+            if not same:
+                raise SystemExit(f"seed {seed} disagrees with seed {seeds[0]} on {column}")
+        audit[column] = {"checked_seeds": list(seeds)}
+    for column in ("y_g10", "y_g15"):
+        values = reference[column].to_numpy(dtype=np.float64)
+        for seed in seeds[1:]:
+            other = frames[seed][column].to_numpy(dtype=np.float64)
+            if values.shape != other.shape or not np.allclose(values, other, rtol=0, atol=1e-12):
+                raise SystemExit(f"seed {seed} disagrees with seed {seeds[0]} on {column}")
+        audit[column] = {"checked_seeds": list(seeds)}
+    audit["unsafe_total"] = int((reference["y_g10"] > RULES["g10_gt_0.05"][1]).sum())
+    return audit
+
+
+def assert_probability_quality(frames: dict[int, pd.DataFrame], seeds: list[int],
+                               metrics: dict[int, dict]) -> dict:
+    """Refuse missing/non-finite/out-of-range probabilities and uncalibrated 'primary' claims."""
+    audit = {"checked": 0}
+    for seed in seeds:
+        frame = frames[seed]
+        for model in MODELS:
+            for rule_name in RULES:
+                column = f"{model}_prob_{rule_name}"
+                payload = metrics[seed]["models"][model]["test"][rule_name]
+                if column not in frame.columns:
+                    raise SystemExit(f"seed {seed}: missing probability column {column}")
+                values = frame[column].to_numpy(dtype=np.float64)
+                if not np.isfinite(values).all():
+                    raise SystemExit(f"seed {seed}: non-finite probabilities in {column}")
+                if values.min() < 0.0 or values.max() > 1.0:
+                    raise SystemExit(f"seed {seed}: probabilities outside [0, 1] in {column}")
+                if payload.get("primary") == "calibrated" and payload.get("metrics_calibrated") is None:
+                    raise SystemExit(f"seed {seed}: {model}/{rule_name} claims calibrated primary "
+                                     "but has no calibrated metrics")
+                audit["checked"] += int(len(values))
+    return audit
+
+
+REQUIRED_IDENTICAL_PROTOCOL = (
+    "input_size", "augment", "augmentation_policy", "epochs_max", "patience", "batch", "lr",
+    "min_nac_valid", "channels", "scalar_scaling", "calibration", "rules", "composite_rule",
+    "contrast_channel", "ablation",
+)
+
+
+def assert_seed_protocol_consistency(metrics: dict[int, dict], seeds: list[int]) -> dict:
+    """Seeds of one config must share hyperparameters, ablation flags and data provenance."""
+    missing_seeds = [seed for seed in seeds if seed not in metrics]
+    if missing_seeds:
+        raise SystemExit(f"missing metrics.json for seeds {missing_seeds}")
+    reference = metrics[seeds[0]]["protocol"]
+    audit = {"missing": [], "unknown": []}
+    for key in REQUIRED_IDENTICAL_PROTOCOL:
+        if key not in reference:
+            audit["missing"].append(key)
+            continue
+        for seed in seeds[1:]:
+            if metrics[seed]["protocol"].get(key) != reference[key]:
+                raise SystemExit(f"seed {seed} protocol.{key} differs from seed {seeds[0]}")
+    for seed in seeds:
+        if int(metrics[seed]["protocol"].get("seed", -1)) != int(seed):
+            raise SystemExit(f"run for seed {seed} recorded protocol.seed="
+                             f"{metrics[seed]['protocol'].get('seed')}")
+    reference_provenance = reference.get("provenance")
+    if reference_provenance is None:
+        audit["unknown"].append("provenance")
+    else:
+        for seed in seeds[1:]:
+            other = metrics[seed]["protocol"].get("provenance")
+            if other != reference_provenance:
+                raise SystemExit(f"seed {seed} was trained on different data provenance than seed {seeds[0]}")
+    audit["provenance"] = reference_provenance if reference_provenance is not None else "UNKNOWN"
+    audit["ablation"] = reference.get("ablation", "UNKNOWN")
+    return audit
+
+
 def require_split_independence(audit: dict) -> None:
     """Fail rather than silently publishing metrics from leaked split groups."""
     if audit["groups_in_multiple_splits"] or audit["products_in_multiple_splits"]:
@@ -219,6 +318,9 @@ def main(argv=None) -> int:
         metrics[seed], frames[seed] = load_seed(directory)
 
     cohort = assert_identical_cohorts(seeds, frames)
+    truth_audit = assert_truth_consistency(frames, seeds)
+    probability_audit = assert_probability_quality(frames, seeds, metrics)
+    protocol_audit = assert_seed_protocol_consistency(metrics, seeds)
     labels = pd.read_csv(args.labels)
     split_audit = check_split_independence(labels)
     require_split_independence(split_audit)
@@ -235,17 +337,31 @@ def main(argv=None) -> int:
     for model in MODELS:
         summary[model] = {}
         for rule_name in RULES:
-            keys = ("mae", "rmse", "brier", "nll", "auc", "brier_constant",
-                    "brier_raw", "nll_raw", "auc_raw")
+            keys = ("mae", "rmse", "brier", "brier_raw", "auc", "auc_raw",
+                    "brier_constant", "nll_primary", "nll_raw")
             collected = {k: [] for k in keys}
             for seed in seeds:
                 payload = metrics[seed]["models"][model]["test"][rule_name]
                 primary = payload["metrics"]
                 raw = payload["metrics_raw"]
-                for key in keys:
-                    source = raw if key.endswith("_raw") else primary
-                    base = key[:-4] if key.endswith("_raw") else key
-                    collected[key].append(source.get(base))
+                frame = frames[seed]
+                truth = frame[f"event_{rule_name}"].to_numpy(dtype=np.float64)
+                probability = frame[f"{model}_prob_{rule_name}"].to_numpy(dtype=np.float64)
+                # Cross-check the trainer's primary Brier against the exported probabilities.
+                recomputed = float(((probability - truth) ** 2).mean())
+                if abs(recomputed - float(primary["brier"])) > 1e-6:
+                    raise SystemExit(f"seed {seed} {model}/{rule_name}: exported probabilities give "
+                                     f"Brier {recomputed:.6f} but metrics.json reports "
+                                     f"{primary['brier']:.6f}; refusing to publish")
+                collected["mae"].append(primary.get("mae"))
+                collected["rmse"].append(primary.get("rmse"))
+                collected["brier"].append(primary.get("brier"))
+                collected["brier_raw"].append(raw.get("brier"))
+                collected["auc"].append(raw.get("auc"))
+                collected["auc_raw"].append(raw.get("auc"))
+                collected["brier_constant"].append(primary.get("brier_constant"))
+                collected["nll_primary"].append(nll(probability, truth))
+                collected["nll_raw"].append(raw.get("nll"))
             summary[model][rule_name] = {
                 key: {
                     "mean": float(np.mean(clean)) if (clean := [v for v in values if v is not None]) else None,
@@ -362,6 +478,17 @@ def main(argv=None) -> int:
         "protocol": protocol,
         "environment": environment_info(seeds, args.pattern),
         "cohort": cohort,
+        "truth_consistency": truth_audit,
+        "probability_quality": probability_audit,
+        "seed_protocol": protocol_audit,
+        "field_sources": {
+            "mae": "metrics.json metrics.mae (primary probability)",
+            "brier": "metrics.json metrics.brier (primary) + recomputed cross-check",
+            "brier_raw": "metrics.json metrics_raw.brier",
+            "nll_primary": "recomputed from test_predictions {model}_prob_{rule} vs event_{rule}",
+            "nll_raw": "metrics.json metrics_raw.nll",
+            "auc": "metrics.json metrics_raw.auc",
+        },
         "split_independence": split_audit,
         "event_head_divergence": head_audit,
         "test_rule_prevalence": prevalence,
@@ -399,8 +526,8 @@ def render_markdown(payload: dict) -> str:
              f"- environment: {payload.get('environment', {})}",
              f"- test rule prevalence: {payload.get('test_rule_prevalence', {})}", ""]
     lines += ["## Mean (std) across seeds, primary probability", "",
-              "| model | rule | MAE | RMSE | Brier (primary) | Brier (raw) | AUC | NLL |",
-              "|---|---|---|---|---|---|---|---|"]
+              "| model | rule | MAE | RMSE | Brier (primary) | Brier (raw) | AUC | NLL (primary) | NLL (raw) |",
+              "|---|---|---|---|---|---|---|---|---|"]
     for model, rules in payload["per_model"].items():
         for rule_name, values in rules.items():
             def cell(key):
@@ -409,7 +536,7 @@ def render_markdown(payload: dict) -> str:
             auc = values["auc"]["mean"]
             lines.append(f"| {model} | {rule_name} | {cell('mae')} | {cell('rmse')} | "
                          f"{cell('brier')} | {cell('brier_raw')} | {auc if auc is None else f'{auc:.4f}'} | "
-                         f"{cell('nll')} |")
+                         f"{cell('nll_primary')} | {cell('nll_raw')} |")
     lines += ["", "## Paired group-bootstrap differences (primary probabilities)", "",
               "| comparison | rule | ΔMAE mean [95% CI] | ΔBrier mean [95% CI] | excludes 0 |",
               "|---|---|---|---|---|"]

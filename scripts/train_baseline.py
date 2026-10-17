@@ -52,6 +52,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import sys
@@ -451,6 +452,18 @@ def logistic_probability(model, features: np.ndarray, fallback: float) -> np.nda
     return model.predict_proba(features)[:, 1]
 
 
+def file_fingerprint(path: Path) -> dict:
+    """Size + SHA256 for provenance; UNKNOWN rather than guessing when unavailable."""
+    path = Path(path)
+    if not path.exists():
+        return {"path": str(path), "bytes": None, "sha256": "UNKNOWN"}
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return {"path": str(path), "bytes": path.stat().st_size, "sha256": digest.hexdigest()}
+
+
 def logit(probability: np.ndarray) -> np.ndarray:
     clipped = np.clip(probability, 1e-7, 1 - 1e-7)
     return np.log(clipped / (1 - clipped))
@@ -728,6 +741,9 @@ def main(argv=None) -> int:
             "seed": args.seed,
             "epochs_max": args.epochs,
             "patience": args.patience,
+            "batch": args.batch,
+            "lr": args.lr,
+            "min_nac_valid": args.min_nac_valid,
             "input_size": args.size,
             "augment": args.augment,
             "augmentation_policy": ("geometry-free flips/rot90" if args.augment
@@ -752,6 +768,11 @@ def main(argv=None) -> int:
             "rules": {k: {"target": v[0], "threshold": v[1]} for k, v in RULES.items()},
             "composite_rule": COMPOSITE_RULE,
             "contrast_channel": "(I - median(I)) / median(I), clipped to [-1, 3]",
+            "provenance": {
+                "manifest": file_fingerprint(args.manifest),
+                "labels": file_fingerprint(args.labels),
+                "cache": file_fingerprint(args.cache),
+            },
         },
         "tiles_all_splits": {s: int((labels["split"] == s).sum()) for s in ("train", "cal", "val", "test")},
         "tiles_used_by_split": {s: int((data["split"] == s).sum()) for s in ("train", "cal", "val", "test")},

@@ -1,0 +1,81 @@
+{
+  "status": "FROZEN_PRODUCT_LEVEL_NOT_GROUP_DISJOINT",
+  "created_utc": "2026-10-17T08:20:59.978394+00:00",
+  "git_sha": "UNKNOWN",
+  "algorithm": {
+    "candidate_pool": "split_final == test, has_slope3m",
+    "exclusions": [
+      "hydrated sample_id",
+      "used NAC_EDR_ID",
+      "used group_id"
+    ],
+    "exclusion": "product",
+    "group_disjoint": false,
+    "spatial_rule": "center distance >= 10.0 km from every hydrated tile",
+    "sampling": "one tile per NAC product, round-robin over LTM zones, seeded shuffle",
+    "seed": 2026,
+    "requested": 120,
+    "minimum": 30,
+    "max_per_product": 5
+  },
+  "counts": {
+    "frozen_tiles": 64,
+    "products": 22,
+    "groups": 4,
+    "zones": 4,
+    "by_zone": {
+      "LTM_44N": 46,
+      "LTM_36N": 16,
+      "LPS_S": 1,
+      "LTM_27S": 1
+    }
+  },
+  "coverage": {
+    "manifest_groups": 272,
+    "used_groups": 272,
+    "unused_groups": 0,
+    "manifest_products": 1090,
+    "used_products": 336,
+    "unused_products": 754
+  },
+  "audit": {
+    "exclusion": "product",
+    "max_per_product": 5,
+    "candidates_after_exclusion": 2505,
+    "groups_after_selection": 4,
+    "selected_groups_already_used": [
+      "G_M1100087298",
+      "G_M1101040045",
+      "G_M1115861937",
+      "G_M1151623432"
+    ],
+    "buffer_km": 10.0,
+    "min_buffer_km_selected": 10.078284828596052,
+    "used_products": 336,
+    "used_groups": 272,
+    "used_tiles": 760
+  },
+  "sources": {
+    "manifest": {
+      "path": "outputs/manifest_100k_final.parquet",
+      "sha256": "b2e3841be1dae4005e6977e27ffbec970691d62bc5eecfa2b202f22b6752f6cd"
+    },
+    "used_labels": {
+      "path": "outputs/labels_hydrated.csv",
+      "sha256": "eb2ff9326cd3d3180409355b53b2cf135c02ddd324cec87e583686abccdaafb5"
+    },
+    "heldout_manifest_sha256": "33f0898fca6b4a6c95cf5bda7a19c8181674723f386bae88fd2366184963ed97"
+  },
+  "overlap_checks": {
+    "hydrated_sample_ids": 0,
+    "used_nac_products": 0,
+    "future_train_expansion": "V2 rows are split_final=test; train expansion only draws from split_final=train, so they cannot be pulled in",
+    "group_overlap": 4
+  },
+  "known_limits": [
+    "DTM_source_ID is UNKNOWN in the source index: this is a tile/geographic/group-level holdout, not a proven stereo-DTM-source-level OOD split.",
+    "Group-level independence is NOT achieved: every leakage group in this corpus was already touched by the hydrated cohort, so this is a product/spatial holdout only.",
+    "Footprint-level projection review is still pending (GEO_JOIN_PENDING).",
+    "No payload was downloaded and no model metric was computed for these tiles before freezing."
+  ]
+}
