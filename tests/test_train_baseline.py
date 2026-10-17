@@ -28,8 +28,8 @@ class TestMetrics(unittest.TestCase):
     def test_brier_and_constant_baseline(self):
         y = np.array([0.0, 0.0, 1.0, 1.0])
         scores = np.array([-2.0, -2.0, 2.0, 2.0])
-        result = tb.metrics(y, y.copy(), ("rule", 0.5), scores)
         probability = 1 / (1 + np.exp(-scores))
+        result = tb.metrics(y, y.copy(), ("rule", 0.5), probability)
         expected = float(((probability - y) ** 2).mean())
         self.assertAlmostEqual(result["brier"], expected, places=8)
         self.assertAlmostEqual(result["brier_constant"], 0.25, places=8)
@@ -37,8 +37,11 @@ class TestMetrics(unittest.TestCase):
 
     def test_threshold_is_strict(self):
         y = np.array([0.05, 0.050001])
-        result = tb.metrics(y, y.copy(), ("rule", 0.05), np.zeros(2))
+        result = tb.metrics(y, y.copy(), ("rule", 0.05), np.full(2, 0.5))
         self.assertAlmostEqual(result["unsafe_rate"], 0.5)
+
+    def test_logit_is_stable_at_extremes(self):
+        self.assertTrue(np.isfinite(tb.logit(np.array([0.0, 1.0]))).all())
 
 
 class TestRiskCoverage(unittest.TestCase):
@@ -46,7 +49,7 @@ class TestRiskCoverage(unittest.TestCase):
         # Risk ranking (1, 3, 2, 0) matches the labels: the two accepted tiles are safe.
         y = np.array([0.9, 0.0, 0.9, 0.0])
         risk = np.array([0.9, 0.1, 0.8, 0.2])
-        rows = tb.risk_coverage(y, risk, ("rule", 0.05), coverages=(0.5, 1.0))
+        rows = tb.risk_coverage(y, risk, "g10_gt_0.05", coverages=(0.5, 1.0))
         half, full = rows
         self.assertEqual(half["accepted_n"], 2)
         self.assertEqual(half["unsafe_accepted_n"], 0)
@@ -57,7 +60,7 @@ class TestRiskCoverage(unittest.TestCase):
 
     def test_uar_uses_actual_accepted_count(self):
         y = np.array([0.0, 0.9])
-        rows = tb.risk_coverage(y, np.array([0.1, 0.9]), ("rule", 0.05), coverages=(0.5,))
+        rows = tb.risk_coverage(y, np.array([0.1, 0.9]), "g10_gt_0.05", coverages=(0.5,))
         self.assertEqual(rows[0]["accepted_n"], 1)
         self.assertEqual(rows[0]["unsafe_accepted_n"], 0)
         self.assertEqual(rows[0]["UAR"], 0.0)
@@ -144,6 +147,47 @@ class TestAlignmentMath(unittest.TestCase):
         self.assertTrue(degenerate)
         fallback = tb.logistic_probability(model, np.zeros((2, 2)), 0.7)
         self.assertTrue(np.allclose(fallback, 0.7))
+
+
+class TestEvaluateModel(unittest.TestCase):
+    def test_each_rule_uses_its_own_regression_column(self):
+        # Column 0 tracks g10, column 1 is deliberately unrelated.
+        y_g10 = np.array([0.0, 0.5, 1.0])
+        fractions = np.column_stack([y_g10, np.array([0.9, 0.1, 0.05])])
+        payload = tb.evaluate_model(y_g10, fractions, np.zeros(3), "g10_gt_0.05")
+        self.assertAlmostEqual(payload["metrics"]["mae"], 0.0, places=8)
+        self.assertAlmostEqual(payload["metrics"]["rmse"], 0.0, places=8)
+
+        y_g15 = np.array([1.0, 0.0, 0.25])
+        fractions = np.column_stack([np.array([0.1, 0.2, 0.3]), y_g15])
+        payload = tb.evaluate_model(y_g15, fractions, np.zeros(3), "g15_gt_0.02")
+        self.assertAlmostEqual(payload["metrics"]["mae"], 0.0, places=8)
+
+    def test_rule_column_index_matches_rules(self):
+        self.assertEqual(tb.rule_column_index("g10_gt_0.05"), 0)
+        self.assertEqual(tb.rule_column_index("g15_gt_0.02"), 1)
+
+
+class TestChannelsAndCache(unittest.TestCase):
+    def test_batch_tensor_selects_channels(self):
+        import torch
+        cache = {
+            "a": np.stack([np.ones((4, 4)), np.zeros((4, 4))]).astype(np.float16),
+            "b": np.stack([np.full((4, 4), 2.0), np.full((4, 4), 3.0)]).astype(np.float16),
+        }
+        device = torch.device("cpu")
+        nac = tb.batch_tensor(["a", "b"], cache, device, (0,))
+        self.assertEqual(tuple(nac.shape), (2, 1, 4, 4))
+        self.assertAlmostEqual(float(nac[1, 0, 0, 0]), 2.0)
+        coarse = tb.batch_tensor(["a", "b"], cache, device, (1,))
+        self.assertAlmostEqual(float(coarse[1, 0, 0, 0]), 3.0)
+        fusion = tb.batch_tensor(["a", "b"], cache, device, (0, 1))
+        self.assertEqual(tuple(fusion.shape), (2, 2, 4, 4))
+
+    def test_variants_map_to_channel_sets(self):
+        self.assertEqual(tb.CNN_VARIANTS["nac"], (0,))
+        self.assertEqual(tb.CNN_VARIANTS["coarse_grid"], (1,))
+        self.assertEqual(tb.CNN_VARIANTS["fusion"], (0, 1))
 
 
 class TestCoarseFeatures(unittest.TestCase):

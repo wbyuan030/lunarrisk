@@ -1,5 +1,5 @@
 {
-  "status": "p1_manifest_built_2026-10-17",
+  "status": "p1_baseline_2026-10-17",
   "date": "2026-10-17",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
   "files": [
@@ -104,6 +104,11 @@
       "sha256": "34993fec8a6a06567a61843dec02f491d32170274efaaff65e15c3e7a6211351"
     },
     {
+      "path": "reports/p1_baseline.md",
+      "bytes": 9491,
+      "sha256": "123a99213fe56df2a14858ee6fbc2d0c5dbadd77ea675d78cce0e426a3532ac3"
+    },
+    {
       "path": "reports/p1_manifest.md",
       "bytes": 5230,
       "sha256": "5a61a0d47ed4b03df1e23dec2bc90405a80d1534cb24c7581cf0d8f949f47999"
@@ -120,8 +125,8 @@
     },
     {
       "path": "scripts/build_manifest.py",
-      "bytes": 15165,
-      "sha256": "e885857f351501a17349a62f08044258306a82cab8a6709b9c27b6b8f816b954"
+      "bytes": 15398,
+      "sha256": "483f5aa3e05dc5381747dedac24234f0ad971716a7389dc8378c21c1b1554bee"
     },
     {
       "path": "scripts/crater_pilot.py",
@@ -129,14 +134,29 @@
       "sha256": "153a9fc51b024340402199386f15b0f0c3f29b753304a0820bae0d08a79fd232"
     },
     {
+      "path": "scripts/finalize_split.py",
+      "bytes": 8354,
+      "sha256": "22101b089dce1dc0832764b6ccab9e6b8c1818cb1f796b025b5bc2dfd2e4f9f4"
+    },
+    {
       "path": "scripts/hf_audit.py",
       "bytes": 15362,
       "sha256": "0b2a74a9f786271f54ee57b449b00ae26d93304bf67a17fd87cbc3a730738e18"
     },
     {
+      "path": "scripts/hydrate_tiles.py",
+      "bytes": 12069,
+      "sha256": "374b516019ed3e5ed6427a64e945030ccf43020cc543601d7f9157e0a96a197f"
+    },
+    {
       "path": "scripts/make_slope_labels.py",
       "bytes": 12405,
       "sha256": "6441350951e821fa9e0a17b226721cbb3b2f08593dd000f06320d189a49626e9"
+    },
+    {
+      "path": "scripts/plot_baseline.py",
+      "bytes": 4282,
+      "sha256": "e41d83357f19d9f6a9a009bd7c5303956bc895cff24e594ebdaa4ac432d11b76"
     },
     {
       "path": "scripts/rocm_smoke.py",
@@ -149,14 +169,29 @@
       "sha256": "d09f24df81f757fba00cbbd52d8d244d7c05f3a059a7a231dc470da2d6216a62"
     },
     {
+      "path": "scripts/train_baseline.py",
+      "bytes": 33020,
+      "sha256": "f236f5a4797fefebc982e610c33fcae3e5dd29623c7826f91d03dae6be8f52db"
+    },
+    {
       "path": "tests/test_build_manifest.py",
-      "bytes": 4897,
-      "sha256": "238a0cccaaf77f6db590cf63cb360304b14f507d2f99cf2794c0a7ae7382fed3"
+      "bytes": 5004,
+      "sha256": "e6776fa2040906303bf838a14d5f90dc8e7b88bd84b79e4647412387769e7116"
+    },
+    {
+      "path": "tests/test_finalize_split.py",
+      "bytes": 3512,
+      "sha256": "5d1e2e42ce3969ca4488d4904861845abc11d04cc196294fa6269f69d96a1e91"
     },
     {
       "path": "tests/test_slope_labels.py",
       "bytes": 7552,
       "sha256": "c02ae1931df845565fc0034537951f3c3bbb9a20482289d0a24ac81297f2a0ee"
+    },
+    {
+      "path": "tests/test_train_baseline.py",
+      "bytes": 8720,
+      "sha256": "0503e0b1f603424880557c7cf2ac957a100388e1427ec8f0279aadac5e60809b"
     }
   ]
 }
