@@ -2,7 +2,8 @@
 """P18-05: freeze an untouched `heldout_v2` cohort before any model sees it.
 
 Selection is restricted to official ``test``-split tiles that were never hydrated,
-whose NAC product and leakage group were never used, and that sit at least
+whose NAC product was never used (and, in strict mode, whose leakage group was
+never used), and that sit at least
 ``--buffer-km`` from every hydrated tile. The freeze writes the ID list and its
 SHA256; no payload is downloaded and no model metric is read for these tiles.
 
@@ -252,11 +253,13 @@ def main(argv=None) -> int:
         "git_sha": git_sha(),
         "algorithm": {
             "candidate_pool": "split_final == test, has_slope3m",
-            "exclusions": ["hydrated sample_id", "used NAC_EDR_ID", "used group_id"],
+            "exclusions": (["hydrated sample_id", "used NAC_EDR_ID", "used group_id"]
+                           if args.exclusion == "group" else
+                           ["hydrated sample_id", "used NAC_EDR_ID"]),
             "exclusion": args.exclusion,
             "group_disjoint": group_disjoint,
             "spatial_rule": f"center distance >= {args.buffer_km} km from every hydrated tile",
-            "sampling": "one tile per NAC product, round-robin over LTM zones, seeded shuffle",
+            "sampling": "round-robin over LTM zones, seeded shuffle, with max_per_product cap",
             "seed": args.seed,
             "requested": args.n,
             "minimum": args.min_tiles,
