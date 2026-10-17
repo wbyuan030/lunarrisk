@@ -94,6 +94,57 @@ class TestRiskCoverage(unittest.TestCase):
                 tb.risk_coverage(np.array([0.0, 0.8]), invalid, "g10_gt_0.05")
 
 
+class TestP17RankingAndAblation(unittest.TestCase):
+    def test_tied_risks_have_order_invariant_expected_uar(self):
+        # Tied constant probabilities must reduce to cohort prevalence, even
+        # when safe/unsafe samples are deliberately shuffled in CSV order.
+        y = np.array([1.0, 1.0, 0.0, 0.0, 1.0, 0.0])
+        risk = np.full(len(y), 0.5)
+        rows = tb.risk_coverage(y, risk, "g10_gt_0.05",
+                                coverages=(1 / 6, 0.5, 5 / 6, 1.0))
+        shuffled = tb.risk_coverage(y[::-1], risk, "g10_gt_0.05",
+                                    coverages=(1 / 6, 0.5, 5 / 6, 1.0))
+        for left, right in zip(rows, shuffled):
+            self.assertAlmostEqual(left["UAR"], 0.5)
+            self.assertAlmostEqual(left["HMR"],
+                                   left["accepted_n"] / len(y))
+            self.assertAlmostEqual(left["UAR"], right["UAR"])
+            self.assertAlmostEqual(left["unsafe_accepted_n"],
+                                   left["accepted_n"] * 0.5)
+        self.assertTrue(rows[0]["boundary_tie_expected"])
+        self.assertFalse(rows[-1]["boundary_tie_expected"])
+
+    def test_unequal_risk_scores_keep_exact_counts(self):
+        y = np.array([0.0, 0.8, 0.0, 0.8])
+        rows = tb.risk_coverage(y, [0.05, 0.95, 0.1, 0.9], "g10_gt_0.05",
+                                coverages=(0.5, 1))
+        self.assertEqual(rows[0]["unsafe_accepted_n"], 0)
+        self.assertEqual(rows[1]["unsafe_accepted_n"], 2)
+        self.assertFalse(rows[0]["boundary_tie_expected"])
+
+    def test_ablation_feature_mapping(self):
+        self.assertEqual(tb.ablation_features("fusion"),
+                         ((0, 1, 2), tb.NAC_SCALARS + tb.GEOMETRY_SCALARS))
+        self.assertEqual(tb.ablation_features("fusion", use_geometry=False),
+                         ((0, 1, 2), tb.NAC_SCALARS))
+        self.assertEqual(tb.ablation_features("fusion", use_nac_photometry=False),
+                         ((1, 2), tb.GEOMETRY_SCALARS))
+        self.assertEqual(tb.ablation_features("fusion", use_geometry=False,
+                                               use_nac_photometry=False),
+                         ((1, 2), ()))
+        self.assertEqual(tb.ablation_features("coarse_grid", use_nac_photometry=False),
+                         ((2,), tb.GEOMETRY_SCALARS))
+
+    def test_unsafe_spatial_augmentation_is_rejected(self):
+        with self.assertRaises(SystemExit):
+            tb.main(["--augment", "--no-nac-photometry"])
+        # --no-geometry removes the azimuth inconsistency; then execution
+        # should proceed to data file loading (which fails on a nonexistent path).
+        with self.assertRaises(FileNotFoundError):
+            tb.main(["--augment", "--no-geometry",
+                     "--labels", "/nonexistent/p17-fixture-labels.csv"])
+
+
 class TestBootstrap(unittest.TestCase):
     def test_grouped_bootstrap_resamples_groups(self):
         y = np.array([1.0, 2.0, 3.0])
