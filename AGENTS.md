@@ -1,3 +1,28 @@
+# 当前任务：P1.9 外部 LROC 严格独立测试集（2026-10-17）
+
+**必须首先阅读 [`docs/P1_9_HELDOUT_BUILD.md`](docs/P1_9_HELDOUT_BUILD.md) 并直接执行 Gate 0 → Gate 1。**
+上文旧 P1.8/P1.7/P0 指令只作为历史备查，不是当前任务。Coding Agent 应先拉取 main，在原 ROCm
+环境运行全套单测与 compileall，修复新增的 LROC 元数据筛选测试（如果有失败），随后开展真实
+多边形/CRS/立体源 README 独立性审计。
+
+**最新已完成（来源：仓库报告）**：P18-04 fixed-mask 统一 CNN 参数量 98,464、15 次本地训练，
+163 项测试通过；P18-05b 找到 LROC NAC DTM 候选档案，但原 **143 景“严格 OOD”判定已被 Review 撤回**：
+旧版用等面积圆半径代替 footprint 上界，而且未拦截空 stereo 源 ID。本轮代码只做更保守的
+顶点元数据筛选，严格独立性必须验证双方真实 footprint、CRS、完整立体源，再冻结。
+参阅 [`reports/p1_8_new_heldout_sources.md`](reports/p1_8_new_heldout_sources.md) 第 7 节勘误。
+
+**务必遵守**：开发集的 110 Tile 已反复使用；旧 64 Tile 产品级冻结清单不得覆盖或重抽；
+尚未完成严格 `heldout_v2_external`，不得基于外部候选运行模型预测或声明获得严格 OOD 成绩。
+Gate 1 做只读元数据和 footprint 分析；Gate 2 仅在 QA 通过后下载有限 probe；Gate 3
+冻结有哈希的正式外部测试集，再返回给用户核对，**不要提前执行 Gate 4 的最终模型评分**。
+
+单卡 RX 7900 XT 和现有 ROCm 环境优先；不自行购买云卡、使用 4×4090、覆盖原始
+NAC/DTM/旧 labels、训练 LFM/联合后验。每关必须有测试、实测证据和日志，再 push main。
+
+---
+
+## 历史执行指令（P1.8 等，仅供溯源）
+
 # 当前任务：P1.8 续篇（2026-10-17）
 
 **请先阅读 [`docs/P1_8_CONTINUE.md`](docs/P1_8_CONTINUE.md)，按其 B→C→D 的 Gate 顺序直接开展工作。**
