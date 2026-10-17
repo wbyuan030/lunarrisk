@@ -1,5 +1,10 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **Active Coding Agent sprint: [P1.8 — safe dataset expansion and held-out validation](docs/P1_8_NEXT_STEPS.md).** Start with `P18-01/02`: fix no-op `--resume` and atomic CSV/schema-safe labels. Do **not** expand downloads before tests prove the old 760 tiles, provenance and split assignments are unchanged.
+>
+> **Latest completed experiments:** [P1.7 12-run ablations](reports/p1_7_ablation.md) on RX 7900 XT, 96 tests passed at that commit. The new P1.8 actions are *planned*, not executed. See [AGENTS.md](AGENTS.md) for coding agent instructions.
+>
+
 > **Current research status (2026-10-17): P1.7 controlled ablations have been run on the ROCm host (12 trainings + 4 aggregates, seeds 42/43/44); 96 tests pass.**
 > Latest evidence: [P1.7 ablation report](reports/p1_7_ablation.md); earlier baseline: [P1.6 baseline report](reports/p1_baseline.md).
 > Headline: the P1.6 "NAC increment" does **not** replicate under the corrected protocol (spatial augmentation removed because it conflicts with the fixed solar-azimuth scalar); no ablation config gives a monotone, capacity-controlled NAC story.
