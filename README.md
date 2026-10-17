@@ -1,5 +1,11 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **Current research status (2026-10-17): P1.6 completed; P1.7 evaluation hardening and ablation flags committed, real rerun pending.**
+> Latest evidence: [P1.6 baseline report](reports/p1_baseline.md).
+> Coding Agent's current execution order: [P1.7 next steps](docs/P1_7_NEXT_STEPS.md).
+> The original P0 scaffold instructions below are historical. The public S3 SomBench 100k release is available, the initial 760 physical tiles have been hydrated, and 81 tests passed at P1.6. Those results do not establish that P1.7's new changes have passed ROCm testing.
+
+
 **Status:** ready-to-run scaffold. The scripts are CPU-tested locally, **not validated on your ROCm host or on the complete lunar dataset**. They are designed to fail clearly when real inputs are missing; nothing silently substitutes synthetic lunar data.
 
 ## Hard decision: start with an accessible real dataset
