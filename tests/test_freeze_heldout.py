@@ -137,6 +137,36 @@ class TestFreezeArtifacts(unittest.TestCase):
             self.assertGreaterEqual(protocol["audit"]["min_buffer_km_selected"], 10.0)
             self.assertEqual(protocol["overlap_checks"]["hydrated_sample_ids"], 0)
 
+    def test_product_only_freeze_metadata_does_not_claim_group_exclusion(self):
+        # Product-level protocol deliberately permits groups already used during
+        # model development; the written metadata must not claim otherwise.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            candidates = pd.DataFrame([
+                row(f"new_{i}", f"P_NEW_{i}", "G_USED",
+                    lat=2.0 + i * 0.5, zone=f"LTM_{i % 2}")
+                for i in range(8)
+            ])
+            manifest_path = root / "manifest.parquet"
+            candidates.to_parquet(manifest_path, index=False)
+            labels_path = root / "labels.csv"
+            used_frame().to_csv(labels_path, index=False)
+            code = fh.main([
+                "--manifest", str(manifest_path), "--labels", str(labels_path),
+                "--out-dir", str(root / "protocols"), "--n", "6",
+                "--min-tiles", "5", "--exclusion", "product",
+                "--buffer-km", "10", "--seed", "5"
+            ])
+            self.assertEqual(code, 0)
+            protocol = json.loads(
+                (root / "protocols" / "heldout_v2_protocol.json").read_text()
+            )
+            self.assertEqual(protocol["status"], "FROZEN_PRODUCT_LEVEL_NOT_GROUP_DISJOINT")
+            self.assertFalse(protocol["algorithm"]["group_disjoint"])
+            self.assertEqual(protocol["algorithm"]["exclusions"],
+                             ["hydrated sample_id", "used NAC_EDR_ID"])
+            self.assertEqual(protocol["overlap_checks"]["group_overlap"], 1)
+
     def test_insufficient_candidates_reports_blocked(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
