@@ -95,5 +95,45 @@ class TestCohortChecks(unittest.TestCase):
         self.assertEqual(audit["usable"], 2)
 
 
+
+
+class TestP17AuditGuards(unittest.TestCase):
+    def test_split_audit_refuses_leaked_groups_and_products(self):
+        leaked = {"groups_in_multiple_splits": 1, "products_in_multiple_splits": 0}
+        with self.assertRaises(SystemExit):
+            agg.require_split_independence(leaked)
+        leaked = {"groups_in_multiple_splits": 0, "products_in_multiple_splits": 1}
+        with self.assertRaises(SystemExit):
+            agg.require_split_independence(leaked)
+        agg.require_split_independence({
+            "groups_in_multiple_splits": 0, "products_in_multiple_splits": 0
+        })
+
+    def test_raw_event_head_audit_detects_identical_predictions(self):
+        keys = {
+            "cnn_nac_raw_event_prob_g10_gt_0.05": [0.2, 0.8],
+            "cnn_nac_raw_event_prob_g15_gt_0.02": [0.2, 0.8],
+        }
+        for variant in ("coarse_grid", "fusion"):
+            keys[f"cnn_{variant}_raw_event_prob_g10_gt_0.05"] = [0.2, 0.8]
+            keys[f"cnn_{variant}_raw_event_prob_g15_gt_0.02"] = [0.3, 0.7]
+        with self.assertRaises(SystemExit):
+            agg.event_head_divergence({42: pd.DataFrame(keys)}, [42])
+
+    def test_raw_event_head_audit_passes_distinct_outputs(self):
+        columns = {}
+        for variant in ("nac", "coarse_grid", "fusion"):
+            model = f"cnn_{variant}"
+            columns[f"{model}_raw_event_prob_g10_gt_0.05"] = [0.15, 0.85]
+            columns[f"{model}_raw_event_prob_g15_gt_0.02"] = [0.25, 0.75]
+        result = agg.event_head_divergence({42: pd.DataFrame(columns)}, [42])
+        self.assertFalse(result["cnn_fusion"]["42"]["identical"])
+        self.assertAlmostEqual(result["cnn_fusion"]["42"]["mean_abs_gap"], 0.1)
+
+    def test_raw_event_head_audit_rejects_missing_exports(self):
+        with self.assertRaises(SystemExit):
+            agg.event_head_divergence({42: pd.DataFrame({"x": [1, 2]})}, [42])
+
+
 if __name__ == "__main__":
     unittest.main()
