@@ -222,6 +222,7 @@ class TestNewConsistencyGuards(unittest.TestCase):
             "min_nac_valid": 0.99, "channels": ["a"], "scalar_scaling": "train-only",
             "calibration": "cal", "rules": {}, "composite_rule": "r", "contrast_channel": "c",
             "ablation": ablation or {"use_geometry": True, "use_nac_photometry": True},
+            "ablation_mode": "legacy",
             "provenance": provenance or {"labels": {"sha256": "abc"}},
         }
         return {seed: {"protocol": protocol}}
@@ -249,6 +250,43 @@ class TestNewConsistencyGuards(unittest.TestCase):
         metrics = self._seed_metrics(42)
         with self.assertRaises(SystemExit):
             agg.assert_seed_protocol_consistency(metrics, [43])
+
+    def _capacity_metrics(self, counts, specs=None, mode="fixed-mask"):
+        specs = specs or {"cnn_nac": {"channel_mask": [1, 1, 0]},
+                          "cnn_coarse_grid": {"channel_mask": [0, 0, 1]},
+                          "cnn_fusion": {"channel_mask": [1, 1, 1]}}
+        return {seed: {
+            "protocol": {"ablation_mode": mode, "fixed_mask_specs": specs},
+            "models": {name: {"parameters": {"total": count}} for name, count in counts.items()},
+        } for seed in (42, 43)}
+
+    def test_fixed_capacity_accepts_equal_counts(self):
+        metrics = self._capacity_metrics({"cnn_nac": 100, "cnn_coarse_grid": 100, "cnn_fusion": 100})
+        audit = agg.assert_fixed_capacity(metrics, [42, 43])
+        self.assertEqual(set(audit["parameter_counts"].values()), {100})
+
+    def test_fixed_capacity_rejects_unequal_counts(self):
+        metrics = self._capacity_metrics({"cnn_nac": 100, "cnn_coarse_grid": 90, "cnn_fusion": 100})
+        with self.assertRaises(SystemExit):
+            agg.assert_fixed_capacity(metrics, [42, 43])
+
+    def test_fixed_capacity_rejects_mixed_modes(self):
+        metrics = self._capacity_metrics({"cnn_nac": 100, "cnn_coarse_grid": 100, "cnn_fusion": 100})
+        metrics[43]["protocol"]["ablation_mode"] = "legacy"
+        with self.assertRaises(SystemExit):
+            agg.assert_fixed_capacity(metrics, [42, 43])
+
+    def test_fixed_capacity_rejects_different_mask_schemes(self):
+        metrics = self._capacity_metrics({"cnn_nac": 100, "cnn_coarse_grid": 100, "cnn_fusion": 100})
+        metrics[43]["protocol"]["fixed_mask_specs"] = {"cnn_nac": {"channel_mask": [1, 1, 1]}}
+        with self.assertRaises(SystemExit):
+            agg.assert_fixed_capacity(metrics, [42, 43])
+
+    def test_legacy_mode_skips_capacity_comparison(self):
+        metrics = self._capacity_metrics({"cnn_nac": 10, "cnn_coarse_grid": 99, "cnn_fusion": 100},
+                                        mode="legacy")
+        audit = agg.assert_fixed_capacity(metrics, [42, 43])
+        self.assertIn("note", audit)
 
     def test_missing_hyperparameters_are_reported_not_guessed(self):
         metrics = self._seed_metrics(42)

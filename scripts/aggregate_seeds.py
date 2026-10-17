@@ -155,7 +155,7 @@ def assert_probability_quality(frames: dict[int, pd.DataFrame], seeds: list[int]
 REQUIRED_IDENTICAL_PROTOCOL = (
     "input_size", "augment", "augmentation_policy", "epochs_max", "patience", "batch", "lr",
     "min_nac_valid", "channels", "scalar_scaling", "calibration", "rules", "composite_rule",
-    "contrast_channel", "ablation",
+    "contrast_channel", "ablation", "ablation_mode",
 )
 
 
@@ -187,6 +187,40 @@ def assert_seed_protocol_consistency(metrics: dict[int, dict], seeds: list[int])
                 raise SystemExit(f"seed {seed} was trained on different data provenance than seed {seeds[0]}")
     audit["provenance"] = reference_provenance if reference_provenance is not None else "UNKNOWN"
     audit["ablation"] = reference.get("ablation", "UNKNOWN")
+    return audit
+
+
+def assert_fixed_capacity(metrics: dict[int, dict], seeds: list[int]) -> dict:
+    """fixed-mask runs must keep identical capacity and mask schemes across seeds.
+
+    Mixing ``legacy`` (capacity changes with each ablation) into a fixed-mask comparison is
+    refused, because it would silently compare models of different size.
+    """
+    modes = {metrics[seed]["protocol"].get("ablation_mode", "legacy") for seed in seeds}
+    if len(modes) > 1:
+        raise SystemExit(f"seeds mix ablation modes {sorted(modes)}")
+    mode = modes.pop()
+    audit = {"ablation_mode": mode}
+    if mode != "fixed-mask":
+        audit["note"] = "legacy mode: parameter counts differ by design and are not compared"
+        return audit
+    reference_specs = metrics[seeds[0]]["protocol"].get("fixed_mask_specs")
+    reference_counts = None
+    for seed in seeds:
+        protocol = metrics[seed]["protocol"]
+        if protocol.get("fixed_mask_specs") != reference_specs:
+            raise SystemExit(f"seed {seed} records a different fixed-mask scheme")
+        counts = {name: model["parameters"]["total"]
+                  for name, model in metrics[seed]["models"].items() if name.startswith("cnn_")}
+        if not counts:
+            raise SystemExit(f"seed {seed} has no cnn_* parameter counts")
+        if len(set(counts.values())) > 1:
+            raise SystemExit(f"seed {seed} fixed-mask variants differ in capacity: {counts}")
+        if reference_counts is None:
+            reference_counts = counts
+        elif counts != reference_counts:
+            raise SystemExit(f"seed {seed} capacity differs from other seeds: {counts}")
+    audit["parameter_counts"] = reference_counts
     return audit
 
 
@@ -321,6 +355,7 @@ def main(argv=None) -> int:
     truth_audit = assert_truth_consistency(frames, seeds)
     probability_audit = assert_probability_quality(frames, seeds, metrics)
     protocol_audit = assert_seed_protocol_consistency(metrics, seeds)
+    capacity_audit = assert_fixed_capacity(metrics, seeds)
     labels = pd.read_csv(args.labels)
     split_audit = check_split_independence(labels)
     require_split_independence(split_audit)
@@ -481,6 +516,7 @@ def main(argv=None) -> int:
         "truth_consistency": truth_audit,
         "probability_quality": probability_audit,
         "seed_protocol": protocol_audit,
+        "fixed_capacity": capacity_audit,
         "field_sources": {
             "mae": "metrics.json metrics.mae (primary probability)",
             "brier": "metrics.json metrics.brier (primary) + recomputed cross-check",

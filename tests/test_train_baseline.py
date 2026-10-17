@@ -452,6 +452,146 @@ class TestBalancedRules(unittest.TestCase):
             self.assertIsNotNone(entry["metrics_raw"]["brier"])
 
 
+class TestFixedMaskAblation(unittest.TestCase):
+    """P18-04a: equal-capacity masks must not change shapes, counts or leak hidden inputs."""
+
+    def _fixture(self, seed=0, n=3, size=16):
+        import torch
+        torch.manual_seed(seed)
+        model = tb.TinyCNN(in_channels=len(tb.CHANNELS), n_scalars=len(tb.ALL_SCALARS))
+        rng = np.random.default_rng(seed)
+        cache = {f"s{i}": rng.random((len(tb.CHANNELS), size, size)).astype(np.float16)
+                 for i in range(n)}
+        rows = pd.DataFrame({"sample_id": [f"s{i}" for i in range(n)]})
+        scalars = pd.DataFrame(
+            rng.normal(size=(n, len(tb.ALL_SCALARS))),
+            index=[f"s{i}" for i in range(n)], columns=list(tb.ALL_SCALARS))
+        return model, cache, rows, scalars
+
+    def _result(self, model, spec, scalars):
+        return {"model": model, "scalar_table": scalars, "scalar_columns": spec["scalars"],
+                "channel_mask": spec["channel_mask"], "scalar_mask": spec["scalar_mask"]}
+
+    def test_all_variants_and_ablations_share_parameter_counts(self):
+        import torch
+        counts = {}
+        for use_geometry in (True, False):
+            for use_photometry in (True, False):
+                for variant in tb.CNN_VARIANTS:
+                    spec = tb.fixed_mask_spec(variant, use_geometry=use_geometry,
+                                              use_nac_photometry=use_photometry)
+                    model = tb.TinyCNN(in_channels=len(spec["channels"]),
+                                       n_scalars=len(spec["scalars"]))
+                    out = model(torch.zeros(2, len(spec["channels"]), 16, 16),
+                                torch.zeros(2, len(spec["scalars"])))
+                    self.assertEqual(tuple(out.shape), (2, 4))
+                    counts[(variant, use_geometry, use_photometry)] = tb.parameter_count(model)["total"]
+        self.assertEqual(len(set(counts.values())), 1, counts)
+
+    def test_masked_channel_has_no_influence(self):
+        import torch
+        spec = tb.fixed_mask_spec("nac")                     # hides coarse_slope (index 2)
+        model, cache, rows, scalars = self._fixture()
+        result = self._result(model, spec, scalars)
+        device = torch.device("cpu")
+        f1, s1 = tb.predict_variant(result, rows, cache, spec["channels"], 2, device)
+        mutated = {k: v.copy() for k, v in cache.items()}
+        for value in mutated.values():
+            value[2] = 0.0
+        f2, s2 = tb.predict_variant(result, rows, mutated, spec["channels"], 2, device)
+        np.testing.assert_allclose(f1, f2, atol=1e-6)
+        np.testing.assert_allclose(s1, s2, atol=1e-6)
+
+    def test_visible_channel_does_influence_output(self):
+        import torch
+        spec = tb.fixed_mask_spec("nac")
+        model, cache, rows, scalars = self._fixture()
+        result = self._result(model, spec, scalars)
+        device = torch.device("cpu")
+        f1, _ = tb.predict_variant(result, rows, cache, spec["channels"], 2, device)
+        mutated = {k: v.copy() for k, v in cache.items()}
+        for value in mutated.values():
+            value[0] = np.clip(value[0].astype(np.float32) + 0.5, 0, 1)
+        f2, _ = tb.predict_variant(result, rows, mutated, spec["channels"], 2, device)
+        self.assertFalse(np.allclose(f1, f2, atol=1e-6))
+
+    def test_masked_scalars_have_no_influence(self):
+        import torch
+        spec = tb.fixed_mask_spec("coarse_grid")             # hides NAC scalars
+        model, cache, rows, scalars = self._fixture()
+        result = self._result(model, spec, scalars)
+        device = torch.device("cpu")
+        f1, _ = tb.predict_variant(result, rows, cache, spec["channels"], 2, device)
+        mutated = scalars.copy()
+        for name in tb.NAC_SCALARS:
+            mutated[name] = mutated[name] + 5.0
+        result2 = self._result(model, spec, mutated)
+        f2, _ = tb.predict_variant(result2, rows, cache, spec["channels"], 2, device)
+        np.testing.assert_allclose(f1, f2, atol=1e-6)
+        # Geometry scalars are visible for coarse_grid, so changing them must matter.
+        mutated_geo = scalars.copy()
+        for name in tb.GEOMETRY_SCALARS:
+            mutated_geo[name] = mutated_geo[name] + 5.0
+        f3, _ = tb.predict_variant(self._result(model, spec, mutated_geo), rows, cache,
+                                   spec["channels"], 2, device)
+        self.assertFalse(np.allclose(f1, f3, atol=1e-6))
+
+    def test_no_photometry_keeps_texture_and_no_geometry_hides_geometry(self):
+        spec = tb.fixed_mask_spec("fusion", use_geometry=False, use_nac_photometry=False)
+        self.assertEqual(spec["masked_channels"], ["nac_contrast"])
+        self.assertIn("nac_texture", [name for name in tb.CHANNELS if name not in spec["masked_channels"]])
+        self.assertEqual(set(spec["masked_scalars"]), set(tb.NAC_SCALARS + tb.GEOMETRY_SCALARS))
+        spec_geo = tb.fixed_mask_spec("fusion", use_geometry=False, use_nac_photometry=True)
+        self.assertEqual(spec_geo["masked_channels"], [])
+        self.assertEqual(set(spec_geo["masked_scalars"]), set(tb.GEOMETRY_SCALARS))
+
+    def test_masks_survive_serialization(self):
+        import io
+        import torch
+        spec = tb.fixed_mask_spec("coarse_grid")
+        model, cache, rows, scalars = self._fixture(seed=7)
+        result = self._result(model, spec, scalars)
+        device = torch.device("cpu")
+        f1, s1 = tb.predict_variant(result, rows, cache, spec["channels"], 2, device)
+        buffer = io.BytesIO()
+        torch.save(model.state_dict(), buffer)
+        buffer.seek(0)
+        clone = tb.TinyCNN(in_channels=len(spec["channels"]), n_scalars=len(spec["scalars"]))
+        clone.load_state_dict(torch.load(buffer, map_location="cpu"))
+        f2, s2 = tb.predict_variant(self._result(clone, spec, scalars), rows, cache,
+                                    spec["channels"], 2, device)
+        np.testing.assert_allclose(f1, f2, atol=1e-6)
+        np.testing.assert_allclose(s1, s2, atol=1e-6)
+
+    def test_one_epoch_synthetic_smoke_applies_masks(self):
+        import argparse
+        import torch
+        spec = tb.fixed_mask_spec("nac")
+        model, cache, rows, scalars = self._fixture(seed=3)
+        data = pd.DataFrame({
+            "sample_id": ["s0", "s1", "s2"],
+            "split": ["train", "train", "val"],
+            "slope3m_g10": [0.0, 0.5, 0.1],
+            "slope3m_g15": [0.0, 0.2, 0.0],
+        })
+        args = argparse.Namespace(seed=3, epochs=1, patience=1, batch=2, lr=1e-2,
+                                  augment=False, verbose=False)
+        device = torch.device("cpu")
+        trained = tb.train_variant(cache, data, args, device, spec["channels"],
+                                   scalar_table=scalars, scalar_columns=spec["scalars"],
+                                   channel_mask=spec["channel_mask"],
+                                   scalar_mask=spec["scalar_mask"])
+        self.assertIn("parameters", trained)
+        val_rows = data[data["split"] == "val"]
+        f1, s1 = tb.predict_variant(trained, val_rows, cache, spec["channels"], 2, device)
+        mutated = {k: v.copy() for k, v in cache.items()}
+        for value in mutated.values():
+            value[2] = 0.0
+        f2, s2 = tb.predict_variant(trained, val_rows, mutated, spec["channels"], 2, device)
+        np.testing.assert_allclose(f1, f2, atol=1e-6)
+        self.assertEqual(tuple(s1.shape), (1, 2))
+
+
 class TestCoarseFeatures(unittest.TestCase):
     def test_feature_list_present_in_hydrated_labels(self):
         path = ROOT / "outputs" / "labels_hydrated.csv"

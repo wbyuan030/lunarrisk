@@ -98,6 +98,53 @@ VARIANT_SCALARS = {
 }
 
 
+ALL_SCALARS = NAC_SCALARS + GEOMETRY_SCALARS
+
+
+def fixed_mask_spec(variant: str, *, use_geometry: bool = True,
+                    use_nac_photometry: bool = True) -> dict:
+    """Equal-capacity ablation: same 3-channel input and full scalar head for every variant.
+
+    Missing modalities are multiplied by 0 (the train-standardised neutral value), so the
+    parameter count never changes. ``legacy`` mode instead drops channels/scalars, which
+    changes capacity and must not be interpreted as an information-theoretic comparison.
+    """
+    if variant not in CNN_VARIANTS:
+        raise KeyError(variant)
+    channel_mask = [1.0] * len(CHANNELS)
+    scalar_mask = {name: 1.0 for name in ALL_SCALARS}
+    if variant == "nac":
+        channel_mask[2] = 0.0                       # coarse slope grid hidden
+    elif variant == "coarse_grid":
+        channel_mask[0] = 0.0                       # NAC contrast hidden
+        channel_mask[1] = 0.0                       # NAC texture hidden
+        for name in NAC_SCALARS:
+            scalar_mask[name] = 0.0
+    if not use_nac_photometry:
+        channel_mask[0] = 0.0                       # contrast channel hidden
+        for name in NAC_SCALARS:
+            scalar_mask[name] = 0.0                 # photometry scalars hidden
+    if not use_geometry:
+        for name in GEOMETRY_SCALARS:
+            scalar_mask[name] = 0.0
+    masked_channels = [CHANNELS[i] for i, value in enumerate(channel_mask) if value == 0.0]
+    masked_scalars = [name for name, value in scalar_mask.items() if value == 0.0]
+    return {
+        "channels": tuple(range(len(CHANNELS))),
+        "scalars": ALL_SCALARS,
+        "channel_mask": tuple(channel_mask),
+        "scalar_mask": tuple(scalar_mask[name] for name in ALL_SCALARS),
+        "masked_channels": masked_channels,
+        "masked_scalars": masked_scalars,
+    }
+
+
+def parameter_count(model: nn.Module) -> dict:
+    total = int(sum(p.numel() for p in model.parameters()))
+    trainable = int(sum(p.numel() for p in model.parameters() if p.requires_grad))
+    return {"total": total, "trainable": trainable}
+
+
 def ablation_features(variant: str, *, use_geometry: bool = True,
                       use_nac_photometry: bool = True) -> tuple[tuple[int, ...], tuple[str, ...]]:
     """Select a paired ablation without changing the cached input or global model specs.
@@ -317,7 +364,9 @@ def scalar_tensor(ids: list[str], table: pd.DataFrame | None, columns: tuple[str
 
 def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, ...],
                   scalar_table: pd.DataFrame | None = None,
-                  scalar_columns: tuple[str, ...] = ()) -> dict:
+                  scalar_columns: tuple[str, ...] = (),
+                  channel_mask: tuple[float, ...] | None = None,
+                  scalar_mask: tuple[float, ...] | None = None) -> dict:
     train_rows = data[data["split"] == "train"].reset_index(drop=True)
     val_rows = data[data["split"] == "val"].reset_index(drop=True)
     y_train = train_rows[["slope3m_g10", "slope3m_g15"]].to_numpy(dtype=np.float32)
@@ -332,6 +381,19 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
     model = TinyCNN(in_channels=len(channels), n_scalars=len(scalar_columns)).to(device)
+    channel_mask_t = (torch.tensor(channel_mask, dtype=torch.float32, device=device).view(1, -1, 1, 1)
+                      if channel_mask is not None else None)
+    scalar_mask_t = (torch.tensor(scalar_mask, dtype=torch.float32, device=device).view(1, -1)
+                     if scalar_mask is not None else None)
+
+    def prepared(ids):
+        x = batch_tensor(ids, cache, device, channels)
+        scalars = scalar_tensor(ids, scalar_table, scalar_columns, device)
+        if channel_mask_t is not None:
+            x = x * channel_mask_t
+        if scalar_mask_t is not None and scalars is not None:
+            scalars = scalars * scalar_mask_t
+        return x, scalars
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=1e-4)
     mse, bce = nn.MSELoss(), nn.BCEWithLogitsLoss()
 
@@ -341,8 +403,8 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
         with torch.no_grad():
             for start in range(0, len(rows), args.batch):
                 ids = rows["sample_id"].iloc[start:start + args.batch].tolist()
-                outputs.append(model(batch_tensor(ids, cache, device, channels),
-                                     scalar_tensor(ids, scalar_table, scalar_columns, device)).cpu().numpy())
+                x, scalars = prepared(ids)
+                outputs.append(model(x, scalars).cpu().numpy())
         out = np.concatenate(outputs)
         return 1 / (1 + np.exp(-out[:, :2])), out[:, 2:4]
 
@@ -355,8 +417,7 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
         for start in range(0, len(order), args.batch):
             index = order[start:start + args.batch]
             ids = train_rows["sample_id"].iloc[index].tolist()
-            x = batch_tensor(ids, cache, device, channels)
-            scalars = scalar_tensor(ids, scalar_table, scalar_columns, device)
+            x, scalars = prepared(ids)
             if args.augment:
                 if rng.random() < 0.5:
                     x = torch.flip(x, dims=[3])
@@ -388,20 +449,33 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
     model.load_state_dict(best["state"])
     return {"model": model, "history": history, "best_epoch": best["epoch"],
             "best_val_mae": best["val_mae"], "seed": seed, "channels": channels,
-            "scalar_table": scalar_table, "scalar_columns": scalar_columns}
+            "scalar_table": scalar_table, "scalar_columns": scalar_columns,
+            "channel_mask": channel_mask, "scalar_mask": scalar_mask,
+            "parameters": parameter_count(model)}
 
 
 def predict_variant(result, rows, cache, channels, batch, device) -> tuple[np.ndarray, np.ndarray]:
     model = result["model"]
     scalar_table = result.get("scalar_table")
     scalar_columns = result.get("scalar_columns", ())
+    channel_mask = result.get("channel_mask")
+    scalar_mask = result.get("scalar_mask")
+    channel_mask_t = (torch.tensor(channel_mask, dtype=torch.float32, device=device).view(1, -1, 1, 1)
+                      if channel_mask is not None else None)
+    scalar_mask_t = (torch.tensor(scalar_mask, dtype=torch.float32, device=device).view(1, -1)
+                     if scalar_mask is not None else None)
     model.eval()
     outputs = []
     with torch.no_grad():
         for start in range(0, len(rows), batch):
             ids = rows["sample_id"].iloc[start:start + batch].tolist()
-            outputs.append(model(batch_tensor(ids, cache, device, channels),
-                                 scalar_tensor(ids, scalar_table, scalar_columns, device)).cpu().numpy())
+            x = batch_tensor(ids, cache, device, channels)
+            scalars = scalar_tensor(ids, scalar_table, scalar_columns, device)
+            if channel_mask_t is not None:
+                x = x * channel_mask_t
+            if scalar_mask_t is not None and scalars is not None:
+                scalars = scalars * scalar_mask_t
+            outputs.append(model(x, scalars).cpu().numpy())
     out = np.concatenate(outputs)
     return 1 / (1 + np.exp(-out[:, :2])), out[:, 2:4]
 
@@ -657,6 +731,8 @@ def rule_values(frame: pd.DataFrame) -> dict:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--labels", type=Path, default=Path("outputs/labels_hydrated.csv"))
+    parser.add_argument("--manifest", type=Path, default=Path("outputs/manifest_100k_final.parquet"),
+                        help="manifest used for provenance; labels must derive from it")
     parser.add_argument("--cache", type=Path, default=Path("outputs/cache_v3.npz"))
     parser.add_argument("--out", type=Path, default=Path("outputs/baseline"))
     parser.add_argument("--size", type=int, default=128)
@@ -677,6 +753,9 @@ def main(argv=None) -> int:
     parser.add_argument("--min-nac-valid", type=float, default=0.99,
                         help="minimum finite fraction of the aligned NAC layer")
     parser.add_argument("--variants", default="nac,coarse_grid,fusion")
+    parser.add_argument("--ablation-mode", choices=("legacy", "fixed-mask"), default="legacy",
+                        help="legacy drops channels/scalars (capacity changes); fixed-mask keeps "
+                             "every variant at identical capacity and zeros the hidden inputs")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
     if args.augment and not args.no_geometry:
@@ -750,6 +829,7 @@ def main(argv=None) -> int:
                                     else "no spatial transforms; solar azimuth unchanged"),
             "ablation": {"use_geometry": not args.no_geometry,
                          "use_nac_photometry": not args.no_nac_photometry},
+            "ablation_mode": args.ablation_mode,
             "channels": list(CHANNELS),
             "variant_channels": {
                 k: [CHANNELS[c] for c in ablation_features(
@@ -762,6 +842,17 @@ def main(argv=None) -> int:
                     k, use_geometry=not args.no_geometry,
                     use_nac_photometry=not args.no_nac_photometry)[1])
                 for k in CNN_VARIANTS
+            },
+            "fixed_mask_specs": {
+                k: fixed_mask_spec(k, use_geometry=not args.no_geometry,
+                                   use_nac_photometry=not args.no_nac_photometry)
+                for k in CNN_VARIANTS
+            } if args.ablation_mode == "fixed-mask" else {},
+            "architecture": {
+                "name": "TinyCNN",
+                "in_channels": len(CHANNELS),
+                "n_scalars": len(ALL_SCALARS),
+                "outputs": 4,
             },
             "scalar_scaling": "StandardScaler fitted on the train split only",
             "calibration": "Platt scaling fitted on the cal split, applied to cnn_* probabilities",
@@ -861,13 +952,23 @@ def main(argv=None) -> int:
     if unknown:
         raise SystemExit(f"unknown variants: {unknown}; known: {list(CNN_VARIANTS)}")
     for variant in variant_names:
-        channels, columns = ablation_features(
-            variant, use_geometry=not args.no_geometry,
-            use_nac_photometry=not args.no_nac_photometry)
-        print(f"training cnn_{variant}: channels {[CHANNELS[c] for c in channels]}, "
-              f"scalars {list(columns)}")
+        if args.ablation_mode == "fixed-mask":
+            spec = fixed_mask_spec(variant, use_geometry=not args.no_geometry,
+                                   use_nac_photometry=not args.no_nac_photometry)
+            channels, columns = spec["channels"], spec["scalars"]
+            channel_mask, scalar_mask = spec["channel_mask"], spec["scalar_mask"]
+        else:
+            channels, columns = ablation_features(
+                variant, use_geometry=not args.no_geometry,
+                use_nac_photometry=not args.no_nac_photometry)
+            channel_mask = scalar_mask = None
+        print(f"training cnn_{variant} [{args.ablation_mode}]: "
+              f"channels {[CHANNELS[c] for c in channels]}, scalars {list(columns)}"
+              + (f", masked channels {spec['masked_channels']}, masked scalars {spec['masked_scalars']}"
+                 if channel_mask is not None else ""))
         trained = train_variant(cache, data, args, device, channels,
-                                scalar_table=scalar_table_scaled, scalar_columns=columns)
+                                scalar_table=scalar_table_scaled, scalar_columns=columns,
+                                channel_mask=channel_mask, scalar_mask=scalar_mask)
         test_fractions, test_scores = predict_variant(trained, test_rows, cache, channels, args.batch, device)
         cal_fractions, cal_scores = predict_variant(trained, cal_rows, cache, channels, args.batch, device)
         payload = evaluate_all_rules(
@@ -878,6 +979,11 @@ def main(argv=None) -> int:
         results["models"][f"cnn_{variant}"] = {
             "channels": [CHANNELS[c] for c in channels],
             "scalars": list(columns),
+            "channel_mask": list(channel_mask) if channel_mask is not None else None,
+            "scalar_mask": list(scalar_mask) if scalar_mask is not None else None,
+            "masked_channels": (spec["masked_channels"] if args.ablation_mode == "fixed-mask" else []),
+            "masked_scalars": (spec["masked_scalars"] if args.ablation_mode == "fixed-mask" else []),
+            "parameters": trained["parameters"],
             "seed": trained["seed"],
             "best_epoch": trained["best_epoch"],
             "best_val_mae": trained["best_val_mae"],
@@ -886,6 +992,13 @@ def main(argv=None) -> int:
             "_predictions": {"fractions": test_fractions, "scores": test_scores},
             "device": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
         }
+
+    if args.ablation_mode == "fixed-mask":
+        counts = {name: model["parameters"]["total"]
+                  for name, model in results["models"].items() if name.startswith("cnn_")}
+        if len(set(counts.values())) > 1:
+            raise SystemExit(f"fixed-mask variants must share the parameter count, got {counts}")
+        results["protocol"]["fixed_mask_parameter_counts"] = counts
 
     # ---- Grouped bootstrap on the primary rule ----
     target, threshold = RULES[PRIMARY_RULE]

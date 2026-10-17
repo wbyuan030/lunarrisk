@@ -224,3 +224,30 @@ python3 scripts/compare_ablations.py --out outputs/p18_recheck/cross_config
 ```
 
 注意：`outputs/` 与 `data/` 被 `.gitignore` 排除；`protocols/` 入库。**V2 冻结后不得因结果好坏更换站点。**
+
+## L. P1.8 续作：fixed-mask 消融与严格 held-out 调研（2026-10-17）
+
+```bash
+# P18-04a：等容量消融（每变体 3 通道 + 完整标量 head，缺失模态置 0）
+python3 scripts/train_baseline.py --ablation-mode fixed-mask --seed 42 --no-augment \
+  --out outputs/p18_full_seed42
+# 消融组合：--no-geometry / --no-nac-photometry / 两者
+# 合法增强对照（仅无几何条件）：--augment --no-geometry
+for config in p18_full p18_no_geo p18_no_photo p18_no_both; do
+  python3 scripts/aggregate_seeds.py --pattern "outputs/${config}_seed{seed}" --out "outputs/${config}_summary"
+done
+python3 scripts/compare_ablations.py --configs p18_full,p18_no_geo,p18_no_photo,p18_no_both \
+  --reference p18_full --pattern "outputs/{config}_seed{seed}" --out outputs/p18_fixed_mask_summary
+
+# P18-05b：语料可行性（1M 索引 + LROC NAC DTM 全量清单）
+python3 scripts/audit_heldout_sources.py     # 1M release 是否有未触及的组
+python3 scripts/audit_lroc_dtm.py            # LROC DTM 档案与 SomBench 产品重叠 + 空间隔离
+```
+
+约束与坑：
+
+- `fixed-mask` 与 `legacy` 的指标**不可混比**：聚合脚本会拒绝混用模式或不同参数量的运行。
+- 同配置重复运行 MAE 有 ~0.005 的运行间波动（MIOpen）；小于该值的差异不要解释。
+- LROC DTM 清单 4.3 MB，来自 PDS；`pyshp` 已加入 `requirements-extra.txt`。
+- 已冻结的 `protocols/heldout_v2_product_level_*` 不得重写；其 `exclusions` 字段的历史勘误见
+  `reports/p1_8_heldout_protocol.md` §7。

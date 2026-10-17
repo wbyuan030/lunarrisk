@@ -83,7 +83,7 @@ def load_configs(pattern: str, configs: list[str], seeds: list[int]) -> tuple[di
 COMPARABLE_PROTOCOL = (
     "input_size", "augment", "augmentation_policy", "epochs_max", "patience", "batch", "lr",
     "min_nac_valid", "channels", "scalar_scaling", "calibration", "rules", "composite_rule",
-    "contrast_channel",
+    "contrast_channel", "ablation_mode",
 )
 
 
@@ -127,10 +127,23 @@ def assert_config_protocol_consistency(metrics: dict, ablation: dict, configs: l
                     raise SystemExit(f"{config}/seed{seed} variant_scalars for {variant} do not "
                                      "match the recorded ablation flags")
             audit["configs"].setdefault(config, set()).add(json.dumps(protocol.get("ablation"), sort_keys=True))
+            if protocol.get("ablation_mode") == "fixed-mask":
+                counts = {name: model["parameters"]["total"]
+                          for name, model in metrics[(config, seed)]["models"].items()
+                          if name.startswith("cnn_")}
+                if len(set(counts.values())) > 1:
+                    raise SystemExit(f"{config}/seed{seed} fixed-mask variants differ in capacity: {counts}")
+                audit.setdefault("parameter_counts", {})[f"{config}/{seed}"] = counts
     for config, seen in audit["configs"].items():
         if len(seen) > 1:
             raise SystemExit(f"{config} mixes several ablation flags across seeds: {sorted(seen)}")
         audit["configs"][config] = json.loads(next(iter(seen)))
+    counts = audit.get("parameter_counts")
+    if counts:
+        unique = {json.dumps(value, sort_keys=True) for value in counts.values()}
+        if len(unique) > 1:
+            raise SystemExit(f"fixed-mask capacity differs between configs/seeds: {counts}")
+        audit["parameter_counts_shared"] = next(iter(unique))
     audit["missing"] = sorted(set(audit["missing"]))
     audit["provenance"] = reference.get("provenance", "UNKNOWN")
     return audit

@@ -96,3 +96,28 @@
 - 未使用 4×4090、付费云、LFM/Qwen/联合后验。
 - 未修改原始 NAC/DTM 数据；未覆盖 `outputs/labels_hydrated.csv`（dry-run 在副本上进行）。
 - 未用旧 `development_test` 挑选任何新模型；未读取 V2 的任何模型指标。
+
+## 追加：P18-04a / P18-04b / P18-05b（2026-10-17，第二轮）
+
+代码状态：P18-04a 提交后（fixed-mask）。测试：**163/163 PASS**（新增 fixed-mask 7 项 + 聚合守卫 8 项）。
+
+| 任务 | 状态 | 证据 |
+|---|---|---|
+| P18-04a fixed-mask + 单测 + smoke | **PASS** | 三变体参数量均 98,464；掩码不变量 7 项；1 epoch smoke |
+| P18-04b 受控 3 seed 消融 | **PASS** | 12 次 + 3 次合法增强对照，431 s；见 `reports/p1_8_fixed_mask.md` |
+| P18-05b 新语料调研 | **GO_STRICT_OOD** | LROC NAC DTM 档案 143 景严格独立候选；见 `reports/p1_8_new_heldout_sources.md` |
+
+关键数字：
+
+- fixed-mask 下 `cnn_fusion − cnn_coarse_grid`：full ΔMAE **+0.0043 [−0.0018, +0.0116]**（不排除 0）；
+  `no_photo` **−0.0142 [−0.0217, −0.0062]**；`no_both` **−0.0147 [−0.0225, −0.0059]**。
+  Brier 在所有配置均无排除 0 的增量。
+- 同配置重复运行的 MAE 地板约 **0.005**（融合/粗坡度），`cnn_nac` 约 0.035 → 上述 0.014–0.019 的增量
+  约为地板的 3–4 倍，属真实但有限。
+- 合法增强（`--no-geometry --augment`）：fusion MAE 0.0665 → **0.0561**，改善超过噪声地板 →
+  P1.6 的较好结果不能仅归因于"增强伪影"，合法增强可能有真实正则化收益。
+- 1M release：999,808 Tile / 1,095 产品 / **268 组，全部被 760 Tile 触及** → 语料内无法构造严格独立组。
+- LROC NAC DTM：662 景中 188 景仅用未使用产品，143 景同时空间隔离（≥10 km + 覆盖半径），
+  总覆盖 68,126 km²，分辨率 2–7 m，`images` 字段直接给出立体源 ID。
+
+未使用付费资源；未触碰已冻结的 `protocols/heldout_v2_product_level_*`；未在 143 景候选上下载或评估任何模型。

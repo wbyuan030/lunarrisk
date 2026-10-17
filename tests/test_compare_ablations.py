@@ -140,6 +140,7 @@ def protocol(seed=42, ablation=None, provenance=None, channels=None, scalars=Non
         "rules": {"g10_gt_0.05": {"target": "slope3m_g10", "threshold": 0.05}},
         "composite_rule": "rule",
         "contrast_channel": "formula",
+        "ablation_mode": "legacy",
         "ablation": ablation or {"use_geometry": True, "use_nac_photometry": True},
         "variant_channels": channels or {
             variant: [ca.tb.CHANNELS[c] for c in ca.tb.ablation_features(
@@ -155,9 +156,15 @@ def protocol(seed=42, ablation=None, provenance=None, channels=None, scalars=Non
     }
 
 
-def metrics_payload(seed=42, ablation=None, provenance=None, channels=None, scalars=None):
+def metrics_payload(seed=42, ablation=None, provenance=None, channels=None, scalars=None,
+                    counts=None):
     values = protocol(seed, ablation, provenance, channels, scalars)
-    return {"protocol": values}
+    counts = counts or {"cnn_nac": 100, "cnn_coarse_grid": 100, "cnn_fusion": 100}
+    models = {name: {"parameters": {"total": count}} for name, count in counts.items()}
+    for name in ca.MODELS:
+        models.setdefault(name, {})["test"] = {
+            rule: {"metrics": {}, "metrics_raw": {}} for rule in ca.tb.RULES}
+    return {"protocol": values, "models": models}
 
 
 class TestProtocolConsistency(unittest.TestCase):
@@ -198,6 +205,26 @@ class TestProtocolConsistency(unittest.TestCase):
         metrics = {("a", 42): metrics_payload(42, flags, channels=wrong)}
         with self.assertRaises(SystemExit):
             ca.assert_config_protocol_consistency(metrics, ablation, ["a"], [42])
+
+    def test_mixing_legacy_and_fixed_mask_is_fatal(self):
+        ablation = {"a": {"use_geometry": True, "use_nac_photometry": True},
+                    "b": {"use_geometry": True, "use_nac_photometry": True}}
+        metrics = {("a", 42): metrics_payload(42, ablation["a"]),
+                   ("b", 42): metrics_payload(42, ablation["b"])}
+        metrics[("b", 42)]["protocol"]["ablation_mode"] = "fixed-mask"
+        with self.assertRaises(SystemExit):
+            ca.assert_config_protocol_consistency(metrics, ablation, ["a", "b"], [42])
+
+    def test_fixed_mask_capacity_must_match_across_configs(self):
+        ablation = {"a": {"use_geometry": True, "use_nac_photometry": True},
+                    "b": {"use_geometry": False, "use_nac_photometry": True}}
+        metrics = {("a", 42): metrics_payload(42, ablation["a"]),
+                   ("b", 42): metrics_payload(42, ablation["b"])}
+        for key in metrics:
+            metrics[key]["protocol"]["ablation_mode"] = "fixed-mask"
+        metrics[("b", 42)]["models"]["cnn_fusion"]["parameters"]["total"] = 90
+        with self.assertRaises(SystemExit):
+            ca.assert_config_protocol_consistency(metrics, ablation, ["a", "b"], [42])
 
     def test_mixed_ablation_flags_within_a_config_are_fatal(self):
         metrics = {
