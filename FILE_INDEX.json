@@ -1,6 +1,7 @@
 {
-  "status": "p1_6_review_response_2026-10-17",
+  "status": "p1_7_ablation_run_2026-10-17",
   "date": "2026-10-17",
+  "code_state_at_run": "e17efdf",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
   "files": [
     {
@@ -10,8 +11,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 2957,
-      "sha256": "45780154514a4662594934ebf0afd51f91b7e3925f360055d584b739201747db"
+      "bytes": 4237,
+      "sha256": "42e283438ee5e27db734daed311a9b4788384d06a31855aff15bad79871b4d99"
     },
     {
       "path": "CODING_AGENT_PROMPT.md",
@@ -25,8 +26,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5861,
-      "sha256": "3a161ab3f3a941f097c54a05147a98d739671227d9f44eca70ba0463c715b36e"
+      "bytes": 6718,
+      "sha256": "18f00042d200f11a0e247fe34c15c40dfe315059042aab3ba6cd8f9fff43cfc0"
     },
     {
       "path": "START_HERE.md",
@@ -47,6 +48,11 @@
       "path": "docs/P1_5_NEXT_STEPS.md",
       "bytes": 7127,
       "sha256": "24a43f574be9942b2f012932c6e32458140abfc091e71aad6fb8adf8fb240fbf"
+    },
+    {
+      "path": "docs/P1_7_NEXT_STEPS.md",
+      "bytes": 9100,
+      "sha256": "0589b4a6dbec16f26597f9e15d8a111466a7a51c118bbe056a7b45dbc1138658"
     },
     {
       "path": "docs/RUNBOOK.md",
@@ -109,6 +115,11 @@
       "sha256": "34993fec8a6a06567a61843dec02f491d32170274efaaff65e15c3e7a6211351"
     },
     {
+      "path": "reports/p1_7_ablation.md",
+      "bytes": 8642,
+      "sha256": "815891469ad311d0580c253d16006aef5eabe28855f787abe4a51f1df3552a70"
+    },
+    {
       "path": "reports/p1_baseline.md",
       "bytes": 23817,
       "sha256": "4627e9c25eec4e68fdbff6a6011fb2785086040604e7ee238ac7b65a632e1f3b"
@@ -130,13 +141,18 @@
     },
     {
       "path": "scripts/aggregate_seeds.py",
-      "bytes": 18662,
-      "sha256": "f0a1283741cbcfde8a44ecf370ef1b9bad8bdd41ccb1eeaa341f4cebf11d6d0c"
+      "bytes": 21177,
+      "sha256": "c424c8c77a7383e8b27e1430fdb1547458d7f06a0ba8ffff5acdc729aabccf60"
     },
     {
       "path": "scripts/build_manifest.py",
       "bytes": 15805,
       "sha256": "17dab9df6a153ac798e1de748b71edb25c96e1da274e0bf6a6a8ae8098d2e64b"
+    },
+    {
+      "path": "scripts/compare_ablations.py",
+      "bytes": 13759,
+      "sha256": "cf23db5e250a040d0f6fd7b1c2d8ad421e45f439d885e291e1ea6b9a3561c27b"
     },
     {
       "path": "scripts/crater_pilot.py",
@@ -180,18 +196,23 @@
     },
     {
       "path": "scripts/train_baseline.py",
-      "bytes": 46622,
-      "sha256": "3232705bcb796cd0ed522727ddea621127a95992b1191bbbe21d601788903a2e"
+      "bytes": 50061,
+      "sha256": "d3361740c4512f85fd44eeb282bb21083a1706aacad6230114aaaeb8a8e791b4"
     },
     {
       "path": "tests/test_aggregate_seeds.py",
-      "bytes": 4231,
-      "sha256": "cd1505d57db6a108727f6248c4c385b6fc91aadfefec7e7860c272b84ccd9749"
+      "bytes": 6113,
+      "sha256": "ddad1badbf64f2979739630f45e1c163f5d0f31296512b71e042719c0e97fde8"
     },
     {
       "path": "tests/test_build_manifest.py",
       "bytes": 5213,
       "sha256": "45015a9686d2a7e75562745f0cdcaec2058ef64c252689658f632c6c707f4096"
+    },
+    {
+      "path": "tests/test_compare_ablations.py",
+      "bytes": 6737,
+      "sha256": "d1758a62fd87caa086efe6081fd3ca7a20aa93e3a7f4945edd75b792aae713b9"
     },
     {
       "path": "tests/test_finalize_split.py",
@@ -205,8 +226,8 @@
     },
     {
       "path": "tests/test_train_baseline.py",
-      "bytes": 19765,
-      "sha256": "55512adc198f2a07d50eba5f4b4afb3be89843502f4fb3eda10114c85d5a524b"
+      "bytes": 22581,
+      "sha256": "a6ec55aba48d3e990dad38deb0f0fa232ce8b99986808101bb56037204ca3c7c"
     }
   ]
 }
