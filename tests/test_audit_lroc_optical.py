@@ -34,6 +34,30 @@ FULL_HTML = f'''<html><body>
 </body></html>'''
 
 
+SCENE_DTM_ONLY = '<html><body><a href="/lroc/view_rdr_product/NAC_DTM_ALPHA">self</a></body></html>'
+SCENE_WITH_SIBLINGS = ('<html><body>'
+                       '<a href="/lroc/view_rdr_product/NAC_DTM_BETA">self</a>'
+                       '<a href="/lroc/view_rdr_product/NAC_DTM_BETA_MOSAIC_200CM">mosaic</a>'
+                       '<a href="/lroc/view_rdr_product/NAC_DTM_BETA_SHADE">shade</a>'
+                       '<a href="/lroc/view_rdr_product/NAC_DTM_BETA_E763N0085">quad</a>'
+                       '</body></html>')
+
+
+class TestSiblingDiscovery(unittest.TestCase):
+    def test_sibling_products_exclude_the_base_id(self):
+        products = optical.sibling_products(SCENE_WITH_SIBLINGS, "BETA")
+        self.assertEqual(products, ["NAC_DTM_BETA_E763N0085", "NAC_DTM_BETA_MOSAIC_200CM",
+                                    "NAC_DTM_BETA_SHADE"])
+
+    def test_sibling_classification(self):
+        groups = optical.classify_siblings(
+            optical.sibling_products(SCENE_WITH_SIBLINGS, "BETA"), "BETA")
+        self.assertEqual(groups["optical_ids"], ["NAC_DTM_BETA_MOSAIC_200CM"])
+        self.assertEqual(groups["derived_ids"], ["NAC_DTM_BETA_SHADE"])
+        self.assertEqual(groups["quad_ids"], ["NAC_DTM_BETA_E763N0085"])
+        self.assertEqual(optical.classify_siblings([], "ALPHA")["optical_ids"], [])
+
+
 class TestLinkHandling(unittest.TestCase):
     def test_links_are_extracted_deduplicated_and_sorted(self):
         html = FULL_HTML + FULL_HTML.replace("BETA", "BETA")
@@ -70,6 +94,10 @@ class TestMainWithCache(unittest.TestCase):
             (cache / "NAC_DTM_ALPHA.html").write_text(DTM_ONLY_HTML, encoding="utf-8")
             (cache / "NAC_DTM_BETA.html").write_text(FULL_HTML, encoding="utf-8")
             (cache / "NAC_DTM_GAMMA.html").write_text("<html>no links here</html>", encoding="utf-8")
+            (cache / "scene_NAC_DTM_ALPHA.html").write_text(SCENE_DTM_ONLY, encoding="utf-8")
+            (cache / "scene_NAC_DTM_BETA.html").write_text(SCENE_WITH_SIBLINGS, encoding="utf-8")
+            (cache / "scene_NAC_DTM_GAMMA.html").write_text(SCENE_DTM_ONLY, encoding="utf-8")
+            (cache / "scene_NAC_DTM_DELTA.html").write_text(SCENE_DTM_ONLY, encoding="utf-8")
             audit_csv = base / "audit.csv"
             pd.DataFrame([
                 {"DTM_name": "ALPHA", "source_disjoint": True, "footprint_disjoint": True},
@@ -78,15 +106,25 @@ class TestMainWithCache(unittest.TestCase):
                 {"DTM_name": "DELTA", "source_disjoint": True, "footprint_disjoint": False},
             ]).to_csv(audit_csv, index=False)
             out_csv, out_json = base / "out.csv", base / "out.json"
-            code = optical.main(["--audit", str(audit_csv), "--cache", str(cache),
-                                 "--out-csv", str(out_csv), "--out-json", str(out_json)])
+            code = optical.main(["--audit", str(audit_csv), "--cache", str(cache), "--scope", "passing",
+                                 "--no-head", "--out-csv", str(out_csv), "--out-json", str(out_json)])
             self.assertEqual(code, 0)
             frame = pd.read_csv(out_csv).set_index("DTM_name")
             self.assertEqual(set(frame.index), {"ALPHA", "BETA", "GAMMA"})  # DELTA excluded
             self.assertTrue(bool(frame.loc["BETA", "has_optical"]))
+            self.assertIn("NAC_DTM_BETA_MOSAIC_200CM", frame.loc["BETA", "optical_sibling_ids"])
+            self.assertEqual(frame.loc["BETA", "optical_verified"], "not_checked")
             self.assertFalse(bool(frame.loc["ALPHA", "has_optical"]))
             report = json.loads(out_json.read_text(encoding="utf-8"))
             self.assertEqual(report["audited_scenes"], 3)
+            self.assertEqual(report["scope"], "passing")
+
+            code = optical.main(["--audit", str(audit_csv), "--cache", str(cache), "--scope", "all",
+                                 "--no-head", "--out-csv", str(base / "all.csv"),
+                                 "--out-json", str(base / "all.json")])
+            self.assertEqual(code, 0)
+            all_report = json.loads((base / "all.json").read_text(encoding="utf-8"))
+            self.assertEqual(all_report["audited_scenes"], 4)  # includes the footprint-failing scene
             self.assertEqual(report["with_optical_product"], 1)
             self.assertEqual(report["with_dtm_product"], 2)
 

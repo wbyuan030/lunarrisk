@@ -8,3 +8,4 @@ netCDF4>=1.6
 h5netcdf>=1.3
 hdf5plugin>=4.1
 pyshp>=2.3  # LROC NAC DTM shapefile audit (scripts/audit_lroc_dtm.py)
+tifffile
