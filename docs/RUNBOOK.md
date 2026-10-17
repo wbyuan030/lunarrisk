@@ -121,3 +121,32 @@ python -m unittest discover -s tests -v
 ## H. 待以后处理
 
 长期代码设计见 `references/PROJECT_CONTEXT.md`，周末 4×4090 计算节点的 10GiB 磁盘保护和 Staging 见 `optional_gpuflow/` 的现有 MVP。**本次不修改 GPUFlow，不用四卡做 P0。**
+
+## I. P1 已落地脚本（2026-10-17 执行）
+
+P1 的报告见 `reports/p1_manifest.md` 与 `reports/p1_baseline.md`。脚本按顺序：
+
+```bash
+# 1) 100k 索引 → manifest（分组泄漏审计，不下载 payload）
+python3 scripts/build_manifest.py                     # 5 km 块分组
+python3 scripts/build_manifest.py --block-m 25000     # 分组敏感性
+
+# 2) 最终切分：train/cal/val/test + 10 km 缓冲（组级零重叠）
+python3 scripts/finalize_split.py
+
+# 3) 真实数据下载 + 物理标签（可 --resume 续跑）
+python3 scripts/hydrate_tiles.py --train 400 --cal 120 --val 120 --test 120 --workers 12 --resume
+
+# 4) 基线实验：constant / coarse_ridge / cnn_nac / cnn_coarse_grid / cnn_fusion
+python3 scripts/train_baseline.py
+python3 scripts/train_baseline.py --min-nac-valid 0 --out outputs/baseline_alltiles
+python3 scripts/plot_baseline.py
+```
+
+约定与坑：
+
+- `outputs/`、`data/` 被 `.gitignore` 排除；产物留在磁盘，报告里给出文件名与哈希。
+- `scripts/train_baseline.py` 的 `--min-nac-valid`（默认 0.99）会丢弃 NAC 层无效像素过多的极区 Tile；
+  被丢弃 Tile 的标签统计会写入 `metrics.json` 的 `nac_availability`，不要静默忽略。
+- 数据缓存为 `outputs/cache_v2.npz`（2 通道：NAC + 60 m 坡度）；布局变更时会自动重建。
+- 本机 MIOpen 存在轻微运行间不确定性（CNN MAE 变动约 0.007）；比较小差异要用多 seed 与组级 CI。

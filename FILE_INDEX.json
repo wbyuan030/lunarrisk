@@ -2,6 +2,7 @@
   "status": "p1_baseline_2026-10-17",
   "date": "2026-10-17",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
+  "artifacts_note": "outputs/ and data/ are gitignored; artifacts stay on disk",
   "files": [
     {
       "path": ".gitignore",
@@ -45,8 +46,8 @@
     },
     {
       "path": "docs/RUNBOOK.md",
-      "bytes": 5140,
-      "sha256": "1e7d3b736293a46b9d94b96843e45e3ff925de696458c8124d542e97abf2b090"
+      "bytes": 6609,
+      "sha256": "6f62825adacf0965ca0989399ba61867cfef7484fa92195dc78163fb2b3c853a"
     },
     {
       "path": "docs/TASKS.md",
