@@ -1,11 +1,11 @@
 # LunarRisk: RX 7900 XT First Experiments
 
-> **Current Coding Agent sprint (2026-10-17):** [P1.8 continuation — fixed-mask ablation + new independent-data audit](docs/P1_8_CONTINUE.md). Start with P18-04a and a public-source index audit; the old hydration/CSV/statistics fixes **already passed**.
+> **Active sprint (2026-10-17):** [P1.9 external LROC DTM heldout QA](docs/P1_9_HELDOUT_BUILD.md).
+> LROC index discovery is promising, but the earlier **143 supposedly strict OOD DTMs are provisional metadata candidates only**: source IDs and real polygon clearance were not fully verified. The equal-area-circle proof was invalid and is now withdrawn. See the [research erratum](reports/p1_8_new_heldout_sources.md).
 >
-> **Evidence:** [P1.8 progress](reports/p1_8_progress.md) reports 148 passing tests for P18-01/02/03; [heldout review](reports/p1_8_heldout_protocol.md) reports **BLOCKED** for strict group-disjoint V2 because all 272 groups were previously touched. The frozen 64-tile, 22-new-NAC-product candidate overlaps 4 previously used groups and is **not** strict geographic/source OOD. [P1.7 ablation](reports/p1_7_ablation.md) remains exploratory.
+> **Latest actual GPU experiments:** [P1.8 fixed-mask ablations](reports/p1_8_fixed_mask.md): 15 runs on RX 7900 XT, 163 tests reported passed, no proven Brier gain on the repeatedly viewed development test set.
+> Coding agents should begin with [AGENTS.md](AGENTS.md) → [P1.9 Gate 0/1](docs/P1_9_HELDOUT_BUILD.md) and leave the existing 64-tile product-only freeze unchanged.
 >
-> **Current decision:** proceed with fixed-parameter-count modality masking and a scientifically legal augmentation comparison on the development set. Preserve frozen V2 files and do not claim NAC increment or independent landing safety until external holdout evidence exists.
-
 **Historical P0 scaffold notes below (superseded by [AGENTS.md](AGENTS.md) and the current sprint).**
 
 **Status:** ready-to-run scaffold. The scripts are CPU-tested locally, **not validated on your ROCm host or on the complete lunar dataset**. They are designed to fail clearly when real inputs are missing; nothing silently substitutes synthetic lunar data.
