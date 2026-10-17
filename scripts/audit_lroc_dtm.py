@@ -24,6 +24,10 @@ from scipy.spatial import cKDTree
 LUNAR_RADIUS_KM = 1737.4
 PRODUCT_RE = re.compile(r"(M\d{9,10})(?!\d)", re.IGNORECASE)
 MENTION_RE = re.compile(r"M\d+", re.IGNORECASE)
+# Early (2009-2010) LROC NAC EDR IDs have nine digits; later ones have ten. Both are
+# legitimate, optionally followed by a camera/level suffix (L, R, LE, RE). The DBF really
+# contains two-letter suffixes (e.g. M1374407232LE), so a single optional letter is wrong.
+SOURCE_TOKEN_RE = re.compile(r"^M\d{9,10}(?:[LR]E?|E)?$", re.IGNORECASE)
 
 
 def normalise_products(images: str) -> list[str]:
@@ -31,10 +35,34 @@ def normalise_products(images: str) -> list[str]:
     return sorted({p.upper() for p in PRODUCT_RE.findall(str(images))})
 
 
+def source_tokens(images: str) -> list[str]:
+    return [token for token in re.split(r"[,;\s]+", str(images or "")) if token]
+
+
 def source_id_metadata_valid(images: str) -> bool:
-    """Require nonempty, well-formed DBF numeric IDs; README still required."""
-    mentions = MENTION_RE.findall(str(images or ""))
-    return bool(mentions) and all(len(m) in (10, 11) for m in mentions)
+    """Require a nonempty list of well-formed NAC EDR IDs; the README is still required.
+
+    Nine-digit legacy IDs are accepted: SomBench itself contains them (e.g. ``M189321511``).
+    """
+    tokens = source_tokens(images)
+    return bool(tokens) and all(SOURCE_TOKEN_RE.match(token) for token in tokens)
+
+
+def classify_source_field(images: str, field_size: int | None = None) -> str:
+    """Fail-closed classification of the DBF ``images`` field.
+
+    Returns ``OK`` / ``EMPTY`` / ``DBF_TRUNCATED`` (the DBF column is a fixed-width string
+    and long mosaic lists are cut mid-ID) / ``MALFORMED_TOKEN``.
+    """
+    raw = str(images or "")
+    tokens = source_tokens(raw)
+    if not tokens:
+        return "EMPTY"
+    if field_size is not None and len(raw) >= int(field_size):
+        return "DBF_TRUNCATED"
+    if not all(SOURCE_TOKEN_RE.match(token) for token in tokens):
+        return "MALFORMED_TOKEN"
+    return "OK"
 
 
 def unit_sphere(lat_deg, lon_deg) -> np.ndarray:
@@ -80,11 +108,14 @@ def main(argv=None) -> int:
 
     reader = shapefile.Reader(str(args.shapefile))
     fields = [field[0] for field in reader.fields[1:]]
+    image_field = next((field for field in reader.fields[1:] if field[0] == "images"), None)
+    image_field_size = int(image_field[2]) if image_field is not None else None
     records = []
     for index in range(len(reader)):
         row = reader.record(index).as_dict()
         raw_sources = row.get("images", "")
-        source_valid = source_id_metadata_valid(raw_sources)
+        source_status = classify_source_field(raw_sources, image_field_size)
+        source_valid = source_status == "OK"
         products = normalise_products(raw_sources) if source_valid else []
         vertex_radius = vertex_outer_radius_km(
             float(row.get("center_lat") or 0.0),
@@ -92,6 +123,7 @@ def main(argv=None) -> int:
             reader.shape(index).points,
         )
         records.append({
+            "source_status": source_status,
             "source_ids_nonempty_and_wellformed": source_valid,
             "vertex_outer_radius_km": vertex_radius,
             "dtm_name": str(row.get("DTM_NAME", "")),
@@ -154,6 +186,10 @@ def main(argv=None) -> int:
             "all_products_unseen": int(frame["all_products_unseen"].sum()),
             "empty_or_malformed_source_records": int(
                 (~frame["source_ids_nonempty_and_wellformed"]).sum()),
+            "source_status_counts": {
+                key: int(value) for key, value in frame["source_status"].value_counts().items()
+            },
+            "images_field_size": image_field_size,
             "missing_or_invalid_vertex_geometry": int(
                 frame["vertex_outer_radius_km"].isna().sum()),
             "any_product_unseen": int(frame["any_product_unseen"].sum()),

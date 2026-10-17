@@ -29,6 +29,10 @@ def frame(rows):
         "BOUNDS_YMAX": 512.0,
         "CENTER_LATITUDE": 0.0,
         "CENTER_LONGITUDE": 0.0,
+        "UPPER_LEFT_LONGITUDE": -0.01,
+        "UPPER_LEFT_LATITUDE": 0.01,
+        "LOWER_RIGHT_LONGITUDE": 0.0,
+        "LOWER_RIGHT_LATITUDE": 0.0,
         "INCIDENCE_ANGLE": 45.0,
         "EMISSION_ANGLE": 10.0,
         "PHASE_ANGLE": 40.0,
@@ -133,6 +137,13 @@ class TestManifest(unittest.TestCase):
         self.assertIsNone(other["nac_sha256"])
         self.assertEqual(other["co_registration_status"], "INDEX_BOUNDS_ONLY")
         self.assertEqual(manifest["geo_join_status"].unique().tolist(), ["GEO_JOIN_PENDING"])
+        # Per-zone LTM metres cannot be interpreted from the single index CRS string, so the
+        # manifest must carry geographic corners plus an explicit CRS-provenance flag.
+        for column in ("upper_left_lon", "upper_left_lat", "lower_right_lon", "lower_right_lat"):
+            self.assertIn(column, manifest.columns)
+        self.assertEqual(manifest["bounds_crs_status"].unique().tolist(),
+                         ["PER_ZONE_LTM_UNVERIFIED"])
+        self.assertAlmostEqual(row["upper_left_lat"], 0.01)
 
 
 if __name__ == "__main__":

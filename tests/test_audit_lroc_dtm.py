@@ -30,6 +30,41 @@ class TestSourceIDs(unittest.TestCase):
         for raw in ("M123", "M123456789012", "M1234567890 M123"):
             self.assertFalse(audit.source_id_metadata_valid(raw))
 
+    def test_nine_digit_legacy_ids_are_valid(self):
+        # SomBench itself contains nine-digit EDRs (e.g. M189321511); they are not malformed.
+        for raw in ("M189321511", "M160214633, M160221419", "M189321511R"):
+            self.assertTrue(audit.source_id_metadata_valid(raw), raw)
+        self.assertEqual(audit.normalise_products("M160214633, M160221419"),
+                         ["M160214633", "M160221419"])
+
+    def test_empty_and_malformed_tokens_are_classified(self):
+        self.assertEqual(audit.classify_source_field(""), "EMPTY")
+        self.assertEqual(audit.classify_source_field("  ,  "), "EMPTY")
+        self.assertEqual(audit.classify_source_field("M1, M2"), "MALFORMED_TOKEN")
+        self.assertEqual(audit.classify_source_field("no source IDs"), "MALFORMED_TOKEN")
+
+    def test_dbf_truncation_is_detected(self):
+        full = "M1136306535, M1136330937"
+        self.assertEqual(audit.classify_source_field(full, field_size=len(full)), "DBF_TRUNCATED")
+        self.assertEqual(audit.classify_source_field(full, field_size=255), "OK")
+        # A list cut mid-ID must never be treated as a complete source list.
+        self.assertEqual(audit.classify_source_field("M111856750, M127199795, M1120", 254),
+                         "MALFORMED_TOKEN")
+
+    def test_duplicate_ids_are_deduplicated(self):
+        raw = "M1267226882, M1267226882, M1136306535R"
+        self.assertEqual(audit.normalise_products(raw), ["M1136306535", "M1267226882"])
+
+    def test_two_letter_camera_level_suffixes_are_valid(self):
+        # Real DBF rows (CHANGE501, MALAPERT01) carry LE/RE suffixes.
+        for raw in ("M1374407232LE, M1374421274LE", "M139939938LE, M139946735RE"):
+            self.assertTrue(audit.source_id_metadata_valid(raw), raw)
+            self.assertEqual(audit.classify_source_field(raw), "OK")
+        self.assertEqual(audit.normalise_products("M1374407232LE, M1374421274LE"),
+                         ["M1374407232", "M1374421274"])
+        for raw in ("M1234567890LEE", "M1234567890X", "M1234567890ALE", "M12345678901LEE"):
+            self.assertFalse(audit.source_id_metadata_valid(raw), raw)
+
     def test_legitimate_sources_with_camera_suffix(self):
         raw = "M1136306535L, M1136330937R"
         self.assertTrue(audit.source_id_metadata_valid(raw))

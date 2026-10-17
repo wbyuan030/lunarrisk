@@ -230,6 +230,13 @@ def build_manifest(
             "bounds_ymax": float(row["BOUNDS_YMAX"]),
             "center_lat": float(row["CENTER_LATITUDE"]),
             "center_lon": float(row["CENTER_LONGITUDE"]),
+            # Corners are geographic; the BOUNDS_* values are per-LTM-zone projected metres
+            # and the index ships a single CRS string that does not describe them.
+            "upper_left_lon": float(row["UPPER_LEFT_LONGITUDE"]),
+            "upper_left_lat": float(row["UPPER_LEFT_LATITUDE"]),
+            "lower_right_lon": float(row["LOWER_RIGHT_LONGITUDE"]),
+            "lower_right_lat": float(row["LOWER_RIGHT_LATITUDE"]),
+            "bounds_crs_status": "PER_ZONE_LTM_UNVERIFIED",
             "incidence_angle_deg": float(row["INCIDENCE_ANGLE"]),
             "emission_angle_deg": float(row["EMISSION_ANGLE"]),
             "phase_angle_deg": float(row["PHASE_ANGLE"]),
