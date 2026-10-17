@@ -1,3 +1,19 @@
+# 当前任务覆盖（2026-10-17，P1.7）
+
+**本仓库已完成 P0/P1/P1.5/P1.6；以下历史 P0 约束保留作溯源，不应再阻止当前 P1.7 任务。**
+最新执行文档：[`docs/P1_7_NEXT_STEPS.md`](docs/P1_7_NEXT_STEPS.md)。
+经用户授权的本轮工作是：修复指标/评估审计、运行 7900 XT 单卡受控消融、冻结新的未见过的测试区域协议；随后再决定是否扩至 3–5k 真实 Tile。
+
+Agent 的本轮执行顺序：
+1. `git pull --ff-only origin main`；单测及静态检查；核对现有 HIP/PyTorch，不得盲目覆盖环境。
+2. P1.7 四组受控消融，均用 `--no-augment` 与种子 42/43/44；记录 `reports/p1_7_ablation.md`，不得复制 P1.6 指标冒充本轮结果。
+3. 明确指出旧 110 Tile Test 已被多次查看，仅用于探索；冻结独立的 `heldout_v2` 地理/源组，检查 DTM provenance 缺口。
+4. 再执行受限样本扩容和独立验证，逐步报告。不要提前动用四卡、云 GPU 或大模型。
+
+**保护条款**：任何付费算力、覆盖现有环境、删除共享/原始数据必须先经用户单独批准。10GiB 四卡服务器存储限额仍有效。本次只需单卡 7900 XT。模型输出安全标签仅是工程代理，不是认证着陆安全结论。
+
+---
+
 # AGENTS.md — LunarRisk 单卡启动约束
 
 > 给 Pi / Codex / Claude Code 的工作协议。本 Sprint 中 `AGENTS.md`、`docs/TASKS.md` 优先于旧版 LunarJEV v5.x 大型蓝图。
