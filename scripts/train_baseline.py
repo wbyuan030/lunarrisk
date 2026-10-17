@@ -95,6 +95,23 @@ VARIANT_SCALARS = {
     "coarse_grid": GEOMETRY_SCALARS,
     "fusion": NAC_SCALARS + GEOMETRY_SCALARS,
 }
+
+
+def ablation_features(variant: str, *, use_geometry: bool = True,
+                      use_nac_photometry: bool = True) -> tuple[tuple[int, ...], tuple[str, ...]]:
+    """Select a paired ablation without changing the cached input or global model specs.
+
+    --no-nac-photometry preserves the NAC texture channel, dropping only the
+    contrast-preserving NAC image channel and NAC brightness/contrast scalars.
+    """
+    channels = CNN_VARIANTS[variant]
+    scalars = VARIANT_SCALARS[variant]
+    if not use_geometry:
+        scalars = tuple(name for name in scalars if name not in GEOMETRY_SCALARS)
+    if not use_nac_photometry:
+        channels = tuple(c for c in channels if CHANNELS[c] != "nac_contrast")
+        scalars = tuple(name for name in scalars if name not in NAC_SCALARS)
+    return channels, scalars
 COVERAGES = (0.2, 0.4, 0.6, 0.8)
 SLOPE_MAX_DEG = 90.0
 CONTRAST_EPS = 1e-6
@@ -495,11 +512,24 @@ def risk_coverage(y: np.ndarray, unsafe_probability: np.ndarray, rule_name: str,
     if np.any((unsafe_probability < 0) | (unsafe_probability > 1)):
         raise ValueError("unsafe_probability must lie in [0, 1]")
     order = np.argsort(unsafe_probability, kind="mergesort")
+    ranked_scores = unsafe_probability[order]
+    ranked_truth = truth[order]
+    unsafe_cumulative = np.cumsum(ranked_truth)
     rows = []
     for coverage in coverages:
         k = max(1, int(round(coverage * len(y))))
-        accepted = order[:k]
-        unsafe_accepted = int(truth[accepted].sum())
+        # If the coverage boundary cuts through equal scores, take the expected
+        # unsafe count under uniform random tie-breaking, not CSV row order.
+        cutoff = ranked_scores[k - 1]
+        lo = int(np.searchsorted(ranked_scores, cutoff, side="left"))
+        hi = int(np.searchsorted(ranked_scores, cutoff, side="right"))
+        unsafe_below = int(unsafe_cumulative[lo - 1]) if lo else 0
+        tie_at_boundary = lo < k < hi
+        if tie_at_boundary:
+            unsafe_in_tie = int(ranked_truth[lo:hi].sum())
+            unsafe_accepted = unsafe_below + (k - lo) / (hi - lo) * unsafe_in_tie
+        else:
+            unsafe_accepted = float(unsafe_cumulative[k - 1])
         rows.append({
             "rule": rule_name,
             "threshold": threshold,
@@ -508,6 +538,7 @@ def risk_coverage(y: np.ndarray, unsafe_probability: np.ndarray, rule_name: str,
             "accepted_n": k,
             "test_n": len(y),
             "unsafe_accepted_n": unsafe_accepted,
+            "boundary_tie_expected": tie_at_boundary,
             "unsafe_total": int(truth.sum()),
             "UAR": unsafe_accepted / k,
             "HMR": unsafe_accepted / int(truth.sum()) if truth.sum() else None,
@@ -622,14 +653,23 @@ def main(argv=None) -> int:
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--bootstrap", type=int, default=1000)
-    parser.add_argument("--augment", action="store_true", default=True)
+    parser.add_argument("--augment", action="store_true", default=False,
+                        help="enable flips/rotations ONLY when --no-geometry is active")
     parser.add_argument("--no-augment", dest="augment", action="store_false")
+    parser.add_argument("--no-geometry", action="store_true",
+                        help="ablate incidence/emission/phase/solar azimuth scalars")
+    parser.add_argument("--no-nac-photometry", action="store_true",
+                        help="ablate NAC absolute contrast image channel and photometry scalars")
     parser.add_argument("--force-cache", action="store_true")
     parser.add_argument("--min-nac-valid", type=float, default=0.99,
                         help="minimum finite fraction of the aligned NAC layer")
     parser.add_argument("--variants", default="nac,coarse_grid,fusion")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args(argv)
+    if args.augment and not args.no_geometry:
+        parser.error("--augment with solar azimuth geometry is invalid: spatial flips/rot90 "
+                     "do not rotate the geometry scalar. Use --no-augment (default), "
+                     "or explicitly --no-geometry --augment for a geometry-free control.")
 
     labels = pd.read_csv(args.labels)
     labels["layers_nac"] = labels["sample_id"].map(lambda s: f"data/hydrated/{s}/nac.nc")
@@ -690,9 +730,23 @@ def main(argv=None) -> int:
             "patience": args.patience,
             "input_size": args.size,
             "augment": args.augment,
+            "augmentation_policy": ("geometry-free flips/rot90" if args.augment
+                                    else "no spatial transforms; solar azimuth unchanged"),
+            "ablation": {"use_geometry": not args.no_geometry,
+                         "use_nac_photometry": not args.no_nac_photometry},
             "channels": list(CHANNELS),
-            "variant_channels": {k: [CHANNELS[c] for c in v] for k, v in CNN_VARIANTS.items()},
-            "variant_scalars": {k: list(v) for k, v in VARIANT_SCALARS.items()},
+            "variant_channels": {
+                k: [CHANNELS[c] for c in ablation_features(
+                    k, use_geometry=not args.no_geometry,
+                    use_nac_photometry=not args.no_nac_photometry)[0]]
+                for k in CNN_VARIANTS
+            },
+            "variant_scalars": {
+                k: list(ablation_features(
+                    k, use_geometry=not args.no_geometry,
+                    use_nac_photometry=not args.no_nac_photometry)[1])
+                for k in CNN_VARIANTS
+            },
             "scalar_scaling": "StandardScaler fitted on the train split only",
             "calibration": "Platt scaling fitted on the cal split, applied to cnn_* probabilities",
             "rules": {k: {"target": v[0], "threshold": v[1]} for k, v in RULES.items()},
@@ -786,8 +840,9 @@ def main(argv=None) -> int:
     if unknown:
         raise SystemExit(f"unknown variants: {unknown}; known: {list(CNN_VARIANTS)}")
     for variant in variant_names:
-        channels = CNN_VARIANTS[variant]
-        columns = VARIANT_SCALARS[variant]
+        channels, columns = ablation_features(
+            variant, use_geometry=not args.no_geometry,
+            use_nac_photometry=not args.no_nac_photometry)
         print(f"training cnn_{variant}: channels {[CHANNELS[c] for c in channels]}, "
               f"scalars {list(columns)}")
         trained = train_variant(cache, data, args, device, channels,
@@ -878,6 +933,11 @@ def main(argv=None) -> int:
         export[f"cnn_{variant}_g10"] = results["models"][model_key]["_predictions"]["fractions"][:, 0]
         export[f"cnn_{variant}_g15"] = results["models"][model_key]["_predictions"]["fractions"][:, 1]
         export[f"cnn_{variant}_event_prob"] = results["models"][model_key]["test"][PRIMARY_RULE]["probability"]
+        # Raw scores are necessary to audit the *classification heads*, not
+        # the two correlated slope-fraction regression outputs.
+        scores = results["models"][model_key]["_predictions"]["scores"]
+        for index, rule_name in enumerate(HEAD_RULES):
+            export[f"{model_key}_raw_event_prob_{rule_name}"] = 1 / (1 + np.exp(-scores[:, index]))
     for model_name, model in results["models"].items():
         for rule_name, payload in model["test"].items():
             export[f"{model_name}_prob_{rule_name}"] = payload["probability"]
