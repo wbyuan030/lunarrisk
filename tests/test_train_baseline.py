@@ -200,22 +200,33 @@ class TestChannelsAndCache(unittest.TestCase):
     def test_batch_tensor_selects_channels(self):
         import torch
         cache = {
-            "a": np.stack([np.ones((4, 4)), np.zeros((4, 4))]).astype(np.float16),
-            "b": np.stack([np.full((4, 4), 2.0), np.full((4, 4), 3.0)]).astype(np.float16),
+            "a": np.stack([np.ones((4, 4)), np.zeros((4, 4)), np.full((4, 4), 9.0)]).astype(np.float16),
+            "b": np.stack([np.full((4, 4), 2.0), np.full((4, 4), 3.0), np.full((4, 4), 7.0)]).astype(np.float16),
         }
         device = torch.device("cpu")
-        nac = tb.batch_tensor(["a", "b"], cache, device, (0,))
-        self.assertEqual(tuple(nac.shape), (2, 1, 4, 4))
-        self.assertAlmostEqual(float(nac[1, 0, 0, 0]), 2.0)
-        coarse = tb.batch_tensor(["a", "b"], cache, device, (1,))
-        self.assertAlmostEqual(float(coarse[1, 0, 0, 0]), 3.0)
-        fusion = tb.batch_tensor(["a", "b"], cache, device, (0, 1))
+        contrast = tb.batch_tensor(["a", "b"], cache, device, (0,))
+        self.assertEqual(tuple(contrast.shape), (2, 1, 4, 4))
+        self.assertAlmostEqual(float(contrast[1, 0, 0, 0]), 2.0)
+        coarse = tb.batch_tensor(["a", "b"], cache, device, (2,))
+        self.assertAlmostEqual(float(coarse[1, 0, 0, 0]), 7.0)
+        fusion = tb.batch_tensor(["a", "b"], cache, device, (0, 2))
         self.assertEqual(tuple(fusion.shape), (2, 2, 4, 4))
 
     def test_variants_map_to_channel_sets(self):
-        self.assertEqual(tb.CNN_VARIANTS["nac"], (0,))
-        self.assertEqual(tb.CNN_VARIANTS["coarse_grid"], (1,))
-        self.assertEqual(tb.CNN_VARIANTS["fusion"], (0, 1))
+        self.assertEqual(tb.CHANNELS, ("nac_contrast", "nac_texture", "coarse_slope"))
+        self.assertEqual(tb.CNN_VARIANTS["nac"], (0, 1))
+        self.assertEqual(tb.CNN_VARIANTS["coarse_grid"], (2,))
+        self.assertEqual(tb.CNN_VARIANTS["fusion"], (0, 1, 2))
+
+    def test_variant_scalars_give_geometry_to_every_variant(self):
+        for variant, columns in tb.VARIANT_SCALARS.items():
+            for geometry in tb.GEOMETRY_SCALARS:
+                self.assertIn(geometry, columns, variant)
+        for variant in ("nac", "fusion"):
+            for nac_scalar in tb.NAC_SCALARS:
+                self.assertIn(nac_scalar, tb.VARIANT_SCALARS[variant])
+        for nac_scalar in tb.NAC_SCALARS:
+            self.assertNotIn(nac_scalar, tb.VARIANT_SCALARS["coarse_grid"])
 
 
 
@@ -227,7 +238,7 @@ class TestChannelsAndCache(unittest.TestCase):
                                "slope3m_g15": [0.01, 0.03]})
         event = np.column_stack([
             (labels[target] > threshold).to_numpy(dtype=np.float32)
-            for target, threshold in tb.RULES.values()
+            for target, threshold in (tb.RULES[name] for name in tb.HEAD_RULES)
         ])
         np.testing.assert_array_equal(event, [[1.0, 0.0], [0.0, 1.0]])
         logits = np.array([[0.4, 0.5], [-0.5, -0.6]])
@@ -279,7 +290,7 @@ class TestTrainVariantFixture(unittest.TestCase):
         # The two rules must not be served by one shared score column.
         scores_two_cols = tb.predict_variant(result, val_rows, cache, (0,), 4, device)[1]
         np.testing.assert_array_equal(scores_two_cols, scores)
-        self.assertEqual(scores.shape[1], len(tb.RULES))
+        self.assertEqual(scores.shape[1], len(tb.HEAD_RULES))
 
     def test_fixture_scores_drive_both_rules_independently(self):
         cache, data, args, torch = self._fixture(seed=1)
@@ -287,7 +298,7 @@ class TestTrainVariantFixture(unittest.TestCase):
         result = tb.train_variant(cache, data, args, device, (1,))
         val_rows = data[data["split"] == "val"].reset_index(drop=True)
         fractions, scores = tb.predict_variant(result, val_rows, cache, (1,), 4, device)
-        for index, rule_name in enumerate(tb.RULES):
+        for index, rule_name in enumerate(tb.HEAD_RULES):
             payload = tb.evaluate_model(val_rows["slope3m_g10"].to_numpy(), fractions, scores[:, index], rule_name)
             self.assertIn("metrics", payload)
             self.assertEqual(payload["metrics_raw"]["rule"], rule_name)
@@ -303,6 +314,91 @@ class TestTrainVariantFixture(unittest.TestCase):
         quarter = payload["risk_coverage"][0]
         self.assertEqual(quarter["unsafe_accepted_n"], 0)
         self.assertEqual(quarter["UAR"], 0.0)
+
+
+class TestPhotometryAndGeometry(unittest.TestCase):
+    def test_contrast_channel_keeps_absolute_scale(self):
+        """Per-tile stretching erases the shading magnitude; the contrast channel must not."""
+        rng = np.random.default_rng(0)
+        flat = np.full((16, 16), 0.05) + rng.normal(0, 1e-4, (16, 16))
+        rough = np.full((16, 16), 0.05) + rng.normal(0, 0.02, (16, 16))
+        flat_contrast = np.abs(tb.contrast_normalize(flat)).mean()
+        rough_contrast = np.abs(tb.contrast_normalize(rough)).mean()
+        self.assertGreater(float(rough_contrast), 20 * float(flat_contrast))
+        # The texture channel deliberately equalises them, which is why it cannot be the only NAC input.
+        self.assertAlmostEqual(float(np.abs(tb.robust_normalize(flat)).max()), 1.5, delta=0.3)
+
+    def test_contrast_channel_handles_nan(self):
+        values = np.array([[0.04, np.nan], [0.06, 0.05]])
+        channel = tb.contrast_normalize(values)
+        self.assertTrue(np.isfinite(channel).all())
+        self.assertAlmostEqual(float(channel[0, 1]), 0.0)
+
+    def test_sample_grid_on_coordinates_uses_real_geometry(self):
+        source = np.arange(9, dtype=np.float64).reshape(1, 9)
+        source_x = np.arange(9, dtype=np.float64) * 10.0
+        source_y = np.array([0.0])
+        sampled = tb.sample_grid_on_coordinates(source, source_x, source_y,
+                                                np.array([15.0, 25.0]), np.array([0.0]))
+        np.testing.assert_allclose(sampled[0], [1.5, 2.5])
+
+    def test_grid_offsets_detects_disagreement(self):
+        offsets = tb.grid_offsets_m(np.array([0.0, 10.0]), np.array([0.0, 10.0]),
+                                    np.array([2.0, 10.0]), np.array([0.0, 10.0]))
+        self.assertAlmostEqual(offsets["dx_min_m"], 2.0)
+        self.assertAlmostEqual(offsets["dx_max_m"], 0.0)
+
+    def test_scalar_table_has_geometry_and_contrast(self):
+        labels = pd.DataFrame({
+            "sample_id": ["a", "b"],
+            "incidence_angle_deg": [30.0, 60.0],
+            "emission_angle_deg": [5.0, 15.0],
+            "phase_angle_deg": [35.0, 75.0],
+            "sub_solar_ground_azimuth_deg": [0.0, 90.0],
+        })
+        meta = {"a": {"nac_p99_p1": 0.01, "nac_median": 0.05},
+                "b": {"nac_p99_p1": 0.2, "nac_median": 0.1}}
+        table = tb.build_scalar_table(labels, meta)
+        self.assertEqual(list(table.columns), list(tb.NAC_SCALARS + tb.GEOMETRY_SCALARS))
+        self.assertAlmostEqual(float(table.loc["a", "incidence"]), 1 / 3)
+        self.assertAlmostEqual(float(table.loc["a", "az_sin"]), 0.0)
+        self.assertGreater(float(table.loc["b", "log_contrast"]), float(table.loc["a", "log_contrast"]))
+
+
+class TestBalancedRules(unittest.TestCase):
+    def test_rules_registered_with_expected_thresholds(self):
+        self.assertEqual(tb.RULES["g10_gt_0.15"], ("slope3m_g10", 0.15))
+        self.assertEqual(tb.RULES[tb.COMPOSITE_RULE][0], "composite")
+        self.assertAlmostEqual(tb.COMPOSITE_G10, 0.10)
+        self.assertAlmostEqual(tb.COMPOSITE_G15, 0.03)
+
+    def test_composite_truth_is_an_or(self):
+        frame = pd.DataFrame({
+            "slope3m_g10": [0.0, 0.2, 0.0, 0.2],
+            "slope3m_g15": [0.0, 0.0, 0.05, 0.05],
+        })
+        events = tb.rule_event(frame)
+        np.testing.assert_array_equal(events[tb.COMPOSITE_RULE], [False, True, True, True])
+        np.testing.assert_array_equal(events["g10_gt_0.15"], [False, True, False, True])
+
+    def test_rule_score_normalises_margins(self):
+        fractions = np.array([[0.0, 0.0], [0.15, 0.0], [0.05, 0.015]])
+        np.testing.assert_allclose(tb.rule_score("g10_gt_0.15", fractions), [0.0, 1.0, 1 / 3])
+        np.testing.assert_allclose(tb.rule_score(tb.COMPOSITE_RULE, fractions), [0.0, 1.0, 0.5])
+
+    def test_evaluate_all_rules_covers_every_rule(self):
+        test_rows = pd.DataFrame({"slope3m_g10": [0.0, 0.3], "slope3m_g15": [0.0, 0.1]})
+        events = tb.rule_event(test_rows)
+        fractions = np.array([[0.0, 0.0], [0.3, 0.1]])
+        payload = tb.evaluate_all_rules(
+            fractions, fractions,
+            {name: tb.logit(np.array([0.1, 0.9])) for name in tb.HEAD_RULES},
+            {name: tb.logit(np.array([0.1, 0.9])) for name in tb.HEAD_RULES},
+            events, events, tb.rule_values(test_rows))
+        self.assertEqual(set(payload), set(tb.RULES))
+        for rule_name, entry in payload.items():
+            self.assertEqual(entry["metrics_raw"]["rule"], rule_name)
+            self.assertIsNotNone(entry["metrics_raw"]["brier"])
 
 
 class TestCoarseFeatures(unittest.TestCase):

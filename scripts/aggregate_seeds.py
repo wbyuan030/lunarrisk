@@ -24,10 +24,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-RULES = {
-    "g10_gt_0.05": ("slope3m_g10", 0.05),
-    "g15_gt_0.02": ("slope3m_g15", 0.02),
-}
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+import train_baseline as tb  # noqa: E402  (single source of truth for rules/variants)
+
+RULES = tb.RULES
+HEAD_RULES = tb.HEAD_RULES
+COMPOSITE_RULE = tb.COMPOSITE_RULE
+CNN_VARIANTS = tb.CNN_VARIANTS
 MODELS = ("constant", "coarse_ridge", "cnn_nac", "cnn_coarse_grid", "cnn_fusion")
 COMPARISONS = (
     ("cnn_fusion", "cnn_coarse_grid"),
@@ -38,25 +42,18 @@ COVERAGES = (0.2, 0.4, 0.6, 0.8)
 PREDICTION_COLUMNS = {
     "constant": "constant_g10",
     "coarse_ridge": "coarse_g10",
-    "cnn_nac": "cnn_nac_g10",
-    "cnn_coarse_grid": "cnn_coarse_grid_g10",
-    "cnn_fusion": "cnn_fusion_g10",
+    **{f"cnn_{v}": f"cnn_{v}_g10" for v in CNN_VARIANTS},
 }
-FRACTION_COLUMNS = {
-    "g10_gt_0.05": {**PREDICTION_COLUMNS},
-    "g15_gt_0.02": {
-        "constant": "constant_g15",
-        "coarse_ridge": "coarse_g15",
-        "cnn_nac": "cnn_nac_g15",
-        "cnn_coarse_grid": "cnn_coarse_grid_g15",
-        "cnn_fusion": "cnn_fusion_g15",
-    },
-}
-G15_FRACTION_COLUMNS = {
-    "cnn_nac": "cnn_nac_g15",
-    "cnn_coarse_grid": "cnn_coarse_grid_g15",
-    "cnn_fusion": "cnn_fusion_g15",
-}
+# Each rule's MAE is measured against the fraction column of its target attribute.
+FRACTION_COLUMNS = {}
+for _rule, (_target, _threshold) in RULES.items():
+    _suffix = "g15" if _target.endswith("g15") else "g10"
+    FRACTION_COLUMNS[_rule] = {
+        "constant": f"constant_{_suffix}",
+        "coarse_ridge": f"coarse_{_suffix}",
+        **{f"cnn_{v}": f"cnn_{v}_{_suffix}" for v in CNN_VARIANTS},
+    }
+G15_FRACTION_COLUMNS = {f"cnn_{v}": f"cnn_{v}_g15" for v in CNN_VARIANTS}
 
 
 def load_seed(directory: Path) -> tuple[dict, pd.DataFrame]:
@@ -160,7 +157,7 @@ def environment_info(seeds: list[int], pattern: str) -> dict:
             elapsed[str(seed)] = float(path.read_text().strip())
     info["elapsed_sec_per_seed"] = elapsed
     info["elapsed_sec_total"] = float(sum(elapsed.values())) if elapsed else None
-    for name in ("outputs/cache_v2.npz", "outputs/labels_hydrated.csv"):
+    for name in ("outputs/cache_v3.npz", "outputs/labels_hydrated.csv"):
         path = Path(name)
         info[f"bytes_{Path(name).name}"] = path.stat().st_size if path.exists() else None
     return info
@@ -168,10 +165,10 @@ def environment_info(seeds: list[int], pattern: str) -> dict:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pattern", default="outputs/baseline_fixed_seed{seed}")
+    parser.add_argument("--pattern", default="outputs/baseline_v3_seed{seed}")
     parser.add_argument("--seeds", default="42,43,44")
     parser.add_argument("--labels", type=Path, default=Path("outputs/labels_hydrated.csv"))
-    parser.add_argument("--out", type=Path, default=Path("outputs/baseline_fixed_summary"))
+    parser.add_argument("--out", type=Path, default=Path("outputs/multiseed_summary"))
     parser.add_argument("--bootstrap", type=int, default=1000)
     args = parser.parse_args(argv)
 
@@ -284,6 +281,17 @@ def main(argv=None) -> int:
                 } for coverage, entries in rows_by_coverage.items()
             }
 
+    # ---- rule prevalence (from the exported event columns) ----
+    prevalence = {}
+    for rule_name in RULES:
+        column = f"event_{rule_name}"
+        if column in reference.columns:
+            prevalence[rule_name] = float(reference[column].mean())
+        else:
+            target, threshold = RULES[rule_name]
+            values = y_g15 if target.endswith("g15") else y_g10
+            prevalence[rule_name] = float((values > threshold).mean()) if target != "composite" else None
+
     # ---- g15 vs g10 head divergence ----
     divergence = {}
     for model, g15_column in G15_FRACTION_COLUMNS.items():
@@ -314,6 +322,7 @@ def main(argv=None) -> int:
         "environment": environment_info(seeds, args.pattern),
         "cohort": cohort,
         "split_independence": check_split_independence(labels),
+        "test_rule_prevalence": prevalence,
         "per_model": summary,
         "calibration_audit": calibration,
         "paired_differences": differences,
@@ -345,7 +354,8 @@ def render_markdown(payload: dict) -> str:
              f"- cohort: {payload['cohort']['tiles']} tiles / {payload['cohort']['groups']} groups / "
              f"{payload['cohort']['zones']} zones / {payload['cohort']['unsafe_total']} unsafe",
              f"- split independence: {payload['split_independence']}",
-             f"- environment: {payload.get('environment', {})}", ""]
+             f"- environment: {payload.get('environment', {})}",
+             f"- test rule prevalence: {payload.get('test_rule_prevalence', {})}", ""]
     lines += ["## Mean (std) across seeds, primary probability", "",
               "| model | rule | MAE | RMSE | Brier (primary) | Brier (raw) | AUC | NLL |",
               "|---|---|---|---|---|---|---|---|"]

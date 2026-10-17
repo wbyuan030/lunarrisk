@@ -70,23 +70,63 @@ def nearest_other_split(frame: pd.DataFrame, split_column: str, points: np.ndarr
     }, index=frame.index)
 
 
-def apply_buffer(frame: pd.DataFrame, buffer_km: float = 10.0) -> pd.Series:
-    """Return split_final.
+PROTECTED_BY = {
+    "val": ("test",),
+    "cal": ("val", "test"),
+    "train": ("cal", "val", "test"),
+}
 
-    Drop train tiles near cal/val/test, and cal/val tiles near the evaluation
-    sets. Test tiles are never dropped.
+
+def find_buffer_drops(frame: pd.DataFrame, points: np.ndarray, buffer_km: float = 10.0,
+                      split_column: str = "split_pre_buffer") -> np.ndarray:
+    """Drop lower-priority tiles that sit within ``buffer_km`` of a *surviving* higher split.
+
+    Priority order is test > val > cal > train. Each step queries the protected sets that
+    are still present, so dropping cannot cascade into a violation: a tile removed earlier
+    neither protects nor threatens later steps. Test tiles are never dropped.
+
+    Note this deliberately does not use a single "nearest other split" label: if a val tile
+    happens to be closest to a train tile, that must not excuse it from the val-vs-test
+    distance requirement (the shadowing bug).
     """
-    final = frame["split_pre_buffer"].astype(str).copy()
-    conflict = frame["nearest_other_split_km"] < buffer_km
-    own = final.to_numpy()
-    other = frame["nearest_other_split"].astype(str).to_numpy()
-    drop = (
-        ((own == "train") & np.isin(other, ["cal", "val", "test"]) & conflict.to_numpy())
-        | ((own == "cal") & np.isin(other, ["val", "test"]) & conflict.to_numpy())
-        | ((own == "val") & (other == "test") & conflict.to_numpy())
-    )
+    labels = frame[split_column].astype(str).to_numpy()
+    drop = np.zeros(len(frame), dtype=bool)
+    for own_split, protected in PROTECTED_BY.items():
+        own_mask = (labels == own_split) & ~drop
+        ref_mask = np.isin(labels, list(protected)) & ~drop
+        if not own_mask.any() or not ref_mask.any():
+            continue
+        distances, _ = cKDTree(points[ref_mask]).query(points[own_mask], k=1)
+        drop[np.where(own_mask)[0][distances < buffer_km]] = True
+    return drop
+
+
+def apply_buffer(frame: pd.DataFrame, points: np.ndarray, buffer_km: float = 10.0,
+                 split_column: str = "split_pre_buffer") -> pd.Series:
+    """Return split_final using the priority-ordered buffer drop."""
+    final = frame[split_column].astype(str).copy()
+    drop = find_buffer_drops(frame, points, buffer_km, split_column)
     final[drop] = "drop_buffer"
     return final
+
+
+def surviving_pair_distances(final: pd.Series, points: np.ndarray) -> dict:
+    """Minimum centre distance between every pair of surviving splits (buffer contract check)."""
+    result = {}
+    labels = final.astype(str).to_numpy()
+    for index, left in enumerate(SPLITS):
+        for right in SPLITS[index + 1:]:
+            left_mask = labels == left
+            right_mask = labels == right
+            if not left_mask.any() or not right_mask.any():
+                continue
+            distances, _ = cKDTree(points[right_mask]).query(points[left_mask], k=1)
+            result[f"{left}_{right}"] = {
+                "min_km": round(float(distances.min()), 4),
+                "tiles_left": int(left_mask.sum()),
+                "tiles_right": int(right_mask.sum()),
+            }
+    return result
 
 
 def split_audit(frame: pd.DataFrame, split_column: str) -> dict:
@@ -144,7 +184,8 @@ def main(argv=None) -> int:
     nearest = nearest_other_split(frame, "split_pre_buffer", points)
     frame["nearest_other_split"] = nearest["nearest_other_split"]
     frame["nearest_other_split_km"] = nearest["nearest_other_split_km"].round(4)
-    frame["split_final"] = apply_buffer(frame, args.buffer_km)
+    frame["split_final"] = apply_buffer(frame, points, args.buffer_km)
+    frame["drop_buffer"] = frame["split_final"] == "drop_buffer"
 
     audits = split_audit(frame, "split_final")
     kept = frame[frame["split_final"] != "drop_buffer"]
@@ -164,6 +205,8 @@ def main(argv=None) -> int:
                 "tiles_right": int(right_mask.sum()),
                 "within_buffer": int((dist < args.buffer_km).sum()),
             }
+    contract = surviving_pair_distances(frame["split_final"], points)
+    violations = {pair: entry for pair, entry in contract.items() if entry["min_km"] < args.buffer_km}
 
     summary = {
         "manifest": str(args.manifest),
@@ -177,6 +220,12 @@ def main(argv=None) -> int:
             s: int(((frame["split_final"] == s) & frame["has_slope3m"]).sum()) for s in (*SPLITS, "drop_buffer")
         },
         "buffer_dropped": int((frame["split_final"] == "drop_buffer").sum()),
+        "buffer_contract": {
+            "buffer_km": args.buffer_km,
+            "surviving_pairs": contract,
+            "violations": violations,
+            "satisfied": not violations,
+        },
         "split_audit": audits,
         "cross_split_min_distance_km": distances,
         "kept_rows": int(len(kept)),

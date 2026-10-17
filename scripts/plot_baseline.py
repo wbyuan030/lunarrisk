@@ -31,15 +31,18 @@ def main(argv=None) -> int:
 
     metrics = json.loads((args.baseline / "metrics.json").read_text(encoding="utf-8"))
     predictions = pd.read_csv(args.baseline / "test_predictions.csv")
-    ridge = pd.read_csv(args.reference / "test_predictions.csv")
+    # Rules moved into the protocol block in the P1.6 revision; keep both shapes working.
+    rules = metrics.get("rules") or metrics.get("protocol", {}).get("rules")
+    if not rules:
+        raise SystemExit("metrics.json has no rule definitions")
 
     fig, axes = plt.subplots(2, 2, figsize=(13, 10))
 
     # 1. label distribution with the pre-registered threshold
     ax = axes[0, 0]
     ax.hist(predictions["y_g10"], bins=25, range=(0, 1), color="#4c72b0")
-    ax.axvline(metrics["rules"][RULE]["threshold"], color="crimson", linestyle="--",
-               label=f"rule threshold {metrics['rules'][RULE]['threshold']}")
+    ax.axvline(rules[RULE]["threshold"], color="crimson", linestyle="--",
+               label=f"rule threshold {rules[RULE]['threshold']}")
     ax.set_title(f"test cohort g(10 deg)  n={len(predictions)}  "
                  f"unsafe={predictions_y_unsafe(predictions):.0%}")
     ax.set_xlabel("g(10 deg) area fraction")

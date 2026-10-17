@@ -62,3 +62,22 @@ Decision: **GO small scale-up (conditional)** — freeze an extra held-out proto
 training to 3–5k tiles, and add observation geometry plus photometric normalization as
 controlled ablations. LFM, joint posterior, TiM, Qwen, weekend 4×4090 and paid cloud stay
 on HOLD.
+
+### P1.6 follow-up (same day, second review round)
+
+A second review flagged photometric, alignment and crash hazards. Outcome, in short:
+the risk-ranking/head fixes above still stand; the new items were verified one by one
+in `reports/p1_baseline.md` §P1.6, including two claims that did **not** hold up
+(paired-difference CI and export columns were already present, and the per-tile
+normalization fix did not materially rescue the NAC-only model).
+
+Fixed and regression-tested: priority-ordered buffer drops (the nearest-neighbour
+"shadowing" bug, 0 tiles affected on the real 100k index), coordinate-based sampling
+for the 60 m layer, a contrast-preserving NAC channel plus geometry/contrast scalars in
+the head, `hydrate_tiles.py --enrich` for DTM roughness/relief labels, and two crash
+hazards in `plot_baseline.py` / `--resume`.
+
+Rerun (v3) artifacts: `outputs/baseline_v3_seed{42,43,44}/`,
+`outputs/baseline_v3_summary/`. Headline: fusion minus coarse_grid now excludes zero for
+ΔMAE (−0.0081 [−0.0137, −0.0025]) and ΔBrier (−0.0223 [−0.0428, −0.0005]) on `g10>0.05`,
+but the NAC-only model is still far worse than the 60 m baseline (MAE 0.3115 vs 0.0504).

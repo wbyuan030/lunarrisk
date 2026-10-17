@@ -150,3 +150,40 @@ python3 scripts/plot_baseline.py
   被丢弃 Tile 的标签统计会写入 `metrics.json` 的 `nac_availability`，不要静默忽略。
 - 数据缓存为 `outputs/cache_v2.npz`（2 通道：NAC + 60 m 坡度）；布局变更时会自动重建。
 - 本机 MIOpen 存在轻微运行间不确定性（CNN MAE 变动约 0.007）；比较小差异要用多 seed 与组级 CI。
+
+## J. P1.6 修复与重跑（2026-10-17 第二轮 review 后）
+
+已修复（均有回归测试）：
+
+1. **缓冲区最近邻遮蔽 Bug**（`scripts/finalize_split.py`）：旧实现先取"唯一最近异集标签"再判定，val/cal 会被更近的
+   train 遮蔽而逃过对 test 的距离检查。现改为按优先级（test > val > cal > train）对**仍存活**的集合做 KD-Tree 查询，
+   并把 `buffer_contract`（存活集合两两最小距离）写入 `outputs/split_summary.json`。
+   *在真实 100k 数据上该修复改变 0 个 Tile 的 split*（drop 仍为 123），但缺陷是真实的。
+2. **逐图 1%–99% 拉伸抹杀对比度**（`scripts/train_baseline.py`）：NAC 现为 3 通道
+   `nac_contrast = (I - median)/median`（保留绝对明暗对比）、`nac_texture`（局部结构）、`coarse_slope`；
+   并把 `log(p99-p1)`、`log(median)` 与观测几何（incidence/emission/phase/太阳方位 sin/cos）拼到 head。
+   几何对所有 CNN 变体一视同仁；NAC 派生的对比度标量只给含 NAC 通道的变体
+   （`VARIANT_SCALARS`），以保持"固定结构下隔离光学信息"的对照有效。
+3. **60 m 粗坡度未按坐标对齐**（同上）：`load_aligned_tile()` 用 `slope_60m` 自身的 x/y 双线性采样到 3 m 网格，
+   并把 `coarse_offsets_m`、prefill NaN 比例写入 `metrics.json` 的 `coarse_alignment`。
+4. **平衡先验规则**：新增 `g10_gt_0.15` 与复合规则 `g10_gt0.10_or_g15_gt0.03`（阈值只由 train/cal 固定，
+   未接触 test）。两条原规则仍走专用事件头；平衡规则用统一的回归 margin 打分 + cal Platt 标定。
+5. **DTM 多属性标签**：`hydrate_tiles.py --enrich` 在已下载数据上补出 `dtm3m_roughness_9m_m`
+   （3×3 平面去趋势 RMS）与 `dtm3m_relief_p95_p5_m`，无需重新下载。
+6. `plot_baseline.py` 删除了未使用的 `--reference` 读取；`hydrate_tiles.py --resume` 在全量已下载时不再报错。
+
+重跑命令：
+
+```bash
+python3 scripts/build_manifest.py            # 新增观测几何列
+python3 scripts/finalize_split.py            # 修复后的缓冲区（含 buffer_contract）
+python3 scripts/hydrate_tiles.py --enrich    # 在本地数据上补几何 + 粗糙度/极差
+for s in 42 43 44; do
+  extra=""; [ "$s" = "42" ] && extra="--force-cache"
+  python3 scripts/train_baseline.py --seed $s --out outputs/baseline_v3_seed$s $extra
+  echo $? > /dev/null
+done
+python3 scripts/aggregate_seeds.py           # 默认读取 outputs/baseline_v3_seed{seed}
+```
+
+数据缓存新版本为 `outputs/cache_v3.npz`（3 通道），旧 `cache_v2.npz` 不再使用。

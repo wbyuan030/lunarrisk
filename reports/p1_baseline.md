@@ -1,6 +1,84 @@
 # P1-03/P1-04 — 首个真实物理基线（NAC → 3 m 坡度超出率）
 
-> **2026-10-17 post-fix 重跑（本节最新，取代 §5 的 UAR/HMR 与 g15 事件 Brier）**
+> ### 2026-10-17 P1.6：第二轮 review 修复后的重跑（v3，**当前最新**）
+> 本节取代 §0 中的 CNN 行（常数与 `coarse_ridge` 未受影响）；§5–§7 仍为更早的 pre-fix 记录。
+> 完整数值：`outputs/baseline_v3_summary/{summary.json,summary.md,figures_seed42.png}`，
+> 每次运行：`outputs/baseline_v3_seed{42,43,44}/`。**所有 v3 结论以本节为准。**
+
+#### P1.6.1 review 逐条核实结果
+
+| review 项 | 核实结论 | 处理 |
+|---|---|---|
+| §1 逐图 1%–99% 拉伸抹杀单目 NAC 对比度 | **机理成立**（回归测试复现：平坦切片 1e-4 噪声被 `robust_normalize` 拉到满量程） | 新增 `nac_contrast = (I−median)/median` 通道 + `log(p99−p1)`、`log(median)` 与观测几何标量进 head |
+| §1 预测"修复后 cnn_nac 应显著变好" | **未被实验支持**：`cnn_nac` MAE 0.3238±0.0143（v2）→ **0.3115±0.0288**（v3），差异在噪声内 | 如实报告，不据此宣布 NAC 可用 |
+| §2 缓冲区最近邻遮蔽 Bug | **成立**，已用 3 切片共线反例复现：train 被删而 val 距 test 仅 4.55 km 仍存活 | 改为按优先级对**存活集合**查询；新增 `buffer_contract` 断言与 6 项回归测试 |
+| §2 对真实数据的影响 | **真实数据上改变 0 个 Tile**（split 前后逐一比对 90,786 行，`split_final` 零差异；drop 仍 123） | 记录为"真实缺陷但本轮无下游影响" |
+| §3 缺少配对差值 Bootstrap CI 与导出列 | **不成立**（基于旧修订）：配对 CI 自 `af6a7af` 起在 `scripts/aggregate_seeds.py` 中实现，且 `constant_g15`/`coarse_g15`/`*_prob_<rule>` 均已导出 | 本轮仅补充新增两条规则的导出与聚合 |
+| §4 60 m 粗坡度未按坐标重采样 | **成立** | 新增 `sample_grid_on_coordinates()`，NAC 与粗坡度共用同一坐标采样原语；`metrics.json.coarse_alignment` 报告偏移与 NaN 预填 |
+| §5 缺少粗糙度 / 高程极差标签 | **成立**（E3/E4 前置） | 新增 `hydrate_tiles.py --enrich`，在本地已下载数据上补出（无需重下） |
+| §6A `plot_baseline.py` 无用 `--reference` 读取 | **成立** | 删除 |
+| §6B `--resume` 全量已下载时报错 | **成立** | 改为仅当既无新记录又无既有 labels 文件时才退出 |
+
+#### P1.6.2 变更与验证
+
+- NAC 3 通道：`nac_contrast`（保留绝对对比度）、`nac_texture`（局部结构）、`coarse_slope`（坐标采样到 3 m 网格）。
+- head 标量：`log_contrast`、`log_median` 只给含 NAC 通道的变体；几何（incidence/emission/phase/方位 sin·cos）给所有变体，
+  以保持"固定结构隔离光学信息"的对照有效。标量标准化仅在 train 上拟合。
+- 新增预注册规则：`g10_gt_0.15`、复合 `g10>0.10 OR g15>0.03`（阈值只由 train 先验确定，未接触 test）。
+- 切分：缓冲区修复后 `buffer_contract.satisfied = true`（存活集合最小距离：train–cal 10.02 km、train–val 49.63 km、
+  train–test 20.14 km、cal–val 62.72 km、cal–test 74.13 km、val–test 622.60 km）。
+- 单元测试 **81/81 PASS**（新增 15 项：对比度通道、坐标采样、退化 extent、标量表、平衡规则、规则打分的回归测试）。
+- 队列未变：760 Tile、110 test / 25 组 / 10 zone；unsafe(>0.05) = 76/110。
+
+#### P1.6.3 v3 结果（3 seeds，110 test Tile / 25 组，primary 概率）
+
+| 模型 | MAE g10 | Brier g10>0.05 | Brier g10>0.15 | Brier 复合 | AUC(g10>0.05) |
+|---|---|---|---|---|---|
+| `constant` | 0.3554 | 0.2284 | 0.4273 | 0.3545 | 0.500 |
+| `coarse_ridge` | **0.0504** (0.0000) | 0.0728 | 0.0779 | **0.0684** | 0.966 |
+| `cnn_nac` | 0.3115 (0.0288) | 0.1891 (0.0118) | 0.2135 | 0.2028 | 0.729 |
+| `cnn_coarse_grid` | 0.0687 (0.0168) | 0.0806 (0.0024) | 0.0815 | 0.1175 | 0.964 |
+| `cnn_fusion` | 0.0606 (0.0057) | **0.0583** (0.0064) | **0.0506** (0.0030) | 0.0958 | **0.985** |
+
+规则先验（test）：`g10>0.05` 0.691、`g15>0.02` 0.482、`g10>0.15` 0.573、复合 0.645。
+
+**配对组级自助差异（1000 次重采样，3 seed 平均，`*` = 95% CI 排除 0）**
+
+| 比较 | 规则 | ΔMAE [95% CI] | ΔBrier [95% CI] |
+|---|---|---|---|
+| fusion − coarse_grid | g10>0.05 | **−0.0081 [−0.0137, −0.0025]\*** | **−0.0223 [−0.0428, −0.0005]\*** |
+| fusion − coarse_grid | g10>0.15 | **−0.0081 [−0.0137, −0.0025]\*** | **−0.0309 [−0.0596, −0.0019]\*** |
+| fusion − coarse_grid | g15>0.02 | +0.0028 [−0.0083, +0.0144] | −0.0150 [−0.0377, +0.0121] |
+| fusion − coarse_ridge | g10>0.05 | +0.0102 [−0.0013, +0.0220] | −0.0145 [−0.0390, +0.0092] |
+| fusion − coarse_ridge | g15>0.02 | **+0.0311 [+0.0189, +0.0444]\***（更差） | +0.0180 [−0.0131, +0.0554] |
+| coarse_grid − coarse_ridge | g10>0.05 | **+0.0183 [+0.0077, +0.0286]\***（更差） | +0.0078 [−0.0028, +0.0164] |
+
+**固定 Coverage 的 UAR（3 seed 平均）**
+
+| 模型 | g10>0.05 @0.2/0.4/0.6/0.8 | g10>0.15 @0.2/0.4/0.6/0.8 |
+|---|---|---|
+| `constant` | 0.818 / 0.818 / 0.742 / 0.716 | 0.773 / 0.705 / 0.606 / 0.568 |
+| `coarse_ridge` | 0.136 / 0.250 / 0.485 / 0.614 | 0.000 / 0.068 / 0.318 / 0.477 |
+| `cnn_nac` | 0.455 / 0.530 / 0.566 / 0.621 | 0.333 / 0.364 / 0.439 / 0.504 |
+| `cnn_coarse_grid` | 0.106 / 0.242 / 0.485 / 0.614 | 0.000 / 0.098 / 0.359 / 0.492 |
+| `cnn_fusion` | **0.015** / 0.227 / 0.485 / 0.614 | **0.000** / **0.061** / 0.318 / 0.466 |
+
+#### P1.6.4 结论与限制
+
+1. **单目 NAC 的增益首次变得可统计分辨**（fusion − coarse_grid 的 ΔMAE 与 ΔBrier 在 g10 两条规则上均排除 0），
+   但量级很小（ΔMAE ≈ 0.008 g10 面积占比），且 **`cnn_fusion` 的 MAE 仍不优于 `coarse_ridge`**（g15 规则显著更差）。
+2. **review 的归一化假设不成立**：修复对比度通道后 `cnn_nac` 仍远差于粗坡度（0.3115 vs 0.0504）。
+   单目光度与地形的桥接瓶颈不是单次归一化，可能是分辨率/光照未建模（几何只进了标量而非空间变体）。
+3. 平衡规则（`g10>0.15`，先验 0.573）确实给出更有判别力的曲线：`cnn_fusion` 在 20% coverage 下 UAR 0.015，
+   40% 下 0.227；但 `coarse_ridge`/`cnn_coarse_grid` 在 20% 也是 0.000，优势仍不悬殊。
+4. 新增的 DTM 多属性（`dtm3m_roughness_9m_m` 中位 0.0167 m、`dtm3m_relief_p95_p5_m` 中位 31.6 m）为 E3/E4 的
+   联合属性审计准备就绪：relief 与 g10 相关 0.91，roughness 与 relief 仅 0.46（属性不共线），incidence 与 g10 相关 0.08。
+5. 限制照旧：399 train Tile、128 px、单一架构、25 个测试组、`GEO_JOIN_PENDING` 仍未做 footprint 投影审计；
+   v3 的 ΔMAE 结论依赖 3 个 seed 与 25 组，仍属小样本探索性结果。
+
+---
+
+> ### 2026-10-17 post-fix 重跑（§0，已被 P1.6 取代 CNN 行）
 > 触发：上游提交 `4ba8511`/`29575da` 修复了风险排序反转、事件头共享、变体种子不配对、粗坡度未标定四个缺陷；
 > `docs/P1_5_NEXT_STEPS.md` 要求重跑并给出配对 CI。§5 的旧数值仍保留，但仅作 pre-fix 记录，不得引用其 UAR/HMR。
 
@@ -237,30 +315,31 @@ CNN 输入尺寸 128、batch 16、Adam lr 1e-3、最多 60 epoch、patience 10�
 ## 8. 复现
 
 ```bash
-# 单元测试（66）
+# 单元测试（81）
 python3 -m unittest discover -s tests -v
 
 # 下载 + 物理标签（760 Tile，可 --resume 续跑）
 python3 scripts/hydrate_tiles.py --train 400 --cal 120 --val 120 --test 120 --workers 12 --resume
+# 在已下载数据上补几何 + DTM 多属性（粗糙度 / 高程极差），无需重新下载
+python3 scripts/hydrate_tiles.py --enrich
 
-# 主实验（post-fix，3 seeds）：constant / coarse_ridge / cnn_nac / cnn_coarse_grid / cnn_fusion
+# manifest（含观测几何）与修复后的切分（含 buffer_contract）
+python3 scripts/build_manifest.py
+python3 scripts/finalize_split.py
+
+# P1.6 主实验（v3，3 seeds，4 条预注册规则、3 通道 + 几何标量）
 for s in 42 43 44; do
   extra=""; [ "$s" = "42" ] && extra="--force-cache"
   start=$(date +%s)
-  python3 scripts/train_baseline.py --seed $s --out outputs/baseline_fixed_seed$s $extra
-  echo $(( $(date +%s) - start )) > outputs/baseline_fixed_seed$s/elapsed_sec.txt
+  python3 scripts/train_baseline.py --seed $s --out outputs/baseline_v3_seed$s $extra
+  echo $(( $(date +%s) - start )) > outputs/baseline_v3_seed$s/elapsed_sec.txt
 done
-
-# 多种子聚合：均值/std、配对组级自助差异、标定审计、独立头检查
-python3 scripts/aggregate_seeds.py
-
-# pre-fix 单种子结果（仅历史对照，勿引用 UAR）与无筛选敏感性
-python3 scripts/train_baseline.py --min-nac-valid 0 --out outputs/baseline_alltiles
-
-# 图（pre-fix 数值，post-fix 需重画）
-python3 scripts/plot_baseline.py
+python3 scripts/aggregate_seeds.py --out outputs/baseline_v3_summary
+python3 scripts/plot_baseline.py --baseline outputs/baseline_v3_seed42 \
+  --out outputs/baseline_v3_summary/figures_seed42.png
 ```
 
-产物：`outputs/baseline_fixed_seed{42,43,44}/{metrics.json,test_predictions.csv,risk_coverage.csv}`、
-`outputs/baseline_fixed_summary/{summary.json,summary.md}`、`outputs/baseline_alltiles/*`、
-`outputs/labels_hydrated.csv`、`outputs/cache_v2.npz`。
+产物：`outputs/baseline_v3_seed{42,43,44}/{metrics.json,test_predictions.csv,risk_coverage.csv}`、
+`outputs/baseline_v3_summary/{summary.json,summary.md,figures_seed42.png}`、
+`outputs/{manifest_100k_final.parquet,split_summary.json,labels_hydrated.csv,cache_v3.npz}`。
+（更早的 v2/pre-fix 产物：`outputs/baseline_fixed_seed*`、`outputs/baseline_alltiles`、`outputs/baseline`，仅作对照。）

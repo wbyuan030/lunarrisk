@@ -31,27 +31,67 @@ class TestCalibration(unittest.TestCase):
 
 
 class TestBuffer(unittest.TestCase):
-    def frame(self, rows):
-        return pd.DataFrame(rows)
+    """Buffer drops are coordinate driven: no single nearest-neighbour label is consulted."""
+
+    def frame(self, splits, lats, lons=None):
+        return pd.DataFrame({
+            "split_pre_buffer": splits,
+            "center_lat": lats,
+            "center_lon": lons if lons is not None else [0.0] * len(splits),
+        })
+
+    def buffer(self, frame, buffer_km=10.0):
+        points = fs.unit_sphere(frame["center_lat"].to_numpy(), frame["center_lon"].to_numpy())
+        return fs.apply_buffer(frame, points, buffer_km), points
+
+    def test_shadowing_regression_val_is_dropped_even_when_train_is_closer(self):
+        # Reviewer counterexample: train(0.00) val(0.05) test(0.20).
+        # train-val 1.52 km, val-test 4.55 km. The old code kept val because its nearest
+        # neighbour was train, leaving a surviving val-test pair under the buffer.
+        frame = self.frame(["train", "val", "test"], [0.00, 0.05, 0.20])
+        final, points = self.buffer(frame)
+        self.assertEqual(final.tolist(), ["drop_buffer", "drop_buffer", "test"])
+        contract = fs.surviving_pair_distances(final, points)
+        self.assertNotIn("val_test", contract)
 
     def test_train_near_test_is_dropped_test_is_kept(self):
-        frame = self.frame([
-            {"split_pre_buffer": "train", "nearest_other_split": "test", "nearest_other_split_km": 5.0},
-            {"split_pre_buffer": "test", "nearest_other_split": "train", "nearest_other_split_km": 5.0},
-        ])
-        final = fs.apply_buffer(frame, 10.0)
+        frame = self.frame(["train", "test"], [0.00, 0.10])
+        final, _ = self.buffer(frame)
         self.assertEqual(final.tolist(), ["drop_buffer", "test"])
 
-    def test_cal_and_val_rules(self):
-        frame = self.frame([
-            {"split_pre_buffer": "cal", "nearest_other_split": "val", "nearest_other_split_km": 3.0},
-            {"split_pre_buffer": "val", "nearest_other_split": "test", "nearest_other_split_km": 3.0},
-            {"split_pre_buffer": "val", "nearest_other_split": "train", "nearest_other_split_km": 3.0},
-            {"split_pre_buffer": "train", "nearest_other_split": "val", "nearest_other_split_km": 20.0},
-            {"split_pre_buffer": "train", "nearest_other_split": "cal", "nearest_other_split_km": 3.0},
-        ])
-        final = fs.apply_buffer(frame, 10.0)
-        self.assertEqual(final.tolist(), ["drop_buffer", "drop_buffer", "val", "train", "drop_buffer"])
+    def test_test_tiles_are_never_dropped(self):
+        frame = self.frame(["test", "test"], [0.00, 0.01])
+        final, _ = self.buffer(frame)
+        self.assertEqual(final.tolist(), ["test", "test"])
+
+    def test_cal_near_val_is_dropped_but_val_survives(self):
+        # cal(0.00) val(0.05) test(0.60): cal is 1.52 km from val -> dropped, val survives.
+        frame = self.frame(["cal", "val", "test"], [0.00, 0.05, 0.60])
+        final, _ = self.buffer(frame)
+        self.assertEqual(final.tolist(), ["drop_buffer", "val", "test"])
+
+    def test_cal_near_val_is_dropped_even_when_train_is_closest(self):
+        # Shadowing variant for cal: train sits right on top of cal.
+        frame = self.frame(["cal", "val", "test", "train"], [0.00, 0.05, 0.60, 0.001])
+        final, _ = self.buffer(frame)
+        self.assertEqual(final[0], "drop_buffer")
+        self.assertEqual(final[3], "drop_buffer")
+
+    def test_train_far_from_everything_survives(self):
+        frame = self.frame(["train", "cal", "val", "test"], [0.0, 0.5, 2.0, 5.0])
+        final, _ = self.buffer(frame)
+        self.assertEqual(final.tolist(), ["train", "cal", "val", "test"])
+
+    def test_buffer_contract_property(self):
+        frame = self.frame(
+            ["train", "train", "val", "cal", "test", "test", "val", "cal"],
+            [0.000, 0.002, 0.001, 0.004, 0.30, 0.50, 0.28, 0.31],
+        )
+        final, points = self.buffer(frame, 10.0)
+        contract = fs.surviving_pair_distances(final, points)
+        for pair, entry in contract.items():
+            self.assertGreaterEqual(entry["min_km"], 10.0, f"{pair} violates the buffer contract")
+        self.assertTrue((final == "test").sum() == 2)
 
     def test_sphere_distance(self):
         points = fs.unit_sphere(np.array([0.0, 1.0]), np.array([0.0, 0.0]))

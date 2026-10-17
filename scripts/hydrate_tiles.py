@@ -123,6 +123,56 @@ def summarise_slope(path: Path, units_override: str | None) -> dict:
     }
 
 
+def _first_moment_sums(array: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Sum of z*x and z*y over every 3x3 window (x, y are the {-1,0,1} offsets)."""
+    column_sums = array[:-2, :] + array[1:-1, :] + array[2:, :]   # shape (rows, all columns)
+    row_sums = array[:, :-2] + array[:, 1:-1] + array[:, 2:]      # shape (all rows, cols)
+    return column_sums[:, 2:] - column_sums[:, :-2], row_sums[2:, :] - row_sums[:-2, :]
+
+
+def _window_sum(array: np.ndarray) -> np.ndarray:
+    """Sum over every 3x3 window."""
+    rows, cols = array.shape[0] - 2, array.shape[1] - 2
+    out = np.zeros((rows, cols), dtype=np.float64)
+    for di in range(3):
+        for dj in range(3):
+            out += array[di:di + rows, dj:dj + cols]
+    return out
+
+
+def planar_roughness_rms(elevation: np.ndarray) -> float:
+    """Mean planar-detrended RMS of a 3x3 window, in metres.
+
+    For offsets x, y in {-1, 0, 1} the least-squares plane over the window has
+    a = mean(z), b = Sx/6, c = Sy/6, so the residual sum of squares is
+    ``sum(z^2) - sum(z)^2/9 - (Sx^2 + Sy^2)/6``. NaN pixels are filled with the
+    tile median before differencing.
+    """
+    values = np.asarray(elevation, dtype=np.float64)
+    if values.shape[0] < 3 or values.shape[1] < 3:
+        return float("nan")
+    finite = np.isfinite(values)
+    if not finite.any():
+        return float("nan")
+    if not finite.all():
+        values = np.where(finite, values, float(np.nanmedian(values)))
+    total = _window_sum(values)
+    total_sq = _window_sum(values * values)
+    sx, sy = _first_moment_sums(values)
+    residual = total_sq - total ** 2 / 9.0 - (sx ** 2 + sy ** 2) / 6.0
+    rms = np.sqrt(np.clip(residual, 0.0, None) / 9.0)
+    return float(rms.mean())
+
+
+def elevation_relief_p95_p5(elevation: np.ndarray) -> float:
+    """p95 - p5 of the tile elevation, in metres."""
+    values = np.asarray(elevation, dtype=np.float64)
+    finite = values[np.isfinite(values)]
+    if finite.size == 0:
+        return float("nan")
+    return float(np.percentile(finite, 95) - np.percentile(finite, 5))
+
+
 def hydrate_one(row: pd.Series, data_dir: Path, units_source: str) -> dict:
     sample_id = str(row["sample_id"])
     record = {
@@ -135,6 +185,10 @@ def hydrate_one(row: pd.Series, data_dir: Path, units_source: str) -> dict:
         "LTM_CODE": str(row["LTM_CODE"]),
         "center_lat": float(row["center_lat"]),
         "center_lon": float(row["center_lon"]),
+        "incidence_angle_deg": float(row.get("incidence_angle_deg", float("nan"))),
+        "emission_angle_deg": float(row.get("emission_angle_deg", float("nan"))),
+        "phase_angle_deg": float(row.get("phase_angle_deg", float("nan"))),
+        "sub_solar_ground_azimuth_deg": float(row.get("sub_solar_ground_azimuth_deg", float("nan"))),
         "bounds_xmin": float(row["bounds_xmin"]),
         "bounds_ymin": float(row["bounds_ymin"]),
     }
@@ -177,11 +231,55 @@ def hydrate_one(row: pd.Series, data_dir: Path, units_source: str) -> dict:
         record["nac_y0"] = float(nac.y.values[0])
         record["slope_x0"] = float(slope.x.values[0])
         record["slope_y0"] = float(slope.y.values[0])
-        record["dtm3m_min"] = float(np.nanmin(dtm[next(n for n, v in dtm.data_vars.items() if v.ndim == 2)].values))
+        dtm_var = next(n for n, v in dtm.data_vars.items() if v.ndim == 2)
+        dtm_values = np.asarray(dtm[dtm_var].values, dtype=np.float64)
+        record["dtm3m_min"] = float(np.nanmin(dtm_values))
+        record["dtm3m_relief_p95_p5_m"] = elevation_relief_p95_p5(dtm_values)
+        record["dtm3m_roughness_9m_m"] = planar_roughness_rms(dtm_values)
+        record["dtm3m_valid_fraction"] = float(np.isfinite(dtm_values).mean())
     record["units_source"] = units_source
     record["geo_join_status"] = "BOUNDS_ALIGNED_GEO_JOIN_PENDING"
     record["modality_read_ok"] = True
     return record
+
+
+def read_elevation(path: Path) -> np.ndarray:
+    import hdf5plugin  # noqa: F401
+    import h5netcdf  # noqa: F401
+    import xarray as xr
+    with xr.open_dataset(path, engine="h5netcdf") as dataset:
+        var = next(n for n, v in dataset.data_vars.items() if v.ndim == 2)
+        return np.asarray(dataset[var].values, dtype=np.float64)
+
+
+def enrich_existing(labels_path: Path, manifest_path: Path, data_dir: Path) -> int:
+    """Backfill geometry and DTM-derived attributes onto an already hydrated labels file."""
+    labels = pd.read_csv(labels_path)
+    geometry_columns = ["incidence_angle_deg", "emission_angle_deg", "phase_angle_deg",
+                        "sub_solar_ground_azimuth_deg"]
+    manifest = pd.read_parquet(manifest_path, columns=["sample_id", *geometry_columns])
+    labels = labels.drop(columns=[c for c in labels.columns if c in geometry_columns], errors="ignore")
+    labels = labels.merge(manifest, on="sample_id", how="left")
+
+    relief, roughness, valid = [], [], []
+    for sample_id in labels["sample_id"].astype(str):
+        path = data_dir / sample_id / "dtm_3m.nc"
+        if not path.exists():
+            relief.append(np.nan), roughness.append(np.nan), valid.append(np.nan)
+            continue
+        elevation = read_elevation(path)
+        relief.append(elevation_relief_p95_p5(elevation))
+        roughness.append(planar_roughness_rms(elevation))
+        valid.append(float(np.isfinite(elevation).mean()))
+    labels["dtm3m_relief_p95_p5_m"] = relief
+    labels["dtm3m_roughness_9m_m"] = roughness
+    labels["dtm3m_valid_fraction"] = valid
+    labels.to_csv(labels_path, index=False)
+    print(f"enriched {labels_path}: "
+          f"geometry_rows={int(labels['incidence_angle_deg'].notna().sum())}, "
+          f"roughness_rows={int(np.isfinite(labels['dtm3m_roughness_9m_m']).sum())}, "
+          f"relief_rows={int(np.isfinite(labels['dtm3m_relief_p95_p5_m']).sum())}")
+    return 0
 
 
 def record_fieldnames(summary_path: Path, records: list[dict]) -> list[str]:
@@ -215,7 +313,14 @@ def main(argv=None) -> int:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--units-source", default="SomBench README: slope_3m/slope_60m degrees, range [0,90]")
     parser.add_argument("--resume", action="store_true", help="skip tiles already present in the labels file")
+    parser.add_argument("--enrich", action="store_true",
+                        help="only backfill geometry/DTM attributes onto the existing labels file")
     args = parser.parse_args(argv)
+
+    if args.enrich:
+        if not args.labels.exists():
+            raise SystemExit(f"--enrich needs an existing labels file: {args.labels}")
+        return enrich_existing(args.labels, args.manifest, args.data_dir)
 
     frame = pd.read_parquet(args.manifest)
     frame = frame[frame["has_slope3m"] & frame["split_final"].isin(SPLITS)].copy()
@@ -256,14 +361,19 @@ def main(argv=None) -> int:
 
     args.labels.parent.mkdir(parents=True, exist_ok=True)
     import csv as csv_module
-    columns = record_fieldnames(args.labels, records)
-    mode = "a" if (args.resume and args.labels.exists()) else "w"
-    with args.labels.open(mode, newline="", encoding="utf-8") as handle:
-        writer = csv_module.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
-        if mode == "w":
-            writer.writeheader()
-        for record in records:
-            writer.writerow({k: v for k, v in record.items() if k in columns})
+    if not records:
+        if not args.labels.exists():
+            raise SystemExit("no tiles hydrated and no existing labels file")
+        print("nothing to download (all selected tiles already present); summarizing existing labels")
+    else:
+        columns = record_fieldnames(args.labels, records)
+        mode = "a" if (args.resume and args.labels.exists()) else "w"
+        with args.labels.open(mode, newline="", encoding="utf-8") as handle:
+            writer = csv_module.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
+            if mode == "w":
+                writer.writeheader()
+            for record in records:
+                writer.writerow({k: v for k, v in record.items() if k in columns})
 
     labels = pd.read_csv(args.labels)
     summary = {
