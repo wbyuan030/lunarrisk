@@ -27,3 +27,38 @@ Date: 2026-10-17. This change fixes **evaluation/training code**, not historical
 
 ## Notes on interpretation
 `g10`/ `g15` thresholds are **research proxies** rather than certified landing safety definitions. The earlier claim that the coarse model gives UAR 1.0 at 20% coverage was caused by reversed ranking. The previously reported MAE and AUC are not corrected by this patch; event heads and ridge calibration can change Brier/NLL, so these require retraining and fresh outputs.
+
+## Rerun status (2026-10-17)
+
+Completed on the local RX 7900 XT (torch 2.5.1+rocm6.2, HIP 6.2.41133), git commit
+`4638b2e` plus the follow-up export/aggregation commits.
+
+- Tests: **66/66 PASS** (`python3 -m unittest discover -s tests -v`). Added 8 tests:
+  a 1-epoch `train_variant` fixture (event scores `[N,2]`, independent heads), a
+  high-AUC → low-UAR fixture, and 8 aggregation checks (paired bootstrap, cohort identity,
+  split independence).
+- Rerun: `--seed 42 --force-cache`, then seeds 43 and 44. Wall time 44 s / 21 s / 21 s
+  (86 s total; no cloud, single local GPU).
+- Artifacts: `outputs/baseline_fixed_seed{42,43,44}/*`,
+  `outputs/baseline_fixed_summary/{summary.json,summary.md}`.
+- Report: `reports/p1_baseline.md` §0 is the post-fix section; §5–§7 are labeled pre-fix.
+
+Headline (3 seeds, 110 test tiles / 25 groups, primary = cal-split Platt probability):
+
+- Risk curves are sane again: `coarse_ridge` UAR at 20% coverage 0.136 (was a spurious 1.000).
+- Paired group-bootstrap (1000 resamples, differences averaged over seeds):
+  `cnn_fusion - cnn_coarse_grid` ΔBrier −0.0171 [−0.0331, −0.0019] for g10>0.05 and
+  −0.0277 [−0.0469, −0.0104] for g15>0.02 → the NAC channel gives a small but
+  distinguishable event-probability gain; ΔMAE includes 0.
+- `cnn_fusion - coarse_ridge`: ΔMAE +0.0069 [−0.0014, +0.0154] (no gain) and for g15
+  ΔMAE +0.0201 [+0.0099, +0.0307] (significantly worse).
+- Calibration is not universally helpful: `coarse_ridge` and `cnn_coarse_grid` have better
+  raw Brier; `cnn_fusion` and `cnn_nac` need the cal-split Platt fit.
+- Split independence re-checked on the hydrated labels: 0 of 272 groups and 0 products
+  appear in more than one split.
+- `g10` and `g15` heads are not identical (mean |Δ| 0.044–0.160, Pearson 0.88–0.99).
+
+Decision: **GO small scale-up (conditional)** — freeze an extra held-out protocol, expand
+training to 3–5k tiles, and add observation geometry plus photometric normalization as
+controlled ablations. LFM, joint posterior, TiM, Qwen, weekend 4×4090 and paid cloud stay
+on HOLD.

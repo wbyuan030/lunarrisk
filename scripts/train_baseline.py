@@ -292,7 +292,8 @@ def logit(probability: np.ndarray) -> np.ndarray:
 
 
 def metrics(y: np.ndarray, p: np.ndarray, rule: tuple[str, float] | None = None,
-            event_probability: np.ndarray | None = None) -> dict:
+            event_probability: np.ndarray | None = None,
+            rule_name: str | None = None) -> dict:
     result = {
         "mae": float(np.abs(p - y).mean()),
         "rmse": float(np.sqrt(((p - y) ** 2).mean())),
@@ -302,7 +303,8 @@ def metrics(y: np.ndarray, p: np.ndarray, rule: tuple[str, float] | None = None,
         truth = (y > threshold).astype(np.float64)
         probability = np.clip(event_probability, 1e-7, 1 - 1e-7)
         result.update({
-            "rule": name,
+            "rule": rule_name or name,
+            "target": name,
             "threshold": threshold,
             "unsafe_rate": float(truth.mean()),
             "brier": float(((probability - truth) ** 2).mean()),
@@ -376,7 +378,7 @@ def evaluate_model(y_true: np.ndarray, fractions: np.ndarray, raw_scores: np.nda
     index = rule_column_index(rule_name)
     raw_probability = 1 / (1 + np.exp(-raw_scores))
     payload = {
-        "metrics_raw": metrics(y_true, fractions[:, index], rule, raw_probability),
+        "metrics_raw": metrics(y_true, fractions[:, index], rule, raw_probability, rule_name),
         "risk_coverage_raw": risk_coverage(y_true, raw_probability, rule_name),
     }
     if cal_scores is not None and cal_truth is not None:
@@ -384,7 +386,7 @@ def evaluate_model(y_true: np.ndarray, fractions: np.ndarray, raw_scores: np.nda
         calibrated = 1 / (1 + np.exp(-(slope * raw_scores + intercept)))
         payload["platt"] = {"slope": slope, "intercept": intercept, "degenerate": degenerate,
                             "cal_unsafe_rate": float(cal_truth.mean())}
-        payload["metrics_calibrated"] = metrics(y_true, fractions[:, index], rule, calibrated)
+        payload["metrics_calibrated"] = metrics(y_true, fractions[:, index], rule, calibrated, rule_name)
         payload["risk_coverage_calibrated"] = risk_coverage(y_true, calibrated, rule_name)
         payload["primary"] = "calibrated" if not degenerate else "raw"
         payload["probability"] = calibrated
@@ -640,12 +642,20 @@ def main(argv=None) -> int:
         "LTM_CODE": test_rows["LTM_CODE"], "y_g10": test_rows["slope3m_g10"],
         "y_g15": test_rows["slope3m_g15"],
         "slope60m_frac_gt_10": test_rows["slope60m_frac_gt_10"],
-        "constant_g10": predictions["constant"], "coarse_g10": predictions["coarse_ridge"],
+        "constant_g10": predictions["constant"],
+        "constant_g15": np.full(len(test_rows), constant["y2"]),
+        "coarse_g10": ridge_predictions[:, 0],
+        "coarse_g15": ridge_predictions[:, 1],
     }
     for variant in variant_names:
-        export[f"cnn_{variant}_g10"] = results["models"][f"cnn_{variant}"]["_predictions"]["fractions"][:, 0]
-        export[f"cnn_{variant}_g15"] = results["models"][f"cnn_{variant}"]["_predictions"]["fractions"][:, 1]
-        export[f"cnn_{variant}_event_prob"] = results["models"][f"cnn_{variant}"]["test"][PRIMARY_RULE]["probability"]
+        model_key = f"cnn_{variant}"
+        export[f"cnn_{variant}_g10"] = results["models"][model_key]["_predictions"]["fractions"][:, 0]
+        export[f"cnn_{variant}_g15"] = results["models"][model_key]["_predictions"]["fractions"][:, 1]
+        export[f"cnn_{variant}_event_prob"] = results["models"][model_key]["test"][PRIMARY_RULE]["probability"]
+    # Per-rule primary probability for every model, so seeds can be paired downstream.
+    for model_name, model in results["models"].items():
+        for rule_name, payload in model["test"].items():
+            export[f"{model_name}_prob_{rule_name}"] = payload["probability"]
     pd.DataFrame(export).to_csv(args.out / "test_predictions.csv", index=False)
 
     rc_rows = []

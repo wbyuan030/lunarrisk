@@ -1,8 +1,7 @@
 {
-  "status": "p1_baseline_2026-10-17",
+  "status": "p1_postfix_rerun_2026-10-17",
   "date": "2026-10-17",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
-  "artifacts_note": "outputs/ and data/ are gitignored; artifacts stay on disk",
   "files": [
     {
       "path": ".gitignore",
@@ -43,6 +42,11 @@
       "path": "docs/KNOWN_GAPS.md",
       "bytes": 1322,
       "sha256": "2d48aa0862355610e2e670c132c64333f94a4e9697ef6de792d4ee723f83861d"
+    },
+    {
+      "path": "docs/P1_5_NEXT_STEPS.md",
+      "bytes": 5948,
+      "sha256": "d5cbc951f414687043b74e84be628ea7de9ed9692d9faf6b3e0d7ebc3dd8ed12"
     },
     {
       "path": "docs/RUNBOOK.md",
@@ -106,8 +110,8 @@
     },
     {
       "path": "reports/p1_baseline.md",
-      "bytes": 9491,
-      "sha256": "123a99213fe56df2a14858ee6fbc2d0c5dbadd77ea675d78cce0e426a3532ac3"
+      "bytes": 16870,
+      "sha256": "54dcda01dded7bdee05da4d5f5229be78d70502d7c991bb0b1736b66be6c0387"
     },
     {
       "path": "reports/p1_manifest.md",
@@ -123,6 +127,11 @@
       "path": "requirements-extra.txt",
       "bytes": 248,
       "sha256": "ece378a54a9297bb56c5a9d17486dedc5d598fb9ec2014560f8f0c58c7b2ada4"
+    },
+    {
+      "path": "scripts/aggregate_seeds.py",
+      "bytes": 17865,
+      "sha256": "81e56e8c4c7257aabfb2ca0d2327483c169e6e53bae3e02675e7b75cdc892121"
     },
     {
       "path": "scripts/build_manifest.py",
@@ -171,8 +180,13 @@
     },
     {
       "path": "scripts/train_baseline.py",
-      "bytes": 33020,
-      "sha256": "f236f5a4797fefebc982e610c33fcae3e5dd29623c7826f91d03dae6be8f52db"
+      "bytes": 34404,
+      "sha256": "abbfb64c59166a117a92067d2a12cafc65892171dab4aaeed940d2a48a42bf41"
+    },
+    {
+      "path": "tests/test_aggregate_seeds.py",
+      "bytes": 4231,
+      "sha256": "cd1505d57db6a108727f6248c4c385b6fc91aadfefec7e7860c272b84ccd9749"
     },
     {
       "path": "tests/test_build_manifest.py",
@@ -191,8 +205,8 @@
     },
     {
       "path": "tests/test_train_baseline.py",
-      "bytes": 8720,
-      "sha256": "0503e0b1f603424880557c7cf2ac957a100388e1427ec8f0279aadac5e60809b"
+      "bytes": 14520,
+      "sha256": "c6e9525378df8f8db49cf40e6bf625b0da6225b94e7cb1f5170252a848fe25fc"
     }
   ]
 }

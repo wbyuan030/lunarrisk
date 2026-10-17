@@ -1,12 +1,94 @@
 # P1-03/P1-04 — 首个真实物理基线（NAC → 3 m 坡度超出率）
 
-日期：2026-10-17
-数据版本：S3 `nasa-lunar-fm-bench` 100k release，索引 SHA256
-`f9c39d1b570693902bd5616d44f6330ea15a425db3c9d3eb9ceb2cdc9be1873e`
-脚本：`scripts/hydrate_tiles.py`、`scripts/train_baseline.py`、`scripts/plot_baseline.py`
-单测：`tests/test_slope_labels.py`、`tests/test_build_manifest.py`、`tests/test_finalize_split.py`、`tests/test_train_baseline.py`（51/51 PASS）
+> **2026-10-17 post-fix 重跑（本节最新，取代 §5 的 UAR/HMR 与 g15 事件 Brier）**
+> 触发：上游提交 `4ba8511`/`29575da` 修复了风险排序反转、事件头共享、变体种子不配对、粗坡度未标定四个缺陷；
+> `docs/P1_5_NEXT_STEPS.md` 要求重跑并给出配对 CI。§5 的旧数值仍保留，但仅作 pre-fix 记录，不得引用其 UAR/HMR。
+
+## 0. Post-fix 重跑（3 seeds，110 test Tile / 25 地理组）
+
+修复内容（上游，非本轮）：risk evaluator 改为按**最低 P(unsafe)** 优先放行（此前按 `1-P(safe)` 升序，等于优先放行最危险样本，
+使 UAR 假性偏高）；每个 CNN 改为 4 输出 `[g10, g15, logit_unsafe_g10, logit_unsafe_g15]`，两条规则各有独立标签/BCE/标定/评估；
+所有变体使用同一 `--seed`（此前按 `--variants` 顺序偏移）；`coarse_ridge` 事件概率同样用 `cal` 做 Platt 标定。
+旧的 3 输出 checkpoint 不兼容，必须重训（本轮全部重训）。
+
+环境：`AMD Radeon RX 7900 XT` 19.984 GiB，PyTorch **2.5.1+rocm6.2**，HIP **6.2.41133-dd7f95766**，Python 3.10.12。
+耗时（wall，GPU）：seed 42 **44 s**（含重建 `cache_v2.npz` 34.5 MB）、seed 43 **21 s**、seed 44 **21 s**，合计 86 s。
+数据：`outputs/labels_hydrated.csv`（1,087,235 B）、110 test Tile / 25 组 / 10 个 LTM zone、unsafe 76/110。
+切分独立性复核：272 组中 **0** 组跨 split，**0** 个 PRODUCT 跨 split。单元测试 **66/66 PASS**（新增 8 项聚合与 fixture 测试）。
+
+### 0.1 均值（种子间 std），primary 概率
+
+| 模型 | 规则 | MAE | RMSE | Brier (primary) | Brier (raw) | AUC | NLL |
+|---|---|---|---|---|---|---|---|
+| `constant` | g10>0.05 | 0.3554 (0.0000) | 0.4355 (0.0000) | 0.2284 (0.0000) | 0.2284 | 0.5000 | 0.6498 |
+| `coarse_ridge` | g10>0.05 | **0.0504 (0.0000)** | **0.0705** | 0.0728 (0.0000) | 0.0702 | 0.9659 | 0.2283 |
+| `cnn_nac` | g10>0.05 | 0.3238 (0.0143) | 0.4473 (0.0224) | 0.1853 (0.0109) | 0.3421 (0.0405) | 0.7307 | 0.5504 |
+| `cnn_coarse_grid` | g10>0.05 | 0.0593 (0.0059) | 0.0798 (0.0048) | 0.0783 (0.0031) | 0.0733 (0.0017) | 0.9663 | 0.2414 |
+| `cnn_fusion` | g10>0.05 | 0.0573 (0.0037) | 0.0811 (0.0050) | **0.0612 (0.0069)** | 0.0778 (0.0144) | **0.9782** | **0.1873** |
+| `coarse_ridge` | g15>0.02 | **0.0301 (0.0000)** | 0.0446 | 0.0751 (0.0000) | 0.0760 | 0.9374 | 0.2549 |
+| `cnn_fusion` | g15>0.02 | 0.0501 (0.0038) | 0.0796 | 0.0759 (0.0015) | 0.0746 | **0.9521** | 0.2460 |
+
+### 0.2 配对组级自助差异（1000 次重采样，单位 = 泄漏组，种子间先平均）
+
+| 比较 | 规则 | ΔMAE [95% CI] | ΔBrier [95% CI] | 排除 0 |
+|---|---|---|---|---|
+| fusion − coarse_grid | g10>0.05 | −0.0020 [−0.0079, +0.0036] | **−0.0171 [−0.0331, −0.0019]** | 是 |
+| fusion − coarse_grid | g15>0.02 | −0.0045 [−0.0135, +0.0045] | **−0.0277 [−0.0469, −0.0104]** | 是 |
+| fusion − coarse_ridge | g10>0.05 | +0.0069 [−0.0014, +0.0154] | −0.0116 [−0.0264, +0.0031] | 否 |
+| fusion − coarse_ridge | g15>0.02 | **+0.0201 [+0.0099, +0.0307]** | +0.0008 [−0.0141, +0.0161] | 是（MAE 更差） |
+| coarse_grid − coarse_ridge | g15>0.02 | **+0.0245 [+0.0159, +0.0330]** | **+0.0285 [+0.0065, +0.0510]** | 是（CNN 更差） |
+
+**结论修正**：在固定结构对照下，单目 NAC 通道对**事件概率**有小而可分辨的改善（两条规则的 ΔBrier 均排除 0），
+但对**点估计 MAE 无改善**（CI 含 0）；`cnn_fusion` 相对 60 m 特征岭回归在 MAE 上不占优（g15 显著更差）。
+
+### 0.3 Risk–coverage（3 seed 平均 UAR / HMR，primary 概率）
+
+| 模型 | 规则 | cov 0.2 | cov 0.4 | cov 0.6 | cov 0.8 |
+|---|---|---|---|---|---|
+| `constant` | g10>0.05 | 0.818 / 0.237 | 0.818 / 0.474 | 0.742 / 0.645 | 0.716 / 0.829 |
+| `coarse_ridge` | g10>0.05 | 0.136 / 0.039 | 0.250 / 0.145 | 0.485 / 0.421 | 0.614 / 0.711 |
+| `cnn_nac` | g10>0.05 | 0.424 / 0.123 | 0.530 / 0.307 | 0.596 / 0.518 | 0.629 / 0.728 |
+| `cnn_coarse_grid` | g10>0.05 | 0.076 / 0.022 | 0.250 / 0.145 | 0.485 / 0.421 | 0.614 / 0.711 |
+| `cnn_fusion` | g10>0.05 | **0.061 / 0.018** | **0.227 / 0.132** | 0.485 / 0.421 | 0.614 / 0.711 |
+| `cnn_fusion` | g15>0.02 | 0.045 / 0.019 | 0.068 / 0.057 | 0.146 / 0.182 | 0.352 / 0.585 |
+
+无筛查基线（unsafe 率）g10 规则 0.691、g15 规则 0.482。修正后 20% coverage 下 60 m 基线 UAR 从假性的 1.000 降到 0.136。
+
+### 0.4 标定审计（seed 42，raw → calibrated）
+
+| 模型 | 规则 | Brier raw → cal | NLL raw → cal | AUC | Platt |
+|---|---|---|---|---|---|
+| `coarse_ridge` | g10>0.05 | 0.0702 → 0.0728 | 0.2240 → 0.2283 | 0.9659 | slope 1.05, b 0.15 |
+| `cnn_coarse_grid` | g10>0.05 | 0.0714 → 0.0826 | 0.2268 → 0.2528 | 0.9656 | slope 0.98, b 0.76 |
+| `cnn_fusion` | g10>0.05 | 0.0892 → 0.0705 | 0.2625 → 0.2094 | 0.9783 | slope 1.17, b −0.75 |
+| `cnn_nac` | g10>0.05 | 0.3465 → 0.1791 | 0.9587 → 0.5367 | 0.7604 | slope 0.63, b 1.33 |
+
+标定并非总是有益：`coarse_ridge` 与 `cnn_coarse_grid` 的 raw Brier 更好，`cnn_fusion` 与 `cnn_nac` 需要标定才有竞争力。
+两规则分别报告，未在 test 上调参。
+
+### 0.5 两个事件头是否退化
+
+`|g10 − g15|` 均值 0.044–0.160，Pearson 0.88–0.99，三个种子均**非完全相同** → 两个头各自学习，未退化为同一输出。
+
+### 0.6 Post-fix 结论
+
+图（post-fix，seed 42）：`outputs/baseline_fixed_summary/figures_seed42.png`
+（UAR–coverage 曲线已在 3 seed 平均下单调上升；20% coverage 时 `cnn_fusion` UAR 0.061、`coarse_ridge` 0.136、
+`cnn_nac` 0.310、`constant` 0.815，无筛查基线 0.691）。
+
+**GO small scale-up（有条件）**：修正后的风险曲线、双事件头、切分独立性与标定审计均通过；
+但证据仍指向 **60 m 坡度层是主要信息源**，单目 NAC 只在事件概率上有边际增益。
+下一步按协议：先冻结额外的 held-out 测试协议，再把训练扩到 3–5k Tile，并把**观测几何 + 光度归一化**作为受控消融。
+LFM / 联合后验 / TiM / Qwen / 周末 4×4090 / 付费云仍 **HOLD**。
+
+---
 
 ## 1. 任务与规则
+
+> 数据版本：S3 `nasa-lunar-fm-bench` 100k release，索引 SHA256
+> `f9c39d1b570693902bd5616d44f6330ea15a425db3c9d3eb9ceb2cdc9be1873e`。
+> 脚本：`scripts/{hydrate_tiles,train_baseline,plot_baseline,aggregate_seeds}.py`。
+> 单测：66/66 PASS（`tests/test_{slope_labels,build_manifest,finalize_split,train_baseline,aggregate_seeds}.py`）。
 
 - 目标属性：`y1 = g(10°)`、`y2 = g(15°)`，即原生 3 m slope 网格面积占比（原始计数，未做平滑/伪计数）。
 - 预先固定规则：`unsafe = 1[y1 > 0.05]`（工程代理，非认证着陆安全）。
@@ -55,7 +137,11 @@ CNN 输入尺寸 128、batch 16、Adam lr 1e-3、最多 60 epoch、patience 10�
 按 val MAE 早停；事件概率用 `cal` 集做 Platt 标定。`cnn_nac` vs `cnn_coarse_grid` vs `cnn_fusion`
 是唯一能分离"光学影像是否提供额外信息"的对照。
 
-## 5. 结果（110 test Tile / 25 组）
+## 5. 结果（110 test Tile / 25 组）— **已被 §0 取代**
+
+> ⚠️ 以下为 **pre-fix** 数值（commit `f55eb50`）：`risk_coverage` 排序方向错误，UAR/HMR 不可用；
+> 且 CNN 只有一个事件头（g15 规则复用了 g10 的 logit），g15 事件 Brier 不可用。
+> MAE/RMSE 与 g10 事件 Brier 的模型排序在 post-fix 后仍大体成立，但请以 §0 为准。
 
 ### 5.1 点估计
 
@@ -130,7 +216,11 @@ CNN 输入尺寸 128、batch 16、Adam lr 1e-3、最多 60 epoch、patience 10�
 - 规则 `g(10°) > 0.05` 是工程代理，不是认证着陆安全；g15 规则同样只是第二条预先固定的报备规则。
 - 未使用 crater 工程集，未使用 4×4090，未产生云支出。
 
-## 7. 结论与下一步
+## 7. 结论与下一步 — **pre-fix，见 §0.6 的修订**
+
+> ⚠️ 本节的判定基于 pre-fix 数值。post-fix（§0）修订为：**GO small scale-up（有条件）**——
+> 风险曲线已修正、双事件头与切分独立性通过，单目 NAC 对事件概率有边际但可分辨的增益，
+> 但 60 m 坡度层仍是主要信息源，且 NAC 对点估计 MAE 无改善。
 
 **判定：主假设在当前规模下未获支持（NAC-only 弱于独立 60 m 基线，融合无显著增益）。**
 
@@ -147,21 +237,30 @@ CNN 输入尺寸 128、batch 16、Adam lr 1e-3、最多 60 epoch、patience 10�
 ## 8. 复现
 
 ```bash
-# 单元测试（51）
+# 单元测试（66）
 python3 -m unittest discover -s tests -v
 
 # 下载 + 物理标签（760 Tile，可 --resume 续跑）
 python3 scripts/hydrate_tiles.py --train 400 --cal 120 --val 120 --test 120 --workers 12 --resume
 
-# 主实验（constant / coarse_ridge / cnn_nac / cnn_coarse_grid / cnn_fusion）
-python3 scripts/train_baseline.py
+# 主实验（post-fix，3 seeds）：constant / coarse_ridge / cnn_nac / cnn_coarse_grid / cnn_fusion
+for s in 42 43 44; do
+  extra=""; [ "$s" = "42" ] && extra="--force-cache"
+  start=$(date +%s)
+  python3 scripts/train_baseline.py --seed $s --out outputs/baseline_fixed_seed$s $extra
+  echo $(( $(date +%s) - start )) > outputs/baseline_fixed_seed$s/elapsed_sec.txt
+done
 
-# 无 NAC 筛选敏感性
+# 多种子聚合：均值/std、配对组级自助差异、标定审计、独立头检查
+python3 scripts/aggregate_seeds.py
+
+# pre-fix 单种子结果（仅历史对照，勿引用 UAR）与无筛选敏感性
 python3 scripts/train_baseline.py --min-nac-valid 0 --out outputs/baseline_alltiles
 
-# 图
+# 图（pre-fix 数值，post-fix 需重画）
 python3 scripts/plot_baseline.py
 ```
 
-产物：`outputs/baseline/{metrics.json,test_predictions.csv,risk_coverage.csv,figures.png}`、
-`outputs/baseline_alltiles/*`、`outputs/labels_hydrated.csv`、`outputs/cache_v2.npz`。
+产物：`outputs/baseline_fixed_seed{42,43,44}/{metrics.json,test_predictions.csv,risk_coverage.csv}`、
+`outputs/baseline_fixed_summary/{summary.json,summary.md}`、`outputs/baseline_alltiles/*`、
+`outputs/labels_hydrated.csv`、`outputs/cache_v2.npz`。

@@ -241,6 +241,70 @@ class TestChannelsAndCache(unittest.TestCase):
         self.assertNotIn("seed_offset", signature.parameters)
 
 
+class TestTrainVariantFixture(unittest.TestCase):
+    """End-to-end fixture: one epoch through train_variant + predict_variant."""
+
+    def _fixture(self, n_train=8, n_val=4, size=32, seed=0):
+        import argparse
+        import torch
+        rng = np.random.default_rng(seed)
+        cache, rows = {}, []
+        for index in range(n_train + n_val):
+            sample_id = f"s{index}"
+            # Channel 0 carries a label-correlated blob so training sees real signal.
+            g10 = float(rng.uniform(0, 1))
+            blob = np.full((size, size), g10, dtype=np.float32)
+            noise = rng.random((size, size)).astype(np.float32) * 0.1
+            cache[sample_id] = np.stack([blob + noise, rng.random((size, size)).astype(np.float32)]).astype(np.float16)
+            rows.append({
+                "sample_id": sample_id,
+                "split": "train" if index < n_train else "val",
+                "slope3m_g10": g10,
+                "slope3m_g15": float(np.clip(g10 - 0.2, 0, 1)),
+                "group_id": f"G{index}",
+            })
+        args = argparse.Namespace(seed=seed, epochs=1, patience=1, batch=4, lr=1e-2,
+                                  augment=False, verbose=False)
+        return cache, pd.DataFrame(rows), args, torch
+
+    def test_event_scores_have_two_columns(self):
+        cache, data, args, torch = self._fixture()
+        device = torch.device("cpu")
+        result = tb.train_variant(cache, data, args, device, (0,))
+        val_rows = data[data["split"] == "val"].reset_index(drop=True)
+        fractions, scores = tb.predict_variant(result, val_rows, cache, (0,), 4, device)
+        self.assertEqual(tuple(scores.shape), (len(val_rows), 2))
+        self.assertEqual(tuple(fractions.shape), (len(val_rows), 2))
+        self.assertTrue(np.isfinite(scores).all())
+        # The two rules must not be served by one shared score column.
+        scores_two_cols = tb.predict_variant(result, val_rows, cache, (0,), 4, device)[1]
+        np.testing.assert_array_equal(scores_two_cols, scores)
+        self.assertEqual(scores.shape[1], len(tb.RULES))
+
+    def test_fixture_scores_drive_both_rules_independently(self):
+        cache, data, args, torch = self._fixture(seed=1)
+        device = torch.device("cpu")
+        result = tb.train_variant(cache, data, args, device, (1,))
+        val_rows = data[data["split"] == "val"].reset_index(drop=True)
+        fractions, scores = tb.predict_variant(result, val_rows, cache, (1,), 4, device)
+        for index, rule_name in enumerate(tb.RULES):
+            payload = tb.evaluate_model(val_rows["slope3m_g10"].to_numpy(), fractions, scores[:, index], rule_name)
+            self.assertIn("metrics", payload)
+            self.assertEqual(payload["metrics_raw"]["rule"], rule_name)
+            self.assertIsNotNone(payload["metrics_raw"]["brier"])
+
+    def test_high_auc_ranking_lowers_uar(self):
+        # Identical (perfectly ranked) predictions must accept the safe sites first.
+        y = np.array([0.0, 0.9, 0.0, 0.9, 0.0, 0.9])
+        fractions = np.column_stack([y, y])
+        unsafe = np.array([0.02, 0.98, 0.05, 0.9, 0.01, 0.95])
+        payload = tb.evaluate_model(y, fractions, tb.logit(unsafe), "g10_gt_0.05")
+        self.assertAlmostEqual(payload["metrics"]["auc"], 1.0)
+        quarter = payload["risk_coverage"][0]
+        self.assertEqual(quarter["unsafe_accepted_n"], 0)
+        self.assertEqual(quarter["UAR"], 0.0)
+
+
 class TestCoarseFeatures(unittest.TestCase):
     def test_feature_list_present_in_hydrated_labels(self):
         path = ROOT / "outputs" / "labels_hydrated.csv"
