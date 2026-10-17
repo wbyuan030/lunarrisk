@@ -94,14 +94,16 @@
   即在可达公开镜像上，**「有光学影像」与「源级可验证 + 空间独立」几乎互斥**：唯一源可验证的光学景 `ALPHONSUS` 净空差 0.84 km；
   其余 7 景正是 Gate 1 中被 README 空源清单排除的 mosaic 产品。
 
-**原始 NAC EDR 卷不可达（逐条记录）**
+**原始 NAC EDR 卷：公开数据，但目录入口在本环境不可达（是发现问题，不是权限问题）**
 
-- JPL 卷索引（`https://pds-imaging.jpl.nasa.gov/volumes/lro.html`）给出两个权威入口：
-  `https://pdsimage2.wr.usgs.gov/Lunar_Reconnaissance_Orbiter/LROC/EDR/LROLRC_0005/` 与
-  `https://lroc.sese.asu.edu/data/LRO-L-LROC-2-EDR-V1.0/LROLRC_0005/`；两者在当前网络下分别返回 404 与 301→
-  `pds.mcp.nasa.gov` 的 JS 目录浏览器（无静态列表、无可用 API），因此**无法构造出可下载的 EDR 文件 URL**。
-- 另外尝试并失败的路径族：`pds.mcp.nasa.gov/.../pds4/lroc/lro-l-lroc-2-edr[-v1.0]/…`（含 `LROLRC_0001/0005/2001` 卷号与大小写变体）、
-  `pds-geosciences.wustl.edu/lro/…`、`data.lroc.im-ldi.com/lroc/view_rdr/NAC_EDR_M139872173`。
+- 定位：EDR 是 PDS 公开数据、无需任何凭据；本环境的失败模式全部是「路径/目录发现」——
+  详见 `docs/P1_9_EDR_ORTHO_RUNBOOK.md` 第 1.0 节的入口活性矩阵（10 个入口逐条实测结果）。
+- 已试并失败：MCP store 的 EDR bundle（约 25 种组合，含 `LE/RE` 后缀文件名）、
+  `pds.lroc.im-ldi.com` 与 `lroc.sese.asu.edu`（302/301 → JS 目录浏览器）、
+  JPL 卷索引给出的 USGS 路径（404，链接失效）、WUSTL 的 GEO 节点（只有 LOLA/DLRE/LEND，无 LROC）、
+  ODE REST（API 活着但 `productid` 查询 `Count 0`）、LROC 门户检索（POST 表单 + JS 驱动）。
+- 最快的解法：在浏览器里打开一次 MCP EDR 目录浏览器或 LROC 门户检索单个 EDR，取回一个真实文件 URL，
+  即可把 168 条 EDR 的下载脚本化（`outputs/p19_edr_acquisition_list.csv` 已备好）。
 - 明确禁止：不得用 `_SHADE.TIF` / `_SLOPE` / `*.PYR.TIF` 冒充独立光学输入（均由被测 DTM 派生）。
 
 **对 Gate 3 的直接后果**：按计划「不足样本则返回 `BLOCKED_NEW_HELDOUT`，不降低独立条件填满数量」，

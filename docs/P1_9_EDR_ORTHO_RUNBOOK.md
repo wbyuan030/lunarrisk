@@ -19,6 +19,30 @@
 
 ## 1. EDR 卷定位与下载（机构网络）
 
+### 1.0 本机实测的入口矩阵（先看这里，别重跑探测）
+
+结论：**EDR 数据是公开、免认证的；卡点是目录/URL 发现，不是权限。** 本机（headless + 代理）实测：
+
+| 入口 | 实测 | 说明 |
+|---|---|---|
+| `pds.mcp.nasa.gov/.../pds4/lroc/lro-l-lroc-5-rdr/…` | **200** | RDR/5 bundle；3 景 DTM（25/127/91 MB）已成功下载 |
+| 同站点 EDR bundle（约 25 种组合：`lro-l-lroc-2-edr[-v1.0]` × 卷号 `LROLRC_0004/0005/0006/2001` × `DATA/SDP/NAC` × 文件名带/不带 `LE/RE` 后缀） | 全部 404 | 该镜像大概率只放了 RDR/5 |
+| `pds.lroc.im-ldi.com/data/LRO-L-LROC-2-EDR-V1.0/` | 302 | 跳到 MCP 的 JS 目录浏览器（无静态列表、无公开 JSON 端点） |
+| `lroc.sese.asu.edu/data/LRO-L-LROC-2-EDR-V1.0/LROLRC_0005/` | 301 | 同上 |
+| `pdsimage2.wr.usgs.gov/Lunar_Reconnaissance_Orbiter/LROC/EDR/LROLRC_000{5,6}/…` | 404 | 站点根 200；JPL 卷索引里的这条链接已失效 |
+| `pds-geosciences.wustl.edu/lro/` | 200（Apache 目录索引） | 只有 LOLA/DLRE/LEND/MRF 等 GEO 节点数据，**无 LROC** |
+| `oderest.rsl.wustl.edu/live2/?query=product&…` | 200 | REST API 活着，但 `productid=M139872173[LE|RE]` 返回 `Count 0`（未索引 LROC EDR，或需 `pdsid`/`odeid`） |
+| `data.lroc.im-ldi.com/lroc/search`（含 EDR 级过滤字段：入射/出射/曝光/太阳位置/轨道） | 200 | POST 表单 + CSRF token；脚本提交后返回同一页 → 前端 JS 驱动，需浏览器或它的 JSON 端点 |
+| `pds-imaging.jpl.nasa.gov/volumes/lro.html` | 200（193 KB） | 给出 `LROLRC_XXXX` 卷及日期范围（可用），但外链已失效 |
+| `imbrium.mit.edu/DATA/SLDEM2015/…` | 200 | 粗地形可用（167 MB JP2，容器内 PIL 可读） |
+
+**给执行人的最快路径（5–10 分钟）**：在浏览器打开 MCP 的 EDR 目录浏览器
+`https://pds.mcp.nasa.gov/data/index.html#/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-2-edr/`，
+或 LROC 门户 `https://data.lroc.im-ldi.com/lroc/search` 检索一个已知 EDR（如 `M139872173LE`），
+把**实际可下载的文件 URL** 记下来。有了一个可用 URL 模板，168 条 EDR 的清单即可脚本化批量执行。
+
+### 1.1 步骤
+
 1. **ID → 卷**：LROC EDR 卷按时间切分（如 `LROLRC_0001`…）。卷索引页
    `https://pds-imaging.jpl.nasa.gov/volumes/lro.html` 给出每个卷的起止日期与在线入口；
    下载后优先使用卷内 `INDEX/` 下的索引表把 `<EDR_ID>` 映射到具体文件路径。

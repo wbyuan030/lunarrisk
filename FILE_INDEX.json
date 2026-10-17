@@ -1,7 +1,7 @@
 {
- "status": "p1_9_gate0_gate1_pass_gate2_dtm_pass_optical_blocked_gate3_blocked_policy_preregistered_2026-10-17",
+ "status": "p1_9_gate3_blocked_policy_preregistered_edr_entry_matrix_probed_2026-10-17",
  "date": "2026-10-17",
- "git_sha": "ca7d2039d6d200bb462f0e6b4e513976c5a662c4",
+ "git_sha": "fe2e3b6b31244a8bb472dbf32ef9f1bd7fd7c863",
  "files": [
   {
    "path": ".gitignore",
@@ -25,8 +25,8 @@
   },
   {
    "path": "FILE_INDEX.json",
-   "bytes": 10971,
-   "sha256": "89812e4ba1b15741fe7bea4895571b3841857031af31ebd515a3f71dbfdadb76"
+   "bytes": 11472,
+   "sha256": "c4f483995f14fc85e99c88551228fc225f9441dede5a78574b0d7decccf03aca"
   },
   {
    "path": "README.md",
@@ -70,8 +70,8 @@
   },
   {
    "path": "docs/P1_9_EDR_ORTHO_RUNBOOK.md",
-   "bytes": 6488,
-   "sha256": "deea72f52b9d1161a6dcc713fc2b6dee64fb557f79f3828a7a303a0385fc9914"
+   "bytes": 8725,
+   "sha256": "8132c8c1969bbef76f5ee2ae7b26aa96c253e5a792503d9aaceba1e175c0d03f"
   },
   {
    "path": "docs/P1_9_HELDOUT_BUILD.md",
@@ -190,8 +190,8 @@
   },
   {
    "path": "reports/p1_9_io_label_probe.md",
-   "bytes": 11170,
-   "sha256": "2649e19b412c532564dd4a8e42f62a9d709fc9d479f3b313d092ba072b5dff16"
+   "bytes": 11426,
+   "sha256": "a782030c71e5ccdfb7302b9f76308f411529b36075399238ee5617a6462171e3"
   },
   {
    "path": "reports/p1_9_metadata_audit.md",
