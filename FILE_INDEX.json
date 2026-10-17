@@ -1,5 +1,5 @@
 {
-  "status": "p1_postfix_rerun_2026-10-17",
+  "status": "p1_6_review_response_2026-10-17",
   "date": "2026-10-17",
   "runtime_workspace": "/data/lunarrisk (host: ~/rocm_dev/rocm_7_1_ubuntu_2204/data/lunarrisk)",
   "files": [
@@ -45,13 +45,13 @@
     },
     {
       "path": "docs/P1_5_NEXT_STEPS.md",
-      "bytes": 5948,
-      "sha256": "d5cbc951f414687043b74e84be628ea7de9ed9692d9faf6b3e0d7ebc3dd8ed12"
+      "bytes": 7127,
+      "sha256": "24a43f574be9942b2f012932c6e32458140abfc091e71aad6fb8adf8fb240fbf"
     },
     {
       "path": "docs/RUNBOOK.md",
-      "bytes": 6609,
-      "sha256": "6f62825adacf0965ca0989399ba61867cfef7484fa92195dc78163fb2b3c853a"
+      "bytes": 9248,
+      "sha256": "36a91837c8dfbabdf2ecc58e95519c00b28d3b9f9aa660b4e6332ae9e1bf756b"
     },
     {
       "path": "docs/TASKS.md",
@@ -110,8 +110,8 @@
     },
     {
       "path": "reports/p1_baseline.md",
-      "bytes": 16870,
-      "sha256": "54dcda01dded7bdee05da4d5f5229be78d70502d7c991bb0b1736b66be6c0387"
+      "bytes": 23817,
+      "sha256": "4627e9c25eec4e68fdbff6a6011fb2785086040604e7ee238ac7b65a632e1f3b"
     },
     {
       "path": "reports/p1_manifest.md",
@@ -130,13 +130,13 @@
     },
     {
       "path": "scripts/aggregate_seeds.py",
-      "bytes": 17865,
-      "sha256": "81e56e8c4c7257aabfb2ca0d2327483c169e6e53bae3e02675e7b75cdc892121"
+      "bytes": 18662,
+      "sha256": "f0a1283741cbcfde8a44ecf370ef1b9bad8bdd41ccb1eeaa341f4cebf11d6d0c"
     },
     {
       "path": "scripts/build_manifest.py",
-      "bytes": 15398,
-      "sha256": "483f5aa3e05dc5381747dedac24234f0ad971716a7389dc8378c21c1b1554bee"
+      "bytes": 15805,
+      "sha256": "17dab9df6a153ac798e1de748b71edb25c96e1da274e0bf6a6a8ae8098d2e64b"
     },
     {
       "path": "scripts/crater_pilot.py",
@@ -145,8 +145,8 @@
     },
     {
       "path": "scripts/finalize_split.py",
-      "bytes": 8354,
-      "sha256": "22101b089dce1dc0832764b6ccab9e6b8c1818cb1f796b025b5bc2dfd2e4f9f4"
+      "bytes": 10613,
+      "sha256": "7fff1e7481f84ed4002a56831c5fcd6f9984b5e21099a07f5db823fe2562b36f"
     },
     {
       "path": "scripts/hf_audit.py",
@@ -155,8 +155,8 @@
     },
     {
       "path": "scripts/hydrate_tiles.py",
-      "bytes": 12069,
-      "sha256": "374b516019ed3e5ed6427a64e945030ccf43020cc543601d7f9157e0a96a197f"
+      "bytes": 17392,
+      "sha256": "216e88625a9f1242d85120845330d01ddae8c1046210534e1fc905dbd1a82e9e"
     },
     {
       "path": "scripts/make_slope_labels.py",
@@ -165,8 +165,8 @@
     },
     {
       "path": "scripts/plot_baseline.py",
-      "bytes": 4282,
-      "sha256": "e41d83357f19d9f6a9a009bd7c5303956bc895cff24e594ebdaa4ac432d11b76"
+      "bytes": 4445,
+      "sha256": "a40748b7408f64fe3da66f1cd00bc7f77b1a54174b0b6763b029e62c5ecf3640"
     },
     {
       "path": "scripts/rocm_smoke.py",
@@ -180,8 +180,8 @@
     },
     {
       "path": "scripts/train_baseline.py",
-      "bytes": 34404,
-      "sha256": "abbfb64c59166a117a92067d2a12cafc65892171dab4aaeed940d2a48a42bf41"
+      "bytes": 46622,
+      "sha256": "3232705bcb796cd0ed522727ddea621127a95992b1191bbbe21d601788903a2e"
     },
     {
       "path": "tests/test_aggregate_seeds.py",
@@ -190,13 +190,13 @@
     },
     {
       "path": "tests/test_build_manifest.py",
-      "bytes": 5004,
-      "sha256": "e6776fa2040906303bf838a14d5f90dc8e7b88bd84b79e4647412387769e7116"
+      "bytes": 5213,
+      "sha256": "45015a9686d2a7e75562745f0cdcaec2058ef64c252689658f632c6c707f4096"
     },
     {
       "path": "tests/test_finalize_split.py",
-      "bytes": 3512,
-      "sha256": "5d1e2e42ce3969ca4488d4904861845abc11d04cc196294fa6269f69d96a1e91"
+      "bytes": 5369,
+      "sha256": "8087b2a2e963c6f501f242be719ce0541494d8d90dc66b9d1dcd29b66ed59f6d"
     },
     {
       "path": "tests/test_slope_labels.py",
@@ -205,8 +205,8 @@
     },
     {
       "path": "tests/test_train_baseline.py",
-      "bytes": 14520,
-      "sha256": "c6e9525378df8f8db49cf40e6bf625b0da6225b94e7cb1f5170252a848fe25fc"
+      "bytes": 19765,
+      "sha256": "55512adc198f2a07d50eba5f4b4afb3be89843502f4fb3eda10114c85d5a524b"
     }
   ]
 }
