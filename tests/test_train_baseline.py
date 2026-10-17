@@ -66,6 +66,34 @@ class TestRiskCoverage(unittest.TestCase):
         self.assertEqual(rows[0]["UAR"], 0.0)
 
 
+
+    def test_evaluate_model_accepts_lowest_unsafe_probability(self):
+        # A high AUC is only operationally useful when LOW unsafe scores get accepted.
+        y = np.array([0.0, 0.8, 0.0, 0.7])
+        fraction = np.column_stack([y, y])
+        scores = tb.logit(np.array([0.05, 0.95, 0.1, 0.9]))
+        evaluated = tb.evaluate_model(y, fraction, scores, "g10_gt_0.05")
+        half = evaluated["risk_coverage"][1]  # 40% -> 2/4 accepted
+        self.assertEqual(half["unsafe_accepted_n"], 0)
+        self.assertEqual(half["UAR"], 0.0)
+        self.assertAlmostEqual(evaluated["metrics"]["auc"], 1.0)
+
+    def test_calibrated_risk_coverage_uses_unsafe_probability(self):
+        y = np.array([0.0, 0.8, 0.0, 0.7])
+        fraction = np.column_stack([y, y])
+        scores = tb.logit(np.array([0.05, 0.95, 0.1, 0.9]))
+        evaluated = tb.evaluate_model(
+            y, fraction, scores, "g10_gt_0.05",
+            cal_scores=scores, cal_truth=(y > 0.05).astype(int)
+        )
+        self.assertEqual(evaluated["risk_coverage"][1]["unsafe_accepted_n"], 0)
+
+    def test_invalid_risk_probability_is_rejected(self):
+        for invalid in (np.array([0.1, np.nan]), np.array([-0.1, 0.7]), np.array([1.1, 0.2])):
+            with self.assertRaises(ValueError):
+                tb.risk_coverage(np.array([0.0, 0.8]), invalid, "g10_gt_0.05")
+
+
 class TestBootstrap(unittest.TestCase):
     def test_grouped_bootstrap_resamples_groups(self):
         y = np.array([1.0, 2.0, 3.0])
@@ -188,6 +216,29 @@ class TestChannelsAndCache(unittest.TestCase):
         self.assertEqual(tb.CNN_VARIANTS["nac"], (0,))
         self.assertEqual(tb.CNN_VARIANTS["coarse_grid"], (1,))
         self.assertEqual(tb.CNN_VARIANTS["fusion"], (0, 1))
+
+
+
+    def test_rule_heads_are_independent_and_match_label_order(self):
+        import torch
+        model = tb.TinyCNN(in_channels=2)
+        self.assertEqual(tuple(model(torch.zeros((2, 2, 32, 32))).shape), (2, 4))
+        labels = pd.DataFrame({"slope3m_g10": [0.06, 0.01],
+                               "slope3m_g15": [0.01, 0.03]})
+        event = np.column_stack([
+            (labels[target] > threshold).to_numpy(dtype=np.float32)
+            for target, threshold in tb.RULES.values()
+        ])
+        np.testing.assert_array_equal(event, [[1.0, 0.0], [0.0, 1.0]])
+        logits = np.array([[0.4, 0.5], [-0.5, -0.6]])
+        self.assertEqual(tb.rule_column_index("g10_gt_0.05"), 0)
+        self.assertEqual(tb.rule_column_index("g15_gt_0.02"), 1)
+        self.assertFalse(np.array_equal(logits[:, 0], logits[:, 1]))
+
+    def test_model_order_does_not_define_seed(self):
+        import inspect
+        signature = inspect.signature(tb.train_variant)
+        self.assertNotIn("seed_offset", signature.parameters)
 
 
 class TestCoarseFeatures(unittest.TestCase):
