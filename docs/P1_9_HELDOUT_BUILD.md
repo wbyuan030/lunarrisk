@@ -1,6 +1,8 @@
 # P1.9 — 外部 LROC DTM 独立测试集：证据闭环与一次性冻结
 
-**状态：Coding Agent 待执行（2026-10-17）。本文件是行动方案，不是已完成实验。**
+**状态：Gate 0 与 Gate 1 已 PASS（2026-10-17，`main@fa0719a`）；Gate 2–4 未开始。**
+进度与证据见 `reports/p1_9_progress.md`、`reports/p1_9_metadata_audit.md`、`reports/p1_9_footprint_audit.md`。
+本文件其余部分是行动方案与判定口径，不是已完成实验。
 起点：`main@cdafae4` 的 P1.8 fixed-mask 15 次训练与 163 项通过测试；随后针对外部 LROC 索引审计已修正“空源 ID 误判”和“等面积圆半径假冒 footprint 上界”的代码。详见 `reports/p1_8_fixed_mask.md` 与 `reports/p1_8_new_heldout_sources.md` 第 7 节勘误。
 
 **当前最高优先级**：把已发现的 LROC NAC DTM *候选数据源* 变成可以审计的、真正源级和空间独立的 `heldout_v2_external`。不继续围绕旧 110 张 `development_test` 调参，不提前宣称 143 景严格合格，不上传/下载完整外部 DTM 数据池。
@@ -118,6 +120,6 @@ python3 -m compileall -q scripts tests
 python3 scripts/audit_lroc_dtm.py --out outputs/p19_lroc_metadata_audit.json
 ```
 
-**结论口径**：当前不是 `GO_STRICT_OOD`，而是
-`CANDIDATES_REQUIRE_POLYGON_AND_SOURCE_QA`（若元数据筛选发现候选）；
-获得正式严格独立验证能力，要以 Gate 1–3 的真实审计结果为准。
+**结论口径**：Gate 1 后当前为 `CANDIDATES_PASS_SOURCE_AND_FOOTPRINT_QA`
+（181 候选筛选、128 景双项 PASS、91 个景级地理组），**仍不是 `GO_STRICT_OOD`**；
+获得正式严格独立验证能力要以 Gate 2–3 的文件级探针与冻结协议为准。
