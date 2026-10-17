@@ -91,3 +91,27 @@ completion, cov_sqkm, num_stereo, url, features` 等。
 - `DTM_source_ID` 在产品级已可确定，但**逐 Tile 的投影/配准**仍需人工核验。
 - 这些 DTM 的原始分辨率 2–7 m 与 SomBench 3 m 不完全一致；标签定义需在冻结协议中写清楚。
 - 未使用付费资源；未触碰已冻结的 `protocols/heldout_v2_product_level_*` 文件与其 SHA256。
+
+
+## 7. Review 勘误：历史 143 景是元数据候选，不是已证明严格 OOD（2026-10-17）
+
+本节是**追加勘误**，保留上方原始调查数字以便追踪，不覆写历史报告。旧版
+`scripts/audit_lroc_dtm.py` 用 `sqrt(cov_sqkm / pi)` 作为 DTM 的所谓外接半径；
+**等面积圆半径并非外接半径**，对狭长形状尤其可能低估占地范围。
+因此原 `143` 景只是该近似筛选的候选数量，原 `GO_STRICT_OOD` **撤回**。
+
+另一个代码缺陷是 `len(products_unseen) == len(products)` 会在 `products=[]`
+时成立，导致缺少 DBF `images` 源 ID 的记录错误地被认作全部未见过。现在增加
+非空、可解析数字源 ID 的必要条件，统一正规化左右相机后缀与 SomBench ID。
+
+新的元数据审计使用 shapefile 所列多边形顶点到 DTM 中心的最大月心弦距代替等面积圆估算，
+输出 `provisional_candidates_after_vertex_screen`，但**仍不构成完整 footprint
+独立性证明**（边界曲线、CRS、已经使用的 Tile footprint、两景立体源完整性均待确认）。
+输出 `strict_candidates_after_spatial=null` 且不会提前返回 `GO_STRICT_OOD`。
+**新审计需要在 RX 7900 XT 机器使用原 Shapefile 与 labels 重新运行后，才有新的候选数量。**
+不要沿用旧的 143 景作为严格合格数量。
+
+执行门槛：逐景 PDS README 核查全部立体源产品，使用 DTM 与历史 Tile 的真实 footprint
+在一致月球坐标参考系计算至少 10 km 隔离，确认原生 DTM 分辨率和输出坡度标签的物理可比性；
+**冻结**候选清单及 SHA256 后，再进行一次性独立评估。
+详见 `docs/P1_9_HELDOUT_BUILD.md`。旧 64 Tile 产品级冻结文件及哈希原封不动保留。
