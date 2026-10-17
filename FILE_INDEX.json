@@ -1,7 +1,7 @@
 {
- "status": "p1_9_gate0_gate1_pass_gate2_partial_2026-10-17",
+ "status": "p1_9_gate0_gate1_pass_gate2_partial_gate3_blocked_2026-10-17",
  "date": "2026-10-17",
- "git_sha": "a880f4086d2b3aa521cefe27095b68ead897078d",
+ "git_sha": "20d5716c48aaa4e3656860e6898a093ef2c9cb9c",
  "files": [
   {
    "path": ".gitignore",
@@ -25,8 +25,8 @@
   },
   {
    "path": "FILE_INDEX.json",
-   "bytes": 10029,
-   "sha256": "9c8f130751958a3b3894fd21e2736479d15431ef7ce7c0ec5c883550a1d4bf0f"
+   "bytes": 10490,
+   "sha256": "fde7c6ea19c768dfd38b0a0bbf66753fdca42a30dc8ac96d96094e40f2df21dc"
   },
   {
    "path": "README.md",
@@ -175,23 +175,23 @@
   },
   {
    "path": "reports/p1_9_footprint_audit.md",
-   "bytes": 9216,
-   "sha256": "47abaf369d49d825efc830afdc42bf4b4494e657860a982f095076a893e07754"
+   "bytes": 10444,
+   "sha256": "e245b21f8939ef6ba0e74d887181c67bc49fb900e59ee828c7ffd9623fd20982"
   },
   {
    "path": "reports/p1_9_io_label_probe.md",
-   "bytes": 8001,
-   "sha256": "80d64ac3630ffcd275ecd2b84ffb0c28f4693b97ac0b60c6c65d624c9a0f1486"
+   "bytes": 11399,
+   "sha256": "1eed19a1b2c201d225da7ba675f609a702802aa3fac78ead2b3abafaa6917d44"
   },
   {
    "path": "reports/p1_9_metadata_audit.md",
-   "bytes": 5550,
-   "sha256": "ab771cd580a9616035d789ba8c0dbe99a88f99d4a6eebf1accd902c1c3eef713"
+   "bytes": 5822,
+   "sha256": "4bba8f3f4c44bc41e0a98558a5749e55daea3767e125db8ea9df394fb7e968dd"
   },
   {
    "path": "reports/p1_9_progress.md",
-   "bytes": 4824,
-   "sha256": "01a5d0bbcf358bc39f076a764535d6f96202ce61fbabfd5ca6dae514d66a0276"
+   "bytes": 5186,
+   "sha256": "28fb24cc9ae0913440ded1b1eeee349d39876eb257bc7042e2d7de18da768d27"
   },
   {
    "path": "reports/p1_baseline.md",
@@ -210,8 +210,8 @@
   },
   {
    "path": "requirements-extra.txt",
-   "bytes": 319,
-   "sha256": "1979bb5725f71e2c0bdd757f181b2d408f8c8aebdf80c931e3b6d363e09072b1"
+   "bytes": 328,
+   "sha256": "3dafd35b3f31c47a3388e3c3dd8d562941ebf16d8d5a4ae055b3913ea21b11ec"
   },
   {
    "path": "scripts/aggregate_seeds.py",
@@ -232,6 +232,11 @@
    "path": "scripts/audit_lroc_footprints.py",
    "bytes": 22307,
    "sha256": "64b4d485a4b863edb93290ac9b156f3b51a3f5b339b7b2a918833a8be0ff2592"
+  },
+  {
+   "path": "scripts/audit_lroc_optical.py",
+   "bytes": 10248,
+   "sha256": "fefe61520a9cebf72988b387846c0f32b760e17e9caf0fe2b2fe91c6d9864fc8"
   },
   {
    "path": "scripts/build_manifest.py",
@@ -299,6 +304,11 @@
    "sha256": "496b4e699f835d13cbbdfa61935303e7ef9fdd5ac5f99ee73ca603e95fc65ae1"
   },
   {
+   "path": "scripts/verify_clearance_spherical.py",
+   "bytes": 6294,
+   "sha256": "7f98adf312869d7623080c4837576738eb7e4f75ff1b4c96154cc0ce146e8e85"
+  },
+  {
    "path": "tests/test_aggregate_seeds.py",
    "bytes": 13751,
    "sha256": "d06bb67a01c1d81b3739770e1d39a795d64fb185a4e51911fd819ae070eb2ad1"
@@ -312,6 +322,11 @@
    "path": "tests/test_audit_lroc_footprints.py",
    "bytes": 13323,
    "sha256": "148e750a0132a6ba8d15ed209a458ff269e7ffc15a5d2a2197eae75444150a44"
+  },
+  {
+   "path": "tests/test_audit_lroc_optical.py",
+   "bytes": 7146,
+   "sha256": "d52e97cf75fc43b7ece04c52e31c94a317a3fe0c726f38296020e1a4542b437e"
   },
   {
    "path": "tests/test_build_manifest.py",

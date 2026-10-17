@@ -7,8 +7,8 @@
 |---|---|---|
 | Gate 0 — P19-00 审计修复回归 | **PASS** | `reports/p1_9_metadata_audit.md` · `outputs/p19_lroc_metadata_audit.json` |
 | Gate 1 — P19-01 footprint/来源独立性 | **PASS（索引层）** | `reports/p1_9_footprint_audit.md` · `outputs/p19_lroc_footprint_audit.{csv,json}` |
-| Gate 2 — P19-02 物理标签与 I/O 探针 | **部分 PASS** | `reports/p1_9_io_label_probe.md` · `outputs/p19_io_probe.json`（DTM/label 侧 PASS；光学 NAC 供给 BLOCKED） |
-| Gate 3 — P19-03 冻结 `heldout_v2_external` | PENDING | 等 Gate 2；不得在预测后改动 |
+| Gate 2 — P19-02 物理标签与 I/O 探针 | **部分 PASS** | `reports/p1_9_io_label_probe.md` · `outputs/p19_io_probe.json`（DTM/label 侧 PASS；光学 NAC 供给 BLOCKED：**128 个 PASS 景中 0 景发布光学影像**） |
+| Gate 3 — P19-03 冻结 `heldout_v2_external` | **BLOCKED_NEW_HELDOUT** | 按计划规则不得降条件凑数；需先解决光学来源（`reports/p1_9_io_label_probe.md` 第「下一步」节） |
 | Gate 4 — P19-04 一次性评估 | HOLD | 未授权 |
 
 ## 验证命令与结果（容器 `rocm-lab`，`/data/lunarrisk`）
@@ -46,9 +46,10 @@ python3 scripts/audit_lroc_footprints.py       # 冷 173 s / 热 11 s
 
 ## 下一步（Gate 2 剩余项 → Gate 3）
 
-- **光学 NAC 供给未解决（当前唯一硬阻塞）**：RDR/5 bundle 只提供 DTM + `_SHADE.TIF`（DTM 派生，禁止当光学输入）；
-  在本镜像上 12 种 EDR 路径组合与 LROC im-ldi EDR 页面均 404。下一步试 LROC ASU SDP 下载服务、
-  USGS `pdsimage2` 镜像、PDS4 registry API 反查 EDR bundle 路径。
+- **光学 NAC 供给未解决（当前唯一硬阻塞，已量化）**：181 景全量审计中 8 景发布 NAC 正射镶嵌图，
+  其中 7 景是 README 源清单为空的 mosaic 产品，唯一源可验证者 `ALPHONSUS` 净空 9.16 km（差 0.84 km 未达门槛）；
+  **通过 Gate 1 的 128 景里 0 景有光学影像**。原始 EDR 卷在本网络不可达（权威入口 404 / 仅 JS 浏览器）。
+  三条出路见 `reports/p1_9_io_label_probe.md`「下一步（需要明确决策）」，其中两条需要用户批准放宽口径。
 - 研究人员需在观测冻结集成绩之前选择尺度政策：(A) 仅采原生 ≈3 m 景 并保持 `g10/g15` 同尺度目标；
   (B) 定义共同可实现的尺度并在开发集先重算标签。探针已给出 3 景在 2–16 m 块平均下的 `g10` 漂移（≤2% 相对），
   但块平均**不等于**独立粗分辨率真值，不作为等价性证据。
