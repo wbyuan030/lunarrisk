@@ -91,6 +91,44 @@ def check_split_independence(labels: pd.DataFrame) -> dict:
     }
 
 
+def require_split_independence(audit: dict) -> None:
+    """Fail rather than silently publishing metrics from leaked split groups."""
+    if audit["groups_in_multiple_splits"] or audit["products_in_multiple_splits"]:
+        raise SystemExit(
+            "split leakage detected: "
+            f"{audit['groups_in_multiple_splits']} groups and "
+            f"{audit['products_in_multiple_splits']} source products span multiple splits"
+        )
+
+
+def event_head_divergence(frames: dict[int, pd.DataFrame], seeds: list[int]) -> dict:
+    """Audit raw binary-event outputs, NOT correlated g10/g15 regression fractions."""
+    result = {}
+    for variant in CNN_VARIANTS:
+        model = f"cnn_{variant}"
+        result[model] = {}
+        for seed in seeds:
+            frame = frames[seed]
+            left_key = f"{model}_raw_event_prob_g10_gt_0.05"
+            right_key = f"{model}_raw_event_prob_g15_gt_0.02"
+            missing = [key for key in (left_key, right_key) if key not in frame.columns]
+            if missing:
+                raise SystemExit(f"seed {seed}: missing {missing}; rerun the P1.7 trainer")
+            left = frame[left_key].to_numpy(dtype=np.float64)
+            right = frame[right_key].to_numpy(dtype=np.float64)
+            identical = bool(np.allclose(left, right))
+            pearson = (float(np.corrcoef(left, right)[0, 1])
+                       if np.std(left) > 0 and np.std(right) > 0 else None)
+            result[model][str(seed)] = {
+                "mean_abs_gap": float(np.abs(left - right).mean()),
+                "pearson": pearson,
+                "identical": identical,
+            }
+            if identical:
+                raise SystemExit(f"seed {seed} {model}: g10/g15 raw event heads are identical")
+    return result
+
+
 def mae(values: np.ndarray, prediction: np.ndarray, index: np.ndarray) -> float:
     return float(np.abs(values[index] - prediction[index]).mean())
 
@@ -181,6 +219,10 @@ def main(argv=None) -> int:
         metrics[seed], frames[seed] = load_seed(directory)
 
     cohort = assert_identical_cohorts(seeds, frames)
+    labels = pd.read_csv(args.labels)
+    split_audit = check_split_independence(labels)
+    require_split_independence(split_audit)
+    head_audit = event_head_divergence(frames, seeds)
     reference = frames[seeds[0]]
     y_g10 = reference["y_g10"].to_numpy(dtype=np.float64)
     y_g15 = reference["y_g15"].to_numpy(dtype=np.float64)
@@ -316,12 +358,12 @@ def main(argv=None) -> int:
         "bootstrap_resamples": args.bootstrap,
         "models": list(MODELS),
     }
-    labels = pd.read_csv(args.labels)
     payload = {
         "protocol": protocol,
         "environment": environment_info(seeds, args.pattern),
         "cohort": cohort,
-        "split_independence": check_split_independence(labels),
+        "split_independence": split_audit,
+        "event_head_divergence": head_audit,
         "test_rule_prevalence": prevalence,
         "per_model": summary,
         "calibration_audit": calibration,
@@ -387,12 +429,20 @@ def render_markdown(payload: dict) -> str:
                 lines.append(f"| {model} ({rule_name}) | {coverage} | {entry['UAR_mean']:.3f} | "
                              f"{entry['HMR_mean']:.3f} | {entry['accepted_n']} | "
                              f"{entry['unsafe_accepted_n_mean']:.1f} |")
-    lines += ["", "## g15 vs g10 head divergence", "",
+    lines += ["", "## g15 vs g10 fraction-regression divergence (not event heads)", "",
               "| model | mean |Δ| | pearson | identical |", "|---|---|---|---|"]
     for model, per_seed in payload["g15_vs_g10_divergence"].items():
         for seed, entry in per_seed.items():
             lines.append(f"| {model} (seed {seed}) | {entry['mean_abs_gap']:.4f} | "
                          f"{entry['pearson']:.4f} | {entry['identical']} |")
+    lines += ["", "## Dedicated binary-event head divergence (raw, before calibration)", "",
+              "| model | mean |Δ P(unsafe)| | pearson | identical |",
+              "|---|---|---|---|"]
+    for model, per_seed in payload["event_head_divergence"].items():
+        for seed, entry in per_seed.items():
+            corr = entry["pearson"]
+            lines.append(f"| {model} (seed {seed}) | {entry['mean_abs_gap']:.4f} | "
+                         f"{'n/a' if corr is None else f'{corr:.4f}'} | {entry['identical']} |")
     return "\n".join(lines) + "\n"
 
 
