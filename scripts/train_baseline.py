@@ -169,7 +169,7 @@ class TinyCNN(nn.Module):
             nn.Conv2d(32, 64, 3, padding=1), nn.BatchNorm2d(64), nn.ReLU(), nn.MaxPool2d(2),
             nn.Conv2d(64, 128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU(), nn.MaxPool2d(2),
         )
-        self.head = nn.Sequential(nn.AdaptiveAvgPool2d(1), nn.Flatten(), nn.Linear(128, 3))
+        self.head = nn.Sequential(nn.AdaptiveAvgPool2d(1), nn.Flatten(), nn.Linear(128, 4))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.head(self.features(x))
@@ -180,15 +180,18 @@ def batch_tensor(ids: list[str], cache: dict, device: torch.device, channels: tu
     return torch.from_numpy(stacked).to(device)
 
 
-def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, ...],
-                  seed_offset: int = 0) -> dict:
+def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, ...]) -> dict:
     train_rows = data[data["split"] == "train"].reset_index(drop=True)
     val_rows = data[data["split"] == "val"].reset_index(drop=True)
     y_train = train_rows[["slope3m_g10", "slope3m_g15"]].to_numpy(dtype=np.float32)
-    e_train = (train_rows["slope3m_g10"] > 0.05).to_numpy(dtype=np.float32)
+    # Each rule receives its own event logit, not a shared g10 classification score.
+    e_train = np.column_stack([
+        (train_rows[target] > threshold).to_numpy(dtype=np.float32)
+        for target, threshold in RULES.values()
+    ])
     y_val = val_rows[["slope3m_g10", "slope3m_g15"]].to_numpy(dtype=np.float32)
 
-    seed = args.seed + seed_offset
+    seed = args.seed  # identical across variants for paired comparisons
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)
     model = TinyCNN(in_channels=len(channels)).to(device)
@@ -226,7 +229,7 @@ def train_variant(cache, data: pd.DataFrame, args, device, channels: tuple[int, 
             target = torch.from_numpy(y_train[index]).to(device)
             event = torch.from_numpy(e_train[index]).to(device)
             out = model(x)
-            loss = mse(torch.sigmoid(out[:, :2]), target) + 0.5 * bce(out[:, 2], event)
+            loss = mse(torch.sigmoid(out[:, :2]), target) + 0.5 * bce(out[:, 2:4], event)
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
             optimizer.step()
@@ -310,12 +313,17 @@ def metrics(y: np.ndarray, p: np.ndarray, rule: tuple[str, float] | None = None,
     return result
 
 
-def risk_coverage(y: np.ndarray, scores: np.ndarray, rule_name: str,
+def risk_coverage(y: np.ndarray, unsafe_probability: np.ndarray, rule_name: str,
                   coverages=COVERAGES) -> list[dict]:
-    """Accept the lowest-predicted-risk tiles first."""
+    """Accept lowest P(unsafe) first; do not pass P(safe)."""
     _, threshold = RULES[rule_name]
     truth = (y > threshold).astype(int)
-    order = np.argsort(scores, kind="mergesort")
+    unsafe_probability = np.asarray(unsafe_probability, dtype=np.float64)
+    if unsafe_probability.shape != truth.shape or not np.isfinite(unsafe_probability).all():
+        raise ValueError("unsafe_probability must be a finite vector aligned with y")
+    if np.any((unsafe_probability < 0) | (unsafe_probability > 1)):
+        raise ValueError("unsafe_probability must lie in [0, 1]")
+    order = np.argsort(unsafe_probability, kind="mergesort")
     rows = []
     for coverage in coverages:
         k = max(1, int(round(coverage * len(y))))
@@ -369,7 +377,7 @@ def evaluate_model(y_true: np.ndarray, fractions: np.ndarray, raw_scores: np.nda
     raw_probability = 1 / (1 + np.exp(-raw_scores))
     payload = {
         "metrics_raw": metrics(y_true, fractions[:, index], rule, raw_probability),
-        "risk_coverage_raw": risk_coverage(y_true, 1 - raw_probability, rule_name),
+        "risk_coverage_raw": risk_coverage(y_true, raw_probability, rule_name),
     }
     if cal_scores is not None and cal_truth is not None:
         slope, intercept, degenerate = platt_scale(cal_scores, cal_truth)
@@ -377,7 +385,7 @@ def evaluate_model(y_true: np.ndarray, fractions: np.ndarray, raw_scores: np.nda
         payload["platt"] = {"slope": slope, "intercept": intercept, "degenerate": degenerate,
                             "cal_unsafe_rate": float(cal_truth.mean())}
         payload["metrics_calibrated"] = metrics(y_true, fractions[:, index], rule, calibrated)
-        payload["risk_coverage_calibrated"] = risk_coverage(y_true, 1 - calibrated, rule_name)
+        payload["risk_coverage_calibrated"] = risk_coverage(y_true, calibrated, rule_name)
         payload["primary"] = "calibrated" if not degenerate else "raw"
         payload["probability"] = calibrated
         payload["metrics"] = payload["metrics_calibrated"] if not degenerate else payload["metrics_raw"]
@@ -468,7 +476,7 @@ def main(argv=None) -> int:
             "patience": args.patience,
             "input_size": args.size,
             "augment": args.augment,
-            "calibration": "Platt scaling fitted on the cal split, applied to cnn_* probabilities",
+            "calibration": "Platt scaling fitted on the cal split, applied to coarse_ridge and cnn_* probabilities",
         },
         "tiles_all_splits": {s: int((labels["split"] == s).sum()) for s in ("train", "cal", "val", "test")},
         "tiles_used_by_split": {s: int((data["split"] == s).sum()) for s in ("train", "cal", "val", "test")},
@@ -530,9 +538,14 @@ def main(argv=None) -> int:
         model, degenerate = fit_logistic(features_scaled[split_index["train"]], truth)
         degenerate_flags[name] = degenerate
         probability = logistic_probability(model, features_scaled[split_index["test"]], float(truth.mean()))
+        cal_probability = logistic_probability(
+            model, features_scaled[split_index["cal"]], float(truth.mean())
+        )
         payload[name] = evaluate_model(
             test_rows[target].to_numpy(dtype=np.float64), ridge_predictions,
             logit(probability), name,
+            cal_scores=logit(cal_probability),
+            cal_truth=(cal_rows[target].to_numpy() > threshold).astype(int),
         )
     results["models"]["coarse_ridge"] = {
         "features": COARSE_FEATURES,
@@ -547,19 +560,19 @@ def main(argv=None) -> int:
     unknown = [v for v in variant_names if v not in CNN_VARIANTS]
     if unknown:
         raise SystemExit(f"unknown variants: {unknown}; known: {list(CNN_VARIANTS)}")
-    for offset, variant in enumerate(variant_names):
+    for variant in variant_names:
         channels = CNN_VARIANTS[variant]
         print(f"training cnn_{variant} with channels {[CHANNELS[c] for c in channels]}")
-        trained = train_variant(cache, data, args, device, channels, seed_offset=offset)
+        trained = train_variant(cache, data, args, device, channels)
         test_fractions, test_scores = predict_variant(trained, test_rows, cache, channels, args.batch, device)
         val_fractions, _ = predict_variant(trained, val_rows, cache, channels, args.batch, device)
         cal_fractions, cal_scores = predict_variant(trained, cal_rows, cache, channels, args.batch, device)
         payload = {}
         for name, (target, threshold) in RULES.items():
             payload[name] = evaluate_model(
-                test_rows[target].to_numpy(dtype=np.float64), test_fractions, test_scores,
-                name,
-                cal_scores=cal_scores,
+                test_rows[target].to_numpy(dtype=np.float64), test_fractions,
+                test_scores[:, rule_column_index(name)], name,
+                cal_scores=cal_scores[:, rule_column_index(name)],
                 cal_truth=(cal_rows[target].to_numpy() > threshold).astype(int),
             )
         probabilities = {name: payload[name]["probability"] for name in RULES}
