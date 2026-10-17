@@ -47,7 +47,30 @@ python3 -m pytest tests/test_audit_lroc_footprints.py -q
   自相交 shell 不修复、不猜补，保持 `INVALID_POLYGON` 并排除。
 - **距离**：以候选中心建局部方位等距投影（aeqd，R=1 737 400 m），在多边形顶点级别计算 polygon-to-polygon 最小距离；对跨 ±180°、极区、狭长多边形、缺失 CRS、非法 ring/multipart 均有离线用例。
 
-### 3. 来源审计
+### 4. 独立交叉验证（两种完全不同的距离实现）
+
+`scripts/verify_clearance_spherical.py` 用**纯球面几何、零投影**重算净空：候选多边形每个顶点到每张已用 Tile 边界大圆弧的距离，以及每个 Tile 角点到候选多边形各边的距离，全部用大圆角距。
+
+对 12 个最紧的 PASS 景，两种实现的差：
+
+| 景 | aeqd (km) | 球面 (km) | Δ (m) |
+|---|---|---|---|
+| NECTRIMII2 | 10.617 | 10.617 | −0.1 |
+| HSCARP5 | 11.136 | 11.136 | −0.1 |
+| CAUCHY | 11.275 | 11.275 | −0.2 |
+| LARMORQ3 | 11.404 | 11.404 | −0.0 |
+| MARIUS7 | 11.613 | 11.613 | −0.1 |
+| HSCARP4 | 12.158 | 12.158 | −0.3 |
+| FRIGORIS | 13.214 | 13.214 | −0.1 |
+| VIRTANEN2 | 13.246 | 13.246 | −0.0 |
+| MRECRISIUM2 | 15.487 | 15.487 | −0.3 |
+| GEMIMP1 | 15.648 | 15.648 | −0.0 |
+| REINER10 | 15.765 | 15.765 | −0.1 |
+| RANGER | 15.953 | 15.953 | −0.2 |
+
+最大偏差 0.3 m（脚本以 5 m 为容差，退出码 0）。说明：球面实现量的是**边界到边界**距离，因此当两个多边形互相包含时它给出正数而审计给出 0（相交）；两者出现分歧的行恰好都是这种包含情形，例如 `NASSAU04`、`LOWELL1` 等净空失败景。
+
+### 5. 来源审计
 
 - 逐景抓取 `https://pds.mcp.nasa.gov/.../NAC_DTM/<NAME>/NAC_DTM_<NAME>_README.TXT`（缓存到 `data/lroc_nac_dtm/readmes/`）。
 - 解析 `LROC NAC SOURCE IMAGES` 段：接受 `M\d{9,10}` 加可选 `L/R/LE/RE` 后缀；要求 ≥1 条源；遇无法完整解析的 token 一律 `UNKNOWN_SOURCE`。
