@@ -1,3 +1,28 @@
+# 当前首要任务：P1.9 NAC EDR 官方 URL 反查（2026-10-18）
+
+**立即阅读 [`docs/P1_9_EDR_URL_DISCOVERY.md`](docs/P1_9_EDR_URL_DISCOVERY.md) 并执行 Pilot。**
+新的发现：LROC 官方分期观测 ZIP/DBF/CSV 自带 `PRODUCT_ID`、`PDS_VOLUME`、
+`FILE_SPECI`、`URL` 字段。新增 `scripts/resolve_lroc_edr_urls.py`
+可将已有 168 个观测号展开至左右 NAC 相机产品，反查**真实卷/日期路径**，并少量 HEAD 测试链接。
+无需再盲猜 EDR 文件 URL。旧版 `docs/P1_9_EDR_ORTHO_RUNBOOK.md` 中的
+`lrolc2isis` 也已经修为正确的 `lronac2isis`。
+
+**Coding Agent 现在该做**：拉取 main → 运行全仓单测 → 先下载官方小型
+`NAC_EQ_NOMINAL_MISSION_360.ZIP` 索引 → 用现有 `outputs/p19_edr_acquisition_list.csv`
+运行 resolver → 分期增补 NP/SP/Science/Extended 观测索引 → 找至少一条本项目 EDR 的
+`PDS_VOLUME/FILE_SPECI/URL`，再验证文件 HEAD + 少量 Range/对应 LBL。
+在 `reports/p1_9_edr_url_validation.md` 记录每一步证据（真实响应、Git SHA、匹配率、
+失败原因）；如 URL 已迁移，也先输出卷内真实路径，再针对卷根映射寻找镜像。
+
+**当前重要事实**：本助手仅离线运行 resolver 的 5 项 synthetic 测试，全量 217 项历史测试
+未重新运行；受容器 DNS 限制，**仍未取得经文件级验证的原始 EDR**。这不是 Gate 2 PASS。
+严格 `heldout_v2_external` 仍保持 BLOCKED；不得下载整个 EDR 池、放宽独立性、
+改写旧冻结集、提前跑 V2 模型或擅自投入付费/4×4090 算力。
+
+---
+
+## 历史 P1.9/P1.8 指令（下文仅供溯源）
+
 # 当前任务：P1.9 外部 LROC 严格独立测试集（2026-10-17）
 
 **必须首先阅读 [`docs/P1_9_HELDOUT_BUILD.md`](docs/P1_9_HELDOUT_BUILD.md) 并直接执行 Gate 0 → Gate 1。**
