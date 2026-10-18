@@ -1,5 +1,12 @@
 # P1.9 EDR → ISIS 正射校正运行手册（Gate 2 光学通道收尾）
 
+> **2026-10-18 新的更直接入口**：请先使用 [P1.9 EDR URL Discovery](P1_9_EDR_URL_DISCOVERY.md) 和
+> `scripts/resolve_lroc_edr_urls.py`。LROC 官方 NAC 分期观测 Shapefile 直接记录
+> `PRODUCT_ID / PDS_VOLUME / FILE_SPECI / URL`，无需再盲猜卷目录。索引 URL 可能过期，
+> 先核查少数 IMG HEAD 与文件字节，不要直接批量下载。本页第 1.0 节保留为早期失败路线的历史记录。
+> **修正**：ISIS 的 NAC 导入程序是 `lronac2isis`（原误写 `lrolc2isis`）。
+>
+
 **适用决定**：`protocols/p19_external_policy.json` 中的 `optical_route = INSTITUTIONAL_EDR_ISIS`
 （用户 2026-10-17 选定：在机构网络取原始 NAC EDR 卷，用 ISIS/SPICE 自行正射校正，保持严格来源与空间独立性）。
 
@@ -57,7 +64,7 @@
 ```bash
 # 每次运行记录：ISIS 版本、SPICE 内核集合与哈希
 isis_version=$(isis_version)   # 或 cat $ISISROOT/version
-lrolc2isis from=<EDR_ID>.IMG to=<EDR_ID>.cub
+lronac2isis from=<EDR_ID>.IMG to=<EDR_ID>.cub
 spiceinit   from=<EDR_ID>.cub                     # 建议显式给出内核集，禁止 web 模式以便复现
 # 记录内核来源：catlab <EDR_ID>.cub 中的 Kernels 组（写入 p19_isis_provenance.json）
 ```
@@ -111,7 +118,7 @@ isis2std from=<EDR_ID>_ortho.cub to=<EDR_ID>_ortho.cub.tif format=GTiff
 
 - 下载：168 条 EDR；若单条 ≈ 0.3–1.5 GB，则总量 ≈ **50–250 GB**（本机 `/` 剩余 544 GB，仅作参考，
   实际在机构环境执行）。
-- 计算：单景 2 条 EDR 的 `lrolc2isis + spiceinit + cam2map + phocube` 约 10–20 min（单核，视内核缓存），
+- 计算：单景 2 条 EDR 的 `lronac2isis + spiceinit + cam2map + phocube` 约 10–20 min（单核，视内核缓存），
   84 景 ≈ **15–30 核时**；`cam2map` 对每条 5000×52000 幅面的大图是主要开销。
 - 先做 **1 景端到端**（建议 `LICHTENBER2` 或 `RIMPARRY1` 组），确认 QA 门槛与体积，再批量。
 
