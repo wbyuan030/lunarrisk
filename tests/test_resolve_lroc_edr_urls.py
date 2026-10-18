@@ -18,11 +18,15 @@ SPEC.loader.exec_module(mod)
 
 
 class TestIDs(unittest.TestCase):
-    def test_requires_edr_camera_suffix(self):
+    def test_accepts_edr_and_cdr_camera_suffixes(self):
+        # The official NAC index publishes *_LC/_RC (calibrated) products, while the LROC
+        # README and DTM database use *_LE/_RE (engineering) for the same frames.
         self.assertEqual(mod.parse_product_id("M139939938LE"), "M139939938LE")
         self.assertEqual(mod.parse_product_id("m139939938re"), "M139939938RE")
-        self.assertIsNone(mod.parse_product_id("M139939938LC"))
+        self.assertEqual(mod.parse_product_id("M139939938LC"), "M139939938LC")
+        self.assertEqual(mod.parse_product_id("m139939938rc"), "M139939938RC")
         self.assertIsNone(mod.parse_product_id("M139939938"))
+        self.assertIsNone(mod.parse_product_id("M123"))
 
     def test_9_and_10_digits(self):
         self.assertEqual(mod.expected_products(["M139939938", "M1399399380"]),
@@ -41,7 +45,7 @@ class TestIndexes(unittest.TestCase):
                 w.field("PDS_VOLUME", "C", size=30)
                 w.field("FILE_SPECI", "C", size=100)
                 w.field("URL", "C", size=250)
-                for camera in ("LE", "RE"):
+                for camera in ("LC", "RC"):
                     image_id = "M139939938" + camera
                     w.point(0, 0)
                     w.record(image_id, "LROLRC_0005",
@@ -52,13 +56,16 @@ class TestIndexes(unittest.TestCase):
             z = path / "NAC_EQ_NOMINAL_MISSION_360.ZIP"
             with zipfile.ZipFile(z, "w") as archive:
                 archive.write(stem.with_suffix(".dbf"), arcname=stem.with_suffix(".dbf").name)
-            targets = mod.expected_products(["M139939938", "M139872173"])
+            targets = (mod.expected_products(["M139939938"]) | {"M139939938LC", "M139939938RC"}
+                       | mod.expected_products(["M139872173"]))
             result, stats = mod.resolve([z], targets)
             self.assertEqual(stats["records_scanned"], 3)
-            self.assertEqual(result["M139939938LE"]["status"], "UNVERIFIED_URL")
-            self.assertEqual(result["M139939938RE"]["volume"], "LROLRC_0005")
+            self.assertEqual(result["M139939938LC"]["status"], "UNVERIFIED_URL")
+            self.assertEqual(result["M139939938LC"]["data_set"], "CDR")
+            self.assertEqual(result["M139939938RC"]["volume"], "LROLRC_0005")
+            self.assertEqual(result["M139939938LE"]["status"], "NOT_IN_INDEX")
             self.assertEqual(result["M139872173LE"]["status"], "NOT_IN_INDEX")
-            self.assertIn("/NAC/", result["M139939938LE"]["file_spec"])
+            self.assertIn("/NAC/", result["M139939938LC"]["file_spec"])
 
     def test_csv_conflicting_duplicate_fails_closed(self):
         with tempfile.TemporaryDirectory() as t:

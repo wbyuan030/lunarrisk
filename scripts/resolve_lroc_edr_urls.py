@@ -24,12 +24,17 @@ from urllib.parse import urlparse
 import pandas as pd
 
 BASE_ID = re.compile(r"M\d{9,10}$", re.I)
-CAMERA_ID = re.compile(r"(M\d{9,10})([LR])([EC]?)$", re.I)
+CAMERA_ID = re.compile(r"(M\d{9,10})([LR])([EC])$", re.I)
+# Official observation indexes publish *_LC/_RC (calibrated). READMEs and the DTM database
+# use *_LE/_RE (engineering) for the same frames. A request is expanded to all four forms so
+# that either product resolves; the resolved suffix is recorded as ``data_set``.
+CAMERA_SUFFIXES = ("LE", "RE", "LC", "RC")
 REQUIRED = ("PRODUCT_ID", "PDS_VOLUME", "FILE_SPECI", "URL")
 
 
 def expected_products(base_ids: list[str], cameras: str = "both") -> set[str]:
-    cams = ("LE", "RE") if cameras == "both" else ("LE",)
+    """Expand plain acquisition IDs into the camera product IDs the EDR indexes use."""
+    cams = CAMERA_SUFFIXES if cameras == "both" else (CAMERA_SUFFIXES[0],)
     result: set[str] = set()
     for base in base_ids:
         base = base.strip().upper()
@@ -42,9 +47,14 @@ def expected_products(base_ids: list[str], cameras: str = "both") -> set[str]:
 def parse_product_id(raw: object) -> str | None:
     value = str(raw or "").strip().upper()
     match = CAMERA_ID.fullmatch(value)
-    if not match or match.group(3) != "E":
-        return None  # Only EDR; never silently substitute calibrated CDR.
+    if not match:
+        return None
     return match.group(0)
+
+
+def acq_id(product_id: str) -> str:
+    """Strip the two-character camera suffix back to the acquisition id used in requests."""
+    return CAMERA_ID.fullmatch(product_id.upper()).group(1)
 
 
 def _read_dbf_file(file: Path):
@@ -116,12 +126,14 @@ def resolve(indexes: list[Path], targets: set[str]) -> tuple[dict, dict]:
         # Conflicting volume/path/URL evidence must not be silently chosen.
         unique = {(r["volume"], r["file_spec"], r["url"]) for r in candidates}
         if not candidates:
-            resolved[pid] = {"product_id": pid, "status": "NOT_IN_INDEX", "url": "", "volume": "", "file_spec": "", "index": ""}
+            resolved[pid] = {"product_id": pid, "status": "NOT_IN_INDEX", "url": "",
+                             "volume": "", "file_spec": "", "index": ""}
         elif len(unique) != 1:
             resolved[pid] = {"product_id": pid, "status": "AMBIGUOUS_INDEX", "url": "", "volume": "", "file_spec": "", "index": ";".join(sorted({r["index"] for r in candidates}))}
         else:
             row = candidates[0].copy()
             row["status"] = "UNVERIFIED_URL" if row["url"] else "NO_URL_IN_INDEX"
+            row["data_set"] = "EDR" if row["product_id"].upper().endswith(("LE", "RE")) else "CDR"
             resolved[pid] = row
     return resolved, stats
 
