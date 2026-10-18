@@ -1,5 +1,8 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **New P1.9 EDR access lead (2026-10-18):** Official LROC NAC observing-phase [shapefile archives](https://data.lroc.im-ldi.com/lroc/view_rdr/SHAPEFILE_NAC_EQ_NOMINAL_MISSION) include exact `PDS_VOLUME`, `FILE_SPECI` and `URL` fields for EDRs. Try [docs/P1_9_EDR_URL_DISCOVERY.md](docs/P1_9_EDR_URL_DISCOVERY.md) and `scripts/resolve_lroc_edr_urls.py` **before guessing URLs**. This is a verified official metadata discovery, **not yet a verified downloadable raw IMG**. The held-out evaluation gate is still blocked.
+
+
 > **Active sprint (2026-10-17):** [P1.9 external LROC DTM heldout QA](docs/P1_9_HELDOUT_BUILD.md).
 > LROC index discovery is promising, but the earlier **143 supposedly strict OOD DTMs are provisional metadata candidates only**: source IDs and real polygon clearance were not fully verified. The equal-area-circle proof was invalid and is now withdrawn. See the [research erratum](reports/p1_8_new_heldout_sources.md).
 >
