@@ -7,8 +7,8 @@
 |---|---|---|
 | Gate 0 — P19-00 审计修复回归 | **PASS** | `reports/p1_9_metadata_audit.md` · `outputs/p19_lroc_metadata_audit.json` |
 | Gate 1 — P19-01 footprint/来源独立性 | **PASS（索引层）** | `reports/p1_9_footprint_audit.md` · `outputs/p19_lroc_footprint_audit.{csv,json}` |
-| Gate 2 — P19-02 物理标签与 I/O 探针 | **部分 PASS** | `reports/p1_9_io_label_probe.md` · `outputs/p19_io_probe.json`（DTM/label 侧 PASS；光学 NAC 供给 BLOCKED：**128 个 PASS 景中 0 景发布光学影像**） |
-| Gate 3 — P19-03 冻结 `heldout_v2_external` | **BLOCKED**（等正射光学产物） | 政策与路线已预注册：`protocols/p19_external_policy.json`；执行手册 `docs/P1_9_EDR_ORTHO_RUNBOOK.md`；严格池 84 景 / 52 组 |
+| Gate 2 — P19-02 物理标签与 I/O 探针 | **PASS（单景光学闭环）** | `reports/p1_9_io_label_probe.md`（DTM/label）· `reports/p1_9_optical_ortho_probe.md`（CDR→ISIS→正射到 DTM 网格，14259×2389 同网格，campt 几何一致） |
+| Gate 3 — P19-03 冻结 `heldout_v2_external` | **READY（待决定批量范围）** | 单景链路已 PASS；严格池 84 景 / 52 组；批量约束（每景左右相机/拼接、存储、QA 门槛）见 `reports/p1_9_optical_ortho_probe.md` 第五节 |
 | Gate 4 — P19-04 一次性评估 | HOLD | 未授权 |
 
 ## 验证命令与结果（容器 `rocm-lab`，`/data/lunarrisk`）
