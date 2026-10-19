@@ -19,9 +19,6 @@ import datetime as dt
 import re
 from pathlib import Path
 
-import spiceypy
-from spiceypy.utils.support_types import SPICEDOUBLE_CELL
-
 NAME_RE = re.compile(r"_(?P<y1>\d{4})(?P<d1>\d{3})_(?P<y2>\d{4})(?P<d2>\d{3})_")
 ET_MIN = -378691200.0   # 1988-01-01
 ET_MAX = 2524608000.0   # 2050-01-01
@@ -51,6 +48,8 @@ def filename_bounds(kernel: Path) -> tuple[str, str] | None:
 
 
 def prepare_pool(isisdir: Path) -> list[str]:
+    import spiceypy
+
     lsk = sorted((isisdir / "base/kernels/lsk").glob("*.tls"))
     sclk = sorted((isisdir / "lro/kernels/sclk").glob("*.tsc"))
     if not lsk or not sclk:
@@ -61,6 +60,9 @@ def prepare_pool(isisdir: Path) -> list[str]:
 
 
 def measured_bounds(kernel: Path, frame: int) -> tuple[str, str] | None:
+    import spiceypy
+    from spiceypy.utils.support_types import SPICEDOUBLE_CELL
+
     window = SPICEDOUBLE_CELL(2)
     spiceypy.wninsd(ET_MIN, ET_MAX, window)
     try:
