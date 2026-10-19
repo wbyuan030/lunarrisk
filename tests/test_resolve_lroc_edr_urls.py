@@ -29,8 +29,10 @@ class TestIDs(unittest.TestCase):
         self.assertIsNone(mod.parse_product_id("M123"))
 
     def test_9_and_10_digits(self):
+        # requests expand to all four published camera forms (EDR and CDR)
         self.assertEqual(mod.expected_products(["M139939938", "M1399399380"]),
-                         {"M139939938LE", "M139939938RE", "M1399399380LE", "M1399399380RE"})
+                         {"M139939938LE", "M139939938RE", "M139939938LC", "M139939938RC",
+                          "M1399399380LE", "M1399399380RE", "M1399399380LC", "M1399399380RC"})
         with self.assertRaises(ValueError):
             mod.expected_products(["M139939938LE"])
 
