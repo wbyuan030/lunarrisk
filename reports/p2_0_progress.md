@@ -29,7 +29,7 @@
 
 ## 边界与约束（持续有效）
 
-- 测试数：232 → **234**
+- 测试数：232 → **236**
 - 原预注册 `protocols/p19_external_policy.json` 未改；CDR 路线仍为
   `protocols/p19_cdr_route_amendment_proposal.json` 的 `PROPOSED_NOT_APPROVED`。
 - 未运行任何模型预测；未查看 heldout 风险标签；未降低 Gate 1 的 ≥10 km 与源审计标准。
