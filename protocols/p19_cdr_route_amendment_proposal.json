@@ -1,0 +1,51 @@
+{
+  "record": "p19_cdr_route_amendment_proposal",
+  "created_utc_date": "2026-10-20",
+  "status": "PROPOSED_NOT_APPROVED",
+  "supersedes_original_record": false,
+  "original_policy_path": "protocols/p19_external_policy.json",
+  "original_optical_route": "INSTITUTIONAL_EDR_ISIS",
+  "proposed_optical_route": "PUBLIC_CDR_PDS2ISIS_SPICE_ORTHO",
+  "description": "Use publicly archived radiometrically calibrated LROC NAC CDR products corresponding to README-verified independent source acquisitions. Import calibrated pixels with pds2isis and add instrument metadata, run spiceinit with explicit kernels, orthorectify onto precommitted DTM grid and capture radiometry/projection provenance.",
+  "reason": "The CDR IMG pair for FRSHCRATER10 / M153639872 has been downloaded, decoded as scaled I/F, and a left-camera image orthorectified to the DTM grid. Existing optical gate cannot rely on EDR-only discovery. Previous EDR-only assumption is obsolete, but protocol must not be edited retroactively.",
+  "evidence": {
+    "repo_report": "reports/p1_9_optical_ortho_probe.md",
+    "current_one_scene_probe": {
+      "scene": "FRSHCRATER10",
+      "camera_product": "M153639872LC",
+      "camera": "LEFT",
+      "output_grid": "14259x2389",
+      "native_post_spacing_m": 2,
+      "optical_coverage_of_valid_dtm_fraction": 0.4275,
+      "independent_registration_qa": "NOT_YET_PASSED",
+      "both_cameras_mosaicked": false
+    },
+    "current_candidate_pool": {
+      "scenes": 84,
+      "scene_groups": 52,
+      "native_dtm_spacing_max_m": 3
+    }
+  },
+  "unchanged_constraints": [
+    "README source list must verify every camera acquisition, with zero source overlap with SomBench and prior used data",
+    "all new DTM footprints remain >=10 km from historic used and protected footprints",
+    "native DTM post spacing <=3 m under policy A; do not claim physical equivalence by interpolation",
+    "DTM-derived shade/slope/browse layers prohibited as NAC optical input",
+    "do not run model predictions or inspect heldout risk labels/results to choose scenes",
+    "old frozen product-level V2 files and their SHA256 unchanged"
+  ],
+  "new_requirements": [
+    "CDR image product ID/camera and its underlying acquisition must agree with PDS source README; record dataset version and hash",
+    "calibration model/scaling factor/NULL handling documented and image feature preprocessing compatible with train",
+    "ISIS+SPICE kernel paths/hash/versions and exact map-projection semantics recorded",
+    "registration QA with independent control features and per-scene residual distribution before freeze",
+    "union mosaic coverage over DTM valid footprint quantified, with original runbook >=95% target; reduced or tile-level gate requires separate preregistered approval",
+    "check for label leakage when orthorectification uses fine-resolution target DTM pixel elevations instead of independent coarse topography",
+    "multi-camera/multi-acquisition fusion method fixed before any model risk score is observed"
+  ],
+  "pilot_work_authorized_by_handoff": true,
+  "approval_required_for_external_freeze": true,
+  "approval_status": "PENDING_USER_OR_RESEARCH_OWNER_CONFIRMATION",
+  "gate3_status": "HOLD_UNTIL_APPROVED_AND_MULTICAMERA_QA",
+  "gate4_status": "HOLD_SEPARATE_AUTHORIZATION"
+}
