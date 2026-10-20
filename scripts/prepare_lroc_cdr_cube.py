@@ -36,6 +36,11 @@ LABEL_KEYS = {
     "TemperatureTelescope": "LRO:TEMPERATURE_TELESCOPE",
     "StartTime": "START_TIME",
     "StopTime": "STOP_TIME",
+    "PrerollTime": "LRO:PREROLL_TIME",
+    "TemperatureSCSRaw": "LRO:TEMPERATURE_SCS_RAW",
+    "TemperatureFPARaw": "LRO:TEMPERATURE_FPA_RAW",
+    "TemperatureFPGARaw": "LRO:TEMPERATURE_FPGA_RAW",
+    "TemperatureTelescopeRaw": "LRO:TEMPERATURE_TELESCOPE_RAW",
 }
 FRAME_CODES = {"LEFT": -85600, "RIGHT": -85610}
 
@@ -59,6 +64,27 @@ def label_values(raw: bytes) -> dict:
 def run(*args: str) -> None:
     print("+", " ".join(args))
     subprocess.run(args, check=True)
+
+
+def normalise_pvl_quotes(cube: Path) -> int:
+    """Rewrite `'"…"'` values as plain PVL strings.
+
+    ``editlab`` stores any value containing spaces as a PVL string whose content includes the
+    quotes, which breaks ISIS translation lookups (e.g. ``MissionName2DataDir.trn`` reports
+    "Unable to find a translation value"). The replacement is space-padded so the file length
+    and therefore every absolute StartByte in the label stay valid.
+    """
+    raw = cube.read_bytes()
+    fixed = 0
+    for match in re.finditer(rb"'\"([A-Z][A-Z ]*)\"'", raw):
+        plain = b'"' + match.group(1) + b'"'
+        padded = plain + b" " * (len(match.group(0)) - len(plain))
+        raw = raw.replace(match.group(0), padded)
+        fixed += 1
+    if fixed:
+        cube.write_bytes(raw)
+    print(f"normalised {fixed} quoted value(s) in {cube}")
+    return fixed
 
 
 def main(argv=None) -> int:
@@ -96,6 +122,21 @@ def main(argv=None) -> int:
     for key, value in instrument.items():
         run("editlab", f"from={args.out}", "option=addkey", "grpname=Instrument",
             f"keyword={key}", f"value={value}")
+    # Keys the camera model reads from the CDR label; pds2isis does not move them to Instrument.
+    run("editlab", f"from={args.out}", "option=addkey", "grpname=Instrument",
+        "keyword=FrameId", f"value={frame}")
+    for key, value in (("SampleFirstPixel", "0"), ("PrerollTime", values.get("PrerollTime", "")),
+                       ("MissionPhaseName", "SCIENCE MISSION"),
+                       ("InstrumentHostName", '"LUNAR RECONNAISSANCE ORBITER"'),
+                       ("InstrumentHostId", "LRO"),
+                       ("InstrumentName", "LUNAR RECONNAISSANCE ORBITER NARROW ANGLE CAMERA"),
+                       ("TemperatureSCSRaw", values.get("TemperatureSCSRaw", "")),
+                       ("TemperatureFPARaw", values.get("TemperatureFPARaw", "")),
+                       ("TemperatureFPGARaw", values.get("TemperatureFPGARaw", "")),
+                       ("TemperatureTelescopeRaw", values.get("TemperatureTelescopeRaw", ""))):
+        if value:
+            run("editlab", f"from={args.out}", "option=addkey", "grpname=Instrument",
+                f"keyword={key}", f"value={value}")
     run("editlab", f"from={args.out}", "option=addgrp", "grpname=Kernels")
     for key, value in (("NaifIkCode", str(code)), ("NaifFrameCode", str(code))):
         run("editlab", f"from={args.out}", "option=addkey", "grpname=Kernels",
@@ -104,6 +145,7 @@ def main(argv=None) -> int:
     def join(items):
         return "(" + ",".join(str(item) for item in items) + ")" if len(items) > 1 else str(items[0])
 
+    normalise_pvl_quotes(args.out)
     run("spiceinit", f"from={args.out}", f"LS={args.lsk}", f"SCLK={args.sclk}",
         f"TSPK={join(args.tspk)}", f"PCK={args.pck}", f"IK={args.ik}", f"IAK={args.iak}",
         f"FK={args.frame_kernel}", f"CK={join(args.ck)}", f"SPK={join(args.spk)}")

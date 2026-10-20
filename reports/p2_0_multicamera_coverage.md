@@ -1,0 +1,79 @@
+# P2.0 P20-01：FRSHCRATER10 双相机覆盖与光度 QA
+
+**状态：PASS（覆盖达标，配准 QA 待 P20-02）** · 2026-10-20 · 场景 `FRSHCRATER10` / `M153639872`
+输入：已下载的 `M153639872LC` / `M153639872RC` CDR 各 528 929 736 B；DTM
+`NAC_DTM_FRSHCRATER10.TIF`（14259×2389，2 m，等距圆柱，48N/180E）。
+
+## 链路上的两处新增修正
+
+1. `prepare_lroc_cdr_cube.py` 增加了 11 个相机必需键（`FrameId`、`SampleFirstPixel`、
+   `PrerollTime`、`MissionPhaseName`、`InstrumentHost*`、`InstrumentName`、四个温度原始值），
+   否则右相机 `spiceinit` 在翻译/键缺失上失败。脚本现在把左/右两条链都固化。
+2. 脚本新增 `normalise_pvl_quotes()`：`editlab` 会把含空格的值写成 `'"…"'`，破坏
+   `MissionName2DataDir.trn` 翻译。该函数把 `'"X"'` 等长规整为 `"X"`（保持文件长度，
+   不破坏标签里的绝对 StartByte）。本次左/右各规整 4 处。
+3. QA 侧发现 `isis2raw` 对左/右图像写出的 NULL 哨兵不同（左 0.0132450、右 0.0321360），
+   因此覆盖统计必须**按相机各自检测填充值**，不能共用常量。
+
+## 覆盖结果
+
+| 指标 | 值 |
+|---|---|
+| DTM 有效像元 | 28 311 111（网格的 0.8311） |
+| 左相机有效 | 15 096 940（网格 0.4432） |
+| 右相机有效 | 16 809 077（网格 0.4934） |
+| **coverage_left / DTM valid** | **0.4275** |
+| **coverage_right / DTM valid** | **0.5783** |
+| **coverage_union / DTM valid** | **0.9901** |
+| **overlap / DTM valid** | **0.0157**（445 886 像元） |
+| 联合占据（无 DTM 掩膜） | 网格的 0.9235 |
+
+原 Runbook 建议的 ≥95% 覆盖门槛**双相机联合后达到 0.9901**；左右单相机分别只有 0.43 / 0.58，
+因此**必须双相机**，不能假设单一相机覆盖整个 DTM。两相机地面范围：
+
+- 左：lat 47.0851–48.0331，lon 243.7750–243.9238
+- 右：lat 47.0861–48.0336，lon 243.8928–244.0390
+- 重叠经度 243.8928–243.9238（≈0.031°，≈1.5% 的 DTM 宽）
+
+## 光度与辐射一致性（重叠区 445 886 像元）
+
+| 量 | 左 | 右 |
+|---|---|---|
+| I/F 均值 | 0.07150 | 0.07290 |
+| I/F 标准差 | 0.02040 | 0.02129 |
+| 残差均值 / 标准差 | — | −0.001397 / 0.007634 |
+| 残差 p5 / p50 / p95 | — | −0.012085 / −0.001160 / +0.008637 |
+| Pearson r（左 vs 右） | — | **0.9338** |
+
+左右相机在重叠区高度相关（r = 0.93）且残差很小（std 0.0076 ≈ I/F 均值的 10%），
+说明同一场景下两相机的辐射/几何一致性良好，具备融合基础。
+
+## 复跑命令
+
+```bash
+# 相机 cube（左/右同一脚本；右需 FrameId=RIGHT -> NaifIkCode=-85610）
+python3 scripts/prepare_lroc_cdr_cube.py <IMG> --isisdir $ISISDATA --out cdr.cub \
+  --ck …/lrolc_2011031_2011060_v02.bc …/moc42r_2011031_2011060_v05.bc \
+  --frame-kernel …/lro_frames_2014049_v01.tf --spk …/fdf29r_2011060_2011091_v01.bsp \
+  --ik …/lro_lroc_v20.ti --iak …/lro_instrumentAddendum_v05.ti \
+  --sclk …/lro_clkcor_2026287_v00.tsc --lsk …/naif0012.tls \
+  --pck …/pck00010.tpc --tspk …/moon_pa_de421_1900-2050.bpc …/de421.bsp
+
+# DTM 同网格正射
+maptemplate map=dtm_map.cub projection=equirectangular clat=48.0 clon=180.0 \
+  targopt=user targetname=MOON eqradius=1737.4 polradius=1737.4 \
+  rngopt=user minlat=47.0843749 maxlat=48.0248383 minlon=243.8046336 maxlon=244.0401158 \
+  resopt=ppd resolution=15161.67521207
+cam2map from=cdr.cub map=dtm_map.cub to=ortho.cub pixres=map defaultrange=map
+isis2raw from=ortho.cub to=ortho.raw storageorder=BSQ endian=LSB
+```
+
+## 结论与下一步
+
+- **覆盖门槛达到**：union/DTM valid = 0.9901（≥0.95 的目标），重叠 1.57%。
+- **多相机融合策略须在观测任何模型成绩前固定**：重叠区取残差更小且不饱和的相机；
+  记录 seamline、遮挡掩膜；本次残差分布（mean −0.0014，p95 +0.0086）可作为取舍依据之一。
+- 未做（P20-02 范围）：独立地物控制点配准 RMS/p50/p95、投影一致性（m 为单位的容差）、
+  DTM 参与正射造成的地形真值泄漏检查、拼接正式实现与 TIFF 化。
+- Gate 3 仍 **NOT FROZEN**；Gate 4 **HOLD**。CDR 路线仍是
+  `PROPOSED_NOT_APPROVED`，不得据此冻结或评分。
