@@ -7,12 +7,14 @@
 |---|---|---|
 | P20-01 双相机覆盖 | **PASS（覆盖达标）** | `reports/p2_0_multicamera_coverage.md`：union/DTM valid **0.9901**、overlap 0.0157、左右 I/F 残差 std 0.0076、r 0.9338 |
 | P20-01 多相机融合实现 | 待做 | 已有覆盖/残差证据；需固定融合策略与 seamline |
-| P20-02 独立配准 QA | 待做 | 需独立控制点、投影一致性（米级容差）、地形泄漏检查 |
+| P20-02 独立配准 QA | **BLOCKED** | `reports/p2_0_ortho_registration_qa.md`：投影/网格/半径一致（2.0000 m 核对），无地形泄漏；但特征匹配无法分辨 1 个像元（2 m）系统偏移（±1 sample 对照只让 RMS 变 6–10 cm） |
 | P20-03 2–3 个 Pilot 场景 | 待做 | |
 | P20-04 Gate 3 冻结 | HOLD | 需 P20-01/02/03 + CDR 协议批准 |
 
 ## 本轮实际改动的代码
 
+- `scripts/qa_registration_p20.py`（新）：共享有效带内的边缘特征配对 + 受控位移对照，
+  输出逐象限匹配数与残差分布（mean/RMS/p50/p95/max）。
 - `scripts/prepare_lroc_cdr_cube.py`
   - 补齐相机必需的 11 个 Instrument 键（右相机此前无法完成 `spiceinit`）；
   - 新增 `normalise_pvl_quotes()`（`editlab` 的 `'"…"'` 陷阱，等长替换保持 StartByte 有效）。
