@@ -1,5 +1,14 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **Active coding sprint (2026-10-20): [P2.0 multi-camera NAC CDR coverage and registration QA](docs/P2_0_MULTICAMERA_QA.md).**
+> The [single-scene CDR→ISIS→DTM-grid ortho probe](reports/p1_9_optical_ortho_probe.md) succeeded,
+> but the left camera covers only **42.75% of valid DTM pixels** and independent ground registration is not established.
+> Reuse the right-camera CDR to measure union coverage and mosaicking before processing more scenes.
+> The [CDR protocol amendment](protocols/p19_cdr_route_amendment_proposal.json) is a **proposal, not an approved replacement**
+> for the original EDR preregistration. Gate 3 is **not frozen** and Gate 4 model scoring remains on hold.
+> Start with [AGENTS.md](AGENTS.md).
+>
+
 > **New P1.9 EDR access lead (2026-10-18):** Official LROC NAC observing-phase [shapefile archives](https://data.lroc.im-ldi.com/lroc/view_rdr/SHAPEFILE_NAC_EQ_NOMINAL_MISSION) include exact `PDS_VOLUME`, `FILE_SPECI` and `URL` fields for EDRs. Try [docs/P1_9_EDR_URL_DISCOVERY.md](docs/P1_9_EDR_URL_DISCOVERY.md) and `scripts/resolve_lroc_edr_urls.py` **before guessing URLs**. This is a verified official metadata discovery, **not yet a verified downloadable raw IMG**. The held-out evaluation gate is still blocked.
 
 
