@@ -1,5 +1,17 @@
 # P1.9 EDR → ISIS 正射校正运行手册（Gate 2 光学通道收尾）
 
+> **2026-10-20 重要进展／更正：CDR 路线已有单景实测成功。**
+> 当前任务已转至 [`docs/P2_0_MULTICAMERA_QA.md`](P2_0_MULTICAMERA_QA.md)，
+> 真实实验证据见 [`reports/p1_9_optical_ortho_probe.md`](../reports/p1_9_optical_ortho_probe.md)。
+> LROC **CDR 不能使用 `lronac2isis` 或将 `DATA_SET_ID` 假改为 EDR**，
+> 否则像元解码会错误；CDR 应使用 `pds2isis` + Instrument/Kernels 元数据补齐 +
+> 显式 `spiceinit` 再正射。`lronac2isis` 仅用于真实 EDR。
+> 首景左相机覆盖 DTM 有效区域仅 **42.75%**，须通过多相机覆盖与独立配准 QA；
+> 原始 [EDR 协议](../protocols/p19_external_policy.json) 未被覆盖，
+> [CDR 修改提案](../protocols/p19_cdr_route_amendment_proposal.json) 尚待批准，
+> Gate 3 **尚未冻结**。以下旧版操作手册仍保留原本的 EDR 路线供追溯。
+>
+
 > **2026-10-18 新的更直接入口**：请先使用 [P1.9 EDR URL Discovery](P1_9_EDR_URL_DISCOVERY.md) 和
 > `scripts/resolve_lroc_edr_urls.py`。LROC 官方 NAC 分期观测 Shapefile 直接记录
 > `PRODUCT_ID / PDS_VOLUME / FILE_SPECI / URL`，无需再盲猜卷目录。索引 URL 可能过期，
