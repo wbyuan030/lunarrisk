@@ -1,3 +1,38 @@
+# 当前执行任务（P2.0，2026-10-20）：CDR 多相机覆盖与独立配准 QA
+
+**立刻阅读 [`docs/P2_0_MULTICAMERA_QA.md`](docs/P2_0_MULTICAMERA_QA.md) 并直接实施 P20-01 → P20-03 的探针工作。**
+本文件后面的旧 P1.9 / P1.8 / P1.7 指令仅供历史追溯，不再是当前任务。
+
+最新已完成的工作（见 [`reports/p1_9_optical_ortho_probe.md`](reports/p1_9_optical_ortho_probe.md)）：
+`FRSHCRATER10 / M153639872LC` 真实 NAC CDR → `pds2isis` → 补仪器标签 →
+显式 SPICE 内核 → `cam2map` 到与 DTM 相同的 14259×2389 / 2m 网格。
+**光学覆盖仅占 DTM 有效像素 42.75%**；弱互相关的 1 像素偏移不等于独立地物配准 PASS。
+232 项测试为上一轮 Coding Agent 的记录，新工作要重新运行。
+
+**立即实施**：
+- P20-01：优先复用已下载的 `M153639872RC`（右相机）和左相机，做双相机同格网正射、
+  coverage-left/right/union/intersection、掩码与拼接 QA；如果联合覆盖不足，才查 README
+  中其他采集，不要立刻批量下载 84 景。
+- P20-02：独立影像地物配准误差（RMS/p50/p95、离群值）、光度残差与投影一致性；
+  特别检查正射时是否使用了目标高分辨率 DTM 像元高度，避免未来测试的地形真值泄漏。
+- P20-03：在 2–3 个 Pilot 场景复现（优先非冻结 Probe），统计可用 Tile、
+  磁盘/GPU/ISIS 资源、真实失败原因，写报告和回归测试。
+- 原预注册 [`protocols/p19_external_policy.json`](protocols/p19_external_policy.json) 规定 EDR 路线；
+  新 [`protocols/p19_cdr_route_amendment_proposal.json`](protocols/p19_cdr_route_amendment_proposal.json)
+  只是**待确认**的 CDR 协议提案，**不得静默改写原政策或声称新 CDR 已被正式批准**。
+- Gate 3 目前仍为 **NOT FROZEN**，必须 QA 与协议审核后才可真正冻结
+  `heldout_v2_external`；Gate 4 一次性模型评估**保持 HOLD**。
+
+执行完每个阶段添加离线测试、记录真实命令/Hash/数据质量报告，
+更新 `reports/p2_0_progress.md` 后按本仓库习惯 push `main`。
+仅用既有 RX 7900 XT/ROCm 与免费公开数据，不购买云卡、不使用 4×4090、
+不覆盖原始 NAC/DTM、760 张训练标签或 64 张已冻结产品级 V2。
+**不要重复过时的 EDR URL Discovery / SPICE 初始化探索**，除非新数据暴露新的问题。
+
+---
+
+## 历史任务指令（P1.9 等，只供参考）
+
 # 当前首要任务：P1.9 NAC EDR 官方 URL 反查（2026-10-18）
 
 **立即阅读 [`docs/P1_9_EDR_URL_DISCOVERY.md`](docs/P1_9_EDR_URL_DISCOVERY.md) 并执行 Pilot。**
