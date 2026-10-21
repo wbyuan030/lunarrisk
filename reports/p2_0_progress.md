@@ -40,7 +40,7 @@
 
 ## P20-03 小批量可行性（2026-10-20）
 
-[`reports/p2_0_small_batch_qa.md`](p2_0_small_batch_qa.md)：三探针景链路全通（19 min / 4 相机、4.7 GB / 景）；CDR 可获得率 138/168 acquisition 左右齐、69/84 景全齐；69 景约需 324 GB，当前可用 498 GB，建议 cub 建成后删 IMG。独立性 / 替代 acquisition 规则 / CDR 审批三项未完成，Gate 3 仍 NOT FROZEN。
+[`reports/p2_0_small_batch_qa.md`](p2_0_small_batch_qa.md)：三探针景链路全通（19 min / 4 相机、4.7 GB / 景）；CDR 可获得率 138/168 acquisition 左右齐、69/84 景全齐；69 景约需 324 GB，当前可用 498 GB，建议 cub 建成后删 IMG。独立组数 **51 / 69 景**（最大簇 11 景 LICHTENBER）；替代 acquisition 规则 / CDR 审批两项未完成，Gate 3 仍 NOT FROZEN。
 
 ## 实测命令与数据
 
@@ -51,7 +51,7 @@
 
 ## 边界与约束（持续有效）
 
-- 测试数：232 → **264**
+- 测试数：232 → **271**
 - 原预注册 `protocols/p19_external_policy.json` 未改；CDR 路线仍为
   `protocols/p19_cdr_route_amendment_proposal.json` 的 `PROPOSED_NOT_APPROVED`。
 - 未运行任何模型预测；未查看 heldout 风险标签；未降低 Gate 1 的 ≥10 km 与源审计标准。

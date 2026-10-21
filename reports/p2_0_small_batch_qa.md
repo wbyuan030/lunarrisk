@@ -45,10 +45,25 @@ acquisition。因此 69 景是真正常可操作的子集；其余 15 景要么�
 （916 G 中已用 372 G），能放下但余量不大；建议策略是 cub 建成后删除 IMG（每景省 2.1 GB），
 只在需要复核的景保留 nearest QA 立方体。
 
+## 3b. 独立性审计（单链接 10 km，脚本 `scripts/audit_groups_p20.py`）
+
+用 Gate 1 已有的 `outputs/p19_lroc_footprint_pass.csv`（含每个候选 DTM 到最近候选的**多边形间距**）
+对 69 个可操作景做单链接聚类，阈值 10 km：
+
+| 量 | 值 |
+|---|---|
+| 可操作景 | 69（`footprint_disjoint=True` 69/69，`source_disjoint=True` 69/69） |
+| **独立组（10 km）** | **51** |
+| 最大簇 | **11 景**：`LICHTENBER1/2/3/4/5/6/7/8/9/11/12` → 只能算 **1** 个组 |
+| 其他多景簇 | `ARISTARCHU2/3/4/5`（4）、`KINGCRATER2/3/4`（3）、`LICHTENBER10/13`（2）、`MOOREF1/2`（2）、`SULPICIUS1/3`（2） |
+| 原生分辨率 | 2 m ×67、3 m ×2 |
+
+含义：可用于独立 Bootstrap 的单位是 **51 组**，不是 69 景。任何"按景随机分配"的冻结都会让
+LICHTENBER 系列 11 景被当成 11 个独立样本，直接高估独立性。冻结必须**按组分层**（P20-04 已要求）。
+
 ## 4. 未完成项（不得跳过）
 
-- **来源独立性**：本报告的 69 景仍是"能做"的集合，未做组内 footprint 重叠与 10 km 间距复核；
-  不能据此声称独立。
+- **组划分已算，但未冻结**：51 组来自单链接 10 km 规则；若要调整阈值必须在见到任何评分前写进协议。
 - **替代 acquisition 规则**：2 个只有单侧相机的 acquisition 需要协议明确处理方式。
 - **CDR 路线审批**：`protocols/p19_cdr_route_amendment_proposal.json` 仍为提案状态。
 - 因此：`Gate 3` 保持 **NOT FROZEN**，输出结论是"小批量可行"，不是"测试集已冻结"。
