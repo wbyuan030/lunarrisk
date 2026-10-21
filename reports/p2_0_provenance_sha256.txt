@@ -1,0 +1,29 @@
+# P20-02 provenance: SHA256 of every downloaded product and kernel used by the probe scenes
+# generated 2026-10-21T17:59:35Z in rocm-lab container
+# isis: # Changelog; ## [Unreleased]; ## [8.3.0] - 2024-09-30
+# python: py3.10.12 numpy2.2.6 tifffile2025.5.10 scipy1.15.3
+# git: 808953ca4f92a2deb6bf6c3e76a6d1ceecd4fa74
+dabe007620114014d5d8c06417e74bc95651014b1265efc90ccb7a1c97865e12 data/pilot_p20/RANGER/M144483945LC.IMG
+a80abb50ca233c112d7b06fe1958a1a1e6c0f87e31a06b6f6e20ae4b2cc686f0 data/pilot_p20/RANGER/M144483945RC.IMG
+332adaff9dcdfc1a107dc2dadd42bc0426da07ca1c57ba2d3ff31d8676076afb data/pilot_p20/RANGER/M144490730.IMG
+c9dd0d9f3b18fdab8d672b7d058c9d803d856c163aed680c5b9c9a776d5bdb4a data/pilot_p20/RANGER/M144490730LC.IMG
+8f99da8cf2d3735549bfe19ffebc4b6044eac3a39a284120630f467d33c365e0 data/pilot_p20/RANGER/M144490730RC.IMG
+7a0e63a783892da630945bde2a78d8b65c388c5f1ce501b6bf812a51a2e60ede data/pilot_p20/RANGER/NAC_DTM_RANGER.TIF
+9cf492e437af27a4b8ead0d54c05030ceb2cd5968a0f2f4cba8caa31a327232f data/pilot_p20/RANGER/NAC_DTM_RANGER.LBL
+7ee807c03287ec9af3c973d8ef0ae5009975bb097b76410c9db6a9ea75e4baea data/pilot_p20/PLANCKFLOOR/M136648682LC.IMG
+f73b83e17cd8267ee9c88437939ee39703029a6ce80c343d704471429f62ff1f data/pilot_p20/PLANCKFLOOR/M136648682RC.IMG
+332adaff9dcdfc1a107dc2dadd42bc0426da07ca1c57ba2d3ff31d8676076afb data/pilot_p20/PLANCKFLOOR/M136655466.IMG
+6dd10408dae8ff1ea60a3c391c50027580b8dc221b09473e71a8f2fbde886aaf data/pilot_p20/PLANCKFLOOR/M136655466LC.IMG
+eb501026fc8a14c03bd776bf99109b388d813dfdf6d4fdd0d91c9ec6b886a10c data/pilot_p20/PLANCKFLOOR/M136655466RC.IMG
+60dd18504b66cd863e1677c42e5026ce5a1c0448b208d10abd129d3decc8729c data/pilot_p20/PLANCKFLOOR/NAC_DTM_PLANCKFLOOR.TIF
+afe728a74b727a2981ab10710b7c9422eda406f6889c2f032bb9423d48dae711 data/pilot_p20/PLANCKFLOOR/NAC_DTM_PLANCKFLOOR.LBL
+--- kernels ---
+50e3a71e26a5cfee9e09b2099e4c901c2b6dce463edbce5f2740f76123aae6b5  /opt/isis-env/data/lro/kernels/ck/lrolc_2010304_2010335_v02.bc
+2079a3f740ac1cacd69b27bbf3cbe0b0f692109bd8abd734e7411d8b58f6f41e  /opt/isis-env/data/lro/kernels/ck/moc42r_2010304_2010335_v03.bc
+e3443dc198371e58ec336cc3f2539eb72e0367925ba86f5a185b923e2b577e8f  /opt/isis-env/data/lro/kernels/ck/lrolc_2010212_2010244_v03.bc
+75262d6267e227ed229e32990d1a776d122ef56e7997c54abf2203bc9089a687  /opt/isis-env/data/lro/kernels/ck/moc42r_2010212_2010244_v04.bc
+fd70cd0a76d493cd5b62eb6d760aeee7a549ccb00d005511007a17fe63e12826  /opt/isis-env/data/lro/kernels/spk/fdf29r_2010305_2010335_v01.bsp
+725ecf687a152d6b45d6c7f6bb3e21721ac14d782fe9d398e0494345b3637e1a  /opt/isis-env/data/lro/kernels/spk/fdf29r_2010213_2010244_v50.bsp
+9a981b8c4366386dbf7424a8dafaf0cdb2030ed9935ae511d3897f6acfcc1dd6  /opt/isis-env/data/lro/kernels/fk/lro_frames_2014049_v01.tf
+15e21c86eb2f74cfc9de1853e55acb2f4f305db5087e97a92448d6a32447823c  /opt/isis-env/data/lro/kernels/ik/lro_lroc_v20.ti
+9d5e8052c0c43d2a7c1df84938dd94b9c33b4e98c55eac150a3b4d3deead2b66  /opt/isis-env/data/lro/kernels/iak/lro_instrumentAddendum_v05.ti
