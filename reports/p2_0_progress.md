@@ -7,7 +7,7 @@
 |---|---|---|
 | P20-01 双相机覆盖 | **PASS（覆盖达标）** | `reports/p2_0_multicamera_coverage.md`：union/DTM valid **0.9901**、overlap 0.0157、左右 I/F 残差 std 0.0076、r 0.9338 |
 | P20-01 多相机融合实现 | 待做 | 已有覆盖/残差证据；需固定融合策略与 seamline |
-| P20-02 独立配准 QA | **BLOCKED** | `reports/p2_0_ortho_registration_qa.md`：投影/网格/半径一致（2.0000 m 核对），无地形泄漏；但特征匹配无法分辨 1 个像元（2 m）系统偏移（±1 sample 对照只让 RMS 变 6–10 cm） |
+| P20-02 独立配准 QA | **PASS @2 px / ≤1 px BLOCKED** | `reports/p2_0_ortho_registration_qa.md`：投影/网格/半径一致（2.0000 m 核对），无地形泄漏；但特征匹配无法分辨 1 个像元（2 m）系统偏移（±1 sample 对照只让 RMS 变 6–10 cm） |
 | P20-03 小批量可行性 | **READY** | `reports/p2_0_small_batch_qa.md`：69/84 景双相机齐备（138/168 acquisition，82.1%）；可用池 **41 组**；40 景存储 ≈140 GB、CPU ≈7.7 h；缺 28 条 acquisition（极区索引 404） |
 | P20-04 Gate 3 冻结 | HOLD | 需 P20-01/02/03 + CDR 协议批准 |
 
@@ -37,6 +37,10 @@
 
 新发现（工程）：`cam2map` 默认 `INTERP=CUBICCONVOLUTION`，普通正射像素值是邻域卷积，
 不能用于相等判据；QA 需单独重建 `interp=nearest` 立方体（13 min/相机）。
+
+## P20-03 小批量可行性（2026-10-20）
+
+[`reports/p2_0_small_batch_qa.md`](p2_0_small_batch_qa.md)：三探针景链路全通（19 min / 4 相机、4.7 GB / 景）；CDR 可获得率 138/168 acquisition 左右齐、69/84 景全齐；69 景约需 324 GB，当前可用 498 GB，建议 cub 建成后删 IMG。独立性 / 替代 acquisition 规则 / CDR 审批三项未完成，Gate 3 仍 NOT FROZEN。
 
 ## 实测命令与数据
 
