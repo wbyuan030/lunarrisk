@@ -20,6 +20,23 @@
   - 补齐相机必需的 11 个 Instrument 键（右相机此前无法完成 `spiceinit`）；
   - 新增 `normalise_pvl_quotes()`（`editlab` 的 `'"…"'` 陷阱，等长替换保持 StartByte 有效）。
 
+## P20-02 配准实测（2026-10-20，第二次推进）
+
+新增 `scripts/grid_consistency_p20.py`、`scripts/solar_azimuth_p20.py`、`scripts/make_dtm_template.py`、
+`scripts/ortho_registration_p20.py` 与 13 项离线测试（合计 **257** 项通过）。
+
+| 项 | 状态 | 关键数字 |
+|---|---|---|
+| 正射 ↔ DTM 网格算术一致性 | **PASS** | 最近邻 QA 立方体 40/40 精确匹配，含边界点 |
+| 太阳方向（SPICE，球面三角） | **PASS** | RANGER 100.01°/42.64°；PLANCKFLOOR 310.46°/25.23° |
+| hillshade 几何自检 | **不足** | RANGER 0.802（5/16 窗口）；PLANCKFLOOR 0.229（0/16） |
+| 左右相机互检 | **不足** | RANGER 共同条带仅 85 px 宽 |
+| GCP 级绝对配准 | **BLOCKED** | 需独立地物控制点；本轮未取得 |
+| PLANCKFLOOR 覆盖 | PASS | 四相机 0.9771；单 acquisition 0.9678/0.9429 |
+
+新发现（工程）：`cam2map` 默认 `INTERP=CUBICCONVOLUTION`，普通正射像素值是邻域卷积，
+不能用于相等判据；QA 需单独重建 `interp=nearest` 立方体（13 min/相机）。
+
 ## 实测命令与数据
 
 - 相机产品：`M153639872LC` / `M153639872RC`（CDR，LROLRC_1006/DATA/SCI/2011060/NAC/）
@@ -29,7 +46,7 @@
 
 ## 边界与约束（持续有效）
 
-- 测试数：232 → **236**
+- 测试数：232 → **257**
 - 原预注册 `protocols/p19_external_policy.json` 未改；CDR 路线仍为
   `protocols/p19_cdr_route_amendment_proposal.json` 的 `PROPOSED_NOT_APPROVED`。
 - 未运行任何模型预测；未查看 heldout 风险标签；未降低 Gate 1 的 ≥10 km 与源审计标准。

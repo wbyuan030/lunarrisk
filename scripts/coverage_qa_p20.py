@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 import numpy as np
@@ -25,6 +26,22 @@ def load(path: Path, lines: int, samples: int):
     if counts.max() / grid.size < 0.01:
         return np.where(np.isfinite(grid), grid, np.nan), None
     return np.where(grid == fill, np.nan, grid), (float(fill), float(counts.max() / grid.size))
+
+
+def acquisition_unions(items):
+    """Group per-camera valid masks by acquisition id (product base, e.g. M136648682).
+
+    items: iterable of (image_name, camera_tag, mask). Returns {acq: {"tags": set, "mask": arr}}.
+    """
+    acqs = {}
+    for name, tag, mask in items:
+        match = re.match(r"(M\d+)", name)
+        if not match:
+            continue
+        entry = acqs.setdefault(match.group(1), {"tags": set(), "mask": np.zeros_like(mask)})
+        entry["tags"].add(tag)
+        entry["mask"] |= mask
+    return acqs
 
 
 def main(argv=None) -> int:
@@ -94,6 +111,15 @@ def main(argv=None) -> int:
             "residual_std_if": round(float(np.nanstd(lv - rv)), 6) if np.isfinite(lv).any() else None,
             "residual_pixels": int(np.isfinite(lv - rv).sum()),
         }
+    # Per-acquisition coverage (L+R of the same observation). This is the scheduling unit:
+    # a single acquisition rarely reaches the 0.95 target on its own.
+    acqs = acquisition_unions((name, tag, ok)
+                              for tag in sorted(cams) for name, _, ok, _ in cams[tag])
+    report["acquisitions"] = {
+        acq: {"camera_tags": sorted(entry["tags"]),
+              "dtm_coverage": round(float((entry["mask"] & dtm_valid).sum() / total), 6),
+              "grid_fraction": round(float(entry["mask"].mean()), 6)}
+        for acq, entry in sorted(acqs.items())}
     report["union_dtm_coverage"] = round(float((union & dtm_valid).sum() / total), 6)
     report["union_grid_fraction"] = round(float(union.mean()), 6)
 

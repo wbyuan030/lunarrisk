@@ -42,5 +42,30 @@ class TestLoad(unittest.TestCase):
                 cov.load(path, 4, 4)
 
 
+class TestAcquisitionGrouping(unittest.TestCase):
+    def test_l_and_r_of_one_acquisition_are_merged(self):
+        a = np.zeros((2, 4), dtype=bool)
+        a[0, :2] = True                       # left camera half
+        b = np.zeros((2, 4), dtype=bool)
+        b[0, 2:] = True                       # right camera, complementary half
+        c = np.zeros((2, 4), dtype=bool)
+        c[1, :] = True                        # a different (later) acquisition
+        acqs = cov.acquisition_unions([
+            ("M136648682LC_L_ortho.raw", "left", a),
+            ("M136648682RC_R_ortho.raw", "right", b),
+            ("M136655466LC_L_ortho.raw", "left", c),
+        ])
+        self.assertEqual(sorted(acqs), ["M136648682", "M136655466"])
+        first = acqs["M136648682"]
+        self.assertEqual(sorted(first["tags"]), ["left", "right"])
+        self.assertEqual(int(first["mask"].sum()), 4)          # union, not overwrite
+        self.assertEqual(int(acqs["M136655466"]["mask"].sum()), 4)
+        self.assertEqual(sorted(acqs["M136655466"]["tags"]), ["left"])
+
+    def test_names_without_a_product_id_are_ignored(self):
+        mask = np.ones((1, 1), dtype=bool)
+        self.assertEqual(cov.acquisition_unions([("dtm_map.cub", "left", mask)]), {})
+
+
 if __name__ == "__main__":
     unittest.main()

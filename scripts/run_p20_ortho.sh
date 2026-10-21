@@ -12,6 +12,12 @@ SPK=${4:?spk}
 cd "$SCENE"
 IS=$ISISDATA/lro/kernels
 
+# Label-only map template from the DTM's own label values (idempotent).
+grid=$(ls *.grid.json 2>/dev/null | head -1)
+[ -n "$grid" ] || { echo "no <dtm>.grid.json in $SCENE; run pilot_p20.sh first"; exit 1; }
+python3 /data/lunarrisk/scripts/make_dtm_template.py "$grid"
+[ -f dtm_map.cub ] || { echo "dtm_map.cub missing"; exit 1; }
+
 for img in *.IMG; do
   [ -e "$img" ] || continue
   size=$(stat -c%s "$img")
