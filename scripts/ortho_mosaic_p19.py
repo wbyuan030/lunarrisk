@@ -119,6 +119,67 @@ def illumination_spread(illumination: dict) -> dict:
             "elevation_spread_deg": round(max(elevations) - min(elevations), 2)}
 
 
+def estimate_gains(images, stats) -> dict:
+    """Multiplicative gain per image, fitted against the top-priority image on their overlap.
+
+    Only meaningful when the illumination guard passed: the residual difference between two
+    products of the same acquisition then comes from calibration/exposure, not from sun geometry,
+    so a single gain per image is the least intrusive correction. The reference keeps gain 1.
+    """
+    order = priority_order(images, stats)
+    ref_name, ref_image = images[order[0]]
+    gains = {ref_name: 1.0}
+    for index in order[1:]:
+        name, image = images[index]
+        overlap = np.isfinite(image) & np.isfinite(ref_image)
+        if overlap.sum() < 32:
+            gains[name] = 1.0
+            continue
+        ref_median = float(np.median(ref_image[overlap]))
+        own_median = float(np.median(image[overlap]))
+        gains[name] = ref_median / own_median if own_median > 0 else 1.0
+    return {"reference": ref_name, "gains": gains}
+
+
+def apply_gains(images, gains: dict):
+    out = []
+    for name, image in images:
+        gain = gains.get(name, 1.0)
+        out.append((name, image * gain if gain != 1.0 else image))
+    return out
+
+
+def seam_step(values: np.ndarray, source: np.ndarray) -> dict:
+    """Radiometric step across source boundaries, against the same statistic inside a source.
+
+    A hard selection can still leave a visible band when two images differ in exposure, even at
+    identical sun geometry, so the size of the jump must be measured rather than eyeballed.
+    Horizontal and vertical neighbour pairs are handled separately because their shapes differ.
+    """
+    finite = np.isfinite(values)
+
+    across_h = (finite[:, :-1] & finite[:, 1:]) & (source[:, :-1] != source[:, 1:])
+    across_v = (finite[:-1, :] & finite[1:, :]) & (source[:-1, :] != source[1:, :])
+    same_h = (finite[:, :-1] & finite[:, 1:]) & (source[:, :-1] == source[:, 1:])
+    same_v = (finite[:-1, :] & finite[1:, :]) & (source[:-1, :] == source[1:, :])
+
+    across = np.concatenate([np.abs(values[:, 1:] - values[:, :-1])[across_h],
+                             np.abs(values[1:, :] - values[:-1, :])[across_v]])
+    inside = np.concatenate([np.abs(values[:, 1:] - values[:, :-1])[same_h],
+                             np.abs(values[1:, :] - values[:-1, :])[same_v]])
+
+    out = {"seam_pairs": int(across.size), "interior_pairs": int(inside.size)}
+    if across.size:
+        out["seam_median"] = float(np.median(across))
+        out["seam_p95"] = float(np.percentile(across, 95))
+    if inside.size:
+        out["interior_median"] = float(np.median(inside))
+        out["interior_p95"] = float(np.percentile(inside, 95))
+    if across.size and inside.size and np.median(inside) > 0:
+        out["seam_over_interior_median"] = round(float(np.median(across) / np.median(inside)), 3)
+    return out
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dir", type=Path, required=True)
@@ -130,6 +191,9 @@ def main(argv=None) -> int:
                              "scripts/solar_azimuth_p20.py")
     parser.add_argument("--max-azimuth-spread", type=float, default=10.0)
     parser.add_argument("--max-elevation-spread", type=float, default=5.0)
+    parser.add_argument("--equalize", action="store_true",
+                        help="fit one multiplicative gain per image against the top-priority "
+                             "image; only valid once the illumination guard has passed")
     parser.add_argument("--out", type=Path, default=None)
     args = parser.parse_args(argv)
 
@@ -154,6 +218,10 @@ def main(argv=None) -> int:
                 f"{spread['elevation_spread_deg']} deg); split the scene instead")
 
     stats = weights(images)
+    gain_report = None
+    if args.equalize:
+        gain_report = estimate_gains(images, stats)
+        images = apply_gains(images, gain_report["gains"])
     combined, source = mosaic(images, stats)
 
     counts = {images[i][0]: int((source == i).sum()) for i in range(len(images))}
@@ -163,7 +231,9 @@ def main(argv=None) -> int:
               "mosaic_valid_share": round(total / combined.size, 6),
               "uncovered_pixels": int(combined.size - total),
               "seam_length_pixels": seam_length(source),
+              "seam_step": seam_step(combined, source),
               "illumination": spread,
+              "equalization": gain_report,
               "policy": "hard selection: lower saturation, then sharper; no blending"}
     for name in counts:
         report["images"][name]["contributed_share"] = (

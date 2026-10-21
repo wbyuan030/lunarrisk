@@ -111,6 +111,20 @@
           1.11,
           0.48
         ]
+      },
+      "seam_step": {
+        "RANGER": {
+          "seam_median": 0.0060427,
+          "interior_median": 0.0006104,
+          "ratio": 9.9,
+          "after_single_gain": 0.0020155
+        },
+        "PLANCKFLOOR": {
+          "seam_median": 0.0106204,
+          "interior_median": 0.0013428,
+          "ratio": 7.909,
+          "after_single_gain": 0.011037
+        }
       }
     },
     "availability": {
@@ -154,6 +168,7 @@
     "group_stratification": "Freeze and bootstrap by the 51 single-linkage groups at 10 km, never by scene. The 11 LICHTENBERG DTMs count as one group.",
     "coverage_gate": "Keep the runbook 95% union-coverage target; no tile-level relaxation without a separate preregistered amendment.",
     "mosaic_policy": "Adopt the hard-selection policy and illumination guard above; blending across different solar geometry stays forbidden.",
-    "sub_pixel_claim": "Neither claim <=1 px nor claim sub-pixel accuracy. Permitted wording: consistent with the DTM terrain to 1-2 px (2-5 m)."
+    "sub_pixel_claim": "Neither claim <=1 px nor claim sub-pixel accuracy. Permitted wording: consistent with the DTM terrain to 1-2 px (2-5 m).",
+    "seam_radiometry": "Hard selection leaves a measured radiometric step (RANGER 0.0060 I/F at seams vs 0.0006 inside, ratio 9.9; PLANCKFLOOR 0.0106 vs 0.0013, ratio 7.9). A single per-image gain cuts RANGER to 0.0020 but does not help PLANCKFLOOR, so mosaics stay geometry-only until seam radiometry is resolved (per-seam gradient correction or seam-band constrained assignment)."
   }
 }

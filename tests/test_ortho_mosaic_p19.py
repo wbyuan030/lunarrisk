@@ -96,6 +96,78 @@ class TestSaturation(unittest.TestCase):
         self.assertAlmostEqual(mos.saturated_share(img), 4 / 6)
 
 
+class TestGains(unittest.TestCase):
+    SHAPE = (16, 16)
+
+    def pair(self, ref_value, other_value):
+        left = np.zeros(self.SHAPE, dtype=bool)
+        left[:, :10] = True                     # enough overlap to fit a gain
+        right = np.zeros(self.SHAPE, dtype=bool)
+        right[:, 6:] = True
+        ref = np.full(self.SHAPE, np.nan)
+        ref[left] = ref_value
+        other = np.full(self.SHAPE, np.nan)
+        other[right] = other_value
+        images = [("ref", ref), ("dim", other)]
+        stats = mos.weights(images)
+        stats["ref"]["priority"], stats["dim"]["priority"] = [1.0, 1.0], [1.0, 0.0]
+        return images, stats
+
+    def test_gain_is_fitted_to_the_reference(self):
+        images, stats = self.pair(0.02, 0.01)   # same terrain, half the exposure
+        fitted = mos.estimate_gains(images, stats)
+        self.assertEqual(fitted["reference"], "ref")
+        self.assertEqual(fitted["gains"]["ref"], 1.0)
+        self.assertAlmostEqual(fitted["gains"]["dim"], 2.0, places=6)
+
+    def test_equalization_removes_the_seam_step(self):
+        images, stats = self.pair(0.02, 0.01)
+        before, src_before = mos.mosaic(images, stats)
+        step_before = mos.seam_step(before, src_before)
+        gains = mos.estimate_gains(images, stats)
+        after, src_after = mos.mosaic(mos.apply_gains(images, gains["gains"]), stats)
+        step_after = mos.seam_step(after, src_after)
+        self.assertGreater(step_before["seam_median"], 0.005)   # a visible 0.01 jump
+        self.assertLess(step_after.get("seam_median", 0.0), 1e-9)
+        self.assertGreater(step_after["seam_pairs"], 0)         # both images still contribute
+
+
+class TestSeamStep(unittest.TestCase):
+    def test_matching_images_show_no_step(self):
+        values = np.full((8, 8), 0.02)
+        source = np.zeros((8, 8), dtype=np.int16)
+        source[4:, :] = 1
+        stats = mos.seam_step(values, source)
+        self.assertGreater(stats["seam_pairs"], 0)
+        self.assertAlmostEqual(stats["seam_median"], 0.0)      # no jump at the boundary
+        self.assertAlmostEqual(stats["interior_median"], 0.0)  # constant image has no texture
+        self.assertNotIn("seam_over_interior_median", stats)   # ratio undefined at zero texture
+
+    def test_radiometric_offset_is_detected(self):
+        values = np.full((8, 8), 0.02)
+        values[4:, :] = 0.03                     # a 50% brighter second image
+        source = np.zeros((8, 8), dtype=np.int16)
+        source[4:, :] = 1
+        stats = mos.seam_step(values, source)
+        self.assertAlmostEqual(stats["seam_median"], 0.01, places=6)
+        self.assertEqual(stats["seam_pairs"], 8)
+
+    def test_offset_stands_out_against_texture(self):
+        rng = np.random.default_rng(0)
+        values = 0.02 + rng.normal(scale=1e-5, size=(16, 16))
+        values[8:, :] += 0.01                    # step far above the texture level
+        source = np.zeros((16, 16), dtype=np.int16)
+        source[8:, :] = 1
+        stats = mos.seam_step(values, source)
+        self.assertGreater(stats["seam_over_interior_median"], 100)
+
+    def test_no_boundary_reports_zero_pairs(self):
+        values = np.full((6, 6), 0.02)
+        stats = mos.seam_step(values, np.zeros((6, 6), dtype=np.int16))
+        self.assertEqual(stats["seam_pairs"], 0)
+        self.assertIn("interior_median", stats)
+
+
 class TestIlluminationGuard(unittest.TestCase):
     def test_same_sun_is_accepted(self):
         spread = mos.illumination_spread({
