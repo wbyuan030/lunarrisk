@@ -47,5 +47,113 @@
   "approval_required_for_external_freeze": true,
   "approval_status": "PENDING_USER_OR_RESEARCH_OWNER_CONFIRMATION",
   "gate3_status": "HOLD_UNTIL_APPROVED_AND_MULTICAMERA_QA",
-  "gate4_status": "HOLD_SEPARATE_AUTHORIZATION"
+  "gate4_status": "HOLD_SEPARATE_AUTHORIZATION",
+  "amendment_revision": 2,
+  "status_unchanged_reason": "The measurements below close the evidential gaps; they do not approve the CDR route. Only the researcher can change status.",
+  "p20_evidence_2026_10_20": {
+    "grid_consistency": {
+      "method": "scripts/grid_consistency_p20.py --direction ortho-to-camera, cam2map interp=nearest",
+      "scene": "RANGER / M144483945LC",
+      "samples": 40,
+      "exact_match_fraction": 1.0,
+      "note": "cam2map defaults to CUBICCONVOLUTION; an equality test needs a nearest QA cube"
+    },
+    "crater_gcp": {
+      "method": "scripts/crater_gcp_p20.py --dtm-mode dem (LoG bowls on elevation, no illumination model)",
+      "RANGER": {
+        "matches": 160,
+        "dominant_offset_px": [
+          0.0,
+          0.0
+        ],
+        "inliers": 56,
+        "inlier_p95_px": 1.41
+      },
+      "PLANCKFLOOR": {
+        "matches": 81,
+        "dominant_offset_px": [
+          -1.0,
+          1.0
+        ],
+        "inliers": 19,
+        "inlier_p95_px": 2.3
+      },
+      "left_vs_right_systematic_px": {
+        "RANGER": [
+          -2.0,
+          0.0
+        ],
+        "PLANCKFLOOR": [
+          3.0,
+          0.0
+        ]
+      },
+      "sub_pixel_claim": "NOT_ESTABLISHED (blob centroid bias ~1 px, camera pair differs 2-3 px)"
+    },
+    "coverage_union_fraction": {
+      "FRSHCRATER10": 0.9901,
+      "RANGER": 0.9987,
+      "PLANCKFLOOR": 0.9771
+    },
+    "mosaic_policy": {
+      "script": "scripts/ortho_mosaic_p19.py",
+      "selection": "hard selection; lower saturation, then higher sharpness; no blending",
+      "illumination_guard_deg": {
+        "azimuth": 10.0,
+        "elevation": 5.0
+      },
+      "measured_spread_deg": {
+        "RANGER": [
+          0.32,
+          0.96
+        ],
+        "PLANCKFLOOR": [
+          1.11,
+          0.48
+        ]
+      }
+    },
+    "availability": {
+      "acquisitions_total": 168,
+      "both_cameras": 138,
+      "partial": 2,
+      "missing": 28,
+      "scenes_complete": 69,
+      "scenes_in_pool": 84
+    },
+    "independence": {
+      "usable_scenes": 69,
+      "independent_groups_10km": 51,
+      "largest_group": {
+        "size": 11,
+        "members": [
+          "LICHTENBER1",
+          "LICHTENBER2",
+          "LICHTENBER3",
+          "LICHTENBER4",
+          "LICHTENBER5",
+          "LICHTENBER6",
+          "LICHTENBER7",
+          "LICHTENBER8",
+          "LICHTENBER9",
+          "LICHTENBER11",
+          "LICHTENBER12"
+        ]
+      }
+    },
+    "storage_and_time": {
+      "per_scene_4_cameras_gb": 4.7,
+      "per_scene_minutes": 19,
+      "nearest_qa_cube_gb": 0.66,
+      "nearest_qa_minutes": 13,
+      "free_disk_gb": 498
+    }
+  },
+  "pending_rules_requiring_approval": {
+    "replacement_acquisition": "2 of 168 acquisitions have only one camera. Proposal: drop the scene rather than substitute a different acquisition, because substitution changes observation time and illumination and must be visible as a separate stratum, not silently repaired.",
+    "group_stratification": "Freeze and bootstrap by the 51 single-linkage groups at 10 km, never by scene. The 11 LICHTENBERG DTMs count as one group.",
+    "coverage_gate": "Keep the runbook 95% union-coverage target; no tile-level relaxation without a separate preregistered amendment.",
+    "mosaic_policy": "Adopt the hard-selection policy and illumination guard above; blending across different solar geometry stays forbidden.",
+    "sub_pixel_claim": "Neither claim <=1 px nor claim sub-pixel accuracy. Permitted wording: consistent with the DTM terrain to 1-2 px (2-5 m)."
+  }
 }
