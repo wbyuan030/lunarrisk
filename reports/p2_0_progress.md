@@ -30,8 +30,9 @@
 | 正射 ↔ DTM 网格算术一致性 | **PASS** | 最近邻 QA 立方体 40/40 精确匹配，含边界点 |
 | 太阳方向（SPICE，球面三角） | **PASS** | RANGER 100.01°/42.64°；PLANCKFLOOR 310.46°/25.23° |
 | hillshade 几何自检 | **不足** | RANGER 0.802（5/16 窗口）；PLANCKFLOOR 0.229（0/16） |
-| 左右相机互检 | **不足** | RANGER 共同条带仅 85 px 宽 |
-| GCP 级绝对配准 | **BLOCKED** | 需独立地物控制点；本轮未取得 |
+| 坑心 GCP（正射 vs DTM 高程） | **PASS @2 px** | RANGER 主峰 (0,0) px、56 内点；PLANCKFLOOR 1.4 px、19 内点；p95 1.4/2.3 px |
+| 左右相机互检 | 2–3 px 系统差 | RANGER (−2,0) px；PLANCKFLOOR (3,0) px |
+| ≤1 px 严格配准 | **BLOCKED** | GCP 质心偏差约 1 px，需圆形度筛选与平差 |
 | PLANCKFLOOR 覆盖 | PASS | 四相机 0.9771；单 acquisition 0.9678/0.9429 |
 
 新发现（工程）：`cam2map` 默认 `INTERP=CUBICCONVOLUTION`，普通正射像素值是邻域卷积，
@@ -46,7 +47,7 @@
 
 ## 边界与约束（持续有效）
 
-- 测试数：232 → **257**
+- 测试数：232 → **264**
 - 原预注册 `protocols/p19_external_policy.json` 未改；CDR 路线仍为
   `protocols/p19_cdr_route_amendment_proposal.json` 的 `PROPOSED_NOT_APPROVED`。
 - 未运行任何模型预测；未查看 heldout 风险标签；未降低 Gate 1 的 ≥10 km 与源审计标准。
