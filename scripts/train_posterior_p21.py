@@ -114,7 +114,8 @@ def train(model, ids, cache, scalars, z, channels, *, epochs: int, lr: float, de
     return history
 
 
-def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, point_sigma=None):
+def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, point_sigma=None,
+            temperature=None):
     """Posterior draws on every split.
 
     The point variant has no dispersion of its own, so it is evaluated as a Gaussian with the
@@ -132,6 +133,10 @@ def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, poi
         z = (mu.unsqueeze(0) + noise).cpu().numpy()
     else:
         z = sample_internal(model, x, s, draws=draws, seed=seed).cpu().numpy()
+    if temperature is not None and model.variant != "point":
+        # scale the dispersion only: the mean stays where the model put it
+        mu = z.mean(axis=0, keepdims=True)
+        z = mu + temperature * (z - mu)
     dense = {f"z{i + 1}": z[..., i] for i in range(4)}
     return from_internal(dense), z
 
@@ -192,6 +197,43 @@ def group_bootstrap(labels, values, predicted, groups, statistic, draws=200, see
             "p95": float(np.percentile(estimates, 95)), "groups": int(len(unique))}
 
 
+def fit_temperature(mu, cov, z_true):
+    """Maximum-likelihood isotropic temperature for a Gaussian posterior, in closed form.
+
+    Scaling the covariance by T^2 changes the NLL by ``quad / (2 T^2) + k log T + const``, so
+    ``dNLL/dT = 0`` gives ``T^2 = mean(quad) / k``. Fitted on the ``cal`` split only - never on test.
+    """
+    diff = z_true - mu
+    chol = np.linalg.cholesky(cov)
+    solved = np.linalg.solve(chol, diff[..., None])
+    quad = float(np.mean((solved ** 2).sum(axis=(-1, -2))))
+    k = mu.shape[-1]
+    return float(np.sqrt(max(quad, 1e-12) / k))
+
+
+def calibrate(model, ids_cal, cache, scalars, z_cal, channels, device, point_sigma=None):
+    """Return (temperature, diagnostics) from the calibration split.
+
+    The point model is calibrated too: its dispersion comes from training residuals, which says
+    nothing about whether that dispersion is right on held-out rows, so the same temperature is fitted.
+    """
+    import torch
+    with torch.no_grad():
+        x, s = batch(model, ids_cal, cache, scalars, channels, device)
+        params = model.parameters_dict(model(x, s))
+        mu = params["mu"].cpu().numpy()
+        if model.variant == "point":
+            if point_sigma is None:
+                return None, {"reason": "point model without residual sigma"}
+            sigma = np.asarray(point_sigma, dtype=np.float64)
+            cov = np.tile(np.diag(sigma ** 2), (mu.shape[0], 1, 1))
+        else:
+            cov = model.covariance(params).cpu().numpy()
+    temperature = fit_temperature(mu, cov, z_cal.cpu().numpy())
+    return temperature, {"method": "gaussian isotropic temperature (closed form)",
+                         "fit_on": "cal", "k": int(mu.shape[-1])}
+
+
 def zero_low_rank(head):
     """Zero the low-rank columns of the head and return what is needed to restore them."""
     import torch
@@ -224,6 +266,8 @@ def main(argv=None) -> int:
     parser.add_argument("--draws", type=int, default=256)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--limit", type=int, default=0, help="cap rows per split (smoke runs)")
+    parser.add_argument("--calibrate", action="store_true",
+                        help="fit one Gaussian temperature on cal and apply it when sampling")
     parser.add_argument("--ablate-u", action="store_true",
                         help="re-evaluate the same checkpoint with the low-rank factor zeroed")
     parser.add_argument("--out", type=Path, required=True)
@@ -270,6 +314,26 @@ def main(argv=None) -> int:
               "splits": {}}
     rules = standard_rules()
 
+    model.eval()
+    point_sigma = None
+    if model.variant == "point":
+        with torch.no_grad():
+            x_train, s_train = batch(model, ids_train, cache, scalars, channels, device)
+            residual = z_train.to(device) - model(x_train, s_train)
+        point_sigma = residual.std(dim=0, unbiased=True).cpu().numpy().tolist()
+        report["point_sigma_internal"] = point_sigma
+
+    temperature = None
+    calibration = None
+    if args.calibrate:
+        ids_cal = [s for s in ids_all if split_of[s] == "cal"]
+        if ids_cal:
+            temperature, calibration = calibrate(model, ids_cal, cache, scalars,
+                                                z[[index_of[s] for s in ids_cal]],
+                                                channels, device, point_sigma=point_sigma)
+            report["calibration"] = calibration
+            report["calibration"]["temperature"] = round(float(temperature), 6)
+
     def evaluate_splits(tag: str) -> dict:
         out = {}
         for split in ("train", "val", "cal", "test"):
@@ -279,7 +343,8 @@ def main(argv=None) -> int:
             split_ids = [ids_all[i] for i in rows]
             split_truth = {k: v[rows] for k, v in truth.items()}
             predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
-                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma)
+                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma,
+                                   temperature=temperature if tag != "u_zeroed" else None)
             metrics = {"n_rows": len(rows),
                        "n_groups": int(len(np.unique(groups[rows]))),
                        "attributes": attribute_metrics(split_truth, predicted),
@@ -294,17 +359,6 @@ def main(argv=None) -> int:
                                                        groups[rows], rule_statistic, seed=args.seed)
             out[split] = metrics
         return out
-
-    model.eval()
-    point_sigma = None
-    if model.variant == "point":
-        # the point model has no dispersion of its own; calibrate it with TRAIN residual spread so the
-        # rule interface (and hence Brier) is comparable with the posterior variants
-        with torch.no_grad():
-            x_train, s_train = batch(model, ids_train, cache, scalars, channels, device)
-            residual = z_train.to(device) - model(x_train, s_train)
-        point_sigma = residual.std(dim=0, unbiased=True).cpu().numpy().tolist()
-        report["point_sigma_internal"] = point_sigma
 
     report["splits"] = evaluate_splits("as_trained")
 
