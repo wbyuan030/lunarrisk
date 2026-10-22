@@ -192,6 +192,25 @@ def group_bootstrap(labels, values, predicted, groups, statistic, draws=200, see
             "p95": float(np.percentile(estimates, 95)), "groups": int(len(unique))}
 
 
+def zero_low_rank(head):
+    """Zero the low-rank columns of the head and return what is needed to restore them."""
+    import torch
+    start = 2 * 4
+    with torch.no_grad():
+        saved = (head.weight[start:].clone(), head.bias[start:].clone())
+        head.weight[start:].zero_()
+        head.bias[start:].zero_()
+    return saved
+
+
+def restore_low_rank(head, saved):
+    import torch
+    start = 2 * 4
+    with torch.no_grad():
+        head.weight[start:] = saved[0]
+        head.bias[start:] = saved[1]
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--labels", type=Path, default=ROOT / "outputs" / "labels_hydrated.csv")
@@ -205,6 +224,8 @@ def main(argv=None) -> int:
     parser.add_argument("--draws", type=int, default=256)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--limit", type=int, default=0, help="cap rows per split (smoke runs)")
+    parser.add_argument("--ablate-u", action="store_true",
+                        help="re-evaluate the same checkpoint with the low-rank factor zeroed")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
 
@@ -249,34 +270,52 @@ def main(argv=None) -> int:
               "splits": {}}
     rules = standard_rules()
 
+    def evaluate_splits(tag: str) -> dict:
+        out = {}
+        for split in ("train", "val", "cal", "test"):
+            rows = [i for i, s in enumerate(ids_all) if split_of[s] == split]
+            if len(rows) < 4:
+                continue
+            split_ids = [ids_all[i] for i in rows]
+            split_truth = {k: v[rows] for k, v in truth.items()}
+            predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
+                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma)
+            metrics = {"n_rows": len(rows),
+                       "n_groups": int(len(np.unique(groups[rows]))),
+                       "attributes": attribute_metrics(split_truth, predicted),
+                       "events": event_metrics(split_truth, predicted, rules, seed=args.seed),
+                       "tag": tag}
+
+            def rule_statistic(selection, rule_name="g10_gt_0.05"):
+                realised = np.asarray(rules[rule_name].evaluate(split_truth), dtype=float)
+                return float(realised[selection].mean())
+
+            metrics["prevalence_ci"] = group_bootstrap(labels.iloc[rows], split_truth, predicted,
+                                                       groups[rows], rule_statistic, seed=args.seed)
+            out[split] = metrics
+        return out
+
     model.eval()
     point_sigma = None
     if model.variant == "point":
+        # the point model has no dispersion of its own; calibrate it with TRAIN residual spread so the
+        # rule interface (and hence Brier) is comparable with the posterior variants
         with torch.no_grad():
             x_train, s_train = batch(model, ids_train, cache, scalars, channels, device)
             residual = z_train.to(device) - model(x_train, s_train)
         point_sigma = residual.std(dim=0, unbiased=True).cpu().numpy().tolist()
         report["point_sigma_internal"] = point_sigma
-    for split in ("train", "val", "cal", "test"):
-        rows = [i for i, s in enumerate(ids_all) if split_of[s] == split]
-        if len(rows) < 4:
-            continue
-        split_ids = [ids_all[i] for i in rows]
-        split_truth = {k: v[rows] for k, v in truth.items()}
-        predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
-                               draws=args.draws, seed=args.seed, point_sigma=point_sigma)
-        metrics = {"n_rows": len(rows),
-                   "n_groups": int(len(np.unique(groups[rows]))),
-                   "attributes": attribute_metrics(split_truth, predicted),
-                   "events": event_metrics(split_truth, predicted, rules, seed=args.seed)}
 
-        def rule_statistic(selection, rule_name="g10_gt_0.05"):
-            realised = np.asarray(rules[rule_name].evaluate(split_truth), dtype=float)
-            return float(realised[selection].mean())
+    report["splits"] = evaluate_splits("as_trained")
 
-        metrics["prevalence_ci"] = group_bootstrap(labels.iloc[rows], split_truth, predicted,
-                                                  groups[rows], rule_statistic, seed=args.seed)
-        report["splits"][split] = metrics
+    if args.ablate_u and model.rank:
+        # same checkpoint, correlation removed: the only way to attribute a P3 gain to the covariance
+        # structure rather than to the extra head parameters and their optimisation path
+        saved = zero_low_rank(model.head)
+        report["splits_u0"] = evaluate_splits("u_zeroed")
+        restore_low_rank(model.head, saved)
+        report["ablation"] = {"kind": "same-checkpoint U=0",
+                              "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged"}
 
     report["checkpoint"] = {k: v for k, v in export_state(model, seeds=[args.seed]).items()
                             if k != "state_dict"}

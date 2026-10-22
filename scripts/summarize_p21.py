@@ -145,6 +145,18 @@ def render(runs) -> str:
     for metric, values in paired(runs, "test", "attributes", "point", "diagonal").items():
         formatted = " ".join(f"{v:+.4f}" for v in values)
         lines.append(f"| {metric} | {formatted} | {np.mean(values):+.4f} |")
+    ablated = {k: v for k, v in runs.items() if v.get("ablation")}
+    if ablated:
+        lines += ["", "## 同 checkpoint U=0 消融（joint，test）", "",
+                  "| seed | 指标 | 训练后 | U=0 | 差 |", "|---|---|---|---|---|"]
+        for (variant, seed), payload in sorted(ablated.items()):
+            for metric in ("g10_gt_0.05_brier", "g10_gt_0.05_nll"):
+                rule, kind = metric.rsplit("_", 1)
+                trained = payload["splits"]["test"]["events"][rule][kind]
+                zeroed = payload["splits_u0"]["test"]["events"][rule][kind]
+                lines.append(f"| {seed} | {metric} | {trained:.4f} | {zeroed:.4f} | "
+                             f"{zeroed - trained:+.4f} |")
+        lines.append("")
     stats = counts(runs, "test")
     lines += ["", "## 风险数字的实际计数（test，@20% 覆盖率）", "",
               f"- 样本 {stats['rows']} 行，独立组 {stats['groups']}，放行 {stats['accepted@20']}，"

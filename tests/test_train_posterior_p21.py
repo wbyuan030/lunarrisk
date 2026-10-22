@@ -52,6 +52,20 @@ class TestEventMetrics(unittest.TestCase):
         self.assertLess(metrics["r"]["brier"], 1e-9)
 
 
+class TestLowRankAblation(unittest.TestCase):
+    def test_zeroing_removes_only_the_u_columns_and_restores_exactly(self):
+        import torch
+        from lunarrisk.probabilistic import condition_posterior
+        model = condition_posterior("joint", width=8, rank=2, n_scalars=0)
+        before = model.head.weight.detach().clone()
+        saved = runner.zero_low_rank(model.head)
+        after = model.head.weight.detach()
+        self.assertTrue(torch.all(after[:8] == before[:8]))      # mu and log sigma untouched
+        self.assertTrue(torch.all(after[8:] == 0))               # U columns zeroed
+        runner.restore_low_rank(model.head, saved)
+        self.assertTrue(torch.all(model.head.weight.detach() == before))
+
+
 class TestAttributeMetrics(unittest.TestCase):
     def test_mae_and_rmse(self):
         truth = {"g10": np.array([0.0, 1.0]), "g15": np.array([0.0, 1.0]),
