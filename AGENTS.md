@@ -1,3 +1,50 @@
+# 当前任务（P2.1，2026-10-22）：联合风险模型 H1/H2 + Gate 3 Group 修复
+
+**优先阅读并执行 [`docs/P2_1_JOINT_RISK_RESEARCH.md`](docs/P2_1_JOINT_RISK_RESEARCH.md)。**
+与前几轮不同，本轮**不继续无限延长 CDR/ISIS 工程，而要回到原始科研主线**：
+NAC + 60m 粗地形 → 多物理属性条件联合分布 → 动态 AST 工程规则 → 事件风险概率
+→ 同等安全放行率下的误放行比较。
+
+**并行 P0（当天应处理）**：修复 `scripts/audit_groups_p20.py` 的近邻边 Single-linkage 假设；
+在 69 个可用场景的**全部 2,346 个 polygon pair**中检测距离 <10km 的边、求连通分量，
+独立性逐对核查，不可把同址场景分成不同组。
+`protocols/heldout_v2_group_pool.csv` 当前 `SPARIM1/SPARIM2` 在同中心和 0km 最近距下
+却被划到不同 Group，且均入了 15 Group 候选草案。新增
+`scripts/check_group_pool_collision.py` + `tests/test_check_group_pool_collision.py`
+为**保守防线**，不是完整 polygon 证明；立即运行并记录现存异常。
+**务必保留 v1 草案不变**，修正后以 v2 协议重新选择组和 hash，仍为 PENDING_SIGNOFF。
+
+**科研主线（现在立即启动）**：
+- A0：已有 labels 中四目标 `g10,g15,roughness9m,relief` 的真值/泄漏审计（不把 DTM 派生列作输入）；
+- A1：同一轻量 encoder 的点估计、diagonal 后验、rank-2 joint 后验；
+- A2：安全的 Compare/AND/OR/NOT AST，同一 evaluator 算 GT，QMC 估计任意规则的事件概率；
+- A3：3 Seed，Brier/NLL 与同 Coverage 下 UAR/HMR，明确 `110 Tile / 25 Group` 仅为
+  **反复使用的 development_test**；不在其上继续挑规则/架构。
+- 如果 H1/H2 没有超越 Ridge 与 direct-event head 的增益，优先分析失败和止损，
+  **不强行接 LFM、LLM、JEPA 或 One-Pass**。
+
+**研究口径和授权边界**：
+历史报告记录本地 RX7900XT 固定容量消融；上一阶段 **319 项测试通过**是 Coding Agent
+在当前 P2.1 之前记录的数字，新增代码必须重新执行测试并引用本轮日志。
+`protocols/p19_external_policy.json` 和 CDR 修订提案仍为不同版本；Gate 3
+**NOT_FROZEN**、Gate 4 **HOLD**，不可因本轮推动自行批准原 CDR 替换、重写旧冻结清单、
+下载全部候选场景或拿独立集筛模型。
+只用当前本地 ROCm + 免费数据；所有成果需代码、离线测试、真实证据和文档，
+完成后按既有工作流推到 `main`。
+
+```bash
+git pull --ff-only origin main
+python3 -m unittest discover -s tests -v
+python3 -m compileall -q scripts tests
+python3 scripts/check_group_pool_collision.py
+```
+最后一条在存在明显独立性警讯时**应以 exit code 2 返回**，这是正常的阻塞信号，
+不是允许忽略的测试失败；根据结果去做全几何 pair audit。
+
+---
+
+## 旧任务与历史交接（仅作追溯）
+
 # 当前执行任务（P2.0，2026-10-20）：CDR 多相机覆盖与独立配准 QA
 
 **立刻阅读 [`docs/P2_0_MULTICAMERA_QA.md`](docs/P2_0_MULTICAMERA_QA.md) 并直接实施 P20-01 → P20-03 的探针工作。**
