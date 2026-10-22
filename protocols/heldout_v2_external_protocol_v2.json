@@ -1,0 +1,171 @@
+{
+  "record": "heldout_v2_external_protocol",
+  "version": 2,
+  "supersedes": "protocols/heldout_v2_external_protocol.json (v1, kept unchanged for comparison)",
+  "created_utc_date": "2026-10-22",
+  "status": "PENDING_SIGNOFF",
+  "gate3_status": "NOT_FROZEN",
+  "gate4_status": "HOLD",
+  "signoff_required_from": "researcher",
+  "reason_for_v2": "v1 grouping unioned only each DTM's nearest-neighbour edge, which is not single linkage, and that edge could point at a scene outside the usable set. Re-running the graph over all 2346 polygon pairs at 10 km collapses the 69 usable scenes into 41 groups instead of 51, and merges SPARIM1/SPARIM2 (identical centre, 0 km) which v1 had split across two selected groups.",
+  "grouping": {
+    "script": "scripts/audit_groups_pairwise.py",
+    "method": "all-pairs polygon distance in a local azimuthal equidistant projection, sphere R=1737.4 km",
+    "threshold_km": 10.0,
+    "scenes": 69,
+    "pairs_evaluated": 2346,
+    "edges_below_threshold": 81,
+    "groups": 41,
+    "largest_group": 13,
+    "min_intergroup_distance_km": 40.0515,
+    "pair_table": "outputs/p21_group_pairs.csv (2346 rows, distance + edge flag)",
+    "zero_distance_overlapping_pairs": 31,
+    "zero_distance_touching_pairs": 3,
+    "overlap_note": "31 of the 34 sub-0.5 km pairs share real area (up to 112.7 km2, LICHTENBER2/LICHTENBER7) and all of them come from different stereo sources, so they are independent observations of the same ground: one group, and at most one scene per overlapping neighbour in the selection."
+  },
+  "v1_to_v2_diff": {
+    "groups_v1": 51,
+    "groups_v2": 41,
+    "shared_group_ids": "36 (the singletons, whose membership did not change)",
+    "selection_v1": {
+      "groups": 15,
+      "scenes": 18,
+      "selection_hash": "7f91528860c43e633767dd0f96dc076831e050cba81d60fac888c81fd0b3962f"
+    },
+    "selection_v2": {
+      "groups": 15,
+      "scenes": 18,
+      "selection_hash": "c75027e5e08f883c05679c7a9af87dfc2eae218041a03d33b895f8998366613a"
+    },
+    "sparim": "v1 split SPARIM1/SPARIM2; v2 groups SPARIM1..4 together and the overlap rule keeps one"
+  },
+  "selection": {
+    "pool": "protocols/heldout_v2_group_pool_v2.csv",
+    "target_groups": 15,
+    "max_scenes_per_group": 2,
+    "overlap_rule": "inside a group, a scene is skipped if it overlaps an already selected scene by >1 km2",
+    "order": "sha256(group_id) ascending for groups, sha256(scene) ascending inside a group",
+    "selected_group_ids": [
+      "GRP_8aed6072f2a1",
+      "GRP_33da9e66c824",
+      "GRP_a3605a52a7dd",
+      "GRP_01feec6d5a30",
+      "GRP_703749a05c1c",
+      "GRP_24db1499e763",
+      "GRP_d41f738bbb78",
+      "GRP_3d17888d0dd2",
+      "GRP_1ca2c6f75f30",
+      "GRP_2abd4dcdb307",
+      "GRP_d8464a251a00",
+      "GRP_86ff5f2e06bd",
+      "GRP_9546ec434932",
+      "GRP_18c93e19f8da",
+      "GRP_820aa6473858"
+    ],
+    "selected_scenes": [
+      "APOLLO12",
+      "MRECRISIUM3",
+      "FRSHCRATER14",
+      "IMPACTMELT2",
+      "SURVEYOR7",
+      "MAFICMOUND",
+      "OPENHIMERF",
+      "ARISTARCHU5",
+      "ARISTARCHU4",
+      "CMPTNCRTR",
+      "CRISIUMVOLC",
+      "KINGCRATER2",
+      "KINGCRATER4",
+      "LICHTENBER13",
+      "LICHTENBER4",
+      "LINNECRATER",
+      "FECUNDITATIS",
+      "VIRTANEN2"
+    ],
+    "expected_scenes": 18,
+    "scenes_per_group": {
+      "GRP_8aed6072f2a1": [
+        "APOLLO12"
+      ],
+      "GRP_33da9e66c824": [
+        "MRECRISIUM3"
+      ],
+      "GRP_a3605a52a7dd": [
+        "FRSHCRATER14"
+      ],
+      "GRP_01feec6d5a30": [
+        "IMPACTMELT2"
+      ],
+      "GRP_703749a05c1c": [
+        "SURVEYOR7"
+      ],
+      "GRP_24db1499e763": [
+        "MAFICMOUND"
+      ],
+      "GRP_d41f738bbb78": [
+        "OPENHIMERF"
+      ],
+      "GRP_3d17888d0dd2": [
+        "ARISTARCHU5",
+        "ARISTARCHU4"
+      ],
+      "GRP_1ca2c6f75f30": [
+        "CMPTNCRTR"
+      ],
+      "GRP_2abd4dcdb307": [
+        "CRISIUMVOLC"
+      ],
+      "GRP_d8464a251a00": [
+        "KINGCRATER2",
+        "KINGCRATER4"
+      ],
+      "GRP_86ff5f2e06bd": [
+        "LICHTENBER13",
+        "LICHTENBER4"
+      ],
+      "GRP_9546ec434932": [
+        "LINNECRATER"
+      ],
+      "GRP_18c93e19f8da": [
+        "FECUNDITATIS"
+      ],
+      "GRP_820aa6473858": [
+        "VIRTANEN2"
+      ]
+    },
+    "skipped_scenes": [
+      {
+        "group_id": "GRP_3d17888d0dd2",
+        "scene": "ARISTARCHU3",
+        "reason": "overlaps an already selected scene by >1 km2"
+      }
+    ],
+    "selection_hash": "c75027e5e08f883c05679c7a9af87dfc2eae218041a03d33b895f8998366613a",
+    "scene_hash": "a7ce2597632e48780c250210d2dfb94dab0fe5f8a8cfdc8abae18f108e5849dd",
+    "fallback_rule": "If a selected scene fails a data gate below, record the gate, the measured value and the reason, then take the next group in rank order. Exclusions may only cite data quality, never a model result. At most 20 percent of groups may be replaced; beyond that the freeze is BLOCKED_NEW_HELDOUT."
+  },
+  "data_gates_per_scene": {
+    "coverage": "single-acquisition L+R union over DTM valid pixels >= 0.95 (runbook target)",
+    "mosaic_scope": "one acquisition only; a second acquisition is a separate stratum, never blended",
+    "registration": "crater-centroid GCP consistent with the DTM terrain to 1-2 px (2-5 m); no <=1 px claim",
+    "grid": "ortho grid must pass scripts/grid_consistency_p20.py exactly (nearest QA cube)",
+    "illumination": "record SPICE solar azimuth/elevation per camera; spread guard 10 deg azimuth / 5 deg elevation",
+    "native_resolution": "DTM post spacing <= 3 m, no interpolation-based claims",
+    "independence": "footprint_disjoint and source_disjoint true; scene stays inside its group",
+    "radiometry": "record scaling factor, NULL handling and saturation share; no DTM-derived layer as optical input"
+  },
+  "bootstrap_unit": "group, never scene",
+  "forbidden": [
+    "running any model prediction or inspecting heldout risk labels before the manifest is hashed",
+    "relaxing the 0.95 coverage gate or the 10 km spacing rule inside this version",
+    "splicing a second acquisition into a mosaic to reach coverage",
+    "reporting an accuracy figure that depends on the selected scenes before they are frozen",
+    "selecting two scenes that overlap inside one group",
+    "using the nearest-neighbour grouping (scripts/audit_groups_p20.py) for any freeze decision"
+  ],
+  "storage_plan": {
+    "per_scene_gb_single_acquisition": 2.6,
+    "expected_scenes": 18,
+    "estimated_gb": 46.8
+  }
+}

@@ -1,5 +1,12 @@
 """P20-03 independence audit: how many separable groups survive a 10 km spacing rule.
 
+DEPRECATED for freeze decisions (P2.1 workstream B). This clustering unioned only each DTM's
+nearest-candidate edge, which is not single linkage: a scene can sit within the threshold of another
+without being anyone's nearest neighbour, and nearest neighbours were computed over a larger
+candidate set. Measured consequence: 51 groups here versus 41 from the all-pairs polygon rebuild in
+``scripts/audit_groups_pairwise.py``, which also merges SPARIM1/SPARIM2 that this code splits.
+Kept for history; use the pairwise script for any held-out pool.
+
 Inputs are the existing Gate 1 audit products, so this adds no new data claims:
 
 * ``outputs/p19_lroc_footprint_pass.csv`` - one row per candidate DTM with
