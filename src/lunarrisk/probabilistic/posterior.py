@@ -170,8 +170,12 @@ def sample_internal(model: ConditionalPosterior, x, scalars=None, *, draws: int 
         if model.variant == "point":
             return params["mu"].unsqueeze(0).repeat(draws, 1, 1)
         chol = torch.linalg.cholesky(model.covariance(params))
-        noise = torch.randn((draws,) + params["mu"].shape, generator=generator)
-        return params["mu"].unsqueeze(0) + noise @ chol.transpose(-1, -2)
+        # noise is drawn on CPU and moved afterwards: a CPU generator cannot fill a CUDA tensor, and
+        # this way a fixed seed yields identical draws on CPU and GPU
+        noise = torch.randn((draws,) + params["mu"].shape, generator=generator).to(chol.device)
+        # (draws, batch, 4) x (batch, 4, 4): the batch is a shared leading dim, not a draw index
+        correlated = torch.einsum("sni,nij->snj", noise, chol.transpose(-1, -2))
+        return params["mu"].unsqueeze(0) + correlated
 
 
 def nll_internal(model: ConditionalPosterior, x, z, scalars=None):
