@@ -1,5 +1,17 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **ACTIVE SPRINT (2026-10-22): [P2.1 joint posterior + compositional risk experiments](docs/P2_1_JOINT_RISK_RESEARCH.md).**
+> The main research question is whether a *conditional joint distribution* over slope exceedance,
+> roughness and relief produces better calibrated, rule-compositional hazard probabilities
+> and fewer unsafe acceptances than point or independent marginal estimates.
+> Work in parallel on full-pair polygon grouping: current P2.0 `SPARIM1/SPARIM2`
+> were split despite identical centroids and recorded zero nearest distance.
+> Run `scripts/check_group_pool_collision.py` for a **warning, not a certificate**;
+> the current 15-group/18-scene heldout v1 remains **PENDING_SIGNOFF / NOT_FROZEN**, Gate 4 **HOLD**.
+> Do not rerun large CDR/ISIS exploratory work or hold science hostage to an unapproved freeze.
+> **Coding Agent:** read [AGENTS.md](AGENTS.md) first.
+>
+
 > **Active coding sprint (2026-10-20): [P2.0 multi-camera NAC CDR coverage and registration QA](docs/P2_0_MULTICAMERA_QA.md).**
 > The [single-scene CDR→ISIS→DTM-grid ortho probe](reports/p1_9_optical_ortho_probe.md) succeeded,
 > but the left camera covers only **42.75% of valid DTM pixels** and independent ground registration is not established.
