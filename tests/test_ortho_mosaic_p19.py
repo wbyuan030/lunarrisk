@@ -115,17 +115,34 @@ class TestGains(unittest.TestCase):
 
     def test_gain_is_fitted_to_the_reference(self):
         images, stats = self.pair(0.02, 0.01)   # same terrain, half the exposure
-        fitted = mos.estimate_gains(images, stats)
+        fitted = mos.fit_photometry(images, stats)
         self.assertEqual(fitted["reference"], "ref")
         self.assertEqual(fitted["gains"]["ref"], 1.0)
         self.assertAlmostEqual(fitted["gains"]["dim"], 2.0, places=6)
+
+    def test_offset_is_recovered_too(self):
+        left = np.zeros(self.SHAPE, dtype=bool)
+        left[:, :10] = True
+        right = np.zeros(self.SHAPE, dtype=bool)
+        right[:, 6:] = True
+        ref = np.full(self.SHAPE, np.nan)
+        ref[left] = 0.02
+        other = np.full(self.SHAPE, np.nan)
+        other[right] = 0.01 + 0.004            # different gain and a constant lift
+        images = [("ref", ref), ("dim", other)]
+        stats = mos.weights(images)
+        stats["ref"]["priority"], stats["dim"]["priority"] = [1.0, 1.0], [1.0, 0.0]
+        fitted = mos.fit_photometry(images, stats)
+        self.assertAlmostEqual(fitted["gains"]["dim"], 0.02 / 0.014, places=4)
+        self.assertAlmostEqual(fitted["offsets"]["dim"], -(0.02 - 0.02), places=6)
 
     def test_equalization_removes_the_seam_step(self):
         images, stats = self.pair(0.02, 0.01)
         before, src_before = mos.mosaic(images, stats)
         step_before = mos.seam_step(before, src_before)
-        gains = mos.estimate_gains(images, stats)
-        after, src_after = mos.mosaic(mos.apply_gains(images, gains["gains"]), stats)
+        fitted = mos.fit_photometry(images, stats)
+        after, src_after = mos.mosaic(mos.apply_gains(images, fitted["gains"],
+                                                      fitted["offsets"]), stats)
         step_after = mos.seam_step(after, src_after)
         self.assertGreater(step_before["seam_median"], 0.005)   # a visible 0.01 jump
         self.assertLess(step_after.get("seam_median", 0.0), 1e-9)
@@ -166,6 +183,63 @@ class TestSeamStep(unittest.TestCase):
         stats = mos.seam_step(values, np.zeros((6, 6), dtype=np.int16))
         self.assertEqual(stats["seam_pairs"], 0)
         self.assertIn("interior_median", stats)
+
+
+class TestSeamJump(unittest.TestCase):
+    def test_flat_field_with_a_real_step_shows_a_jump(self):
+        values = np.full((12, 12), 0.02)
+        values[:, 6:] = 0.03
+        source = np.zeros((12, 12), dtype=np.int16)
+        source[:, 6:] = 1
+        stats = mos.seam_jump(values, source)
+        self.assertGreater(stats["seam_samples"], 0)
+        self.assertAlmostEqual(stats["seam_jump_median"], 0.01, places=6)
+        self.assertAlmostEqual(stats["control_jump_median"], 0.0, places=6)
+
+    def test_a_smooth_ramp_across_the_boundary_is_not_a_jump(self):
+        values = np.tile(np.linspace(0.02, 0.04, 12), (12, 1))
+        source = np.zeros((12, 12), dtype=np.int16)
+        source[:, 6:] = 1                      # boundary on a slope, but no discontinuity
+        stats = mos.seam_jump(values, source)
+        self.assertGreater(stats["seam_samples"], 0)
+        self.assertLess(stats["seam_jump_median"], 1e-9)
+
+    def test_steep_terrain_does_not_inflate_the_jump(self):
+        # a gradient 100x larger than the step must still not register as a step
+        values = np.tile(np.linspace(0.0, 0.5, 12), (12, 1))
+        source = np.zeros((12, 12), dtype=np.int16)
+        source[:, 6:] = 1
+        self.assertLess(mos.seam_jump(values, source)["seam_jump_median"], 1e-9)
+
+
+class TestAcquisitionFilter(unittest.TestCase):
+    def test_prefix_selects_one_acquisition(self):
+        names = ["M144483945LC_L_ortho.raw", "M144483945RC_R_ortho.raw",
+                 "M144490730LC_L_ortho.raw", "M144490730RC_R_ortho.raw"]
+        kept = [n for n in names if n.startswith(("M144483945",))]
+        self.assertEqual(len(kept), 2)
+        self.assertTrue(all(n.startswith("M144483945") for n in kept))
+
+    def test_within_acquisition_pair_keeps_a_small_step(self):
+        # same acquisition: the two cameras differ only by exposure (~1%), never by shadow
+        # geometry, so the gradient-cancelled jump stays at that level (contrast: 0.5% of signal
+        # across acquisitions, measured on RANGER 0.0052 and PLANCKFLOOR 0.0104)
+        left = np.zeros(SHAPE, dtype=bool)
+        left[:, :6] = True
+        right = np.zeros(SHAPE, dtype=bool)
+        right[:, 4:] = True
+        a = np.full(SHAPE, np.nan)
+        a[left] = 0.0200
+        b = np.full(SHAPE, np.nan)
+        b[right] = 0.0198
+        images = [("M1LC_L_ortho.raw", a), ("M1RC_R_ortho.raw", b)]
+        stats = mos.weights(images)
+        stats["M1LC_L_ortho.raw"]["priority"] = [1.0, 1.0]
+        stats["M1RC_R_ortho.raw"]["priority"] = [1.0, 0.0]
+        combined, source = mos.mosaic(images, stats)
+        stats_jump = mos.seam_jump(combined, source)
+        self.assertGreater(stats_jump["seam_samples"], 0)
+        self.assertLess(stats_jump["seam_jump_median"], 0.0005)
 
 
 class TestIlluminationGuard(unittest.TestCase):

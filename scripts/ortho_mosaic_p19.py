@@ -141,11 +141,110 @@ def estimate_gains(images, stats) -> dict:
     return {"reference": ref_name, "gains": gains}
 
 
-def apply_gains(images, gains: dict):
+def fit_photometry(images, stats, min_overlap: int = 32) -> dict:
+    """Robust gain+offset per image against the top-priority reference.
+
+    Each image is corrected to the reference over their overlap: gain from the ratio of medians,
+    then offset from the median residual after that gain.
+
+    A joint least-squares fit of all gains and offsets was tried first and rejected: with thin
+    overlaps (85 px strips) the model is ill-conditioned, and the solution drifted to the clamps
+    (all gains 0.5 with compensating offsets) while the seam step got worse, 0.0052 vs 0.0060.
+    The sequential robust estimator cannot produce that degeneracy, and every parameter it writes
+    is a median over real overlapping pixels.
+    """
+    order = priority_order(images, stats)
+    ref_name, ref_image = images[order[0]]
+    gains = {ref_name: 1.0}
+    offsets = {ref_name: 0.0}
+    pairs = 0
+    for index in order[1:]:
+        name, image = images[index]
+        overlap = np.isfinite(image) & np.isfinite(ref_image)
+        if overlap.sum() < min_overlap:
+            gains[name], offsets[name] = 1.0, 0.0
+            continue
+        pairs += 1
+        ref_values = ref_image[overlap]
+        own_values = image[overlap]
+        own_median = float(np.median(own_values))
+        ref_median = float(np.median(ref_values))
+        gain = ref_median / own_median if own_median > 0 else 1.0
+        gain = float(np.clip(gain, 0.5, 2.0))
+        offset = float(np.median(ref_values - gain * own_values))
+        gains[name], offsets[name] = gain, offset
+    return {"reference": ref_name, "gains": gains, "offsets": offsets, "pairs": pairs,
+            "estimator": "median ratio + median residual"}
+
+
+def apply_gains(images, gains: dict, offsets: dict | None = None):
     out = []
     for name, image in images:
         gain = gains.get(name, 1.0)
-        out.append((name, image * gain if gain != 1.0 else image))
+        offset = (offsets or {}).get(name, 0.0)
+        if gain != 1.0 or offset != 0.0:
+            out.append((name, image * gain + offset))
+        else:
+            out.append((name, image))
+    return out
+
+
+def seam_jump(values: np.ndarray, source: np.ndarray, control_stride: int = 7) -> dict:
+    """Gradient-cancelled discontinuity at source boundaries, with an interior control.
+
+    ``seam_step`` compares boundary pairs with every interior pair, which is biased: boundaries
+    can sit on steeper terrain than the average interior pixel. This removes the local linear
+    trend instead, at a horizontal boundary between x and x+1:
+
+        jump = (v[x+1] - v[x]) - ((v[x] - v[x-1]) + (v[x+2] - v[x+1])) / 2
+
+    and the same statistic is evaluated at interior positions as a control, so a value near the
+    control means no visible step.
+    """
+    finite = np.isfinite(values)
+
+    def horizontal(interior_only: bool):
+        left_ok = finite[:, 1:-2] & finite[:, :-3]
+        right_ok = finite[:, 2:-1] & finite[:, 3:]
+        same_left = source[:, 1:-2] == source[:, :-3]
+        same_right = source[:, 2:-1] == source[:, 3:]
+        change = source[:, 1:-2] != source[:, 2:-1]
+        base = left_ok & right_ok & same_left & same_right
+        pick = base & (~change if interior_only else change)
+        if not pick.any():
+            return np.array([])
+        own = values[:, 2:-1] - values[:, 1:-2]
+        left = values[:, 1:-2] - values[:, :-3]
+        right = values[:, 3:] - values[:, 2:-1]
+        return np.abs(own - 0.5 * (left + right))[pick]
+
+    def vertical(interior_only: bool):
+        up_ok = finite[1:-2, :] & finite[:-3, :]
+        down_ok = finite[2:-1, :] & finite[3:, :]
+        same_up = source[1:-2, :] == source[:-3, :]
+        same_down = source[2:-1, :] == source[3:, :]
+        change = source[1:-2, :] != source[2:-1, :]
+        base = up_ok & down_ok & same_up & same_down
+        pick = base & (~change if interior_only else change)
+        if not pick.any():
+            return np.array([])
+        own = values[2:-1, :] - values[1:-2, :]
+        up = values[1:-2, :] - values[:-3, :]
+        down = values[3:, :] - values[2:-1, :]
+        return np.abs(own - 0.5 * (up + down))[pick]
+
+    seam = np.concatenate([horizontal(False), vertical(False)])
+    interior = np.concatenate([horizontal(True)[::control_stride],
+                               vertical(True)[::control_stride]])
+    out = {"seam_samples": int(seam.size), "control_samples": int(interior.size)}
+    if seam.size:
+        out["seam_jump_median"] = float(np.median(seam))
+        out["seam_jump_p95"] = float(np.percentile(seam, 95))
+    if interior.size:
+        out["control_jump_median"] = float(np.median(interior))
+        out["control_jump_p95"] = float(np.percentile(interior, 95))
+    if seam.size and interior.size and np.median(interior) > 0:
+        out["seam_over_control"] = round(float(np.median(seam) / np.median(interior)), 3)
     return out
 
 
@@ -191,6 +290,9 @@ def main(argv=None) -> int:
                              "scripts/solar_azimuth_p20.py")
     parser.add_argument("--max-azimuth-spread", type=float, default=10.0)
     parser.add_argument("--max-elevation-spread", type=float, default=5.0)
+    parser.add_argument("--acquisition", action="append", default=None,
+                        help="keep only these acquisition prefixes (e.g. M144483945); repeatable. "
+                             "Mosaicking across acquisitions at low sun mixes different shadows.")
     parser.add_argument("--equalize", action="store_true",
                         help="fit one multiplicative gain per image against the top-priority "
                              "image; only valid once the illumination guard has passed")
@@ -200,6 +302,8 @@ def main(argv=None) -> int:
     images = []
     for path in sorted(args.dir.glob("*_ortho.raw")):
         if "_" not in path.stem:
+            continue
+        if args.acquisition and not path.name.startswith(tuple(args.acquisition)):
             continue
         image, fill_share = load_raw(path, args.lines, args.samples)
         images.append((path.name, image))
@@ -220,8 +324,8 @@ def main(argv=None) -> int:
     stats = weights(images)
     gain_report = None
     if args.equalize:
-        gain_report = estimate_gains(images, stats)
-        images = apply_gains(images, gain_report["gains"])
+        gain_report = fit_photometry(images, stats)
+        images = apply_gains(images, gain_report["gains"], gain_report["offsets"])
     combined, source = mosaic(images, stats)
 
     counts = {images[i][0]: int((source == i).sum()) for i in range(len(images))}
@@ -232,6 +336,7 @@ def main(argv=None) -> int:
               "uncovered_pixels": int(combined.size - total),
               "seam_length_pixels": seam_length(source),
               "seam_step": seam_step(combined, source),
+              "seam_jump": seam_jump(combined, source),
               "illumination": spread,
               "equalization": gain_report,
               "policy": "hard selection: lower saturation, then sharper; no blending"}

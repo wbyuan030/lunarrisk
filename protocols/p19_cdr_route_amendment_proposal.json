@@ -48,7 +48,7 @@
   "approval_status": "PENDING_USER_OR_RESEARCH_OWNER_CONFIRMATION",
   "gate3_status": "HOLD_UNTIL_APPROVED_AND_MULTICAMERA_QA",
   "gate4_status": "HOLD_SEPARATE_AUTHORIZATION",
-  "amendment_revision": 2,
+  "amendment_revision": 3,
   "status_unchanged_reason": "The measurements below close the evidential gaps; they do not approve the CDR route. Only the researcher can change status.",
   "p20_evidence_2026_10_20": {
     "grid_consistency": {
@@ -125,6 +125,46 @@
           "ratio": 7.909,
           "after_single_gain": 0.011037
         }
+      },
+      "seam_jump": {
+        "metric": "gradient-cancelled discontinuity vs interior control",
+        "cross_acquisition_4cam": {
+          "RANGER": {
+            "seam": 0.005158,
+            "control": 0.000931,
+            "ratio": 5.541
+          },
+          "PLANCKFLOOR": {
+            "seam": 0.010086,
+            "control": 0.001694,
+            "ratio": 5.955
+          }
+        },
+        "after_gain_offset": {
+          "RANGER": {
+            "seam": 0.002772,
+            "ratio": 2.978
+          },
+          "PLANCKFLOOR": {
+            "seam": 0.010393,
+            "ratio": 6.136
+          }
+        },
+        "within_one_acquisition": {
+          "RANGER": {
+            "seam": 0.001083,
+            "control": 0.000931,
+            "ratio": 1.164,
+            "coverage": 0.926124
+          },
+          "PLANCKFLOOR": {
+            "seam": 0.002518,
+            "control": 0.001679,
+            "ratio": 1.5,
+            "coverage": 0.951734
+          }
+        },
+        "policy": "single-acquisition mosaic; second acquisition only as a separate stratum"
       }
     },
     "availability": {
@@ -169,6 +209,7 @@
     "coverage_gate": "Keep the runbook 95% union-coverage target; no tile-level relaxation without a separate preregistered amendment.",
     "mosaic_policy": "Adopt the hard-selection policy and illumination guard above; blending across different solar geometry stays forbidden.",
     "sub_pixel_claim": "Neither claim <=1 px nor claim sub-pixel accuracy. Permitted wording: consistent with the DTM terrain to 1-2 px (2-5 m).",
-    "seam_radiometry": "Hard selection leaves a measured radiometric step (RANGER 0.0060 I/F at seams vs 0.0006 inside, ratio 9.9; PLANCKFLOOR 0.0106 vs 0.0013, ratio 7.9). A single per-image gain cuts RANGER to 0.0020 but does not help PLANCKFLOOR, so mosaics stay geometry-only until seam radiometry is resolved (per-seam gradient correction or seam-band constrained assignment)."
+    "seam_radiometry": "Hard selection leaves a measured radiometric step (RANGER 0.0060 I/F at seams vs 0.0006 inside, ratio 9.9; PLANCKFLOOR 0.0106 vs 0.0013, ratio 7.9). A single per-image gain cuts RANGER to 0.0020 but does not help PLANCKFLOOR, so mosaics stay geometry-only until seam radiometry is resolved (per-seam gradient correction or seam-band constrained assignment).",
+    "mosaic_scope": "Mosaic within a single acquisition only. Cross-acquisition mosaics mix different observation geometry: the gradient-cancelled seam jump is 5.5x (RANGER) and 6.0x (PLANCKFLOOR) the interior control across acquisitions, versus 1.16x / 1.50x within one acquisition, and a global gain+offset fit does not fix PLANCKFLOOR at all. A second acquisition may only be used as a separate stratum. Coverage consequence: FRSHCRATER10 0.9901 and PLANCKFLOOR 0.9517 pass the 95% target with one acquisition, RANGER reaches only 0.9261 and must not be repaired by relaxing the gate."
   }
 }
