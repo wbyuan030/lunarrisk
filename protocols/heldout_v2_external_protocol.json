@@ -1,0 +1,144 @@
+{
+  "record": "heldout_v2_external_protocol",
+  "version": 1,
+  "created_utc_date": "2026-10-21",
+  "status": "PENDING_SIGNOFF",
+  "gate3_status": "NOT_FROZEN",
+  "gate4_status": "HOLD",
+  "signoff_required_from": "researcher",
+  "signoff_effect": "Changing status to FROZEN and then downloading/processing the selected groups into protocols/heldout_v2_external_manifest.csv. No model prediction may be run on any selected scene before that manifest carries hashes.",
+  "pool": {
+    "source": "protocols/heldout_v2_group_pool.csv",
+    "builder": "scripts/make_heldout_pool_p20.py",
+    "grouping_rule": "single-linkage at 10 km on Gate 1 polygon distances (footprint geometry)",
+    "groups_total": 51,
+    "groups_eligible": 48,
+    "eligible_scenes": 66,
+    "probe_groups_excluded": [
+      "GRP_0363b4569ce7",
+      "GRP_29784d08cd8d",
+      "GRP_e8e331c03638"
+    ],
+    "ordering": "sha256(group_id) ascending, independent of any measurement",
+    "largest_group_note": "The 11-scene LICHTENBERG cluster is one group; max_scenes_per_group=2 stops it from dominating the heldout set while keeping the group as the bootstrap unit."
+  },
+  "selection": {
+    "target_groups": 15,
+    "max_scenes_per_group": 2,
+    "selected_group_ids": [
+      "GRP_ef0254448b3d",
+      "GRP_c5dd2d5e0f3e",
+      "GRP_8aed6072f2a1",
+      "GRP_5032fe12f95b",
+      "GRP_33da9e66c824",
+      "GRP_a3605a52a7dd",
+      "GRP_01feec6d5a30",
+      "GRP_703749a05c1c",
+      "GRP_24db1499e763",
+      "GRP_d41f738bbb78",
+      "GRP_3d17888d0dd2",
+      "GRP_1ca2c6f75f30",
+      "GRP_2abd4dcdb307",
+      "GRP_d8464a251a00",
+      "GRP_c319259741ae"
+    ],
+    "selected_scenes": [
+      "LICHTENBER4",
+      "LICHTENBER5",
+      "SPARIM2",
+      "APOLLO12",
+      "SPARIM1",
+      "MRECRISIUM3",
+      "FRSHCRATER14",
+      "IMPACTMELT2",
+      "SURVEYOR7",
+      "MAFICMOUND",
+      "OPENHIMERF",
+      "ARISTARCHU5",
+      "ARISTARCHU3",
+      "CMPTNCRTR",
+      "CRISIUMVOLC",
+      "KINGCRATER2",
+      "KINGCRATER4",
+      "MARIUS2"
+    ],
+    "expected_scenes": 18,
+    "scenes_per_group": {
+      "GRP_ef0254448b3d": [
+        "LICHTENBER4",
+        "LICHTENBER5"
+      ],
+      "GRP_c5dd2d5e0f3e": [
+        "SPARIM2"
+      ],
+      "GRP_8aed6072f2a1": [
+        "APOLLO12"
+      ],
+      "GRP_5032fe12f95b": [
+        "SPARIM1"
+      ],
+      "GRP_33da9e66c824": [
+        "MRECRISIUM3"
+      ],
+      "GRP_a3605a52a7dd": [
+        "FRSHCRATER14"
+      ],
+      "GRP_01feec6d5a30": [
+        "IMPACTMELT2"
+      ],
+      "GRP_703749a05c1c": [
+        "SURVEYOR7"
+      ],
+      "GRP_24db1499e763": [
+        "MAFICMOUND"
+      ],
+      "GRP_d41f738bbb78": [
+        "OPENHIMERF"
+      ],
+      "GRP_3d17888d0dd2": [
+        "ARISTARCHU5",
+        "ARISTARCHU3"
+      ],
+      "GRP_1ca2c6f75f30": [
+        "CMPTNCRTR"
+      ],
+      "GRP_2abd4dcdb307": [
+        "CRISIUMVOLC"
+      ],
+      "GRP_d8464a251a00": [
+        "KINGCRATER2",
+        "KINGCRATER4"
+      ],
+      "GRP_c319259741ae": [
+        "MARIUS2"
+      ]
+    },
+    "within_group_order": "sha256(scene name) ascending; at most max_scenes_per_group are taken",
+    "fallback_rule": "If a selected scene fails a data gate below, record the gate, the measured value and the reason, then take the next group in rank order. Exclusions may only cite data quality, never a model result. At most 20 percent of groups may be replaced; beyond that the freeze is BLOCKED_NEW_HELDOUT.",
+    "selection_hash": "7f91528860c43e633767dd0f96dc076831e050cba81d60fac888c81fd0b3962f",
+    "scene_hash": "73fa22cfdc0be171868fdc12343291657726718649bc62c13f740621b05df585"
+  },
+  "data_gates_per_scene": {
+    "coverage": "single-acquisition L+R union over DTM valid pixels >= 0.95 (runbook target)",
+    "mosaic_scope": "one acquisition only; a second acquisition is a separate stratum, never blended",
+    "registration": "crater-centroid GCP consistent with the DTM terrain to 1-2 px (2-5 m); no <=1 px claim",
+    "grid": "ortho grid must pass scripts/grid_consistency_p20.py exactly (nearest QA cube)",
+    "illumination": "record SPICE solar azimuth/elevation per camera; spread guard 10 deg azimuth / 5 deg elevation",
+    "native_resolution": "DTM post spacing <= 3 m, no interpolation-based claims",
+    "independence": "footprint_disjoint and source_disjoint true; scene stays inside its group",
+    "radiometry": "record scaling factor, NULL handling and saturation share; no DTM-derived layer as optical input"
+  },
+  "bootstrap_unit": "group, never scene; the 11-scene LICHTENBERG cluster counts once",
+  "forbidden": [
+    "running any model prediction or inspecting heldout risk labels before the manifest is hashed",
+    "relaxing the 0.95 coverage gate or the 10 km spacing rule inside this version",
+    "splicing a second acquisition into a mosaic to reach coverage",
+    "reporting an accuracy figure that depends on the selected scenes before they are frozen"
+  ],
+  "storage_plan": {
+    "per_scene_gb_4_cameras": 4.7,
+    "per_scene_gb_single_acquisition": 2.6,
+    "expected_scenes": 18,
+    "note": "delete each IMG once its cube exists; keep nearest QA cubes only for re-checked scenes"
+  }
+}

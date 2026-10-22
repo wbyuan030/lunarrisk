@@ -61,9 +61,25 @@ acquisition。因此 69 景是真正常可操作的子集；其余 15 景要么�
 含义：可用于独立 Bootstrap 的单位是 **51 组**，不是 69 景。任何"按景随机分配"的冻结都会让
 LICHTENBER 系列 11 景被当成 11 个独立样本，直接高估独立性。冻结必须**按组分层**（P20-04 已要求）。
 
+## 3c. Gate 3 预注册材料（待签核）
+
+| 文件 | 内容 |
+|---|---|
+| `protocols/heldout_v2_group_pool.csv` | 51 组池，逐组列出成员、原生分辨率、中心坐标、disjoint 标志、探针标记 |
+| `protocols/heldout_v2_external_protocol.json` | v1，`status = PENDING_SIGNOFF`、`gate3_status = NOT_FROZEN`、`gate4_status = HOLD` |
+| 选择规则 | 排序键 `sha256(group_id)`（与任何测量无关）；48 个可用组中取前 **15 组**；每组最多 **2 景**（组内按 `sha256(scene)`）→ **18 景** |
+| 唯一性校验 | `selection_hash`、`scene_hash` 写入协议；`tests/test_make_heldout_pool_p20.py` 用池文件重算并断言一致 |
+| 存储 | 18 景 × 2.6 GB（单 acquisition）≈ **47 GB**；若四条相机则 ≈ 85 GB |
+
+排除规则：探针景所在组（3 组）不可入选；组内 `footprint_disjoint`/`source_disjoint` 必须为真。
+回退规则：仅允许因数据门槛失败而按序替换下一组，且替换上限 20%，超过则 `BLOCKED_NEW_HELDOUT`；
+**不得因模型结果替换**。
+`max_scenes_per_group = 2` 的作用：11 景的 LICHTENBERG 簇只能贡献 2 景，避免一个站点主导测试集。
+
 ## 4. 未完成项（不得跳过）
 
 - **组划分已算，但未冻结**：51 组来自单链接 10 km 规则；若要调整阈值必须在见到任何评分前写进协议。
 - **替代 acquisition 规则**：2 个只有单侧相机的 acquisition 需要协议明确处理方式。
-- **CDR 路线审批**：`protocols/p19_cdr_route_amendment_proposal.json` 仍为提案状态。
+- **CDR 路线审批**：`protocols/p19_cdr_route_amendment_proposal.json` 仍为提案状态（revision 3），
+  签核后我才把 `heldout_v2_external_protocol.json` 置 `FROZEN` 并开始下载所选 18 景。
 - 因此：`Gate 3` 保持 **NOT FROZEN**，输出结论是"小批量可行"，不是"测试集已冻结"。

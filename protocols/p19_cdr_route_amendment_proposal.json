@@ -208,8 +208,13 @@
     "group_stratification": "Freeze and bootstrap by the 51 single-linkage groups at 10 km, never by scene. The 11 LICHTENBERG DTMs count as one group.",
     "coverage_gate": "Keep the runbook 95% union-coverage target; no tile-level relaxation without a separate preregistered amendment.",
     "mosaic_policy": "Adopt the hard-selection policy and illumination guard above; blending across different solar geometry stays forbidden.",
-    "sub_pixel_claim": "Neither claim <=1 px nor claim sub-pixel accuracy. Permitted wording: consistent with the DTM terrain to 1-2 px (2-5 m).",
+    "sub_pixel_claim": "DECIDED 2026-10-21 by the researcher: finalise at 'consistent with DTM terrain to 1-2 px (2-5 m)'. Do not claim <=1 px or sub-pixel accuracy in any report, figure or paper.",
     "seam_radiometry": "Hard selection leaves a measured radiometric step (RANGER 0.0060 I/F at seams vs 0.0006 inside, ratio 9.9; PLANCKFLOOR 0.0106 vs 0.0013, ratio 7.9). A single per-image gain cuts RANGER to 0.0020 but does not help PLANCKFLOOR, so mosaics stay geometry-only until seam radiometry is resolved (per-seam gradient correction or seam-band constrained assignment).",
     "mosaic_scope": "Mosaic within a single acquisition only. Cross-acquisition mosaics mix different observation geometry: the gradient-cancelled seam jump is 5.5x (RANGER) and 6.0x (PLANCKFLOOR) the interior control across acquisitions, versus 1.16x / 1.50x within one acquisition, and a global gain+offset fit does not fix PLANCKFLOOR at all. A second acquisition may only be used as a separate stratum. Coverage consequence: FRSHCRATER10 0.9901 and PLANCKFLOOR 0.9517 pass the 95% target with one acquisition, RANGER reaches only 0.9261 and must not be repaired by relaxing the gate."
+  },
+  "decisions_recorded_2026_10_21": {
+    "gate3_sequence": "fix seam radiometry first, then approve CDR and freeze Gate 3",
+    "registration_wording": "1-2 px (2-5 m); no <=1 px claim",
+    "seam_fix_applied": "mosaic scope restricted to one acquisition; see mosaic_scope pending rule"
   }
 }

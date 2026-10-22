@@ -6,10 +6,10 @@
 | 项 | 状态 | 证据 |
 |---|---|---|
 | P20-01 双相机覆盖 | **PASS（覆盖达标）** | `reports/p2_0_multicamera_coverage.md`：union/DTM valid **0.9901**、overlap 0.0157、左右 I/F 残差 std 0.0076、r 0.9338 |
-| P20-01 多相机融合实现 | 待做 | 已有覆盖/残差证据；需固定融合策略与 seamline |
-| P20-02 独立配准 QA | **PASS @2 px / ≤1 px BLOCKED** | `reports/p2_0_ortho_registration_qa.md`：投影/网格/半径一致（2.0000 m 核对），无地形泄漏；但特征匹配无法分辨 1 个像元（2 m）系统偏移（±1 sample 对照只让 RMS 变 6–10 cm） |
+| P20-01 多相机融合实现 | **PASS（单 acquisition）** | 接缝跃变 1.16× / 1.50× 内部对照；跨 acquisition 5.5× / 6.0× 已废弃 | 已有覆盖/残差证据；需固定融合策略与 seamline |
+| P20-02 独立配准 QA | **定稿：1–2 px（2–5 m）** | `reports/p2_0_ortho_registration_qa.md`：投影/网格/半径一致（2.0000 m 核对），无地形泄漏；但特征匹配无法分辨 1 个像元（2 m）系统偏移（±1 sample 对照只让 RMS 变 6–10 cm） |
 | P20-03 小批量可行性 | **READY** | `reports/p2_0_small_batch_qa.md`：69/84 景双相机齐备（138/168 acquisition，82.1%）；可用池 **41 组**；40 景存储 ≈140 GB、CPU ≈7.7 h；缺 28 条 acquisition（极区索引 404） |
-| P20-04 Gate 3 冻结 | HOLD | 需 P20-01/02/03 + CDR 协议批准 |
+| P20-04 Gate 3 冻结 | **PENDING_SIGNOFF** | `protocols/heldout_v2_external_protocol.json` v1：48 个可用组中按 `sha256(group_id)` 取 15 组 / 18 景（每组 ≤2 景）；`protocols/heldout_v2_group_pool.csv` 为 51 组池；状态待研究员签核后才会置 FROZEN |
 
 ## 本轮实际改动的代码
 
@@ -32,7 +32,7 @@
 | hillshade 几何自检 | **不足** | RANGER 0.802（5/16 窗口）；PLANCKFLOOR 0.229（0/16） |
 | 坑心 GCP（正射 vs DTM 高程） | **PASS @2 px** | RANGER 主峰 (0,0) px、56 内点；PLANCKFLOOR 1.4 px、19 内点；p95 1.4/2.3 px |
 | 左右相机互检 | 2–3 px 系统差 | RANGER (−2,0) px；PLANCKFLOOR (3,0) px |
-| ≤1 px 严格配准 | **BLOCKED** | GCP 质心偏差约 1 px，需圆形度筛选与平差 |
+| ≤1 px | **不声称（定稿）** | 口径已确定为 1–2 px；GCP 质心偏差约 1 px |
 | PLANCKFLOOR 覆盖 | PASS | 四相机 0.9771；单 acquisition 0.9678/0.9429 |
 
 新发现（工程）：`cam2map` 默认 `INTERP=CUBICCONVOLUTION`，普通正射像素值是邻域卷积，
