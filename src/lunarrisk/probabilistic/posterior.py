@@ -111,8 +111,13 @@ class ConditionalPosterior(nn.Module):
         quad = (solved ** 2).sum(dim=(-1, -2))
         log_det = 2.0 * torch.log(torch.diagonal(chol, dim1=-2, dim2=-1)).sum(-1)
         internal = 0.5 * (quad + log_det + N_ATTRIBUTES * math.log(2 * math.pi))
-        jacobian = jacobian_term(mu)
-        return internal, internal - jacobian
+        # If a = f(z), then p_A(a) = p_Z(z) / |det J_f(z)|.
+        # The *observed target* z supplies the change-of-variables factor,
+        # never the model prediction mu. This continuous-density identity is
+        # valid for interior targets; clipping exact 0/1 fractions introduces
+        # boundary mass that needs a separately stated likelihood convention.
+        jacobian = jacobian_term(z)
+        return internal, internal + jacobian
 
 
 def jacobian_term(z: torch.Tensor) -> torch.Tensor:
