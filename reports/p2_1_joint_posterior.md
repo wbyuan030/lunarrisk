@@ -127,3 +127,43 @@ python3 scripts/summarize_p21.py --dir outputs/p21 --md reports/p2_1_joint_poste
 ```
 
 产出：`outputs/p21/{variant}_seed{seed}.json`（含 history、逐 split 指标、checkpoint 的 weights SHA256）。
+
+
+---
+
+## 7. P2.2 方法勘误与重新运行要求（2026-10-23）
+
+**本节为追加勘误；上面的历史数字没有按修复后的代码重新计算，不能直接用作修复后结论。**
+
+后续 Code Review 发现三项 P0 问题并已在 `main` 中做代码修复、添加单测：
+
+1. `train_posterior_p21.py::predict` 的 Point 在 Cal 上虽记录了温度 `T`，
+   原实现却没有把 `T` 乘到训练残差 `point_sigma` 上。历史表中 Point 的所谓
+   “Cal 校准后 Brier/NLL”不能算作严格应用了同等温度策略的 Point；现已让
+   Point/Diagonal/Joint 均按同一高斯温度标准采样（应用于 latent STD）。
+2. `--ablate-u --calibrate` 时，旧 `evaluate_splits` 对 `u_zeroed` 分支
+   强制将 `temperature` 设为 `None`，同时原 Joint 使用 Cal 的 T；
+   这不是同一校准口径的 U 消融。现默认对 U=0 使用**与原 Joint 同一个 Cal-T**，
+   并记录为 `shared_T_fitted_on_full_joint_cal`。另需将
+   `U=0` 在 Cal 上**独立 refit-T** 以及**保留原联合对角方差只去掉相关性**
+   的 matched-marginals 实验作为不同对照。
+3. `posterior.py::nll` 的旧物理密度公式使用 `internal - J(mu)`，
+   正确的连续变量变换为 `internal + J(z_truth)`。
+   本轮已修代码及单测，**此前报告主要是事件 NLL，不是这个 physical density NLL**，
+   因此不意味着此前所有事件 NLL 都由该符号错误直接产生。但未来如报告
+   物理密度指标，必须考虑 `g10/g15=0/1` 的截断边界质量，连续变换密度对真实端点不成立。
+
+此外，有两项此前结论必须下调强度：
+
+- 旧 “U=0 改善 → 相关性有害” **尚非隔离属性依赖的因果归因**：
+  `Σ = diag(σ²)+UUᵀ` 置 `U=0` 会同时降低每个属性的边缘方差；
+  应通过同 checkpoint `diag(diag(Σ))` 保持每个属性边缘方差不变，仅消除 off-diagonal。
+- 旧 “Joint 比 Diagonal 的 NLL/概率分数更好” 仍只是旧版开发集上的初步趋势：
+  不同训练 head、随机性、旧 `development_test` 反复查看、尚缺同样 sample ID 的
+  Coarse Ridge / Direct-event 参照与组级配对区间。不能声称 H1/H2 得到了证实。
+
+**下一次实验需要从 Cal 起重新估计并应用温度、重新跑 3 Seed，固定所有模型/数据/规则
+的样本口径，存储逐样本概率与可加载 checkpoint，再做 Group-paired CI。**
+
+完整执行清单：[P2.2 校准与公平评测](../docs/P2_2_PROBABILITY_VALIDATION.md)。
+外部 v2 仍保持 `PENDING_SIGNOFF/NOT_FROZEN/HOLD`，不受本次勘误影响。
