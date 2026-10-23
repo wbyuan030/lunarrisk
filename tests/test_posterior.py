@@ -164,6 +164,28 @@ class TestSmoke(unittest.TestCase):
         self.assertTrue(grads)
         self.assertTrue(all(torch.isfinite(g).all() for g in grads))
 
+    def test_physical_nll_equals_internal_plus_observed_target_jacobian(self):
+        # Change of variables: -log p_A(a) = -log p_Z(z) + log |det da/dz|.
+        # The Jacobian must depend on the *observed* z, not the predicted mu.
+        from lunarrisk.probabilistic.posterior import jacobian_term
+        torch.manual_seed(7)
+        for variant in ("diagonal", "joint"):
+            with self.subTest(variant=variant):
+                model = condition_posterior(variant, width=16)
+                model.eval()
+                x = torch.randn(3, 3, 32, 32)
+                features = torch.randn(3, 7)
+                z = torch.tensor([
+                    [-2.0, -1.3, -4.0, 3.0],
+                    [0.8, -0.4, -2.1, 4.2],
+                    [-0.3, 1.0, -3.2, 2.5]], dtype=torch.float32)
+                with torch.no_grad():
+                    internal, physical = nll_internal(model, x, z, features)
+                torch.testing.assert_close(physical - internal, jacobian_term(z),
+                                           atol=2e-6, rtol=2e-6)
+                self.assertFalse(torch.allclose(physical - internal,
+                                               jacobian_term(model(x, features)[:, :4])))
+
     def test_physical_nll_differs_by_the_jacobian(self):
         model = condition_posterior("diagonal", width=16)
         x = torch.randn(4, 3, 32, 32)
