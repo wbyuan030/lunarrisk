@@ -6,9 +6,13 @@
 > its residual Gaussian, same-checkpoint U=0 uses the same cal-fitted T, and physical-space
 > NLL uses the target-side positive log-Jacobian. See the
 > [P2.1 pre-fix result erratum](reports/p2_1_joint_posterior.md).
-> **Old Brier/NLL figures are historical until rerun.** Next: rerun all tests, matched-marginals
-> (not just U=0), identical-tile Ridge/direct-event baselines, group-paired comparisons and
-> restorable checkpoints. External Gate 3 remains **NOT_FROZEN**; Gate 4 **HOLD**.
+> **Old Brier/NLL figures are historical until rerun.** The rerun is done: 431 tests pass in the
+> ROCm container, all models now share the same 749-tile sample set, checkpoints reload exactly,
+> and the group-paired comparison is in
+> [reports/p2_2_baseline_comparison.md](reports/p2_2_baseline_comparison.md).
+> **Decision: `STOP_OR_REFRAME` — H1 rejected and H2 not established**
+> ([reports/p2_2_hypothesis_decision.md](reports/p2_2_hypothesis_decision.md)).
+> External Gate 3 remains **NOT_FROZEN**; Gate 4 **HOLD**.
 > Coding Agent: [AGENTS.md](AGENTS.md).
 >
 

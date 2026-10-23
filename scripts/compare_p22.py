@@ -287,7 +287,12 @@ def main(argv=None) -> int:
     if not args.skip_train:
         device = torch.device(args.device if (args.device != "cuda" or torch.cuda.is_available())
                               else "cpu")
+        # Must be on before *any* model touches the GPU: a nondeterministic baseline run changes
+        # MIOpen's kernel selection for everything that follows in the same process, which is how an
+        # apparently deterministic posterior run differed between two identical matrix runs.
+        torch.use_deterministic_algorithms(True)
         manifest["device"] = str(device)
+        manifest["deterministic"] = True
 
         # --- baselines -------------------------------------------------------
         from sklearn.linear_model import Ridge  # noqa: F401  (fail early, not mid-run)
@@ -395,6 +400,7 @@ def main(argv=None) -> int:
         for label, (name_a, name_b) in {
                 "joint_vs_point": ("joint", "point"),
                 "joint_vs_diagonal": ("joint", "diagonal"),
+                "diagonal_vs_point": ("diagonal", "point"),
                 "point_vs_ridge": ("point", "coarse_ridge"),
                 "diagonal_vs_ridge": ("diagonal", "coarse_ridge"),
                 "joint_vs_ridge": ("joint", "coarse_ridge"),
