@@ -161,8 +161,28 @@ def posterior_from_state(payload: dict) -> ConditionalPosterior:
     return model
 
 
+COVARIANCE_MODES = ("full", "matched_marginals")
+
+
+def covariance_from_params(model: ConditionalPosterior, params: dict,
+                           mode: str = "full") -> torch.Tensor:
+    """Covariance used for sampling, optionally with the margins held fixed.
+
+    ``matched_marginals`` keeps every diagonal variance of the joint model and only removes the
+    off-diagonal terms, ``diag(Sigma_joint)``. Zeroing the low-rank factor ``U`` is a *different*
+    ablation: it also shrinks the marginal variances, so an improvement under ``U = 0`` cannot be
+    attributed to "the correlation is harmful" without this second, variance-preserving control.
+    """
+    if mode not in COVARIANCE_MODES:
+        raise ValueError(f"covariance mode must be one of {COVARIANCE_MODES}")
+    covariance = model.covariance(params)
+    if mode == "matched_marginals":
+        covariance = torch.diag_embed(torch.diagonal(covariance, dim1=-2, dim2=-1))
+    return covariance
+
+
 def sample_internal(model: ConditionalPosterior, x, scalars=None, *, draws: int = 256,
-                    seed: int = 0) -> torch.Tensor:
+                    seed: int = 0, covariance_mode: str = "full") -> torch.Tensor:
     """Seeded draws of the internal chain, shape (draws, batch, 4).
 
     Uses an explicit ``torch.Generator`` rather than ``MultivariateNormal.sample``, because that method
@@ -174,7 +194,7 @@ def sample_internal(model: ConditionalPosterior, x, scalars=None, *, draws: int 
         params = model.parameters_dict(out)
         if model.variant == "point":
             return params["mu"].unsqueeze(0).repeat(draws, 1, 1)
-        chol = torch.linalg.cholesky(model.covariance(params))
+        chol = torch.linalg.cholesky(covariance_from_params(model, params, covariance_mode))
         # noise is drawn on CPU and moved afterwards: a CPU generator cannot fill a CUDA tensor, and
         # this way a fixed seed yields identical draws on CPU and GPU
         noise = torch.randn((draws,) + params["mu"].shape, generator=generator).to(chol.device)

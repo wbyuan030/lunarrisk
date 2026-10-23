@@ -28,7 +28,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from lunarrisk.probabilistic import (condition_posterior, export_state, from_internal,  # noqa: E402
-                                     nll_internal, sample_internal, to_internal)
+                                     nll_internal, posterior_from_state, sample_internal,
+                                     to_internal)
 from lunarrisk.rules import prob_event, standard_rules  # noqa: E402
 
 TARGET_COLUMNS = {"g10": "slope3m_g10", "g15": "slope3m_g15",
@@ -115,7 +116,7 @@ def train(model, ids, cache, scalars, z, channels, *, epochs: int, lr: float, de
 
 
 def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, point_sigma=None,
-            temperature=None):
+            temperature=None, covariance_mode="full"):
     """Posterior draws on every split.
 
     The point variant has no dispersion of its own, so it is evaluated as a Gaussian with the
@@ -139,7 +140,8 @@ def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, poi
     else:
         if model.variant == "point" and temperature is not None:
             raise ValueError("point model requires point_sigma for temperature calibration")
-        z = sample_internal(model, x, s, draws=draws, seed=seed).cpu().numpy()
+        z = sample_internal(model, x, s, draws=draws, seed=seed,
+                            covariance_mode=covariance_mode).cpu().numpy()
         if temperature is not None:
             # Use the exact latent mean, not the random MC sample average;
             # keeps the same checkpoint's mean invariant under U=0 ablation.
@@ -190,6 +192,27 @@ def event_metrics(truth, predicted, rules, seed=0):
             out[name][f"accepted@{int(coverage * 100)}"] = int(accepted.size)
             out[name][f"unsafe_accepted@{int(coverage * 100)}"] = int(unsafe[accepted].sum())
     return out
+
+
+def per_sample_frame(labels, rows, truth, predicted, probabilities):
+    """One row per site: ids, split, truth, posterior mean and per-rule event probability.
+
+    Paired statistics must be computed from these rows (never from a table of means), so every run
+    writes them and the comparison script reads them back by ``sample_id``.
+    """
+    import pandas as pd
+    frame = pd.DataFrame({
+        "sample_id": labels["sample_id"].astype(str).to_numpy()[rows],
+        "group_id": labels["group_id"].astype(str).to_numpy()[rows],
+        "split": labels["split"].astype(str).to_numpy()[rows],
+    })
+    for key in TARGET_COLUMNS:
+        frame[f"truth_{key}"] = np.asarray(truth[key], dtype=float)
+        draws = np.asarray(predicted[key])
+        frame[f"mean_{key}"] = draws.mean(axis=0) if draws.ndim > 1 else draws
+    for name, probability in probabilities.items():
+        frame[f"p_{name}"] = np.asarray(probability, dtype=float)
+    return frame
 
 
 def group_bootstrap(labels, values, predicted, groups, statistic, draws=200, seed=0):
@@ -262,6 +285,98 @@ def restore_low_rank(head, saved):
         head.bias[start:] = saved[1]
 
 
+def file_sha256(path):
+    import hashlib
+    if path is None or not Path(path).is_file():
+        return None
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def git_sha():
+    """Code revision for provenance; the ROCm container copy has no .git, so env wins first."""
+    import os
+    import subprocess
+    if os.environ.get("LUNARRISK_GIT_SHA"):
+        return os.environ["LUNARRISK_GIT_SHA"].strip()
+    try:
+        return subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True,
+                              text=True, check=True).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+
+def save_checkpoint(path, model, *, scalar_columns, scalar_mean, scalar_std, point_sigma,
+                    temperature, seed, labels_path, cache_path, channels, extra=None):
+    """Write a reloadable ``*.pt`` payload (the JSON report only keeps a weight hash).
+
+    The payload carries the whole inference state: weights, variant geometry, the train-fitted
+    scalar standardisation, the point residual sigma, every calibrated temperature and the
+    provenance of the inputs, so a fresh process can reproduce event probabilities exactly.
+    """
+    import torch
+    payload = {
+        "state_dict": {k: v.detach().cpu() for k, v in model.state_dict().items()},
+        "variant": model.variant,
+        "rank": model.rank,
+        "width": model.base_width,
+        "in_channels": model.in_channels,
+        "n_scalars": model.n_scalars,
+        "scalar_columns": [str(c) for c in scalar_columns],
+        "scalar_mean": [float(v) for v in scalar_mean],
+        "scalar_std": [float(v) for v in scalar_std],
+        "channels": [int(c) for c in channels],
+        "point_sigma": None if point_sigma is None else [float(v) for v in point_sigma],
+        "temperature": None if temperature is None else float(temperature),
+        "target_eps": 1e-6,
+        "seeds": [int(seed)],
+        "labels_sha256": file_sha256(labels_path),
+        "cache_sha256": file_sha256(cache_path),
+        "git_sha": git_sha(),
+        "weights_sha256": export_state(model)["weights_sha256"],
+    }
+    if extra:
+        payload.update(extra)
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    torch.save(payload, path)
+    return payload
+
+
+def load_checkpoint(path):
+    import torch
+    payload = torch.load(path, map_location="cpu", weights_only=False)
+    return posterior_from_state(payload), payload
+
+
+def standardize_with(payload, scalars):
+    """Apply the checkpoint's train-fitted standardisation to a raw scalar table."""
+    columns = list(payload["scalar_columns"])
+    mean = np.asarray(payload["scalar_mean"], dtype=np.float64)
+    std = np.asarray(payload["scalar_std"], dtype=np.float64)
+    std = np.where(std == 0, 1.0, std)
+    table = scalars.copy()
+    table[columns] = (table[columns].to_numpy(dtype=np.float64) - mean) / std
+    return table
+
+
+def predict_from_checkpoint(path, ids, cache, scalars, rules, device, draws=256, seed=0,
+                            covariance_mode="full"):
+    """Reload a saved model and return posterior draws plus per-rule event probabilities."""
+    model, payload = load_checkpoint(path)
+    model.to(device).eval()
+    table = standardize_with(payload, scalars)
+    predicted, _ = predict(model, ids, cache, table, tuple(payload["channels"]), device,
+                           draws=draws, seed=seed, point_sigma=payload["point_sigma"],
+                           temperature=payload["temperature"], covariance_mode=covariance_mode)
+    probabilities = {name: np.atleast_1d(np.asarray(prob_event(predicted, rule, axis=0),
+                                                    dtype=float))
+                     for name, rule in rules.items()}
+    return predicted, probabilities, payload
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--labels", type=Path, default=ROOT / "outputs" / "labels_hydrated.csv")
@@ -274,17 +389,34 @@ def main(argv=None) -> int:
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--draws", type=int, default=256)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--deterministic", action="store_true",
+                        help="torch.use_deterministic_algorithms(True); on this ROCm build it makes "
+                             "two same-seed runs bit-identical, which plain seeding does not")
     parser.add_argument("--limit", type=int, default=0, help="cap rows per split (smoke runs)")
     parser.add_argument("--calibrate", action="store_true",
                         help="fit one Gaussian temperature on cal and apply it when sampling")
     parser.add_argument("--ablate-u", action="store_true",
                         help="re-evaluate the same checkpoint with the low-rank factor zeroed")
+    parser.add_argument("--ablate-u-calibration-mode", choices=("shared", "refit", "both"),
+                        default="shared",
+                        help="shared: reuse the full-joint cal T; refit: fit a new T on the zeroed "
+                             "model's cal covariance; both: report the two as separate branches. "
+                             "The two must never share one comparison table")
+    parser.add_argument("--matched-marginals", action="store_true",
+                        help="same checkpoint with diag(Sigma_joint): keeps marginal variances and "
+                             "removes only the off-diagonal covariance")
+    parser.add_argument("--save-checkpoint", type=Path, default=None,
+                        help="write a reloadable *.pt with weights, scaler, sigma and all cal temperatures")
+    parser.add_argument("--predictions-out", type=Path, default=None,
+                        help="per-sample CSV: ids, truth, posterior means and per-rule probabilities")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
 
     import torch
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
+    if args.deterministic:
+        torch.use_deterministic_algorithms(True)
     device = torch.device(args.device if (args.device != "cuda" or torch.cuda.is_available()) else "cpu")
 
     baseline = load_baseline_module()
@@ -317,7 +449,8 @@ def main(argv=None) -> int:
                     val=(ids_val, z_val) if ids_val else None)
 
     report = {"variant": args.variant, "rank": args.rank, "seed": args.seed,
-              "device": str(device), "epochs_run": len(history), "history": history,
+              "device": str(device), "deterministic": bool(args.deterministic),
+              "draws": int(args.draws), "epochs_run": len(history), "history": history,
               "trainable_parameters": int(sum(p.numel() for p in model.parameters())),
               "rows": {s: int((labels["split"] == s).sum()) for s in ("train", "val", "cal", "test")},
               "splits": {}}
@@ -343,7 +476,7 @@ def main(argv=None) -> int:
             report["calibration"] = calibration
             report["calibration"]["temperature"] = round(float(temperature), 6)
 
-    def evaluate_splits(tag: str) -> dict:
+    def evaluate_splits(tag: str, temperature_here=None, covariance_mode="full") -> dict:
         out = {}
         for split in ("train", "val", "cal", "test"):
             rows = [i for i, s in enumerate(ids_all) if split_of[s] == split]
@@ -353,7 +486,7 @@ def main(argv=None) -> int:
             split_truth = {k: v[rows] for k, v in truth.items()}
             predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
                                    draws=args.draws, seed=args.seed, point_sigma=point_sigma,
-                                   temperature=temperature)
+                                   temperature=temperature_here, covariance_mode=covariance_mode)
             metrics = {"n_rows": len(rows),
                        "n_groups": int(len(np.unique(groups[rows]))),
                        "attributes": attribute_metrics(split_truth, predicted),
@@ -369,20 +502,104 @@ def main(argv=None) -> int:
             out[split] = metrics
         return out
 
-    report["splits"] = evaluate_splits("as_trained")
+    report["splits"] = evaluate_splits("as_trained", temperature_here=temperature)
 
+    temperatures_u0 = {}
     if args.ablate_u and model.rank:
-        # same checkpoint, correlation removed: the only way to attribute a P3 gain to the covariance
-        # structure rather than to the extra head parameters and their optimisation path
+        # same checkpoint, correlation removed: the only way to attribute a joint gain to the
+        # covariance structure rather than to the extra head parameters and their optimisation path
         saved = zero_low_rank(model.head)
-        report["splits_u0"] = evaluate_splits("u_zeroed")
-        restore_low_rank(model.head, saved)
-        report["ablation"] = {"kind": "same-checkpoint U=0",
-                              "temperature_policy": ("shared_T_fitted_on_full_joint_cal"
-                                                     if temperature is not None else "uncalibrated"),
-                              "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged; "
-                                      "both branches use the same cal-fitted T. "
-                                      "A separately refitted U=0 temperature must be reported as a distinct experiment."}
+        modes = (["shared", "refit"] if args.ablate_u_calibration_mode == "both"
+                 else [args.ablate_u_calibration_mode])
+        temperatures_u0 = {}
+        try:
+            for mode in modes:
+                temperature_u0 = temperature
+                if mode == "refit" and args.calibrate:
+                    ids_cal = [s for s in ids_all if split_of[s] == "cal"]
+                    temperature_u0, calibration_u0 = calibrate(
+                        model, ids_cal, cache, scalars, z[[index_of[s] for s in ids_cal]],
+                        channels, device, point_sigma=point_sigma)
+                    report["calibration_u0_refit"] = dict(calibration_u0)
+                    report["calibration_u0_refit"]["temperature"] = round(float(temperature_u0), 6)
+                key = "splits_u0" if mode == "shared" else "splits_u0_refit"
+                report[key] = evaluate_splits(f"u_zeroed_{mode}", temperature_here=temperature_u0)
+                temperatures_u0[mode] = temperature_u0
+        finally:
+            restore_low_rank(model.head, saved)
+        # U = 0 shrinks the marginal variances as well: report that as a separate matched-marginals
+        # control before any claim that "the correlation itself" is harmful.
+        report["ablation"] = {
+            "kind": "same-checkpoint U=0",
+            "calibration_mode": args.ablate_u_calibration_mode,
+            "temperature_policy": {
+                "shared": "shared_T_fitted_on_full_joint_cal",
+                "refit": "refit_T_on_cal_of_the_u_zero_model",
+                "both": "reported separately: shared_T and refit_T_on_cal",
+            }[args.ablate_u_calibration_mode],
+            "temperature_full": temperature,
+            "temperature_u0": {k: v for k, v in temperatures_u0.items()},
+            "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged. "
+                    "shared_T and refit_T_on_cal must never be mixed inside one comparison table."}
+
+    if args.matched_marginals and model.rank:
+        report["splits_matched_marginals"] = evaluate_splits(
+            "matched_marginals", temperature_here=temperature, covariance_mode="matched_marginals")
+        report["matched_marginals"] = {
+            "covariance": "diag(diag(Sigma_joint)) - marginal variances untouched",
+            "temperature": "same cal-fitted T as the full joint model",
+            "note": "isolates the off-diagonal covariance; compare with U=0 only as a second control"}
+
+    if args.save_checkpoint:
+        saved_payload = save_checkpoint(
+            args.save_checkpoint, model,
+            scalar_columns=list(scalars.columns),
+            scalar_mean=[float(v) for v in mean[scalars.columns]],
+            scalar_std=[float(v) for v in std[scalars.columns]],
+            point_sigma=point_sigma, temperature=temperature, seed=args.seed,
+            labels_path=args.labels, cache_path=args.cache, channels=channels,
+            extra={"ablate_u_calibration_mode": args.ablate_u_calibration_mode})
+        report["checkpoint_path"] = str(args.save_checkpoint)
+        report["checkpoint_sha256"] = saved_payload["weights_sha256"]
+
+    if args.predictions_out:
+        # every split is exported: paired statistics need test rows, and a deployable risk threshold
+        # must be chosen from cal probabilities without ever looking at test danger labels
+        rows_export = list(range(len(ids_all)))
+        ids_export = [ids_all[i] for i in rows_export]
+        export_truth = {k: v[rows_export] for k, v in truth.items()}
+
+        def branch_frame(temperature_here, covariance_mode="full", suffix=""):
+            predicted, _ = predict(model, ids_export, cache, scalars, channels, device,
+                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma,
+                                   temperature=temperature_here, covariance_mode=covariance_mode)
+            probabilities = {name: np.atleast_1d(np.asarray(prob_event(predicted, rule, axis=0),
+                                                            dtype=float))
+                             for name, rule in rules.items()}
+            frame = per_sample_frame(labels, rows_export, export_truth, predicted, probabilities)
+            if suffix:                      # truth stays in the first branch only
+                frame = frame.drop(columns=[c for c in frame.columns if c.startswith("truth_")])
+                frame = frame.rename(columns={c: f"{c}__{suffix}" for c in frame.columns
+                                              if c.startswith("p_") or c.startswith("mean_")})
+            return frame
+
+        frame = branch_frame(temperature)
+        if args.ablate_u and model.rank:
+            saved = zero_low_rank(model.head)
+            try:
+                for mode, temperature_here in temperatures_u0.items():
+                    suffix = "u0" if mode == "shared" else "u0_refit"
+                    extra = branch_frame(temperature_here, suffix=suffix)
+                    frame = frame.merge(extra, on=["sample_id", "group_id", "split"], how="left")
+            finally:
+                restore_low_rank(model.head, saved)
+        if args.matched_marginals and model.rank:
+            extra = branch_frame(temperature, covariance_mode="matched_marginals",
+                                 suffix="matched")
+            frame = frame.merge(extra, on=["sample_id", "group_id", "split"], how="left")
+        args.predictions_out.parent.mkdir(parents=True, exist_ok=True)
+        frame.to_csv(args.predictions_out, index=False)
+        report["predictions_path"] = str(args.predictions_out)
 
     report["checkpoint"] = {k: v for k, v in export_state(model, seeds=[args.seed]).items()
                             if k != "state_dict"}
