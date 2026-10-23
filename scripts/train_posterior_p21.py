@@ -123,20 +123,29 @@ def predict(model, ids, cache, scalars, channels, device, draws=256, seed=0, poi
     hard 0/1 and its Brier/NLL would look artificially perfect or perfectly wrong.
     """
     import torch
+    if temperature is not None and (not math.isfinite(temperature) or temperature <= 0):
+        raise ValueError("calibration temperature must be finite and positive")
     x, s = batch(model, ids, cache, scalars, channels, device)
     if model.variant == "point" and point_sigma is not None:
         generator = torch.Generator().manual_seed(seed)
         with torch.no_grad():
             mu = model(x, s)
         sigma = torch.as_tensor(point_sigma, dtype=mu.dtype, device=mu.device)
+        # Point residual noise is a distribution too: the same cal-fitted T
+        # must scale its standard deviation, not just the diagonal/joint models.
+        sigma = sigma * (1.0 if temperature is None else temperature)
         noise = torch.randn((draws,) + mu.shape, generator=generator).to(mu.device) * sigma
         z = (mu.unsqueeze(0) + noise).cpu().numpy()
     else:
+        if model.variant == "point" and temperature is not None:
+            raise ValueError("point model requires point_sigma for temperature calibration")
         z = sample_internal(model, x, s, draws=draws, seed=seed).cpu().numpy()
-    if temperature is not None and model.variant != "point":
-        # scale the dispersion only: the mean stays where the model put it
-        mu = z.mean(axis=0, keepdims=True)
-        z = mu + temperature * (z - mu)
+        if temperature is not None:
+            # Use the exact latent mean, not the random MC sample average;
+            # keeps the same checkpoint's mean invariant under U=0 ablation.
+            with torch.no_grad():
+                mu = model.parameters_dict(model(x, s))["mu"].cpu().numpy()[None, ...]
+            z = mu + temperature * (z - mu)
     dense = {f"z{i + 1}": z[..., i] for i in range(4)}
     return from_internal(dense), z
 
@@ -344,7 +353,7 @@ def main(argv=None) -> int:
             split_truth = {k: v[rows] for k, v in truth.items()}
             predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
                                    draws=args.draws, seed=args.seed, point_sigma=point_sigma,
-                                   temperature=temperature if tag != "u_zeroed" else None)
+                                   temperature=temperature)
             metrics = {"n_rows": len(rows),
                        "n_groups": int(len(np.unique(groups[rows]))),
                        "attributes": attribute_metrics(split_truth, predicted),
@@ -369,13 +378,17 @@ def main(argv=None) -> int:
         report["splits_u0"] = evaluate_splits("u_zeroed")
         restore_low_rank(model.head, saved)
         report["ablation"] = {"kind": "same-checkpoint U=0",
-                              "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged"}
+                              "temperature_policy": ("shared_T_fitted_on_full_joint_cal"
+                                                     if temperature is not None else "uncalibrated"),
+                              "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged; "
+                                      "both branches use the same cal-fitted T. "
+                                      "A separately refitted U=0 temperature must be reported as a distinct experiment."}
 
     report["checkpoint"] = {k: v for k, v in export_state(model, seeds=[args.seed]).items()
                             if k != "state_dict"}
     report["notes"] = {
         "cal_role": "not used in training; calibration is a separate step",
-        "test_role": "EXPLORATORY - the old 110-tile test has been inspected repeatedly",
+        "test_role": "EXPLORATORY - the old 120-tile development_test has been inspected repeatedly",
         "nll_space": "training uses internal-space NLL; physical-space NLL needs the Jacobian term"}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2), encoding="utf-8")
