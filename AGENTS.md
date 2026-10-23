@@ -1,3 +1,38 @@
+# 当前任务（P2.2，2026-10-23）：修概率口径、跑公平基线、复核 H1/H2
+
+**请先阅读并直接执行 [`docs/P2_2_PROBABILITY_VALIDATION.md`](docs/P2_2_PROBABILITY_VALIDATION.md)。**
+P2.1 的第一轮四属性 Point/Diagonal/Joint + AST 已跑通，v2 地理分组已从 51→41，
+但旧开发集的校准与对照有三个 P0 计算问题。因此下一步**不是训练新大模型或做 OOD 评分**。
+
+**已推到 main 的 P0 代码修正（必须在 RX7900XT 环境跑单测验证）**：
+1. Point 的 Cal 温度现在实际缩放训练残差采样的标准差；
+2. `U=0` 同 checkpoint 使用与完整 Joint 相同的 Cal 温度，标记 shared_T；
+3. Physical-space NLL 用 `internal + log|det J_f(z_true)|`，不是旧的 `internal - log|det J_f(mu)|`；
+4. 新单测覆盖跨变体 temperature 缩放、共享温度消融、Jacobian 真值位置与符号。
+
+**必须补做的实验**：Point/Diagonal/Joint + `coarse_ridge` + direct-event head 在完全相同
+sample ID/规则与 Train/Val/Cal/开发 Test 上比较；保存可加载 checkpoint、逐样本风险概率；
+添加不改变边缘方差的 matched-marginals 对照、U=0 各自 Cal refit 的对照，
+Group-paired bootstrap、三 Seed 与独立重复、合理的规则 AST 扫描、风险数字真实计数。
+原 P2.1 报告已追加勘误，**原有数字为修复前探索性结果，必须重跑才可重新作出判断**。
+
+**外部 heldout**：协议 `heldout_v2_external_protocol_v2.json` 为 PENDING_SIGNOFF，
+Gate 3 NOT_FROZEN、Gate 4 HOLD；不得借机用外部集调参、执行预测、改写原冻结文件，
+或静默批准 EDR→CDR 替代路线。仅允许免费的已有 760 Tile/缓存、本地 RX7900XT/ROCm；
+不买云卡、不开四卡、不加 LFM/One-Pass/JEPA 大模型。
+
+```bash
+git pull --ff-only origin main
+python3 -m unittest discover -s tests -v
+python3 -m compileall -q scripts src tests
+```
+以**实际测试结果**为准：历史 412 项通过不能替代本轮新增测试。
+完成阶段代码、真实日志、修正结果/报告后按仓库既有约定提交并推送 `main`。
+
+---
+
+## 历史任务入口（P2.1 及之前，仅供溯源）
+
 # 当前任务（P2.1，2026-10-22）：联合风险模型 H1/H2 + Gate 3 Group 修复
 
 **优先阅读并执行 [`docs/P2_1_JOINT_RISK_RESEARCH.md`](docs/P2_1_JOINT_RISK_RESEARCH.md)。**
