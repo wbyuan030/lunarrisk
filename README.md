@@ -1,5 +1,17 @@
 # LunarRisk: RX 7900 XT First Experiments
 
+> **ACTIVE SPRINT (2026-10-23): [P2.2 probability scoring correctness and H1/H2 fair comparison](docs/P2_2_PROBABILITY_VALIDATION.md).**
+> First P2.1 Point/Diagonal/Joint posterior+AST runs and 41-group external pool are implemented,
+> but three **evaluation correctness fixes** have been committed: Point calibration now scales
+> its residual Gaussian, same-checkpoint U=0 uses the same cal-fitted T, and physical-space
+> NLL uses the target-side positive log-Jacobian. See the
+> [P2.1 pre-fix result erratum](reports/p2_1_joint_posterior.md).
+> **Old Brier/NLL figures are historical until rerun.** Next: rerun all tests, matched-marginals
+> (not just U=0), identical-tile Ridge/direct-event baselines, group-paired comparisons and
+> restorable checkpoints. External Gate 3 remains **NOT_FROZEN**; Gate 4 **HOLD**.
+> Coding Agent: [AGENTS.md](AGENTS.md).
+>
+
 > **ACTIVE SPRINT (2026-10-22): [P2.1 joint posterior + compositional risk experiments](docs/P2_1_JOINT_RISK_RESEARCH.md).**
 > The main research question is whether a *conditional joint distribution* over slope exceedance,
 > roughness and relief produces better calibrated, rule-compositional hazard probabilities
