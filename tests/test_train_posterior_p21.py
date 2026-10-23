@@ -75,6 +75,7 @@ class TestTemperatureCalibration(unittest.TestCase):
         from unittest.mock import patch
         import torch
         from lunarrisk.probabilistic import condition_posterior
+        torch.manual_seed(20261023)  # identical checkpoint/input across repeat calls
         model = condition_posterior(variant, width=8, rank=2, n_scalars=7)
         model.eval()
         x = torch.randn(2, 3, 32, 32)
