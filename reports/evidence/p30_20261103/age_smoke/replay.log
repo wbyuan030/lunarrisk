@@ -1,0 +1,46 @@
+<TORCH_INSTALL>/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at ../aten/src/ATen/Context.cpp:296.)
+  return F.linear(input, self.weight, self.bias)
+{
+  "status": "REAL_PIXEL_ENGINEERING_SMOKE_ONLY",
+  "protocol": "HDF5_DERIVED_PILOT",
+  "not_benchmark_score": true,
+  "pretrained_weights_used": false,
+  "test_evaluated": false,
+  "code_sha": "2f064fd6b83e923dca993bbc90f63dbce2d3d58e",
+  "source_sha256": {
+    "scripts/p30_age_smoke.py": "535a30e7290564f7be3d4acb7b808c8c2a245c2e7fc6dab01fcaddab7eaa1e2e",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "steps": 2,
+  "train_loss": [],
+  "inputs": {
+    "pilot_sha256": "d6807ecc1a0d52f07fc46cc53f42146e3b66e9562ee9fd7357f5dfbf32d9bd0a",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "train_rows": 4,
+  "val_rows": 4,
+  "train_class_counts": [
+    0,
+    4,
+    0,
+    0,
+    0
+  ],
+  "val_class_counts": [
+    0,
+    4,
+    0,
+    0,
+    0
+  ],
+  "parameters": 459077,
+  "device": "AMD Radeon RX 7900 XT",
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "wall_seconds": 0.4649868980050087,
+  "peak_gpu_allocated_bytes": 115619840,
+  "peak_gpu_reserved_bytes": 134217728,
+  "predictions_sha256": "4b72c374e57e0cc7b931564ea1b899bcbafd77979a6a6df0de7c96e3ef0591f0",
+  "checkpoint_sha256": "05d57fe20ed038aa1ae31b1cf178eedaebc19ca61fb1cd340436b1f9d481c6d9"
+}

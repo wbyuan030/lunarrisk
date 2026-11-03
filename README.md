@@ -3,7 +3,7 @@
 **Active sprint — P3.0, 2026-11-03: public benchmark tasks for LunarJEV.**
 
 Start with [AGENTS.md](AGENTS.md) and [P3.0 execution plan](docs/P3_0_PUBLIC_BENCHMARKS.md).
-This update is a **task handoff**, not a completed benchmark implementation or a new performance result.
+The asset audit, HDF5-derived loader and an eight-patch Age CNN engineering smoke are complete. A fresh-process checkpoint replay produces byte-identical probabilities. **No official benchmark performance result is claimed.**
 The machine-readable scope is [protocols/p30_public_benchmark_plan.json](protocols/p30_public_benchmark_plan.json).
 
 ## Current research direction
@@ -17,7 +17,7 @@ Test whether lunar pretrained representations and task/candidate-conditioned dec
 
 Moonstone source pointers: [official code](https://github.com/ayushprd/Moonstone), [dataset card](https://huggingface.co/datasets/ayushprd/Moonstone/blob/main/README.md), [downstream loader](https://github.com/ayushprd/Moonstone/blob/main/downstream_dataset.py).
 NASA LFM is a separately audited encoder option: [official model card](https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/blob/main/README.md).
-Pinned upstream commits, actual assets, available weights and input mappings are still to be verified by the execution agent.
+Pinned versions, actual file sizes, licenses and access evidence are recorded in the [asset audit](reports/p3_0_benchmark_audit.md). MG-MAE pretrained weights remain unverified in the audited official sources. NASA LFM has a reachable checkpoint, while its input mapping, Python compatibility and full-weight acquisition remain blocked.
 
 ## Begin with an access audit, not a bulk download
 
@@ -33,7 +33,9 @@ A README example such as `checkpoints/latest.pt` is not proof of a downloadable 
 | P30-03 | Geology ordinary-head and candidate-conditioned comparisons |
 | P30-04 | Separately specified candidate-order/subset, modality-missing and calibration extensions |
 
-New script and report names in the plan are **planned outputs**, not already implemented commands. Official random-split results, geographic-split results and new decision protocols must remain distinct. Do not tune on the public test split or claim pretraining-unseen geography without a provenance audit.
+Implemented audit, inspection, extraction, metadata-validation and Age-smoke commands use the `p30_` namespace. See the [loader validation](reports/p3_0_loader_validation.md), [Age smoke and replay](reports/p3_0_age_baseline.md), and [stage progress](reports/p3_0_progress.md). Actual HDF5 metadata contains 16,200 unique Tiles with stored splits 11,400/2,400/2,400. Only four Train and four Val patches were extracted; all eight are Nectarian, so the smoke establishes engineering functionality only. The protocol remains **HDF5_DERIVED_PILOT** until paired official mmap validation succeeds.
+
+Current committed-source checks: **471 tests, 470 passed, one legacy optional-data check skipped; compileall passed**. Actual first-round response bodies total 39,016,735 bytes (about 37.2 MiB). No Test pixels were requested. Official random-split results, geographic-split results and new decision protocols must remain distinct. Do not tune on the public test split or claim pretraining-unseen geography without a provenance audit.
 
 ## Existing LunarRisk evidence remains valid as recorded
 

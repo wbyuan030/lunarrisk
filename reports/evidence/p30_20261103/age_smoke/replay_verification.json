@@ -1,0 +1,13 @@
+{
+  "code_sha": "2f064fd6b83e923dca993bbc90f63dbce2d3d58e",
+  "separate_python_process": true,
+  "rows": 8,
+  "sample_split_target_order_equal": true,
+  "predictions_byte_identical": true,
+  "max_abs_probability_delta": 0.0,
+  "predictions_sha256": "4b72c374e57e0cc7b931564ea1b899bcbafd77979a6a6df0de7c96e3ef0591f0",
+  "source_files_match_commit": true,
+  "test_evaluated": false,
+  "checkpoint_sha256": "05d57fe20ed038aa1ae31b1cf178eedaebc19ca61fb1cd340436b1f9d481c6d9",
+  "checkpoint_not_in_git": true
+}

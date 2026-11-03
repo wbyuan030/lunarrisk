@@ -1,0 +1,26 @@
+{
+  "code_sha": "2f064fd6b83e923dca993bbc90f63dbce2d3d58e",
+  "tests": 471,
+  "passed": 470,
+  "skipped": 1,
+  "compileall_exit": 0,
+  "logs": [
+    {
+      "archive_path": "age_smoke/train.log",
+      "source_sha256": "ee50af23b02fdfc29d48e5c4b22f6b3bc975499bf3cd30bc2f4119222b0d3990",
+      "archive_sha256": "cae24e7ec4c182b40b5c328f190604659038024d504d7ef4b83e093d2581dc1f"
+    },
+    {
+      "archive_path": "age_smoke/replay.log",
+      "source_sha256": "fd711d19cd59ae26aaa8a2a075ee4f0d648e0db65469724ed47d43a91a4196a0",
+      "archive_sha256": "8d10fe2ef24ee2591a4c63aec3f7b42164483b3601155d46960fb3bc55ccbc8f"
+    },
+    {
+      "archive_path": "age_smoke/tests_committed_471.log",
+      "source_sha256": "482f2fc5a57d6e92105d61f0e24480553eefa1f11d791dd16951211b3688bcd5",
+      "archive_sha256": "0b7e4956a9daf92b81a3baff56eb0706a91785bcb298c17388c71bd02785f8ee"
+    }
+  ],
+  "warning": "PyTorch reports unsupported hipBLASLt architecture and falls back to hipblas; both processes complete successfully.",
+  "no_new_network_transfers": true
+}
