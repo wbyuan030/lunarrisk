@@ -1,0 +1,67 @@
+{
+  "protocol": "P31_02_COMPLETED_SELECTED_FULL_CROP_PAIR",
+  "execution_source_commit": "baa97f5e5383750511bddf6017359b7ae520793f",
+  "audit_repository_commit": "90b79983a9bb037e282e620eb905d5ce6a1f5f07",
+  "plan_lock_sha256": "672ae6d64401390fe79c3131b6a25b7b41f0aed322e476fb9dbbdacca828184c",
+  "frozen_plan_file_sha256": "37dbb90364e12c5c89b09c3a8dab94e11b2fcee1c398037319a13d9586c4edbe",
+  "execution_status": "VALIDATED_WITHIN_SELECTED_SAMPLE_COVERAGE",
+  "offline_status": "PASS_OFFLINE_CACHE_REPLAY",
+  "runtime": "Python3.10.12, h5py3.16.0, NumPy2.2.6; private copies of existing container packages, host-only writes; no installation",
+  "live_command": "python3 -I \"$JOB_TMP/p31_python.py\" scripts/p31_loader_pair.py --metadata \"$P31_EXISTING_METADATA\" --prior-transfer-bytes 83468143 --outdir outputs/p31/loader_pair_01 --apply",
+  "live_command_warning": "Historical execution only. Do not rerun with the old ledger; P31-02 is closed.",
+  "offline_command": "python3 -I \"$JOB_TMP/p31_python.py\" reports/evidence/p31_pair_20261104/offline_verify.py --repo \"$REPO\" --run \"$REPO/outputs/p31/loader_pair_01\" --output \"$P31_FRESH_AUDIT_OUTPUT\"",
+  "offline_network_requests": 0,
+  "tests": {
+    "run": 510,
+    "passed": 510,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 7.439
+  },
+  "compile_command": "python3 -m compileall -q scripts src tests",
+  "scope": "two selected complete Train/Val crops; roughness valid-data processing unverified; no Test scoring, no global equivalence or whole-file hash claim",
+  "local_binary_artifacts_not_in_git": {
+    "range_root": "outputs/p31/loader_pair_01",
+    "range_hash_inventory": "report.json: hdf5_ranges and mmap_ranges",
+    "raw_crops": {
+      "outputs/p31/loader_pair_01/raw_2705.npy": {
+        "sha256": "da95889c23cd001a43b3ab9dc388fe4271f86d2a7be5ab626bcf3978507c9008",
+        "bytes": 7340160
+      },
+      "outputs/p31/loader_pair_01/raw_2700.npy": {
+        "sha256": "c68c143fe574ca464cf17b74f9728439b7de5b34180fdf408e85c15c1067092b",
+        "bytes": 7340160
+      }
+    }
+  },
+  "public_files": {
+    "channel_results.csv": {
+      "sha256": "406213346592fa71f9bbea1fef74244d86786732112a57a686899f90bd835746",
+      "bytes": 4031
+    },
+    "execution.log": {
+      "sha256": "60f7949bb400a0d141c304092d922eeb1fc3851e165efe6e9a1ac6145b55f81b",
+      "bytes": 5517
+    },
+    "offline_verification.json": {
+      "sha256": "e3d4f520dd65cf3b9534364ec406bb0478c89d044093a74bf37b653cd1eb914c",
+      "bytes": 1656
+    },
+    "offline_verify.py": {
+      "sha256": "41454dfbc57ed6f4f4532b1a6f9bbf7981882328d1e87c9bb9919ba7820e336c",
+      "bytes": 8930
+    },
+    "report.json": {
+      "sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+      "bytes": 3847824
+    },
+    "transfer_ledger.json": {
+      "sha256": "8fca65d6c4289bd18266821249b11e7630a5aefc4ae9a73ab08337287f199063",
+      "bytes": 575
+    },
+    "unittest.log": {
+      "sha256": "e2e16d86ab336de252bc696275061c82b2071e457012a3c0b4bd7816fc8f7b39",
+      "bytes": 60654
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "status": "PASS_OFFLINE_CACHE_REPLAY",
+  "network_requests": 0,
+  "source_execution_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+  "plan_lock_sha256": "672ae6d64401390fe79c3131b6a25b7b41f0aed322e476fb9dbbdacca828184c",
+  "audit_script_sha256": "41454dfbc57ed6f4f4532b1a6f9bbf7981882328d1e87c9bb9919ba7820e336c",
+  "cache_hashes_verified": 14387,
+  "expected_mmap_range_set_exact": true,
+  "hdf5_overlapping_cached_bytes_consistent": true,
+  "metadata_and_raw_crops_reloaded_from_cached_hdf5": true,
+  "complete_numeric_masks_and_presence_recomputed": true,
+  "selected_hdf5_chunks": [
+    {
+      "sample_id": "2705",
+      "chunk_offset": [
+        2705,
+        0,
+        0,
+        0
+      ],
+      "byte_offset": 9623156647,
+      "compressed_bytes": 5158626,
+      "exact_hdf5_body_requests": 1,
+      "zlib_payload_equals_selected_raw_pixels": true
+    },
+    {
+      "sample_id": "2700",
+      "chunk_offset": [
+        2700,
+        0,
+        0,
+        0
+      ],
+      "byte_offset": 9598187579,
+      "compressed_bytes": 5122941,
+      "exact_hdf5_body_requests": 1,
+      "zlib_payload_equals_selected_raw_pixels": true
+    }
+  ],
+  "compared_pixels": 3670016,
+  "valid_pixels": 3329561,
+  "missing_pixels": 340455,
+  "finite_raw_zero_pixels": 24064,
+  "max_abs_error": 0.0,
+  "not_close_pixels": 0,
+  "mask_disagreements": 0,
+  "new_returned_body_bytes": 25115045,
+  "cumulative_returned_body_bytes": 103617220,
+  "cumulative_conservative_body_bytes": 165257071,
+  "scope": "two prelocked Train/Val crops; roughness has no valid pixels; no global chunk enumeration or whole-asset checksum claim"
+}

@@ -1,6 +1,6 @@
 # P3.1 loader pair — offline lock and bounded runner
 
-Date: 2026-11-03. **Offline implementation and selection complete; real full-crop I/O RUNNING from committed source `baa97f5e5383750511bddf6017359b7ae520793f`.** Existing `http_range.py` is unchanged. No acceptance result is claimed before execution completes. The offline validation below records the pre-execution checkpoint; the execution update at the end supersedes its former NOT EXECUTED state.
+Updated: 2026-11-04. **PASS: loader numerical consistency within the two prelocked samples and their observed coverage.** Real execution used committed source `baa97f5e5383750511bddf6017359b7ae520793f` and completed with `VALIDATED_WITHIN_SELECTED_SAMPLE_COVERAGE`; an independent offline replay recomputed the result from hashed local caches with zero network requests. Existing `http_range.py` and the pre-execution plan are unchanged. The offline design/validation below preserves the pre-execution record; the execution result at the end closes it.
 
 ## Locked selection
 
@@ -87,7 +87,7 @@ The default listing/stat/map/plan paths resolve relative to the script's checkou
 
 Execution creates `report.json`, exact HDF5/mmap range caches, and two raw `.npy` crops in the fresh output directory. It records each successful range's offset, length, cache name and SHA256; raw/source/input hashes; per-channel valid/missing/raw-zero/nonfinite counts and max error; full mask disagreement counts; channel/group presence; labels/split/IDs; attempts, body accounting and timing. A transport or ceiling failure produces BLOCKED evidence with an error type only, excluding signed URLs/proxy details/private paths. Only complete numeric/mask **and** coverage acceptance yields `VALIDATED_WITHIN_SELECTED_SAMPLE_COVERAGE`; this is not a worldwide or every-channel-valid-data certificate.
 
-## Executed validation
+## Pre-execution offline validation (historical checkpoint)
 
 - `python3 -m unittest discover -s tests -p 'test_p31_loader_pair.py' -v`: **19 tests discovered; 18 PASS, 1 host h5py dependency skip**, 0.156 s in the recorded run.
 - The skipped integration test was run using the **existing container's h5py and only in-memory buffers**, loading the current module/test source through stdin: **1 PASS**, 0.130 s. It reads selected synthetic compressed chunks and verifies no range overlaps the designated Test chunk; no files or network are used. An earlier attempt to run all tests inside the container was rejected by automatic approval review because the digest test creates temporary files; that action did not execute, and the narrowed in-memory check succeeded.
@@ -95,10 +95,40 @@ Execution creates `report.json`, exact HDF5/mmap range caches, and two raw `.npy
 - `python3 -m compileall -q scripts src tests`: **PASS**.
 - Full host `python3 -m unittest discover -s tests -v` at the time of the run: **264 tests, 20 errors, 9 skips**; errors arise from missing host dependencies including torch, tifffile, shapefile, xarray and pyproj. This is not a clean full-suite result and does not replace the targeted results. No environment was changed to address it.
 
-At the offline checkpoint, selected HDF5 extraction, full mmap I/O, physical source-range audit and raw-zero coverage confirmation had not executed. Existing P3.0 partial-row matches and all-missing roughness agreement cannot be relabeled as this acceptance result. No scientific accuracy, pretrained benefit or loader PASS is reported here.
+At the offline checkpoint, selected HDF5 extraction, full mmap I/O, physical source-range audit and raw-zero coverage confirmation had not executed. Existing P3.0 partial-row matches and all-missing roughness agreement cannot be relabeled as this acceptance result. That offline checkpoint did not establish real loader acceptance; the completed execution below supplies the new bounded evidence.
 
-## Execution update
+## Completed execution and offline verification — 2026-11-04
 
-The main executor started the single prelocked `--apply` run using the existing local metadata and prior conservative count 83,468,143. Source/input/plan checks passed in the zero-network dry-run before launch. Execution uses private host copies of existing h5py/NumPy/requests and host-side output writes; it does not write into the container. No bulk download or environment installation is involved.
+The single prelocked `--apply` run completed successfully, without retries, extra IDs or changed tolerances. It used existing local metadata and prior conservative count 83,468,143. Source/input/plan checks passed before launch. Execution used private host copies of existing h5py/NumPy/requests with host-side output writes; no installation, container write or bulk download.
 
-Local output namespace: `outputs/p31/loader_pair_01/`; log `outputs/p31/loader_pair_01.log`. The full reservation is charged immediately: cumulative conservative body bytes **165,257,071**, with **908,484,753** bytes remaining under the unchanged cap. Actual returned bytes and acceptance status are not yet available. Do not launch another invocation using the old ledger, reclaim unused reservation or retry silently. The running process will produce a bounded final report on completion/failure; its result will be archived separately.
+**3,670,016 pixel positions were compared across both complete 28-channel crops: maximum absolute error 0, out-of-tolerance positions 0, full-mask disagreements 0.** Channel and group presence also match exactly. Each crop has real valid values in all 27 available channels and all seven groups. The normalized finite/nonzero masks contain 3,329,561 valid and 340,455 missing positions. A finite Hapke pixel normalizes exactly to zero and is masked under the existing convention; raw finite counts therefore differ from normalized valid counts by one. This behavior agrees with mmap and was not changed.
+
+Coverage is substantive rather than all-missing agreement: thermal, M3, radar and Hapke have actual valid values; thermal/M3/radar include partial missingness. Val ID 2700 has **24,064 finite raw zeros in `lpgrs_tio2`**, all retained through normalization as valid nonzero normalized values, matching mmap. Roughness has no finite raw or valid normalized pixels in either crop (131,072 positions); its valid-data normalization remains unverified. Both samples are at 59 degrees latitude, so this is not global or broad geographic validation.
+
+| Selected crop | HDF5 compressed body offset | Compressed body bytes | Complete pixel positions | Max absolute error / mask differences |
+|---|---:|---:|---:|---|
+| Train 2705 | 9,623,156,647 | 5,158,626 | 1,835,008 | 0 / 0 |
+| Val 2700 | 9,598,187,579 | 5,122,941 | 1,835,008 | 0 / 0 |
+
+The offline verifier hashed **14,387 cache bodies** (51 HDF5 + 14,336 mmap), checked the exact prelocked mmap descriptor set and consistent overlapping HDF5 cached bytes, then reopened HDF5 through a cache-only file adapter. It reloaded metadata and both raw crops, reconstructed all mmap rows, and recomputed every channel result, full mask and presence comparison. Both selected compressed HDF5 bodies also independently decompress to the exact selected raw pixel bytes. The two large pixel requests contain only those complete selected chunks; remaining HDF5 reads follow the original metadata traversal. No global enumeration of all other pixel chunks or whole-asset checksum is claimed.
+
+An initial optional chunk-index lookup in the offline audit requested metadata not present in the original cache and failed closed with no network. The completed audit uses the original cached HDF5 read path and exact compressed-payload checks, requiring no additional acquisition. It produced `PASS_OFFLINE_CACHE_REPLAY` with zero network requests. This is recorded independently of the original live-run PASS.
+
+| Measured transfer / execution | Result |
+|---|---:|
+| HDF5 requests / bodies | 51 / 10,434,981 bytes |
+| mmap requests / bodies | 14,336 / 14,680,064 bytes |
+| New returned body bytes | 25,115,045 |
+| Cumulative returned body bytes | 103,617,220 |
+| New conservative reservation charged | 81,788,928 bytes |
+| Cumulative conservative ledger | **165,257,071 bytes** |
+| Remaining original 1 GiB cap | **908,484,753 bytes** |
+| Elapsed live execution | 4,722.273 s (78.7 min) |
+
+Keep the entire conservative reservation charged; unused HDF5 allowance is not reclaimed. Do not reuse the old 83,468,143 ledger for a new invocation. HTTP/TLS overhead is not included in response-body counts. No Test crop was selected or model Test score produced.
+
+Local binary ranges and raw crops remain under ignored `outputs/p31/loader_pair_01/`, with log `outputs/p31/loader_pair_01.log`. Public [execution report](evidence/p31_pair_20261104/report.json), [offline verification](evidence/p31_pair_20261104/offline_verification.json), [per-channel counts](evidence/p31_pair_20261104/channel_results.csv), [audit source](evidence/p31_pair_20261104/offline_verify.py), hashes, command, transfer ledger and final test log are in `reports/evidence/p31_pair_20261104/`. The pre-execution plan remains byte-for-byte unchanged.
+
+Final delivery validation on 2026-11-04 reran the complete suite in the existing private host runtime: **510 tests, all PASS, zero skips**, 7.439 seconds; `python3 -m compileall -q scripts src tests` also PASS. The final sanitized log is archived with this pair evidence; the earlier host dependency failures above describe only the pre-execution checkpoint.
+
+This closes P31-02 within selected sample coverage. The derived loader label remains explicit; this is not exact worldwide official reproduction, valid-data verification of roughness, lunar pretraining or a model-performance gain. Formal Age/Geology baselines remain blocked by the unapproved full HDF5 acquisition. There is no further adaptive sample acquisition in this acceptance round.

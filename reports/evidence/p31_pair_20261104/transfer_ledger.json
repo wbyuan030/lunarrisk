@@ -1,0 +1,13 @@
+{
+  "status": "COMPLETED_NO_RECLAIM_OR_RETRY",
+  "initial_body_cap_bytes": 1073741824,
+  "prior_returned_body_bytes": 78502175,
+  "prior_conservative_body_bytes": 83468143,
+  "new_returned_body_bytes": 25115045,
+  "new_conservative_reservation_bytes": 81788928,
+  "cumulative_returned_body_bytes": 103617220,
+  "cumulative_conservative_body_bytes": 165257071,
+  "remaining_conservative_cap_bytes": 908484753,
+  "whole_asset_download_authorized": false,
+  "note": "Body counters exclude HTTP/TLS overhead. Full reservation retained. No automatic additional probe or retry."
+}

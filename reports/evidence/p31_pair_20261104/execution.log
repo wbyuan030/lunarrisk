@@ -1,0 +1,167 @@
+{
+  "mode": "apply",
+  "lock_sha256": "672ae6d64401390fe79c3131b6a25b7b41f0aed322e476fb9dbbdacca828184c",
+  "records": [
+    {
+      "index": 2705,
+      "sample_id": "2705",
+      "stored_split": 0,
+      "row_idx": 15,
+      "col_idx": 5,
+      "center_lat": 59.0,
+      "unit_name": "Nt",
+      "unit_id": 44,
+      "geology_target": 43,
+      "age_target": 1,
+      "metadata_has_channel": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "m3_valid_fraction": 0.7902679443359375,
+      "valid_fraction": 0.0
+    },
+    {
+      "index": 2700,
+      "sample_id": "2700",
+      "stored_split": 1,
+      "row_idx": 15,
+      "col_idx": 0,
+      "center_lat": 59.0,
+      "unit_name": "Nc",
+      "unit_id": 41,
+      "geology_target": 40,
+      "age_target": 1,
+      "metadata_has_channel": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "m3_valid_fraction": 0.9296417236328125,
+      "valid_fraction": 0.0
+    }
+  ],
+  "transfer": {
+    "cap_bytes": 1073741824,
+    "prior_actual_bytes": 78502175,
+    "prior_conservative_bytes": 83468143,
+    "mmap_requests": 14336,
+    "mmap_body_bytes": 14680064,
+    "hdf5_body_upper_bound": 67108864,
+    "hdf5_request_upper_bound": 2048,
+    "new_body_upper_bound": 81788928,
+    "cumulative_conservative_upper_bound": 165257071,
+    "request_upper_bound": 16384,
+    "hdf5_exact_requests_bytes": "UNKNOWN before apply; exact h5py reads, no aligned blocks/gap overfetch; hard caps apply",
+    "redirect_headers": "not counted as range requests; at most 8 per range, redirect bodies not read",
+    "elapsed_time": "UNKNOWN; no throughput measurement or completion-time promise"
+  },
+  "execution": {
+    "workers": 4,
+    "persistent_session_per_worker": true,
+    "retries": 0,
+    "hdf5_access": "selected chunked patches only; metadata/scalars may be fetched; exact requested bytes, no read-ahead",
+    "cache_files_upper_bound": 16387,
+    "cache_body_upper_bound": 96468992,
+    "cache_note": "range files + raw crop .npy files + report; filesystem allocation and JSON overhead extra",
+    "test_pixels_requested": 0,
+    "requires_fresh_output_directory": true
+  }
+}
+{"worker": 0, "completed_ranges": 512, "returned_body_bytes": 524288}
+{"worker": 1, "completed_ranges": 512, "returned_body_bytes": 524288}
+{"worker": 3, "completed_ranges": 512, "returned_body_bytes": 524288}
+{"worker": 2, "completed_ranges": 512, "returned_body_bytes": 524288}
+{"worker": 1, "completed_ranges": 1024, "returned_body_bytes": 1048576}
+{"worker": 0, "completed_ranges": 1024, "returned_body_bytes": 1048576}
+{"worker": 3, "completed_ranges": 1024, "returned_body_bytes": 1048576}
+{"worker": 2, "completed_ranges": 1024, "returned_body_bytes": 1048576}
+{"worker": 1, "completed_ranges": 1536, "returned_body_bytes": 1572864}
+{"worker": 0, "completed_ranges": 1536, "returned_body_bytes": 1572864}
+{"worker": 2, "completed_ranges": 1536, "returned_body_bytes": 1572864}
+{"worker": 3, "completed_ranges": 1536, "returned_body_bytes": 1572864}
+{"worker": 0, "completed_ranges": 2048, "returned_body_bytes": 2097152}
+{"worker": 1, "completed_ranges": 2048, "returned_body_bytes": 2097152}
+{"worker": 2, "completed_ranges": 2048, "returned_body_bytes": 2097152}
+{"worker": 3, "completed_ranges": 2048, "returned_body_bytes": 2097152}
+{"worker": 0, "completed_ranges": 2560, "returned_body_bytes": 2621440}
+{"worker": 1, "completed_ranges": 2560, "returned_body_bytes": 2621440}
+{"worker": 2, "completed_ranges": 2560, "returned_body_bytes": 2621440}
+{"worker": 3, "completed_ranges": 2560, "returned_body_bytes": 2621440}
+{"worker": 0, "completed_ranges": 3072, "returned_body_bytes": 3145728}
+{"worker": 1, "completed_ranges": 3072, "returned_body_bytes": 3145728}
+{"worker": 2, "completed_ranges": 3072, "returned_body_bytes": 3145728}
+{"worker": 3, "completed_ranges": 3072, "returned_body_bytes": 3145728}
+{"worker": 0, "completed_ranges": 3584, "returned_body_bytes": 3670016}
+{"worker": 1, "completed_ranges": 3584, "returned_body_bytes": 3670016}
+{"worker": 2, "completed_ranges": 3584, "returned_body_bytes": 3670016}
+{"worker": 3, "completed_ranges": 3584, "returned_body_bytes": 3670016}
+{
+  "status": "VALIDATED_WITHIN_SELECTED_SAMPLE_COVERAGE",
+  "transfer": {
+    "prior_conservative_body_bytes": 83468143,
+    "hdf5_body_bytes": 10434981,
+    "hdf5_attempts": 51,
+    "worker_body_bytes": [
+      3670016,
+      3670016,
+      3670016,
+      3670016
+    ],
+    "new_returned_body_bytes": 25115045,
+    "new_conservative_body_bytes": 81788928,
+    "cumulative_conservative_body_bytes": 165257071,
+    "accounting_note": "whole reservation charged conservatively even on failure; transport may consume bytes before raising without returning them to ByteBudget; do not reuse unreturned allocation without audit",
+    "elapsed_seconds": 4722.272744772956
+  }
+}
