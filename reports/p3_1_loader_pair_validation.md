@@ -1,6 +1,6 @@
 # P3.1 loader pair — offline lock and bounded runner
 
-Date: 2026-11-03. **Offline implementation and selection complete; real full-crop I/O NOT EXECUTED.** No network requests, downloads, environment installations, commits or changes to classifier/candidate files were made for this task. Existing `http_range.py` is unchanged. This report does not certify real loader equivalence.
+Date: 2026-11-03. **Offline implementation and selection complete; real full-crop I/O RUNNING from committed source `baa97f5e5383750511bddf6017359b7ae520793f`.** Existing `http_range.py` is unchanged. No acceptance result is claimed before execution completes. The offline validation below records the pre-execution checkpoint; the execution update at the end supersedes its former NOT EXECUTED state.
 
 ## Locked selection
 
@@ -75,7 +75,7 @@ From a current source checkout, using variables for private paths:
 python3 -I scripts/p31_loader_pair.py \
   --metadata "$P31_METADATA_JSON"
 
-# Explicit bounded execution, for the authorized executor; NOT run for this delivery.
+# Explicit bounded execution used after the offline lock; always a fresh output path.
 python3 -I scripts/p31_loader_pair.py \
   --metadata "$P31_METADATA_JSON" \
   --prior-transfer-bytes 83468143 \
@@ -95,4 +95,10 @@ Execution creates `report.json`, exact HDF5/mmap range caches, and two raw `.npy
 - `python3 -m compileall -q scripts src tests`: **PASS**.
 - Full host `python3 -m unittest discover -s tests -v` at the time of the run: **264 tests, 20 errors, 9 skips**; errors arise from missing host dependencies including torch, tifffile, shapefile, xarray and pyproj. This is not a clean full-suite result and does not replace the targeted results. No environment was changed to address it.
 
-Real selected HDF5 extraction, full mmap I/O, physical source-range audit and raw-zero coverage confirmation remain **NOT EXECUTED**, deliberately left to the executor. Existing P3.0 partial-row matches and all-missing roughness agreement cannot be relabeled as this acceptance result. No scientific accuracy, pretrained benefit or loader PASS is reported here.
+At the offline checkpoint, selected HDF5 extraction, full mmap I/O, physical source-range audit and raw-zero coverage confirmation had not executed. Existing P3.0 partial-row matches and all-missing roughness agreement cannot be relabeled as this acceptance result. No scientific accuracy, pretrained benefit or loader PASS is reported here.
+
+## Execution update
+
+The main executor started the single prelocked `--apply` run using the existing local metadata and prior conservative count 83,468,143. Source/input/plan checks passed in the zero-network dry-run before launch. Execution uses private host copies of existing h5py/NumPy/requests and host-side output writes; it does not write into the container. No bulk download or environment installation is involved.
+
+Local output namespace: `outputs/p31/loader_pair_01/`; log `outputs/p31/loader_pair_01.log`. The full reservation is charged immediately: cumulative conservative body bytes **165,257,071**, with **908,484,753** bytes remaining under the unchanged cap. Actual returned bytes and acceptance status are not yet available. Do not launch another invocation using the old ledger, reclaim unused reservation or retry silently. The running process will produce a bounded final report on completion/failure; its result will be archived separately.

@@ -1,0 +1,97 @@
+{
+  "implementation_commit": "baa97f5e5383750511bddf6017359b7ae520793f",
+  "execution_runtime": "Host: private copies of existing container packages; existing host ROCm libraries. No installs or container writes.",
+  "python": "3.10.12",
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "numpy": "2.2.6",
+  "h5py": "3.16.0",
+  "gpu": "RX7900XT",
+  "tests": {
+    "run": 510,
+    "passed": 510,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 7.42
+  },
+  "commands": {
+    "runtime_prefix": "LD_LIBRARY_PATH=\"$P31_EXISTING_ROCM_LIBS\" python3 -I \"$JOB_TMP/p31_python.py\"",
+    "suite": "-m unittest discover -s tests -v (PYTHONPATH also points to private runtime for legacy subprocess tests)",
+    "compile": "python3 -m compileall -q scripts src tests",
+    "uninterrupted": "scripts/p31_train_classifier.py --data \"$P31_EXISTING_PILOT\" --stats reports/evidence/p30_20261103/hf_channel_stats.json --class-map reports/evidence/p30_20261103/geologic_units.json --epochs 2 --batch-size 3 --export-features --expected-data-sha256 cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35 --outdir outputs/p31/runner_uninterrupted_01",
+    "verification": "scripts/p31_validate_runner.py --data \"$P31_EXISTING_PILOT\" --stats reports/evidence/p30_20261103/hf_channel_stats.json --class-map reports/evidence/p30_20261103/geologic_units.json --reference outputs/p31/runner_uninterrupted_01 --outdir outputs/p31/runner_verification_02",
+    "candidate": "scripts/p31_candidate_control.py --data \"$P31_EXISTING_PILOT\" --stats reports/evidence/p30_20261103/hf_channel_stats.json --class-map reports/evidence/p30_20261103/geologic_units.json --outdir outputs/p31/candidate_control_01"
+  },
+  "local_artifacts_not_in_git": {
+    "outputs/p31/runner_uninterrupted_01/checkpoint.pt": {
+      "bytes": 7405055,
+      "sha256": "828be50ec84b9facfb78ac11cd31e6fb6d18f3dcde5c0b627a2b9490be6fa683"
+    },
+    "outputs/p31/runner_uninterrupted_01/features.h5": {
+      "bytes": 27528,
+      "sha256": "8cf4017f3fb2ecbc055d474ad07ad7735e3f2de79a62cff01d964ba2c6f52acc"
+    },
+    "outputs/p31/runner_verification_02/interrupted/checkpoint.pt": {
+      "bytes": 7404607,
+      "sha256": "996d9fd61600989f0927735c6daa3c27d657cb5b21e9c4d616d3be8ca1948bc0"
+    },
+    "outputs/p31/runner_verification_02/resumed/checkpoint.pt": {
+      "bytes": 7405503,
+      "sha256": "177950707684d8e9b0b2825fcb2bac242a1dd3274cf8f233b7b07eebc3e86f8f"
+    }
+  },
+  "source_sha256": {
+    "scripts/p31_validate_runner.py": "200411671b90940a89bf4556f45f0115ce491d359d6b04036e6f3184ce4d4ab5",
+    "scripts/p31_candidate_control.py": "2f1dacd973bc93189867842524a05759624a19f8b00adad10aeba17011d87350"
+  },
+  "public_files": {
+    "asset_manifest.json": {
+      "bytes": 478,
+      "sha256": "84604a518c742e3c9a1b70854822c83d819152e01f920453b189f6ba758987b9"
+    },
+    "candidate_control.json": {
+      "bytes": 7952,
+      "sha256": "c0e0dcd7129a1570ec9e16a48869fe05c03eb40ac575409cc722368f11bf4949"
+    },
+    "runner_interrupted_report.json": {
+      "bytes": 7793,
+      "sha256": "0a7bc42e3db95daadd82bd2f6126bbeb2da08d8211444bef221700c4e18204db"
+    },
+    "runner_replay_report.json": {
+      "bytes": 7795,
+      "sha256": "075ddc6b76ec7bd52604c2efac7804823a93c118834bcce53f2eda32ec7e5380"
+    },
+    "runner_resumed_report.json": {
+      "bytes": 7822,
+      "sha256": "df997450effe736bfc99ca7a4432a49b38a7b1360885b91caacc2ece869c3b51"
+    },
+    "runner_uninterrupted_report.json": {
+      "bytes": 7822,
+      "sha256": "e35e467f2c254e0c620056558270457bd2259550655f9bbb6e2afb512bc18eb9"
+    },
+    "runner_verification.json": {
+      "bytes": 3257,
+      "sha256": "b6a03c1b9474bfbfa23b2737a4639d7e04a0c9204f116127fad54eee66e977d2"
+    },
+    "train_predictions.csv": {
+      "bytes": 598,
+      "sha256": "fdc50f536b67938decfb8607bab998a642623b86a3fdbecc5929a0dcd544a457"
+    },
+    "train_prior_predictions.csv": {
+      "bytes": 606,
+      "sha256": "45712c2f39a3b10a0a902313bf7460cbb9bb7df116cd3614a398e0c7a45a997d"
+    },
+    "unittest.log": {
+      "bytes": 60654,
+      "sha256": "1045d379e7e30639209abc02970cffeac7a6e9b494f094aac022296c5d61a260"
+    },
+    "val_predictions.csv": {
+      "bytes": 592,
+      "sha256": "09969b6cb782dec2c2109eb686224b86f268ca71bd404bc92b5e97ae55714da1"
+    },
+    "val_prior_predictions.csv": {
+      "bytes": 598,
+      "sha256": "2d22133559dff7a041e9b2fed5a3cb3e160bb9938cef42d1ba34e630ce1d55c7"
+    }
+  }
+}

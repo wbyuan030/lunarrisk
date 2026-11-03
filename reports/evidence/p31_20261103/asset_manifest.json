@@ -1,0 +1,10 @@
+{
+  "data_sha256": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+  "data_bytes": 21620863,
+  "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+  "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+  "data_revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+  "full_content_hash_verified_this_invocation": true,
+  "hash_chunk_bytes": 4194304,
+  "hash_seconds": 0.030049504712224007
+}

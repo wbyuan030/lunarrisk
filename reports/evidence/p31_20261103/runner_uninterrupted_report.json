@@ -1,0 +1,395 @@
+{
+  "status": "P31_RUNNER_VALIDATION",
+  "purpose": "runner_validation",
+  "mode": "train",
+  "protocol": "HDF5_DERIVED_PILOT",
+  "test_evaluated": false,
+  "code_sha": "baa97f5",
+  "source_sha256": {
+    "scripts/p31_train_classifier.py": "d0e8f7680d2ec9c2c809bb7f09d78336746e71c559cd753a92e2e39b6fc67a3d",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "config": {
+    "task": "age",
+    "track": "official_stored",
+    "planned_epochs": 2,
+    "batch_size": 3,
+    "workers": 0,
+    "seed": 42,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "patience": 5,
+    "precision": "fp32",
+    "purpose": "runner_validation",
+    "schedule": "upstream cosine with min(2 epochs, total_steps//10) warmup",
+    "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties"
+  },
+  "inputs": {
+    "data_sha256": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+    "data_bytes": 21620863,
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "splits": {
+    "train": {
+      "rows": 5,
+      "ordered_ids_sha256": "d668faa50ecd4665dccce07837c7475bc19d696ce13c408881026ff676747597",
+      "class_counts": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "val": {
+      "rows": 5,
+      "ordered_ids_sha256": "0a801e94d006a018e32d2d68c8b81f0f2aa5449befa43d8f6aa4965e3c515162",
+      "class_counts": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "completed_epochs": 2,
+  "best_epoch": 2,
+  "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties",
+  "metrics": {
+    "train": {
+      "accuracy": 0.8,
+      "macro_f1_full": 0.7333333333333333,
+      "macro_f1_supported": 0.7333333333333333,
+      "per_class_f1": [
+        0.6666666666666666,
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_class_recall": [
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "support": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "predicted_counts": [
+        2,
+        0,
+        1,
+        1,
+        1
+      ],
+      "confusion": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5,
+      "nll": 1.4436493873596192,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.728265357017517,
+      "largest_observed_batch": 3
+    },
+    "val": {
+      "accuracy": 0.6,
+      "macro_f1_full": 0.5333333333333333,
+      "macro_f1_supported": 0.5333333333333333,
+      "per_class_f1": [
+        0.0,
+        0.0,
+        0.6666666666666666,
+        1.0,
+        1.0
+      ],
+      "per_class_recall": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "support": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "predicted_counts": [
+        1,
+        0,
+        2,
+        1,
+        1
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5,
+      "nll": 1.497567081451416,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.7510779857635498,
+      "largest_observed_batch": 3
+    }
+  },
+  "train_prior_probabilities": [
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2
+  ],
+  "train_prior_metrics": {
+    "train": {
+      "accuracy": 0.2,
+      "macro_f1_full": 0.06666666666666667,
+      "macro_f1_supported": 0.06666666666666667,
+      "per_class_f1": [
+        0.3333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "per_class_recall": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "predicted_counts": [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "confusion": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5,
+      "nll": 1.6094380855560302,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.8000000238418579,
+      "largest_observed_batch": 3
+    },
+    "val": {
+      "accuracy": 0.2,
+      "macro_f1_full": 0.06666666666666667,
+      "macro_f1_supported": 0.06666666666666667,
+      "per_class_f1": [
+        0.3333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "per_class_recall": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "predicted_counts": [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      "confusion": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5,
+      "nll": 1.6094380855560302,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.8000000238418579,
+      "largest_observed_batch": 3
+    }
+  },
+  "last_weights_sha256": "b46886554acf38014b69a9f36c6621b379152e84f61b99746040db5ae98028a1",
+  "best_weights_sha256": "b46886554acf38014b69a9f36c6621b379152e84f61b99746040db5ae98028a1",
+  "prediction_sha256": {
+    "train": "fdc50f536b67938decfb8607bab998a642623b86a3fdbecc5929a0dcd544a457",
+    "val": "09969b6cb782dec2c2109eb686224b86f268ca71bd404bc92b5e97ae55714da1"
+  },
+  "peak_process_rss_bytes": 2317893632,
+  "peak_rss_scope": "parent process; workers=0 initially",
+  "peak_gpu_allocated_bytes": 71321088,
+  "peak_gpu_reserved_bytes": 98566144,
+  "train_window_seconds_this_process": 5.570941048674285,
+  "train_examples_this_process": 10,
+  "train_samples_per_second_this_process": 1.7950288672287595,
+  "train_and_export_wall_seconds": 6.435932502150536,
+  "asset_hash_seconds": 0.030049504712224007,
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "parameters": 459077
+}

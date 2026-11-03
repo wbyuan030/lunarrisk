@@ -1,0 +1,216 @@
+{
+  "status": "P31_CANDIDATE_ID_STRUCTURAL_AND_LATENCY_CONTROL",
+  "weights": "seed42 random initialization; no training, accuracy or semantic claim",
+  "device": "cuda",
+  "device_name": "Radeon RX 7900 XT",
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "precision": "fp32",
+  "batch_size": 2,
+  "train_sample_ids": [
+    "65",
+    "0"
+  ],
+  "test_evaluated": false,
+  "source_sha256": {
+    "scripts/p31_candidate_control.py": "2f1dacd973bc93189867842524a05759624a19f8b00adad10aeba17011d87350",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/candidate_heads.py": "f3d164a46512fb8d2158eacaeb1cb2a0c1ebf78d3a1d3ba4b7aab00126f7d9a1",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "inputs": {
+    "data": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+    "stats": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "parameters": {
+    "ordinary": 12289,
+    "candidate_id_control": 12293
+  },
+  "timing_scope": "synchronized sequential warm runs; head includes softmax, candidate input validation, and ordinary masking; end-to-end includes selected HDF5 pixel read, normalization, stack, host-to-device, encoder, head; filesystem caches not cleared; no backward/optimizer",
+  "mac_scope": "linear multiply-accumulates only; excludes embedding, validation, concat, nonlinearities, softmax, masking and frontend; latency measured separately",
+  "read_normalize_transfer_frontend": {
+    "median_ms": 36.026915069669485,
+    "p90_ms": 44.79761980473995,
+    "min_ms": 34.94683373719454,
+    "max_ms": 51.175049506127834,
+    "repeats": 10
+  },
+  "rows": [
+    {
+      "candidate_count": 1,
+      "subset": "first K public IDs, same for every sample",
+      "own_full_mask_identity_max_abs_error": 0.0,
+      "ordinary_head_including_mask": {
+        "median_ms": 0.20479736849665642,
+        "p90_ms": 0.22879308089613914,
+        "min_ms": 0.1985318958759308,
+        "max_ms": 0.23781228810548782,
+        "repeats": 30
+      },
+      "candidate_id_control_head_including_validation": {
+        "median_ms": 0.3318483941257,
+        "p90_ms": 0.3636639565229416,
+        "min_ms": 0.2641715109348297,
+        "max_ms": 0.3745518624782562,
+        "repeats": 30
+      },
+      "ordinary_read_normalize_transfer_frontend_head": {
+        "median_ms": 35.512525588274,
+        "p90_ms": 38.80537515506148,
+        "min_ms": 34.77439749985933,
+        "max_ms": 45.82393914461136,
+        "repeats": 10
+      },
+      "candidate_read_normalize_transfer_frontend_head": {
+        "median_ms": 36.64033580571413,
+        "p90_ms": 48.27219936996695,
+        "min_ms": 35.92547494918108,
+        "max_ms": 136.0971052199602,
+        "repeats": 10
+      },
+      "ordinary_linear_macs_per_sample": 12200,
+      "candidate_linear_macs_per_sample": 11466
+    },
+    {
+      "candidate_count": 5,
+      "subset": "first K public IDs, same for every sample",
+      "own_full_mask_identity_max_abs_error": 1.4901161193847656e-08,
+      "ordinary_head_including_mask": {
+        "median_ms": 0.17832918092608452,
+        "p90_ms": 0.21398402750492096,
+        "min_ms": 0.1639183610677719,
+        "max_ms": 0.2267332747578621,
+        "repeats": 30
+      },
+      "candidate_id_control_head_including_validation": {
+        "median_ms": 0.30758511275053024,
+        "p90_ms": 0.3195125609636307,
+        "min_ms": 0.2822140231728554,
+        "max_ms": 0.3936672583222389,
+        "repeats": 30
+      },
+      "ordinary_read_normalize_transfer_frontend_head": {
+        "median_ms": 36.67074674740434,
+        "p90_ms": 37.925769947469234,
+        "min_ms": 35.329749807715416,
+        "max_ms": 39.05258607119322,
+        "repeats": 10
+      },
+      "candidate_read_normalize_transfer_frontend_head": {
+        "median_ms": 36.51197953149676,
+        "p90_ms": 37.482005171477795,
+        "min_ms": 35.47217231243849,
+        "max_ms": 38.8314463198185,
+        "repeats": 10
+      },
+      "ordinary_linear_macs_per_sample": 12200,
+      "candidate_linear_macs_per_sample": 57330
+    },
+    {
+      "candidate_count": 10,
+      "subset": "first K public IDs, same for every sample",
+      "own_full_mask_identity_max_abs_error": 7.450580596923828e-09,
+      "ordinary_head_including_mask": {
+        "median_ms": 0.17656711861491203,
+        "p90_ms": 0.2137935720384121,
+        "min_ms": 0.16532093286514282,
+        "max_ms": 0.22229459136724472,
+        "repeats": 30
+      },
+      "candidate_id_control_head_including_validation": {
+        "median_ms": 0.29104482382535934,
+        "p90_ms": 0.31651491299271584,
+        "min_ms": 0.27603283524513245,
+        "max_ms": 0.3603259101510048,
+        "repeats": 30
+      },
+      "ordinary_read_normalize_transfer_frontend_head": {
+        "median_ms": 36.77944652736187,
+        "p90_ms": 38.24356887489557,
+        "min_ms": 35.68725287914276,
+        "max_ms": 38.391646929085255,
+        "repeats": 10
+      },
+      "candidate_read_normalize_transfer_frontend_head": {
+        "median_ms": 37.22430905327201,
+        "p90_ms": 38.026337046176195,
+        "min_ms": 35.91411001980305,
+        "max_ms": 38.06882072240114,
+        "repeats": 10
+      },
+      "ordinary_linear_macs_per_sample": 12200,
+      "candidate_linear_macs_per_sample": 114660
+    },
+    {
+      "candidate_count": 25,
+      "subset": "first K public IDs, same for every sample",
+      "own_full_mask_identity_max_abs_error": 3.725290298461914e-09,
+      "ordinary_head_including_mask": {
+        "median_ms": 0.17197849228978157,
+        "p90_ms": 0.2260739915072918,
+        "min_ms": 0.1628166064620018,
+        "max_ms": 0.25218911468982697,
+        "repeats": 30
+      },
+      "candidate_id_control_head_including_validation": {
+        "median_ms": 0.299584586173296,
+        "p90_ms": 0.3256135620176792,
+        "min_ms": 0.2776850014925003,
+        "max_ms": 0.3438163548707962,
+        "repeats": 30
+      },
+      "ordinary_read_normalize_transfer_frontend_head": {
+        "median_ms": 35.94377730041742,
+        "p90_ms": 37.86974502727389,
+        "min_ms": 35.29449086636305,
+        "max_ms": 38.320801220834255,
+        "repeats": 10
+      },
+      "candidate_read_normalize_transfer_frontend_head": {
+        "median_ms": 37.09863778203726,
+        "p90_ms": 38.201526924967766,
+        "min_ms": 35.959795117378235,
+        "max_ms": 39.60070293396711,
+        "repeats": 10
+      },
+      "ordinary_linear_macs_per_sample": 12200,
+      "candidate_linear_macs_per_sample": 286650
+    },
+    {
+      "candidate_count": 49,
+      "subset": "first K public IDs, same for every sample",
+      "own_full_mask_identity_max_abs_error": 0.0,
+      "ordinary_head_including_mask": {
+        "median_ms": 0.19222451373934746,
+        "p90_ms": 0.2242700196802616,
+        "min_ms": 0.16473978757858276,
+        "max_ms": 0.3130203112959862,
+        "repeats": 30
+      },
+      "candidate_id_control_head_including_validation": {
+        "median_ms": 0.30354317277669907,
+        "p90_ms": 0.322050042450428,
+        "min_ms": 0.2853386104106903,
+        "max_ms": 0.3653252497315407,
+        "repeats": 30
+      },
+      "ordinary_read_normalize_transfer_frontend_head": {
+        "median_ms": 36.622000858187675,
+        "p90_ms": 46.7206004075706,
+        "min_ms": 35.505788400769234,
+        "max_ms": 54.6409348025918,
+        "repeats": 10
+      },
+      "candidate_read_normalize_transfer_frontend_head": {
+        "median_ms": 37.04071091488004,
+        "p90_ms": 38.69821960106492,
+        "min_ms": 35.976577550172806,
+        "max_ms": 39.23312667757273,
+        "repeats": 10
+      },
+      "ordinary_linear_macs_per_sample": 12200,
+      "candidate_linear_macs_per_sample": 561834
+    }
+  ]
+}
