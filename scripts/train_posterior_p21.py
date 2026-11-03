@@ -7,8 +7,8 @@ Evaluation is deliberately split by role:
 
 * ``train`` fits the encoder, the head and the scalar scaler.
 * ``val``  only early-stops the epoch count.
-* ``cal``  is *not* touched here; calibration is a separate step and must not be folded into training.
-* ``test`` is reported as EXPLORATORY, because the old 110-tile test has been inspected many times.
+* ``cal`` fits an optional evaluation temperature after training, never encoder/head weights.
+* ``test`` is EXPLORATORY; the development tiles have been inspected many times.
 
 Every number is reported per split with the number of independent groups, and the event metrics use
 the rule AST and posterior integration rather than a thresholded classification.
@@ -53,7 +53,12 @@ def load_dataset(labels_path: Path, cache_path: Path, baseline):
     cache = {str(k): data[k] for k in data.files if k != "__meta__"}
     scalars = baseline.build_scalar_table(labels, meta)
     present = [s for s in labels["sample_id"].astype(str) if s in cache and s in scalars.index]
-    labels = labels[labels["sample_id"].astype(str).isin(present)].reset_index(drop=True)
+    if len(present) != len(labels):
+        missing = sorted(set(labels["sample_id"].astype(str)) - set(present))
+        raise ValueError(f"cache/scalar inputs missing sample IDs: {missing}")
+    if labels["sample_id"].astype(str).duplicated().any():
+        raise ValueError("sample_id must be unique")
+    scalars = scalars.loc[labels["sample_id"].astype(str)].copy()
     return labels, cache, scalars
 
 
@@ -296,6 +301,18 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
+def source_fingerprints():
+    """Hash the executed sources as well as HEAD (the container is a copied working tree)."""
+    paths = [ROOT / "scripts" / "train_posterior_p21.py",
+             ROOT / "scripts" / "train_baseline.py",
+             ROOT / "scripts" / "compare_p22.py",
+             ROOT / "scripts" / "audit_p22_artifacts.py",
+             ROOT / "scripts" / "diagnose_p22_rules.py",
+             ROOT / "scripts" / "run_p22_evidence.py"]
+    paths.extend(sorted((ROOT / "src" / "lunarrisk").rglob("*.py")))
+    return {str(path.relative_to(ROOT)): file_sha256(path) for path in paths if path.is_file()}
+
+
 def git_sha():
     """Code revision for provenance; the ROCm container copy has no .git, so env wins first."""
     import os
@@ -336,6 +353,9 @@ def save_checkpoint(path, model, *, scalar_columns, scalar_mean, scalar_std, poi
         "labels_sha256": file_sha256(labels_path),
         "cache_sha256": file_sha256(cache_path),
         "git_sha": git_sha(),
+        "source_sha256": source_fingerprints(),
+        "transforms": {"type": "logit_chain", "eps": 1e-6,
+                       "attributes": list(TARGET_COLUMNS)},
         "weights_sha256": export_state(model)["weights_sha256"],
     }
     if extra:
@@ -363,14 +383,29 @@ def standardize_with(payload, scalars):
 
 
 def predict_from_checkpoint(path, ids, cache, scalars, rules, device, draws=256, seed=0,
-                            covariance_mode="full"):
-    """Reload a saved model and return posterior draws plus per-rule event probabilities."""
+                            covariance_mode="full", ablation="full"):
+    """Reload inference, including either saved U=0 temperature policy.
+
+    ``matched_marginals`` preserves marginals in the internal chain. Physical g15 is a product of
+    two sigmoid variables, so its physical marginal distribution can still change.
+    """
+    if ablation not in ("full", "u0_shared", "u0_refit"):
+        raise ValueError("unknown checkpoint ablation")
     model, payload = load_checkpoint(path)
     model.to(device).eval()
+    temperature = payload["temperature"]
+    if ablation != "full":
+        if not model.rank:
+            raise ValueError("U=0 requires a joint checkpoint")
+        zero_low_rank(model.head)
+        if ablation == "u0_refit":
+            if "refit" not in payload.get("temperatures_u0", {}):
+                raise ValueError("checkpoint has no saved U=0 Cal-refitted temperature")
+            temperature = payload["temperatures_u0"]["refit"]
     table = standardize_with(payload, scalars)
     predicted, _ = predict(model, ids, cache, table, tuple(payload["channels"]), device,
                            draws=draws, seed=seed, point_sigma=payload["point_sigma"],
-                           temperature=payload["temperature"], covariance_mode=covariance_mode)
+                           temperature=temperature, covariance_mode=covariance_mode)
     probabilities = {name: np.atleast_1d(np.asarray(prob_event(predicted, rule, axis=0),
                                                     dtype=float))
                      for name, rule in rules.items()}
@@ -388,6 +423,8 @@ def main(argv=None) -> int:
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--draws", type=int, default=256)
+    parser.add_argument("--sampling-seed", type=int, default=None,
+                        help="evaluation noise seed (defaults to training seed); does not affect training")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--deterministic", action="store_true",
                         help="torch.use_deterministic_algorithms(True); on this ROCm build it makes "
@@ -411,6 +448,11 @@ def main(argv=None) -> int:
                         help="per-sample CSV: ids, truth, posterior means and per-rule probabilities")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.draws < 1 or args.epochs < 1:
+        parser.error("draws and epochs must be positive")
+    if args.ablate_u and args.ablate_u_calibration_mode in ("refit", "both") and not args.calibrate:
+        parser.error("refit/both requires --calibrate")
+    sampling_seed = args.seed if args.sampling_seed is None else args.sampling_seed
 
     import torch
     torch.manual_seed(args.seed)
@@ -431,8 +473,9 @@ def main(argv=None) -> int:
 
     # scalars are standardised on TRAIN only, then applied everywhere
     train_rows = [i for i, s in enumerate(ids_all) if split_of[s] == "train"]
-    mean = scalars.iloc[train_rows].mean()
-    std = scalars.iloc[train_rows].std().replace(0.0, 1.0)
+    scaler_ids = [ids_all[i] for i in train_rows]
+    mean = scalars.loc[scaler_ids].mean()
+    std = scalars.loc[scaler_ids].std().replace(0.0, 1.0)
     scalars = (scalars - mean) / std
 
     channels = tuple(range(len(baseline.CHANNELS)))
@@ -450,7 +493,9 @@ def main(argv=None) -> int:
 
     report = {"variant": args.variant, "rank": args.rank, "seed": args.seed,
               "device": str(device), "deterministic": bool(args.deterministic),
-              "draws": int(args.draws), "epochs_run": len(history), "history": history,
+              "draws": int(args.draws), "sampling_seed": sampling_seed,
+              "git_sha": git_sha(), "source_sha256": source_fingerprints(),
+              "epochs_run": len(history), "history": history,
               "trainable_parameters": int(sum(p.numel() for p in model.parameters())),
               "rows": {s: int((labels["split"] == s).sum()) for s in ("train", "val", "cal", "test")},
               "splits": {}}
@@ -469,6 +514,8 @@ def main(argv=None) -> int:
     calibration = None
     if args.calibrate:
         ids_cal = [s for s in ids_all if split_of[s] == "cal"]
+        if not ids_cal:
+            raise ValueError("--calibrate requires a nonempty cal split")
         if ids_cal:
             temperature, calibration = calibrate(model, ids_cal, cache, scalars,
                                                 z[[index_of[s] for s in ids_cal]],
@@ -485,7 +532,7 @@ def main(argv=None) -> int:
             split_ids = [ids_all[i] for i in rows]
             split_truth = {k: v[rows] for k, v in truth.items()}
             predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
-                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma,
+                                   draws=args.draws, seed=sampling_seed, point_sigma=point_sigma,
                                    temperature=temperature_here, covariance_mode=covariance_mode)
             metrics = {"n_rows": len(rows),
                        "n_groups": int(len(np.unique(groups[rows]))),
@@ -532,11 +579,11 @@ def main(argv=None) -> int:
         report["ablation"] = {
             "kind": "same-checkpoint U=0",
             "calibration_mode": args.ablate_u_calibration_mode,
-            "temperature_policy": {
+            "temperature_policy": ({
                 "shared": "shared_T_fitted_on_full_joint_cal",
                 "refit": "refit_T_on_cal_of_the_u_zero_model",
                 "both": "reported separately: shared_T and refit_T_on_cal",
-            }[args.ablate_u_calibration_mode],
+            }[args.ablate_u_calibration_mode] if args.calibrate else "uncalibrated"),
             "temperature_full": temperature,
             "temperature_u0": {k: v for k, v in temperatures_u0.items()},
             "note": "covariance reduced to diag(sigma^2); encoder and mu unchanged. "
@@ -546,7 +593,8 @@ def main(argv=None) -> int:
         report["splits_matched_marginals"] = evaluate_splits(
             "matched_marginals", temperature_here=temperature, covariance_mode="matched_marginals")
         report["matched_marginals"] = {
-            "covariance": "diag(diag(Sigma_joint)) - marginal variances untouched",
+            "covariance": "diag(diag(Sigma_internal)) - latent marginal variances untouched",
+            "physical_margin_caveat": "g15 = sigmoid(z1)*sigmoid(z2); its physical marginal can change",
             "temperature": "same cal-fitted T as the full joint model",
             "note": "isolates the off-diagonal covariance; compare with U=0 only as a second control"}
 
@@ -558,27 +606,47 @@ def main(argv=None) -> int:
             scalar_std=[float(v) for v in std[scalars.columns]],
             point_sigma=point_sigma, temperature=temperature, seed=args.seed,
             labels_path=args.labels, cache_path=args.cache, channels=channels,
-            extra={"ablate_u_calibration_mode": args.ablate_u_calibration_mode})
+            extra={"ablate_u_calibration_mode": args.ablate_u_calibration_mode,
+                   "temperatures_u0": temperatures_u0,
+                   "sample_ids_by_split": {
+                       split: labels.loc[labels["split"] == split, "sample_id"].astype(str).tolist()
+                       for split in ("train", "val", "cal", "test")},
+                   "sample_groups": dict(zip(ids_all, groups.tolist())),
+                   "rules": {name: rule.to_dict() for name, rule in rules.items()},
+                   "draws": args.draws, "sampling_seed": sampling_seed,
+                   "deterministic": bool(args.deterministic)})
         report["checkpoint_path"] = str(args.save_checkpoint)
         report["checkpoint_sha256"] = saved_payload["weights_sha256"]
 
     if args.predictions_out:
         # every split is exported: paired statistics need test rows, and a deployable risk threshold
         # must be chosen from cal probabilities without ever looking at test danger labels
-        rows_export = list(range(len(ids_all)))
-        ids_export = [ids_all[i] for i in rows_export]
-        export_truth = {k: v[rows_export] for k, v in truth.items()}
-
         def branch_frame(temperature_here, covariance_mode="full", suffix=""):
-            predicted, _ = predict(model, ids_export, cache, scalars, channels, device,
-                                   draws=args.draws, seed=args.seed, point_sigma=point_sigma,
-                                   temperature=temperature_here, covariance_mode=covariance_mode)
-            probabilities = {name: np.atleast_1d(np.asarray(prob_event(predicted, rule, axis=0),
-                                                            dtype=float))
-                             for name, rule in rules.items()}
-            frame = per_sample_frame(labels, rows_export, export_truth, predicted, probabilities)
+            import pandas as pd
+            frames = []
+            # Match evaluate_splits' exact sample order and noise shape. Drawing all splits in
+            # one batch changes which random numbers each test site receives.
+            for split in ("train", "val", "cal", "test"):
+                rows = [i for i, sample_id in enumerate(ids_all) if split_of[sample_id] == split]
+                if not rows:
+                    continue
+                split_ids = [ids_all[i] for i in rows]
+                predicted, _ = predict(model, split_ids, cache, scalars, channels, device,
+                                       draws=args.draws, seed=sampling_seed, point_sigma=point_sigma,
+                                       temperature=temperature_here, covariance_mode=covariance_mode)
+                probabilities = {name: np.atleast_1d(np.asarray(prob_event(predicted, rule, axis=0),
+                                                                dtype=float))
+                                 for name, rule in rules.items()}
+                frame = per_sample_frame(labels, rows, {k: v[rows] for k, v in truth.items()},
+                                         predicted, probabilities)
+                for name, rule in rules.items():
+                    frame[f"event_{name}"] = np.asarray(
+                        rule.evaluate({k: v[rows] for k, v in truth.items()}), dtype=int)
+                frames.append(frame)
+            frame = pd.concat(frames, ignore_index=True)
             if suffix:                      # truth stays in the first branch only
-                frame = frame.drop(columns=[c for c in frame.columns if c.startswith("truth_")])
+                frame = frame.drop(columns=[c for c in frame.columns
+                                            if c.startswith(("truth_", "event_"))])
                 frame = frame.rename(columns={c: f"{c}__{suffix}" for c in frame.columns
                                               if c.startswith("p_") or c.startswith("mean_")})
             return frame
@@ -605,7 +673,7 @@ def main(argv=None) -> int:
                             if k != "state_dict"}
     report["notes"] = {
         "cal_role": "not used in training; calibration is a separate step",
-        "test_role": "EXPLORATORY - the old 120-tile development_test has been inspected repeatedly",
+        "test_role": "EXPLORATORY - the repeatedly used development_test; row counts are recorded above",
         "nll_space": "training uses internal-space NLL; physical-space NLL needs the Jacobian term"}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2), encoding="utf-8")

@@ -170,6 +170,19 @@ class TestCovarianceAblations(unittest.TestCase):
         # same mu, same noise ordering: the difference is only the covariance used for sampling
         np.testing.assert_allclose(full.mean(axis=0), matched.mean(axis=0), atol=0.25)
 
+    def test_latent_matched_marginals_can_change_physical_g15_distribution(self):
+        import torch
+        from lunarrisk.probabilistic import from_internal
+        noise = torch.randn((8192, 2), generator=torch.Generator().manual_seed(7)).numpy()
+        correlated = noise @ np.linalg.cholesky([[1.0, 0.9], [0.9, 1.0]]).T
+        # Each latent variance is one in both branches, but the product's mean changes.
+        def physical(values):
+            return from_internal({"z1": values[:, 0], "z2": values[:, 1],
+                                  "z3": np.zeros(len(values)), "z4": np.zeros(len(values))})
+        full, matched = physical(correlated), physical(noise)
+        np.testing.assert_array_equal(full["g10"], matched["g10"])
+        self.assertGreater(abs(full["g15"].mean()-matched["g15"].mean()), 0.02)
+
     def test_unknown_covariance_mode_is_rejected(self):
         import torch
         from lunarrisk.probabilistic import condition_posterior, covariance_from_params
@@ -180,36 +193,138 @@ class TestCovarianceAblations(unittest.TestCase):
 
 
 class TestCheckpointRoundTrip(unittest.TestCase):
-    def test_reload_reproduces_per_rule_probabilities(self):
+    def test_original_inference_matches_fresh_process_for_all_variants_and_branches(self):
+        import json
+        import os
+        import subprocess
         import tempfile
-        from pathlib import Path as PathLib
-        from unittest.mock import patch
+        import pandas as pd
         import torch
         from lunarrisk.probabilistic import condition_posterior
         torch.manual_seed(123)
-        model = condition_posterior("joint", width=8, rank=2, n_scalars=3)
-        model.eval()
-        x = torch.randn(2, 3, 32, 32)
-        features = torch.randn(2, 3)
-        import pandas as pd
-        table = pd.DataFrame(np.random.default_rng(0).normal(size=(2, 3)), columns=["s0", "s1", "s2"])
+        ids = ["a", "b"]
+        rng = np.random.default_rng(0)
+        cache = {key: rng.normal(size=(3, 32, 32)).astype(np.float32) for key in ids}
+        raw = pd.DataFrame(rng.normal(size=(2, 3)), index=ids, columns=["s0", "s1", "s2"])
+        mean, std = np.array([0.7, -0.4, 0.9]), np.array([2.0, 1.0, 3.0])
+        scaled = (raw - mean) / std
         rules = standard_rules()
         with tempfile.TemporaryDirectory() as directory:
-            path = PathLib(directory) / "model.pt"
-            runner.save_checkpoint(path, model, scalar_columns=list(table.columns),
-                                   scalar_mean=[0.0, 0.0, 0.0], scalar_std=[2.0, 1.0, 3.0],
-                                   point_sigma=None, temperature=1.4, seed=5,
-                                   labels_path=None, cache_path=None, channels=(0, 1, 2))
-            with patch.object(runner, "batch", return_value=(x, features)):
-                first, probs_first, payload = runner.predict_from_checkpoint(
-                    path, ["a", "b"], None, table, rules, torch.device("cpu"), draws=64, seed=9)
-                second, probs_second, _ = runner.predict_from_checkpoint(
-                    path, ["a", "b"], None, table, rules, torch.device("cpu"), draws=64, seed=9)
-        self.assertEqual(payload["temperature"], 1.4)
-        for name in rules:
-            np.testing.assert_allclose(probs_first[name], probs_second[name], atol=0, rtol=0)
-        for key in first:
-            np.testing.assert_allclose(first[key], second[key], atol=0, rtol=0)
+            directory = Path(directory)
+            np.savez(directory / "inputs.npz", **cache, raw=raw.to_numpy())
+            expected = {}
+            for variant in ("point", "diagonal", "joint"):
+                model = condition_posterior(variant, width=8, rank=2, n_scalars=3).eval()
+                sigma = [0.3, 0.2, 0.1, 0.4] if variant == "point" else None
+                runner.save_checkpoint(
+                    directory / f"{variant}.pt", model, scalar_columns=list(raw.columns),
+                    scalar_mean=mean, scalar_std=std, point_sigma=sigma, temperature=1.4,
+                    seed=5, labels_path=None, cache_path=None, channels=(0, 1, 2),
+                    extra={"temperatures_u0": {"shared": 1.4, "refit": 1.9}})
+                branches = [("full", "full", 1.4)]
+                if variant == "joint":
+                    branches += [("matched", "matched_marginals", 1.4),
+                                 ("u0_shared", "full", 1.4), ("u0_refit", "full", 1.9)]
+                for branch, mode, temperature in branches:
+                    saved = runner.zero_low_rank(model.head) if branch.startswith("u0") else None
+                    try:
+                        physical, _ = runner.predict(
+                            model, ids, cache, scaled, (0, 1, 2), "cpu", draws=128, seed=9,
+                            point_sigma=sigma, temperature=temperature, covariance_mode=mode)
+                        expected[f"{variant}:{branch}"] = {
+                            name: rule.evaluate(physical).mean(axis=0).tolist()
+                            for name, rule in rules.items()}
+                    finally:
+                        if saved is not None:
+                            runner.restore_low_rank(model.head, saved)
+            child = '''
+import sys, json, numpy as np, pandas as pd, torch
+sys.path.insert(0, sys.argv[1])
+import train_posterior_p21 as runner
+from pathlib import Path
+from lunarrisk.rules import standard_rules
+directory = Path(sys.argv[2])
+data = np.load(directory / "inputs.npz")
+cache = {key: data[key] for key in ("a", "b")}
+raw = pd.DataFrame(data["raw"], index=["a", "b"], columns=["s0", "s1", "s2"])
+result = {}
+for variant in ("point", "diagonal", "joint"):
+    branches = ["full"] if variant != "joint" else ["full", "matched", "u0_shared", "u0_refit"]
+    for branch in branches:
+        _, probabilities, _ = runner.predict_from_checkpoint(
+            directory / (variant + ".pt"), ["a", "b"], cache, raw, standard_rules(), "cpu",
+            draws=128, seed=9, covariance_mode="matched_marginals" if branch == "matched" else "full",
+            ablation=branch if branch.startswith("u0") else "full")
+        result[variant + ":" + branch] = {k: v.tolist() for k, v in probabilities.items()}
+print(json.dumps(result))
+'''
+            result = subprocess.run(
+                [sys.executable, "-c", child, str(ROOT / "scripts"), str(directory)],
+                check=True, capture_output=True, text=True, timeout=60,
+                env={**os.environ, "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"})
+            actual = json.loads(result.stdout)
+            self.assertEqual(actual, expected)
+
+
+class TestRunnerExport(unittest.TestCase):
+    def test_report_csv_and_checkpoint_replay_use_identical_split_draws(self):
+        import contextlib
+        import io
+        import json
+        import tempfile
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        import pandas as pd
+        import torch
+        rng = np.random.default_rng(11)
+        ids = [f"tile_{i}" for i in range(16)]
+        splits = np.repeat(["train", "val", "cal", "test"], 4)
+        labels = pd.DataFrame({"sample_id": ids, "group_id": [f"g{i}" for i in range(16)],
+                               "split": splits})
+        for key, column in runner.TARGET_COLUMNS.items():
+            labels[column] = rng.uniform(0.1, 0.5, size=16)
+        labels["slope3m_g15"] *= labels["slope3m_g10"]
+        cache = {key: rng.normal(size=(3, 32, 32)).astype(np.float32) for key in ids}
+        raw = pd.DataFrame(rng.normal(size=(16, 2)), index=ids, columns=["s1", "s2"])
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            labels.to_csv(directory / "labels.csv", index=False)
+            checkpoint = directory / "model.pt"
+            with patch.object(runner, "load_baseline_module", return_value=SimpleNamespace(CHANNELS=(0, 1, 2))), \
+                 patch.object(runner, "load_dataset", return_value=(labels, cache, raw)), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                runner.main(["--variant", "joint", "--device", "cpu", "--seed", "42",
+                             "--epochs", "1", "--draws", "64", "--sampling-seed", "99",
+                             "--labels", str(directory / "labels.csv"), "--calibrate",
+                             "--ablate-u", "--ablate-u-calibration-mode", "both", "--matched-marginals",
+                             "--save-checkpoint", str(checkpoint),
+                             "--predictions-out", str(directory / "pred.csv"),
+                             "--out", str(directory / "report.json")])
+            report = json.loads((directory / "report.json").read_text())
+            frame = pd.read_csv(directory / "pred.csv")
+            _, payload = runner.load_checkpoint(checkpoint)
+            self.assertEqual(payload["sample_ids_by_split"]["test"], ids[12:])
+            self.assertEqual(payload["sample_groups"][ids[-1]], "g15")
+            self.assertEqual(payload["sampling_seed"], 99)
+            self.assertIn("refit", payload["temperatures_u0"])
+            self.assertTrue(payload["source_sha256"])
+            branches = [("", "splits", "full", "full"),
+                        ("__u0", "splits_u0", "u0_shared", "full"),
+                        ("__u0_refit", "splits_u0_refit", "u0_refit", "full"),
+                        ("__matched", "splits_matched_marginals", "full", "matched_marginals")]
+            for split in ("train", "val", "cal", "test"):
+                subset = frame[frame.split == split]
+                split_ids = subset.sample_id.tolist()
+                for suffix, metric_key, ablation, mode in branches:
+                    _, replay, _ = runner.predict_from_checkpoint(
+                        checkpoint, split_ids, cache, raw, standard_rules(), "cpu", draws=64,
+                        seed=99, covariance_mode=mode, ablation=ablation)
+                    for name in standard_rules():
+                        p = subset[f"p_{name}{suffix}"].to_numpy()
+                        y = subset[f"event_{name}"].to_numpy()
+                        np.testing.assert_array_equal(replay[name], p)
+                        self.assertAlmostEqual(float(np.mean((p-y)**2)),
+                                               report[metric_key][split]["events"][name]["brier"])
 
 
 class TestRefitTemperature(unittest.TestCase):

@@ -166,12 +166,12 @@ COVARIANCE_MODES = ("full", "matched_marginals")
 
 def covariance_from_params(model: ConditionalPosterior, params: dict,
                            mode: str = "full") -> torch.Tensor:
-    """Covariance used for sampling, optionally with the margins held fixed.
+    """Covariance used for sampling, optionally with the internal-chain margins held fixed.
 
-    ``matched_marginals`` keeps every diagonal variance of the joint model and only removes the
-    off-diagonal terms, ``diag(Sigma_joint)``. Zeroing the low-rank factor ``U`` is a *different*
-    ablation: it also shrinks the marginal variances, so an improvement under ``U = 0`` cannot be
-    attributed to "the correlation is harmful" without this second, variance-preserving control.
+    ``matched_marginals`` keeps every diagonal variance in the latent chain and only removes the
+    off-diagonal terms, ``diag(Sigma_internal)``. The physical g15 marginal can change because
+    g15 = sigmoid(z1)*sigmoid(z2); this does not preserve all physical attribute distributions.
+    Zeroing the low-rank factor ``U`` additionally shrinks latent marginal variances.
     """
     if mode not in COVARIANCE_MODES:
         raise ValueError(f"covariance mode must be one of {COVARIANCE_MODES}")
