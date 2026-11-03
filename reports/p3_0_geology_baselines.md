@@ -19,4 +19,37 @@
 
 ## 验证状态
 
-新增 4 个 synthetic 测试覆盖候选排列/子集语义、普通分类器 mask 后归一化、空/重复/非法 ID、参数预算与 49 输出。完整 ROCm 环境回归 **482 tests，481 PASS、1 旧标签可选检查 SKIP**；compileall exit 0。真实训练、同 cache 回放、排列与资源实测将在运行后记录，尚不声称成功。
+新增 4 个 synthetic 测试覆盖候选排列/子集语义、普通分类器 mask 后归一化、空/重复/非法 ID、参数预算与 49 输出。完整 ROCm 环境回归 **482 tests，481 PASS、1 旧标签可选检查 SKIP**；compileall exit 0。
+
+## 真实运行与回放
+
+从提交 `baac7dc6f6e7750957cc185156de35e787f422c6` 的全新快照运行。两个头读取同一份冻结特征 cache，各做 2 次 Train 更新；Val 仅输出概率，不参与选择。所有 loss、梯度和概率有限。
+
+| 检查 | 实测 |
+|---|---|
+| ordinary Train CE | `3.992940902709961 → 3.975635051727295` |
+| candidate_id Train CE | `3.917956590652466 → 3.8966808319091797` |
+| 候选逆序并对齐后的概率最大差 | `3.725290298461914e-09`，低于事前 1e-6 |
+| ordinary 全候选 masked-softmax 与 softmax 最大差 | `0.0` |
+| 独立进程恢复两头、同 cache | 20 行、980 个概率最大差 `0.0`；CSV 字节相同 |
+| 训练/特征提取/预测记录窗口 | 1.4527 秒，不含进程导入，不代表正式全量吞吐 |
+| Torch 峰值 allocated / reserved | 142,609,920 / 157,286,400 字节，不等于全进程 GPU 占用 |
+| 新增网络响应体 | 0 字节；初轮累计仍为 78,502,175 实际 / 83,468,143 保守字节 |
+
+Train CE 不可作为架构收益比较：初始化、参数形式不同，本批只有 5 个类、5 个 Train，且前端此前使用相关的 Age 监督。当前不计算/选择 Val 精度，也不从较低 loss 推断候选头更好。
+
+feature cache SHA256：`28a4d4c26d3c12c8fdc32fd9fd0537d2c54051ab54a6a4bbc2273fb0b007eb63`；checkpoint SHA256：`0400fc820728ce9bb21c44876ca9ca8fc836357f9fe49adaa26147cf5f826953`；CSV SHA256：`183022074305d471ef739afdb0414d7245214a0bc762c00aea4227bb9dd45133`。原 cache 与 checkpoint 留在本地 `P30_OUTPUT_ROOT/geology_smoke_01/`，回放输出在 `geology_replay_01/`。这里测试的是恢复预测，不声称中断后续训轨迹等价。
+
+公开 [训练 report](evidence/p30_geology_20261103/train_report.json)、[逐样本概率](evidence/p30_geology_20261103/train_predictions.csv)、[独立回放核验](evidence/p30_geology_20261103/replay_verification.json)、[测试/脱敏日志](evidence/p30_geology_20261103/validation.json) 保留源码与输入 hash。运行记录代码缩写 `baac7dc` 已解析为上述完整 commit 并逐文件核对。
+
+实际命令从固定源码快照、既有 ROCm 环境运行：
+
+```bash
+export OMP_NUM_THREADS=1
+export LUNARRISK_GIT_SHA=baac7dc
+python3 -I scripts/p30_geology_smoke.py --pilot "$P30_OUTPUT_ROOT/age_fiveclass_pilot_01.h5" --encoder "$P30_OUTPUT_ROOT/age_fiveclass_smoke_01/checkpoint.pt" --stats reports/evidence/p30_20261103/hf_channel_stats.json --class-map reports/evidence/p30_20261103/geologic_units.json --outdir "$P30_OUTPUT_ROOT/geology_smoke_01"
+# 独立进程、新输出目录，使用同一 feature cache：
+python3 -I scripts/p30_geology_smoke.py --pilot "$P30_OUTPUT_ROOT/age_fiveclass_pilot_01.h5" --encoder "$P30_OUTPUT_ROOT/age_fiveclass_smoke_01/checkpoint.pt" --stats reports/evidence/p30_20261103/hf_channel_stats.json --class-map reports/evidence/p30_20261103/geologic_units.json --outdir "$P30_OUTPUT_ROOT/geology_replay_01" --replay "$P30_OUTPUT_ROOT/geology_smoke_01/checkpoint.pt" --feature-cache "$P30_OUTPUT_ROOT/geology_smoke_01/feature_cache.pt"
+```
+
+正式 Geology 普通头/候选条件收益仍未检验；预训练表征假设也未检验。进入正式实验需 [下一阶段决策与资源方案](p3_0_next_decision.md)，不是继续延长十张图 smoke。

@@ -1,0 +1,15 @@
+{
+  "code_sha_resolved": "baac7dc6f6e7750957cc185156de35e787f422c6",
+  "recorded_code_sha": "baac7dc",
+  "separate_python_process": true,
+  "prediction_rows": 20,
+  "probabilities_compared": 980,
+  "predictions_byte_identical": true,
+  "max_abs_probability_delta": 0.0,
+  "source_files_match_commit": true,
+  "feature_cache_sha256": "28a4d4c26d3c12c8fdc32fd9fd0537d2c54051ab54a6a4bbc2273fb0b007eb63",
+  "checkpoint_sha256": "0400fc820728ce9bb21c44876ca9ca8fc836357f9fe49adaa26147cf5f826953",
+  "test_evaluated": false,
+  "candidate_permutation_max_delta": 3.725290298461914e-09,
+  "ordinary_all_class_mask_max_delta": 0.0
+}

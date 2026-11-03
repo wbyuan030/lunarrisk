@@ -1,0 +1,47 @@
+{
+  "status": "PENDING_USER_DECISION_NOT_AUTHORIZED",
+  "created_date": "2026-11-03",
+  "reason_for_discussion": "The proposed full-benchmark acquisition exceeds the initial 1 GiB data-access scope; choosing a smaller new pilot would require a separately fixed research protocol. A verified MG-MAE pretrained checkpoint is still unavailable in audited sources.",
+  "initial_cap_bytes_unchanged": 1073741824,
+  "actual_body_bytes_already_used": 78502175,
+  "conservative_body_bytes_already_used": 83468143,
+  "new_downloads_executed_by_this_proposal": 0,
+  "free_disk_bytes_measured": 514972385280,
+  "recommended_option": {
+    "name": "DATA_FIRST_SINGLE_HDF5_WITH_SEPARATE_DERIVED_TRACK",
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+    "bytes": 74449119347,
+    "remote_lfs_sha256_claim": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "full_checksum_currently_verified": false,
+    "license_declared_by_data_card": "CC-BY-4.0",
+    "proposed_additional_local_workspace_reservation_bytes": 85899345920,
+    "additional_mmap_pair_range_body_cap_if_approved": 268435456,
+    "range_allowlist": "Only the 28 pinned pretraining/mmap/<CHANNELS>.npy assets listed in p30_mmap_probe_plan.json; full mmap files remain excluded",
+    "small_statistics_and_class_map": "Already verified locally; no redundant download required",
+    "download_strategy": "New dedicated p30 revision directory, direct partial file, exact size and full SHA256 verification, atomic rename only after success, no duplicate snapshot/cache copy",
+    "working_space_assumption": "One on-disk HDF5 copy; 80 GiB is a proposed reservation, not a measured downloader peak. Extra retained partials or copies are not authorized by this proposal.",
+    "research_scope": "First lock a scratch/shared-encoder Train/Val protocol with realistic class coverage. Do not call it a lunar-pretrained-representation result or official mmap reproduction before representative full-crop validation.",
+    "test_model_scoring": "HOLD until the model/configuration/analysis is fixed"
+  },
+  "alternative_exact_official_mmap_loader": {
+    "status": "OPTION_FOR_DISCUSSION_NOT_AUTOMATIC",
+    "hdf5_bytes": 74449119347,
+    "28_mmap_channel_bytes": 118908518400,
+    "minimum_combined_bytes_without_packed_masks": 193357637747,
+    "optional_28_packed_mask_bytes": 3715894784,
+    "combined_with_optional_masks_bytes": 197073532531,
+    "note": "The downstream Age/Geology loader recomputes finite/nonzero presence and does not load the packed masks. Full pretraining aligned rasters and repository snapshots are unnecessary."
+  },
+  "pretrained_route": {
+    "mg_mae": "Need a verified official checkpoint URL/revision/license/size/hash; do not pretrain from scratch to fill this gap",
+    "nasa_lfm": "Input/geometry mapping and separate compatible Python environment must be resolved before requesting its 2425755440-byte backbone and required tokenizers",
+    "pending_research_choice": "Proceed with scratch/data baselines first, or prioritize obtaining a verified native pretrained encoder before formal comparisons"
+  },
+  "paid_compute": false,
+  "four_gpu": false,
+  "environment_replacement": false,
+  "legacy_external_gate4": "HOLD"
+}

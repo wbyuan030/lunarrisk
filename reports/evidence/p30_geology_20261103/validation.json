@@ -1,0 +1,28 @@
+{
+  "code_sha": "baac7dc6f6e7750957cc185156de35e787f422c6",
+  "tests": 482,
+  "passed": 481,
+  "skipped": 1,
+  "compileall_exit": 0,
+  "logs": [
+    {
+      "path": "tests_482.log",
+      "source_sha256": "88d994d2bd06d93ed10dc6b99f92b944551586aad61c78e04be0c2ec3fbae59c",
+      "archive_sha256": "6e6c26f3d040ce2073d9a8f7a874d00a31788c3339c52a0fc234dc8ad081ad15"
+    },
+    {
+      "path": "train.log",
+      "source_sha256": "56e50a45ce1939ba538072dd945f439dc25805f9d8d9ee37fd780b6008a3431d",
+      "archive_sha256": "b34cb28eaa3bdf6c825cd11101952238353d89cb8b8be1debb9c44afb0cc74b7"
+    },
+    {
+      "path": "replay.log",
+      "source_sha256": "174e755bae01d74db72c4b3cc063a96584cffb77e2372b22f6d34cd48b3181f8",
+      "archive_sha256": "dcaba65ba851380f619afe646a66914ac1648088db885ce35f24179c60ea610e"
+    }
+  ],
+  "skip": "Legacy optional labels_hydrated.csv absent in isolated source snapshot",
+  "new_network_body_bytes": 0,
+  "cumulative_actual_body_bytes": 78502175,
+  "cumulative_conservative_body_bytes": 83468143
+}

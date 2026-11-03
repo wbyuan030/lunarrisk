@@ -1,0 +1,84 @@
+<TORCH_INSTALL>/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at ../aten/src/ATen/Context.cpp:296.)
+  return F.linear(input, self.weight, self.bias)
+{
+  "status": "GEOLOGY_SAME_FEATURE_ENGINEERING_ONLY",
+  "formal_benchmark_score": false,
+  "protocol": "HDF5_DERIVED_PILOT",
+  "test_evaluated": false,
+  "pretrained_encoder": false,
+  "encoder_origin": "two-update scratch CNN supervised on five Train Age labels",
+  "feature_cache_sha256": "28a4d4c26d3c12c8fdc32fd9fd0537d2c54051ab54a6a4bbc2273fb0b007eb63",
+  "code_sha": "baac7dc",
+  "source_sha256": {
+    "scripts/p30_geology_smoke.py": "a22890ff094116a272f123ab5a5a45ba77ab008b2cb0c96338d848429417055a",
+    "src/lunarrisk/benchmarks/candidate_heads.py": "f3d164a46512fb8d2158eacaeb1cb2a0c1ebf78d3a1d3ba4b7aab00126f7d9a1",
+    "scripts/p30_age_smoke.py": "535a30e7290564f7be3d4acb7b808c8c2a245c2e7fc6dab01fcaddab7eaa1e2e",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "inputs": {
+    "pilot": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+    "encoder": "1b463c3b459f4e1ed6012ab03f263d96d8fcc04cd6a58ea735de04e535a7de1f",
+    "stats": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "classes": 49,
+  "parameters": {
+    "ordinary": 12289,
+    "candidate_id": 12293
+  },
+  "updates_each": 2,
+  "seed": 42,
+  "train_loss": {
+    "ordinary": [
+      3.992940902709961,
+      3.975635051727295
+    ],
+    "candidate_id": [
+      3.917956590652466,
+      3.8966808319091797
+    ]
+  },
+  "candidate_permutation_max_delta": 3.725290298461914e-09,
+  "ordinary_all_class_mask_max_delta": 0.0,
+  "splits": {
+    "train": {
+      "ids": [
+        "65",
+        "0",
+        "81",
+        "245",
+        "1333"
+      ],
+      "targets": [
+        47,
+        43,
+        32,
+        4,
+        0
+      ]
+    },
+    "val": {
+      "ids": [
+        "130",
+        "20",
+        "85",
+        "560",
+        "2289"
+      ],
+      "targets": [
+        47,
+        43,
+        32,
+        4,
+        0
+      ]
+    }
+  },
+  "wall_seconds": 1.452687012962997,
+  "peak_gpu_allocated_bytes": 142609920,
+  "peak_gpu_reserved_bytes": 157286400,
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "predictions_sha256": "183022074305d471ef739afdb0414d7245214a0bc762c00aea4227bb9dd45133",
+  "checkpoint_sha256": "0400fc820728ce9bb21c44876ca9ca8fc836357f9fe49adaa26147cf5f826953"
+}
