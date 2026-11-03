@@ -1,0 +1,43 @@
+{
+  "status": "EXECUTION_CONTROLS_VERIFIED_ACQUISITION_RUNNING",
+  "date": "2026-11-04",
+  "tests": {
+    "total": 531,
+    "passed": 531,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 14.044
+  },
+  "new_tests": {
+    "acquisition": 7,
+    "baseline_launcher": 14
+  },
+  "compileall": "PASS",
+  "cli_preview": "PASS_NO_DATA_READ_OR_MODEL_OUTPUT",
+  "full_asset_verified": false,
+  "formal_training_started": false,
+  "test_scored": false,
+  "source_sha256": {
+    "scripts/p31_run_baselines.py": "1322193808e5cc0ece1511ee7cf9a6db490d87deb2808b154c9e7c405a06c3a2",
+    "scripts/p31_acquire_benchmark.py": "8a6ebe3b68d3f6d9c9242737999381dcfdf586616e6ecb1ef84a1238196d0454",
+    "src/lunarrisk/benchmarks/acquisition.py": "7be30e0f40e003d6b31ae07ee8709aa48b7520e9c06541426704aa3045d8c956",
+    "scripts/p31_train_classifier.py": "d0e8f7680d2ec9c2c809bb7f09d78336746e71c559cd753a92e2e39b6fc67a3d",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "tests/test_p31_run_baselines.py": "ec6162ffc118f255ad168b3cf5b94e5d0aa66028308be032d000eb0a39ae885b",
+    "tests/test_p31_acquisition.py": "93574d2b702297b196f449c012f18d3a64253aa9dbf3f5ecaf9c5ca793c4ea18",
+    "protocols/p31_baseline_eval_plan.json": "d02c8bc63179c01654568fd7b8c341918572e6a493b7897a995e4774e17a99c3",
+    "protocols/p31_acquisition_authorization.json": "097fce5e7e07f77ad4c86ae863b76703cf8077f6a5ecd73e32e0abda443012bd"
+  },
+  "preview_note": "Sanitized absolute paths use variables; this is a preview, not training evidence.",
+  "public_files": {
+    "unittest.log": {
+      "bytes": 62927,
+      "sha256": "81c50a9df9f504830e63cce4eb6d7e080939fa7d8eea4a90c6605a2c12365251"
+    },
+    "command_preview.json": {
+      "bytes": 7414,
+      "sha256": "cfb327b0c5ddaeae4c7c5b473ab6f2a4501ea54bbdefd817184478c22fabe8b5"
+    }
+  }
+}
