@@ -1,10 +1,10 @@
 # P3.1 Age baseline
 
-Date: 2026-11-03. **Formal result: BLOCKED_DATA_ACQUISITION.**
+Updated: 2026-11-04. **Acquisition AUTHORIZED and RUNNING; formal Train/Val result pending verified full asset.**
 
 The locked design is [p31_baseline_eval_plan.json](../protocols/p31_baseline_eval_plan.json). Age is the official five-class classification task, with unknown prefixes filtered, not continuous age regression. Run independent scratch CNN and Train empirical prior on the stored 11,400 Train / 2,400 Val rows; select only with Val full-five-class Macro-F1. The fixed 50-epoch maximum, patience 5, batch 16, FP32 and seeds 42/43/44 are predeclared. Retaining the last batch, FP32 and HDF5-derived normalization are explicit differences from upstream.
 
-The full pinned HDF5 has not been acquired. Its 74,449,119,347-byte download remains outside the initial cumulative 1 GiB permission and the pending proposal has not been approved. No formal learning curve, multi-seed mean or Test metric exists. The new runner's finite regression on the existing 5 Train + 5 Val pilot is reported separately in `p3_1_runner_validation.md`; it cannot substitute for this baseline. This report adds no accuracy or research gain claim.
+The user explicitly authorized the 74,449,119,347-byte fixed HDF5 and advancing baselines on 2026-11-04; see [authorization](../protocols/p31_acquisition_authorization.json). Single-copy streaming acquisition has started. Training will follow full-size/SHA256 verification; no formal learning curve, multi-seed mean or Test metric exists yet. The new runner's finite regression on the existing 5 Train + 5 Val pilot is reported separately in `p3_1_runner_validation.md`; it cannot substitute for this baseline. This report adds no accuracy or research gain claim.
 
 When the fixed full asset is available after an explicit acquisition decision, the runner checks full file/statistics/map hashes and ordered split IDs before formal execution:
 

@@ -1,10 +1,10 @@
 # P3.1 Geology baseline
 
-Date: 2026-11-03. **Formal result: BLOCKED_DATA_ACQUISITION.**
+Updated: 2026-11-04. **Acquisition AUTHORIZED and RUNNING; formal Train/Val result pending verified full asset.**
 
 The core task remains official 49-output classification. [p31_baseline_eval_plan.json](../protocols/p31_baseline_eval_plan.json) fixes independent-task scratch CNN and Train empirical prior, stored split, hashes, training budget and Val model selection before scores. Full 49-class Macro-F1 includes zero F1 for absent classes, matching pinned upstream `downstream_base.py`; supported-class macro is additional, with per-class counts and confusion. Train has 46 represented classes; the three absent classes are also absent from Val/Test. This is not an unseen-class protocol.
 
-The full 74,449,119,347-byte pinned asset remains unacquired and its proposal remains `PENDING_USER_DECISION_NOT_AUTHORIZED`. No formal Geology run, multi-seed aggregate or Test score is reported. P3.0's Age-supervised five-example feature cache is preserved as old engineering evidence and is not relabeled scratch Geology or lunar pretraining. The ordinary P3.1 Geology CNN is initialized independently, receiving no extra Age supervision.
+The user explicitly authorized the fixed single HDF5 acquisition and advancing baselines on 2026-11-04; see [authorization](../protocols/p31_acquisition_authorization.json). Download is running, with size/SHA256 verification required before training. No formal Geology run, multi-seed aggregate or Test score is reported yet. P3.0's Age-supervised five-example feature cache is preserved as old engineering evidence and is not relabeled scratch Geology or lunar pretraining. The ordinary P3.1 Geology CNN is initialized independently, receiving no extra Age supervision.
 
 Prepared command after the fixed full asset becomes available under an explicit acquisition decision and after first Age training-chain validation:
 
