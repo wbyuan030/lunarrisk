@@ -1,0 +1,40 @@
+{
+  "status": "EXPLICIT_USER_AUTHORIZATION",
+  "authorized_date": "2026-11-04",
+  "user_instruction": "允许大文件下载 推进基线",
+  "interpretation": "Execute the previously recommended single fixed HDF5 acquisition and the prelocked local Age/Geology Train-Val baselines. This record supersedes only the historical not-authorized acquisition status for this one asset; the original proposal and frozen scientific plan are preserved.",
+  "asset": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+    "bytes": 74449119347,
+    "sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "license_declared_by_data_card": "CC-BY-4.0"
+  },
+  "storage": {
+    "namespace": "outputs/p31/assets/moonstone_53099efd/",
+    "workspace_reservation_bytes": 85899345920,
+    "copies": 1,
+    "strategy": "stream into lunar_patches_v4.h5.partial; exact size and full SHA256; atomic rename only on success; explicit Range resume of the owned partial; no restart from zero or snapshot/cache duplication"
+  },
+  "download": {
+    "chunk_bytes": 4194304,
+    "attempts_per_invocation": 3,
+    "redirects": "HTTPS only; bounded redirects, no redirect-body reads; signed URLs and credentials excluded from evidence",
+    "resume": "HTTP206 and exact Content-Range/length required before body; HTTP200 rejected for nonzero offset",
+    "initial_sample_ledger_preserved": {"cap_bytes": 1073741824, "cumulative_conservative_body_bytes": 165257071},
+    "note": "This is a new explicit single-large-asset scope, not a reset of the original sample cap or approval of arbitrary additional assets. Response-body/wire counter limitations are reported."
+  },
+  "experiments": {
+    "plan": "p31_baseline_eval_plan.json",
+    "tasks": ["age", "geology"],
+    "seeds": [42, 43, 44],
+    "first_seed_verification": "Age42 then Geology42, verify numerical validity/resources before remaining fixed seeds",
+    "test_scoring": "HOLD",
+    "paid_compute": false,
+    "new_weights_or_full_mmap": false,
+    "shared_environment_replacement": false,
+    "legacy_external_gate4": "HOLD"
+  }
+}

@@ -1,6 +1,6 @@
 # P3.1 — 从公开 Benchmark 工程 smoke 转向正式基线
 
-**日期：2026-11-03。状态：待执行计划，不是已完成实验或新的下载批准。**
+**日期：2026-11-03；执行状态更新：2026-11-04。** 原交接的权限判断保留在下文作为历史。P31-01/02工程验收及ID结构控制已完成，当前见 [进度](../reports/p3_1_progress.md)。用户于2026-11-04明确授权“允许大文件下载 推进基线”；新增权限以 [单文件授权记录](../protocols/p31_acquisition_authorization.json) 为准。现在执行固定HDF5单副本下载与已冻结的Age/Geology Train/Val基线，不再等待重复确认；全mmap/额外权重/付费资源不在本次范围，Test评分仍HOLD。
 
 评审基线：`main@25c8ac93e6ea94a1f402c3daecf547bba1990278`。本次用户要求将评审与下一步动作推送到 main。本文件承接 [P3.0](P3_0_PUBLIC_BENCHMARKS.md)，当前入口为 [AGENTS.md](../AGENTS.md)，机器可读任务在 [p31_execution_plan.json](../protocols/p31_execution_plan.json)。旧 P3.0 计划、实验和资产提案不覆盖。
 

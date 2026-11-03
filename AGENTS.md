@@ -20,9 +20,9 @@ P3.0 已完成来源/标签/split审计、部分真实I/O、五类Age与49输出
 
 ## 数据和预训练授权边界
 
-评审推荐固定单一HDF5数据先行方案，但 [`protocols/p30_next_acquisition_proposal.json`](protocols/p30_next_acquisition_proposal.json) **仍为PENDING_USER_DECISION_NOT_AUTHORIZED**。本次“推远端”只提交交接，未自动批准74,449,119,347字节下载、完整mmap或权重。原初次1GiB累计上限不重置。
+**2026-11-04 用户明确授权“允许大文件下载 推进基线”。** 执行范围见 [`protocols/p31_acquisition_authorization.json`](protocols/p31_acquisition_authorization.json)：下载固定 revision 的单一74,449,119,347字节HDF5，并推进已锁定的Age/Geology Train/Val基线。原 [`protocols/p30_next_acquisition_proposal.json`](protocols/p30_next_acquisition_proposal.json) 保留为授权前历史记录；其旧PENDING状态不否定这次新增明确授权。此次不下载完整mmap、额外权重或snapshot，不购买资源。原初次1GiB采样累计账本仍不重置（保守已计165,257,071字节）；大文件为独立新增授权范围。
 
-没有新下载批准也应立即完成离线runner、已有真实pilot回归、基线与完整配对方案，不用等待代替已授权开发；也不再用重复十张图训练代替科研推进。有明确下载批准后，仅固定revision/文件、单副本`.partial`、完整大小/hash校验和原子改名；不下整个snapshot。存储完整文件不等于获准训练/查看Test成绩。
+可扩展runner、真实pilot回放/续训、代表性完整裁片配对和基线设计已交付，见 `reports/p3_1_progress.md`。现在直接执行固定单文件下载与正式基线，不再重复十张图smoke。仅单副本`.partial`、严格Range续传、完整大小/SHA256校验后原子改名；不重复保留snapshot/cache。数据校验后先Age42、Geology42核验正常训练与资源，再按冻结配置运行43/44。只用Train/Val，Test评分仍HOLD。
 
 MG-MAE权重未在已审计来源核实，不从头预训练冒充；NASA LFM模态/尺度/几何/Python兼容性单独验证，不伪造通道和观测。当前不恢复完整Qwen/OnePass联训、TiM、主动路由、全球预训练或低秩后验扩容。
 

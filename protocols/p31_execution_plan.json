@@ -56,8 +56,10 @@
   ],
   "acquisition": {
     "existing_proposal": "protocols/p30_next_acquisition_proposal.json",
-    "status": "PENDING_USER_DECISION_NOT_AUTHORIZED",
+    "status": "EXPLICIT_USER_AUTHORIZATION_SINGLE_HDF5_2026_11_04",
+    "authorization_record": "protocols/p31_acquisition_authorization.json",
     "this_plan_authorizes_bulk_download": false,
+    "note": "The original action plan did not authorize acquisition; the subsequent explicit user instruction now authorizes the one fixed HDF5 and locked local Train-Val baselines. Other assets remain excluded.",
     "initial_transfer_cap_bytes_unchanged": 1073741824,
     "recommended_file_if_approved": {
       "repository": "ayushprd/Moonstone",
