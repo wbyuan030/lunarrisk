@@ -1,0 +1,834 @@
+{
+  "protocol": "P31_02_LOCKED_FULL_CROP_PAIR",
+  "status": "LOCKED_OFFLINE_NOT_EXECUTED",
+  "repository": "ayushprd/Moonstone",
+  "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+  "upstream_commit": "cbd4720653eb05afd975d2a36280858c5c56a275",
+  "records": [
+    {
+      "index": 2705,
+      "sample_id": "2705",
+      "stored_split": 0,
+      "row_idx": 15,
+      "col_idx": 5,
+      "center_lat": 59.0,
+      "unit_name": "Nt",
+      "unit_id": 44,
+      "geology_target": 43,
+      "age_target": 1,
+      "metadata_has_channel": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "m3_valid_fraction": 0.7902679443359375,
+      "valid_fraction": 0.0
+    },
+    {
+      "index": 2700,
+      "sample_id": "2700",
+      "stored_split": 1,
+      "row_idx": 15,
+      "col_idx": 0,
+      "center_lat": 59.0,
+      "unit_name": "Nc",
+      "unit_id": 41,
+      "geology_target": 40,
+      "age_target": 1,
+      "metadata_has_channel": [
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "m3_valid_fraction": 0.9296417236328125,
+      "valid_fraction": 0.0
+    }
+  ],
+  "channels": [
+    "wac_morphology",
+    "elevation",
+    "slope",
+    "roughness",
+    "diviner_tbol_midnight",
+    "diviner_temp_night",
+    "rock_abundance",
+    "christiansen_feature",
+    "m3_750",
+    "m3_950",
+    "m3_1000",
+    "m3_1250",
+    "m3_1580",
+    "m3_2000",
+    "m3_2817",
+    "m3_2857",
+    "grail_freeair",
+    "grail_bouguer",
+    "grail_uncertainty",
+    "minirf_cpr",
+    "minirf_s1",
+    "wac_hapke_415nm",
+    "wac_hapke_566nm",
+    "wac_hapke_604nm",
+    "wac_hapke_689nm",
+    "clementine_uvvis_750nm",
+    "lpgrs_tio2",
+    "lpgrs_feo"
+  ],
+  "groups": {
+    "surface": [
+      "wac_morphology",
+      "elevation",
+      "slope",
+      "roughness"
+    ],
+    "thermal": [
+      "diviner_tbol_midnight",
+      "diviner_temp_night",
+      "rock_abundance",
+      "christiansen_feature"
+    ],
+    "spectral_m3": [
+      "m3_750",
+      "m3_950",
+      "m3_1000",
+      "m3_1250",
+      "m3_1580",
+      "m3_2000",
+      "m3_2817",
+      "m3_2857"
+    ],
+    "gravity": [
+      "grail_freeair",
+      "grail_bouguer",
+      "grail_uncertainty"
+    ],
+    "radar": [
+      "minirf_cpr",
+      "minirf_s1"
+    ],
+    "hapke": [
+      "wac_hapke_415nm",
+      "wac_hapke_566nm",
+      "wac_hapke_604nm",
+      "wac_hapke_689nm"
+    ],
+    "composition": [
+      "clementine_uvvis_750nm",
+      "lpgrs_tio2",
+      "lpgrs_feo"
+    ]
+  },
+  "shape": [
+    28,
+    256,
+    256
+  ],
+  "mmap_shape": [
+    23040,
+    46080
+  ],
+  "selection": "minimum one Train and one Val; each covers all available Train/Val channels, nonpolar <=60 degrees and partial M3; lowest numeric patch ID per split; no scores or targets used for ranking",
+  "unavailable_train_val_channels": [
+    "roughness"
+  ],
+  "raw_zero_coverage": "UNKNOWN_UNTIL_PIXELS; require finite raw zero in downloaded crops or fail coverage; no adaptive extra downloads",
+  "rtol": 1e-05,
+  "atol": 1e-06,
+  "mask": "exact finite/nonzero normalized full-pixel masks and channel/group ANY presence",
+  "normalization": "fixed HF stats; raw nonfinite restored to zero; finite raw zero retained; no second radar log",
+  "input_sha256": {
+    "metadata": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+    "listing": "3b869d836cdbb5aded01763121c420561950064dff4b887075d82602724eae49",
+    "hf_stats": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+    "scripts/p31_loader_pair.py": "af73ec4123adddd577dc53c988f709107e432e4f12c700934c15c89a219ec781",
+    "src/lunarrisk/benchmarks/p31_pair.py": "86cc98f2a8c32a1474b9c1862a3f93ef6b3f6328851c5974b8040e371792ac2e",
+    "src/lunarrisk/benchmarks/http_range.py": "8fa7cd6407853554e07f2f1f5b87e3d3697ff8129dca348b267ffc0db9deae6f",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/benchmarks/mmap_pair.py": "dad9323a0120192ee8c7673decb0d21f45efdf1f9beade3f49622b4b4c96b2e8"
+  },
+  "assets": [
+    {
+      "path": "benchmark/lunar_patches_v4.h5",
+      "bytes": 74449119347,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+      "remote_lfs_sha256_claim": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/wac_morphology.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/wac_morphology.npy",
+      "remote_lfs_sha256_claim": "44e4630dfd3a8df997c173d65d7f3ef4319a187ff188246afb8206afbee39634",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/elevation.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/elevation.npy",
+      "remote_lfs_sha256_claim": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/slope.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/slope.npy",
+      "remote_lfs_sha256_claim": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/roughness.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/roughness.npy",
+      "remote_lfs_sha256_claim": "56e72a385408781e5daa564f52eb60fe4480b4e21c214e8edc371a910b5587a4",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/diviner_tbol_midnight.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/diviner_tbol_midnight.npy",
+      "remote_lfs_sha256_claim": "4dfb8941c27df010601988a652ca617789eb5c6aa86a2b83120ce975166e5013",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/diviner_temp_night.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/diviner_temp_night.npy",
+      "remote_lfs_sha256_claim": "7c45e8b5d5c58d69761e459ad955ff1a3e966bf8d2d31320515fe796d7782b1d",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/rock_abundance.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/rock_abundance.npy",
+      "remote_lfs_sha256_claim": "294448b7cb778e91ab268ea96682584fa44ad91c41f3f115a0ca4d5b425bbd15",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/christiansen_feature.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/christiansen_feature.npy",
+      "remote_lfs_sha256_claim": "e6d8f4fe1e9e9c510a230910a779aff36644b8f13bf0c56c999238070549a852",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_750.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_750.npy",
+      "remote_lfs_sha256_claim": "e8f4d49ff5da60129c141b4b7c7016297a25b8e92cc9e3e475f6336196cf95e8",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_950.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_950.npy",
+      "remote_lfs_sha256_claim": "405c57ac2a5230206629e56d2573c5e298885a28faebec1fb697a4ec6395bd97",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_1000.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_1000.npy",
+      "remote_lfs_sha256_claim": "6fa7b93323dc77ccd3f3d8ed339a12355955f6fe2057848337d75a3c6ea0d363",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_1250.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_1250.npy",
+      "remote_lfs_sha256_claim": "24eaa495ff14f89896ddf3e5253e946e334d239f8d97d1d2d7f1f3477b5a3afa",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_1580.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_1580.npy",
+      "remote_lfs_sha256_claim": "c53dab97c8b052915853b981aa4dcdb699b8c9cb777ec65761678489d3fdaef5",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_2000.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_2000.npy",
+      "remote_lfs_sha256_claim": "67e9e1ec818a02dedcc02a5d6183c9eaa4b87251228c063f3ceb756deb6c6467",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_2817.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_2817.npy",
+      "remote_lfs_sha256_claim": "9f4f13b303a3f517baccdac1d2c4182a770fc11324ab2822dc95f28bdaf10c7f",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/m3_2857.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/m3_2857.npy",
+      "remote_lfs_sha256_claim": "513126ab628cdf78d00a72043697e04474e92eea2d54c8b7df575b4a7e8b1bb2",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/grail_freeair.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/grail_freeair.npy",
+      "remote_lfs_sha256_claim": "3bac6b5606045dc86d04e2c9499f51552f5d3b6cc52d1170677cb55f60c44553",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/grail_bouguer.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/grail_bouguer.npy",
+      "remote_lfs_sha256_claim": "56bc4cc5d09ed436a889df73b5fc2889cea7739c907fd36e7ee8f09329646d64",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/grail_uncertainty.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/grail_uncertainty.npy",
+      "remote_lfs_sha256_claim": "a31f8146ed96d12443f851cfd64753bf1a01122c6d867c8a7d278cb8f8ab1021",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/minirf_cpr.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/minirf_cpr.npy",
+      "remote_lfs_sha256_claim": "98b2d755294b5100cc2fb6d3b700d5a45acf69f507f70b0d9fb1a5ab2c238a06",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/minirf_s1.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/minirf_s1.npy",
+      "remote_lfs_sha256_claim": "6eb98024e307726f2098572662859556572acc72b4a57f3cd7cbaee65064cb7d",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/wac_hapke_415nm.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/wac_hapke_415nm.npy",
+      "remote_lfs_sha256_claim": "42db6d8240fd63542a9b35abc27fefc7a607dca9c1f3951163c44eb62b09c906",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/wac_hapke_566nm.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/wac_hapke_566nm.npy",
+      "remote_lfs_sha256_claim": "546cee7742a16f536166167ff2ac47e1b7a996b0825fa08966181b12d801ef2e",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/wac_hapke_604nm.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/wac_hapke_604nm.npy",
+      "remote_lfs_sha256_claim": "c0d82f30c8ee00f0288a626df962f28493a6777fa70afca6d72ed31f449d49ca",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/wac_hapke_689nm.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/wac_hapke_689nm.npy",
+      "remote_lfs_sha256_claim": "2e90710fef0671234fab2aa9e9b5012907a2c48832b9e2c586958ba0f42db4ca",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/clementine_uvvis_750nm.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/clementine_uvvis_750nm.npy",
+      "remote_lfs_sha256_claim": "9a6473dc4bff1ff4f8c0edd63e685608ae871ebec86d09f02236ee64cc61b903",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/lpgrs_tio2.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/lpgrs_tio2.npy",
+      "remote_lfs_sha256_claim": "e8c6ac90251ab6b0a1717b46e5fd31af986982e7cfcdbc318e4cee268996dfb9",
+      "whole_file_verified": false
+    },
+    {
+      "path": "pretraining/mmap/lpgrs_feo.npy",
+      "bytes": 4246732800,
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/lpgrs_feo.npy",
+      "remote_lfs_sha256_claim": "e124d3a6d5bcb5cb0c43c66abdec074926ed651a08a7dad381e1a105e76371cf",
+      "whole_file_verified": false
+    }
+  ],
+  "mmap_ranges": {
+    "representation": "one run per sample/channel; expand all y=0..255",
+    "dtype": "headerless little-endian float32 C order",
+    "row_stride_bytes": 184320,
+    "rows_per_run": 256,
+    "row_length_bytes": 1024,
+    "runs": [
+      {
+        "sample_id": "2705",
+        "channel": "wac_morphology",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "elevation",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "slope",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "roughness",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "diviner_tbol_midnight",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "diviner_temp_night",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "rock_abundance",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "christiansen_feature",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_750",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_950",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_1000",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_1250",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_1580",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_2000",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_2817",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "m3_2857",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "grail_freeair",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "grail_bouguer",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "grail_uncertainty",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "minirf_cpr",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "minirf_s1",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "wac_hapke_415nm",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "wac_hapke_566nm",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "wac_hapke_604nm",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "wac_hapke_689nm",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "clementine_uvvis_750nm",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "lpgrs_tio2",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2705",
+        "channel": "lpgrs_feo",
+        "y": 0,
+        "start": 707793920,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "wac_morphology",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "elevation",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "slope",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "roughness",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "diviner_tbol_midnight",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "diviner_temp_night",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "rock_abundance",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "christiansen_feature",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_750",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_950",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_1000",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_1250",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_1580",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_2000",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_2817",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "m3_2857",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "grail_freeair",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "grail_bouguer",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "grail_uncertainty",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "minirf_cpr",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "minirf_s1",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "wac_hapke_415nm",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "wac_hapke_566nm",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "wac_hapke_604nm",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "wac_hapke_689nm",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "clementine_uvvis_750nm",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "lpgrs_tio2",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      },
+      {
+        "sample_id": "2700",
+        "channel": "lpgrs_feo",
+        "y": 0,
+        "start": 707788800,
+        "length": 1024
+      }
+    ],
+    "expanded_requests_sha256": "2dded3b09e288b05c8843d43bee0bd945998a57389707eabff0395802dcfccf8"
+  },
+  "transfer": {
+    "cap_bytes": 1073741824,
+    "prior_actual_bytes": 78502175,
+    "prior_conservative_bytes": 83468143,
+    "mmap_requests": 14336,
+    "mmap_body_bytes": 14680064,
+    "hdf5_body_upper_bound": 67108864,
+    "hdf5_request_upper_bound": 2048,
+    "new_body_upper_bound": 81788928,
+    "cumulative_conservative_upper_bound": 165257071,
+    "request_upper_bound": 16384,
+    "hdf5_exact_requests_bytes": "UNKNOWN before apply; exact h5py reads, no aligned blocks/gap overfetch; hard caps apply",
+    "redirect_headers": "not counted as range requests; at most 8 per range, redirect bodies not read",
+    "elapsed_time": "UNKNOWN; no throughput measurement or completion-time promise"
+  },
+  "execution": {
+    "workers": 4,
+    "persistent_session_per_worker": true,
+    "retries": 0,
+    "hdf5_access": "selected chunked patches only; metadata/scalars may be fetched; exact requested bytes, no read-ahead",
+    "cache_files_upper_bound": 16387,
+    "cache_body_upper_bound": 96468992,
+    "cache_note": "range files + raw crop .npy files + report; filesystem allocation and JSON overhead extra",
+    "test_pixels_requested": 0,
+    "requires_fresh_output_directory": true
+  },
+  "lock_sha256": "672ae6d64401390fe79c3131b6a25b7b41f0aed322e476fb9dbbdacca828184c"
+}

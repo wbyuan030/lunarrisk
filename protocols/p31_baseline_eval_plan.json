@@ -1,0 +1,57 @@
+{
+  "protocol": "P31_03_STORED_DERIVED_SCRATCH_BASELINES_V1",
+  "status": "DESIGN_LOCKED_FULL_ASSET_ACQUISITION_NOT_AUTHORIZED",
+  "data": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "bytes": 74449119347,
+    "sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+    "normalization": "Audited HF global statistics; raw nonfinite restored to zero, finite zero retained, finite/nonzero presence, group ANY. Fixed 28 channels in moonstone.CHANNELS order.",
+    "track": "official_stored",
+    "train_rows": 11400,
+    "val_rows": 2400,
+    "train_ordered_ids_sha256": "0c871e33776a46b73be8f18c2691554053f8bf509753293d9a8e17e015a050e4",
+    "val_ordered_ids_sha256": "bf598bab2d592b2d4cefc10361da7df9881f35f68e7a02832fa318b38d0ea5e1",
+    "loader_claim": "HDF5_DERIVED_PILOT; full-crop pair is separately reported within selected sample coverage, never global exact reproduction"
+  },
+  "tasks": {
+    "age": {"outputs": 5, "target": "official ordered case-sensitive age prefixes; unknown excluded", "role": "first formal training-chain validation; no absolute age regression"},
+    "geology": {"outputs": 49, "target": "official unit_id minus one", "role": "core baseline; Train has 46 supported classes, absent Train classes also absent Val/Test; no unseen-class claim"}
+  },
+  "baselines": ["train_empirical_prior", "independent_task_scratch_cnn"],
+  "training": {
+    "epochs": 50,
+    "batch_size": 16,
+    "seed": [42, 43, 44],
+    "lr": 0.001,
+    "patience": 5,
+    "precision": "fp32",
+    "workers": 0,
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "grad_clip_norm": 1.0,
+    "loss": "cross entropy without label smoothing or class weighting",
+    "schedule": "warmup_steps=min(2*batches_per_epoch,total_steps//10); then cosine to zero; total_steps uses planned 50 epochs unchanged on resume",
+    "drop_last": false,
+    "architecture": "28->64 Conv7 stride4 padding3 BN ReLU; 64->128 Conv3 stride2 padding1 BN ReLU; 128->256 Conv3 stride2 padding1 BN ReLU; adaptive average pool1; linear task output",
+    "upstream_differences": ["FP32 instead of upstream BF16", "retain final partial batch instead of upstream drop_last=True", "streaming validation and HDF5-derived pixels rather than mmap loader"],
+    "selection": "strictly greater Val full-K Macro-F1; earliest epoch wins ties; stop after five non-improving epochs",
+    "configuration_trials_per_task": 1,
+    "sequence": "Age seed42 first; verify training/resources; Geology seed42; then remaining fixed seeds43/44 without changing configuration based on Test",
+    "additional_age_supervision_for_geology": false
+  },
+  "metrics": {
+    "primary": ["accuracy", "macro_f1_full"],
+    "absent_class": "all K outputs included; F1=0 when support+prediction=0, matching pinned upstream downstream_base.py",
+    "secondary": ["macro_f1_supported", "per_class_f1", "per_class_recall", "support", "predicted_counts", "confusion", "nll", "multiclass_brier_sum"],
+    "supported_macro": "only classes with ground-truth support; secondary and separately named",
+    "prior": "fit only Train labels; empirical frequencies, no smoothing; infinite NLL reported explicitly when a true class has zero prior",
+    "aggregation": "per seed and mean/std over fixed seeds; no choice of favorable seed or macro definition"
+  },
+  "test": {"model_scoring": "HOLD_UNTIL_SEPARATE_MODEL_AND_ANALYSIS_LOCK", "runner_allows_test": false},
+  "candidate_controls": "CandidateIDHead is candidate_id_control. Full/subset identity is against its own full softmax. Same encoder/modality/examples/budget required for trained comparisons; semantic scorer requires separate locked design.",
+  "resource_boundary": {"bulk_download_authorized": false, "purchase_authorized": false, "gpu": "existing RX7900XT/ROCm", "initial_transfer_cap_bytes": 1073741824, "prior_proposal": "p30_next_acquisition_proposal.json remains PENDING_USER_DECISION_NOT_AUTHORIZED"}
+}
