@@ -1,0 +1,89 @@
+{
+  "plan_id": "p31_benchmark_baselines",
+  "created_date": "2026-11-03",
+  "reviewed_commit": "25c8ac93e6ea94a1f402c3daecf547bba1990278",
+  "status": "ACTION_PLAN_NOT_EXECUTED_NOT_FROZEN",
+  "entrypoint": "docs/P3_1_BENCHMARK_BASELINES.md",
+  "direction": "Data-sufficient scratch baselines first; pretrained and candidate-semantic claims remain separate hypotheses.",
+  "current_evidence": {
+    "source": "reports/p3_0_progress.md",
+    "test_count": 482,
+    "passed": 481,
+    "skipped": 1,
+    "tests_apply_to": "P3.0 recorded code, not future P3.1 changes",
+    "pilot_rows": {"train": 5, "validation": 5},
+    "formal_benchmark_result": false,
+    "pretrained_encoder_used": false,
+    "full_crop_loader_equivalence": false
+  },
+  "tasks": [
+    {
+      "id": "P31-01",
+      "priority": "P0",
+      "state": "TODO_NOW",
+      "work": "Implement a new scalable classification runner: chunked hashing, worker-local HDF5, minibatches, split isolation, restorable checkpoints and resource logging.",
+      "requires_new_download": false,
+      "deliverable": "reports/p3_1_runner_validation.md"
+    },
+    {
+      "id": "P31-02",
+      "priority": "P0",
+      "state": "DESIGN_NOW_EXECUTE_WITHIN_APPROVED_ACCESS",
+      "work": "Freeze representative Train/Val full-crop comparisons covering valid values in every modality group, partial missingness, finite raw zeros and radar.",
+      "planned_protocol": "protocols/p31_loader_pair_plan.json",
+      "tolerance": {"rtol": 0.00001, "atol": 0.000001, "presence_masks": "exact"},
+      "deliverable": "reports/p3_1_loader_pair_validation.md"
+    },
+    {
+      "id": "P31-03",
+      "priority": "P1",
+      "state": "DESIGN_NOW_TRAIN_WHEN_DATA_AND_PROTOCOL_READY",
+      "work": "Ordinary Age baseline followed by core Geology baseline; lock class mapping, official split, metrics, Val selection and compute budget before model scoring.",
+      "tasks": ["age_5_classes", "geology_49_classes"],
+      "planned_protocol": "protocols/p31_baseline_eval_plan.json",
+      "candidate_seeds": [42, 43, 44],
+      "public_test_scoring": "HOLD_UNTIL_MODEL_AND_ANALYSIS_LOCKED"
+    },
+    {
+      "id": "P31-04",
+      "priority": "P1",
+      "state": "CONTROL_TESTS_AND_DESIGN_FIRST",
+      "work": "Preserve candidate-ID head as a structural control, verify own-full-softmax/subset equivalence, measure compute, and specify public-description semantic comparison separately.",
+      "new_report_name": "candidate_id_control",
+      "preserve_existing_api_and_checkpoints": true,
+      "semantic_or_unseen_class_gain_established": false
+    }
+  ],
+  "acquisition": {
+    "existing_proposal": "protocols/p30_next_acquisition_proposal.json",
+    "status": "PENDING_USER_DECISION_NOT_AUTHORIZED",
+    "this_plan_authorizes_bulk_download": false,
+    "initial_transfer_cap_bytes_unchanged": 1073741824,
+    "recommended_file_if_approved": {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "benchmark/lunar_patches_v4.h5",
+      "bytes": 74449119347,
+      "remote_sha256_claim": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+      "local_full_hash_verified": false
+    },
+    "additional_mmap_scope": "Only as previously approved or explicitly newly approved; do not reset the cumulative transfer ledger.",
+    "full_snapshot_allowed": false
+  },
+  "pretrained_track": {
+    "mg_mae": "BLOCKED_IN_AUDITED_SOURCES; bounded official checkpoint verification only",
+    "nasa_lfm": "Separate physical-input/environment/weight acquisition validation required",
+    "scratch_baselines_must_wait_for_pretrained_weights": false
+  },
+  "protections": {
+    "preserve_p22_negative_results_and_evidence": true,
+    "preserve_p30_smoke_and_proposals": true,
+    "legacy_external_gate3": "NOT_FROZEN",
+    "legacy_external_gate4": "HOLD",
+    "replace_rocm_torch": false,
+    "paid_compute": false,
+    "four_gpu": false,
+    "raw_data_or_weights_in_git": false
+  },
+  "new_progress_report": "reports/p3_1_progress.md"
+}
