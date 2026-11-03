@@ -1,0 +1,68 @@
+{
+  "status": "LOCKED_ENGINEERING_ONLY_NOT_FORMAL_BENCHMARK",
+  "protocol": "HDF5_DERIVED_PILOT",
+  "sample_ids": [
+    "65",
+    "0",
+    "81",
+    "245",
+    "1333",
+    "130",
+    "20",
+    "85",
+    "560",
+    "2289"
+  ],
+  "geology_targets": [
+    47,
+    43,
+    32,
+    4,
+    0,
+    47,
+    43,
+    32,
+    4,
+    0
+  ],
+  "stored_splits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "pilot_sha256": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+  "encoder_checkpoint_sha256": "1b463c3b459f4e1ed6012ab03f263d96d8fcc04cd6a58ea735de04e535a7de1f",
+  "encoder_origin": "Age scratch CNN trained on the same five Train samples for two updates; eval/frozen; not lunar pretraining",
+  "feature_dim": 256,
+  "heads": {
+    "ordinary": {
+      "hidden": 40,
+      "parameters": 12289
+    },
+    "candidate_id": {
+      "embedding": 16,
+      "hidden": 42,
+      "parameters": 12293
+    }
+  },
+  "candidates": "all 49 public IDs identically for every image; no per-image label enters the head",
+  "seed": 42,
+  "updates_each": 2,
+  "optimizer": {
+    "name": "AdamW",
+    "lr": 0.001
+  },
+  "class_count": 49,
+  "permutation_atol": 1e-06,
+  "new_network_body_bytes": 0,
+  "test_evaluated": false,
+  "subset_performance_experiment": "NOT_RUN; API/control synthetic tests only",
+  "reports_metrics": "train loss, engineering replay, resource usage only; no accuracy/gain claims"
+}
