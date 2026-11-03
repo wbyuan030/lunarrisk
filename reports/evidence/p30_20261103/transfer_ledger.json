@@ -1,0 +1,21 @@
+{
+  "unit": "received HTTP response body bytes; headers/TLS overhead not measured",
+  "first_round_cap_bytes": 1073741824,
+  "components": {
+    "hf_repository_metadata": 30379,
+    "small_assets": 36400,
+    "two_header_probes": 32,
+    "moonstone_code_metadata_and_sources": 276912,
+    "nasa_code_metadata_and_sources": 70444,
+    "weight_search": 1864,
+    "hdf5_metadata_ranges": 21823488,
+    "eight_patch_ranges": 16777216
+  },
+  "actual_body_bytes": 39016735,
+  "conservative_accounted_bytes": 43982703,
+  "reserve_excess_bytes": 4965968,
+  "accounting": "Initial 5242880-byte reserve for parallel source audit replaced by its measured 276912 bytes. Subsequent NASA/source search bytes carried forward explicitly. ByteBudget is caller-shared in memory; separate invocations carry --prior-transfer-bytes; no durable cross-process ledger lock.",
+  "test_pixels_requested": 0,
+  "full_weights_downloaded": false,
+  "full_benchmark_downloaded": false
+}

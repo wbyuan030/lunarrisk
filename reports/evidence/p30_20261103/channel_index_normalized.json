@@ -1,0 +1,42 @@
+{
+  "source_sha256": "354ed51bd8cb7087313471b069faa8d61aa012eacdaed89bd3b609faec094fb7",
+  "transformation": "Replace upstream absolute paths by <UPSTREAM_ROOT>/basename",
+  "index": {
+    "shape": [
+      23040,
+      46080
+    ],
+    "dtype": "float32",
+    "channels": {
+      "wac_morphology": "<UPSTREAM_ROOT>/wac_morphology.npy",
+      "elevation": "<UPSTREAM_ROOT>/elevation.npy",
+      "slope": "<UPSTREAM_ROOT>/slope.npy",
+      "roughness": "<UPSTREAM_ROOT>/roughness.npy",
+      "diviner_tbol_midnight": "<UPSTREAM_ROOT>/diviner_tbol_midnight.npy",
+      "diviner_temp_night": "<UPSTREAM_ROOT>/diviner_temp_night.npy",
+      "rock_abundance": "<UPSTREAM_ROOT>/rock_abundance.npy",
+      "christiansen_feature": "<UPSTREAM_ROOT>/christiansen_feature.npy",
+      "m3_750": "<UPSTREAM_ROOT>/m3_750.npy",
+      "m3_950": "<UPSTREAM_ROOT>/m3_950.npy",
+      "m3_1000": "<UPSTREAM_ROOT>/m3_1000.npy",
+      "m3_1250": "<UPSTREAM_ROOT>/m3_1250.npy",
+      "m3_1580": "<UPSTREAM_ROOT>/m3_1580.npy",
+      "m3_2000": "<UPSTREAM_ROOT>/m3_2000.npy",
+      "m3_2817": "<UPSTREAM_ROOT>/m3_2817.npy",
+      "m3_2857": "<UPSTREAM_ROOT>/m3_2857.npy",
+      "grail_freeair": "<UPSTREAM_ROOT>/grail_freeair.npy",
+      "grail_bouguer": "<UPSTREAM_ROOT>/grail_bouguer.npy",
+      "grail_uncertainty": "<UPSTREAM_ROOT>/grail_uncertainty.npy",
+      "minirf_cpr": "<UPSTREAM_ROOT>/minirf_cpr.npy",
+      "minirf_s1": "<UPSTREAM_ROOT>/minirf_s1.npy",
+      "wac_hapke_415nm": "<UPSTREAM_ROOT>/wac_hapke_415nm.npy",
+      "wac_hapke_566nm": "<UPSTREAM_ROOT>/wac_hapke_566nm.npy",
+      "wac_hapke_604nm": "<UPSTREAM_ROOT>/wac_hapke_604nm.npy",
+      "wac_hapke_689nm": "<UPSTREAM_ROOT>/wac_hapke_689nm.npy",
+      "clementine_uvvis_750nm": "<UPSTREAM_ROOT>/clementine_uvvis_750nm.npy",
+      "lpgrs_tio2": "<UPSTREAM_ROOT>/lpgrs_tio2.npy",
+      "lpgrs_feo": "<UPSTREAM_ROOT>/lpgrs_feo.npy"
+    },
+    "normalized": true
+  }
+}

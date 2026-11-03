@@ -1,0 +1,57 @@
+{
+  "plan": {
+    "protocol": "HDF5_DERIVED_PILOT",
+    "selection": "first valid original indices per stored Train/Val split",
+    "indices": [
+      0,
+      1,
+      2,
+      3,
+      20,
+      21,
+      22,
+      23
+    ],
+    "patch_ids": [
+      0,
+      1,
+      2,
+      3,
+      20,
+      21,
+      22,
+      23
+    ],
+    "stored_splits": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "test_pixels_requested": 0,
+    "per_split": 4,
+    "source_metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d"
+  },
+  "source_url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+  "status": "REAL_PIXEL_PILOT_EXTRACTED_NOT_EQUIVALENCE",
+  "sample_sha256": {
+    "0": "2029bdad5ef61ee739a6576b0a3acf31793af52cb01c7ae57c8834cc9efd57a9",
+    "1": "95d85c122f8ad04d635d2ee8b51b503fe3ac60adb223c1c49b521ba4f84f0c1b",
+    "2": "cc0e9d195649b8fb4110254ad2964b6fce26276c76ab108a4eac17299b182984",
+    "3": "1c711f8a8d25934aa67f280104712fcacb55274341af9303fd4f42d57353af6d",
+    "20": "6563bdd0e8f73d4f34abbf4734c9a0607c754a16d61c89c74050f59e31a487d8",
+    "21": "cbdd3cfd9b659e83e0ac5215c9d1ef3cc8b9adac07c7b51d6f0e342286708c04",
+    "22": "7b8cfd3d5360f66176749841bf8ddf20ecb631112109db42a29385f8d7ce9115",
+    "23": "0ff646db9d6d68df452029d3228b8916d3a7f173dfb263733463e8ad7ccb563b"
+  },
+  "pilot_sha256": "d6807ecc1a0d52f07fc46cc53f42146e3b66e9562ee9fd7357f5dfbf32d9bd0a",
+  "transfer": {
+    "accounted_body_bytes": 43982703,
+    "new_body_bytes": 16777216,
+    "range_requests": 16
+  }
+}

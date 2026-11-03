@@ -1,0 +1,28 @@
+{
+  "source_base_commit": "6dea815",
+  "tests": {
+    "run": 471,
+    "passed": 470,
+    "skipped": 1,
+    "errors": 0,
+    "failures": 0,
+    "skip": "Legacy optional labels_hydrated.csv absent in isolated source snapshot",
+    "command": "python3 -m unittest discover -s tests -v",
+    "source_log_sha256": "1830c260d5553d12bcbfc552d2ff58893633d9accad8f5e08ce88ad43a2607c7",
+    "public_log_sha256": "34769075e78cc82c8d27e2c411bdeee6f6027177d2d2a61bae1e49c28eecfc34"
+  },
+  "compileall": {
+    "command": "python3 -m compileall -q scripts src tests",
+    "exit_code": 0
+  },
+  "initial_failed_snapshot": {
+    "run": 458,
+    "errors": 12,
+    "cause": "protocols directory omitted from source snapshot; corrected in a fresh snapshot"
+  },
+  "initial_network_attempt": {
+    "status": "BLOCKED_PARTIAL_DATA_ACCESS",
+    "new_body_bytes": 0,
+    "cause": "container request timed out; forwarding existing HTTPS proxy enabled subsequent access"
+  }
+}

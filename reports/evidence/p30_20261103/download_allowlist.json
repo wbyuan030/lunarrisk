@@ -1,0 +1,89 @@
+{
+  "mode": "dry_run",
+  "network_requests": 0,
+  "transfer_cap_bytes": 1073741824,
+  "small_allowlist_bytes": 36400,
+  "assets": [
+    {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "README.md",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/README.md",
+      "bytes": 3858,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "benchmark/geologic_units.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/geologic_units.json",
+      "bytes": 625,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "pretraining/channel_stats.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/channel_stats.json",
+      "bytes": 2039,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "pretraining/mmap/channel_index.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/channel_index.json",
+      "bytes": 2775,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "path": "benchmark/lunar_patches_v4.h5",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+      "bytes": 74449119347,
+      "operation": "strict_range_only",
+      "complete_download_allowed": false,
+      "remote_lfs_sha256_claim": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+      "checksum_status": "remote listing claim; complete file not verified"
+    },
+    {
+      "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "path": "README.md",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/README.md",
+      "bytes": 13387,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "path": "backbone/config.yaml",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/config.yaml",
+      "bytes": 12102,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "path": "tokenizers/WAC_vis/config.yaml",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/tokenizers/WAC_vis/config.yaml",
+      "bytes": 1614,
+      "operation": "bounded_small_get"
+    },
+    {
+      "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "path": "backbone/checkpoint.pt",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/checkpoint.pt",
+      "bytes": 2425755440,
+      "operation": "strict_range_only",
+      "complete_download_allowed": false,
+      "remote_lfs_sha256_claim": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+      "checksum_status": "remote listing claim; complete file not verified"
+    }
+  ],
+  "full_benchmark_or_pretraining": "NOT_AUTHORIZED_IN_INITIAL_ROUND",
+  "range_policy": "206 and exact Content-Range required before reading body; shared cumulative budget",
+  "unlisted_assets": "deny; metadata listing is not a download authorization"
+}

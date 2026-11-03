@@ -1,0 +1,205 @@
+{
+  "plan": {
+    "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+    "asset_bytes": 74449119347,
+    "maximum_session_body_bytes": 67108864,
+    "prior_body_bytes": 5309691,
+    "mode": "apply"
+  },
+  "attributes": {
+    "channel_names": [
+      "wac_morphology",
+      "elevation",
+      "slope",
+      "roughness",
+      "diviner_tbol_midnight",
+      "diviner_temp_night",
+      "rock_abundance",
+      "christiansen_feature",
+      "m3_750",
+      "m3_950",
+      "m3_1000",
+      "m3_1250",
+      "m3_1580",
+      "m3_2000",
+      "m3_2817",
+      "m3_2857",
+      "grail_freeair",
+      "grail_bouguer",
+      "grail_uncertainty",
+      "minirf_cpr",
+      "minirf_s1",
+      "wac_hapke_415nm",
+      "wac_hapke_566nm",
+      "wac_hapke_604nm",
+      "wac_hapke_689nm",
+      "clementine_uvvis_750nm",
+      "lpgrs_tio2",
+      "lpgrs_feo"
+    ],
+    "n_channels": 28,
+    "patch_size": 256,
+    "ppd": 128
+  },
+  "layout": {
+    "metadata/center_lat": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/center_lon": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/col_idx": {
+      "shape": [
+        16200
+      ],
+      "dtype": "int32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/elevation_range": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/geology/dominant_unit_id": {
+      "shape": [
+        16200
+      ],
+      "dtype": "int16",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/geology/dominant_unit_name": {
+      "shape": [
+        16200
+      ],
+      "dtype": "object",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/geology/mare_fraction": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/geology/n_geo_units": {
+      "shape": [
+        16200
+      ],
+      "dtype": "int16",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/has_channel": {
+      "shape": [
+        16200,
+        28
+      ],
+      "dtype": "bool",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/m3/m3_valid_fraction": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/mean_elevation": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/patch_id": {
+      "shape": [
+        16200
+      ],
+      "dtype": "int32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/row_idx": {
+      "shape": [
+        16200
+      ],
+      "dtype": "int32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/split": {
+      "shape": [
+        16200
+      ],
+      "dtype": "uint8",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "metadata/valid_fraction": {
+      "shape": [
+        16200
+      ],
+      "dtype": "float32",
+      "chunks": null,
+      "compression": null,
+      "attributes": {}
+    },
+    "patches": {
+      "shape": [
+        16200,
+        28,
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "chunks": [
+        1,
+        28,
+        256,
+        256
+      ],
+      "compression": "gzip",
+      "attributes": {}
+    }
+  },
+  "status": "REAL_HDF5_METADATA_READ_NOT_LOADER_EQUIVALENCE",
+  "transfer": {
+    "accounted_body_bytes": 27133179,
+    "new_body_bytes": 21823488,
+    "range_requests": 333
+  }
+}

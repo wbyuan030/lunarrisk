@@ -1,0 +1,90 @@
+{
+  "budget_cap_bytes": 1073741824,
+  "accounted_body_bytes": 5309691,
+  "reserved_other_agent_bytes": 5242880,
+  "records": [
+    {
+      "repo": "datasets/ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "file": "README.md",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/README.md",
+      "bytes": 3858,
+      "sha256": "e569fa0d36d2d93c78fe1129e7f7789c7b047743edfa536346a2f1e2b97b645d",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "datasets/ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "file": "benchmark/geologic_units.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/geologic_units.json",
+      "bytes": 625,
+      "sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "datasets/ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "file": "pretraining/channel_stats.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/channel_stats.json",
+      "bytes": 2039,
+      "sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "datasets/ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "file": "pretraining/mmap/channel_index.json",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap/channel_index.json",
+      "bytes": 2775,
+      "sha256": "354ed51bd8cb7087313471b069faa8d61aa012eacdaed89bd3b609faec094fb7",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "file": "README.md",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/README.md",
+      "bytes": 13387,
+      "sha256": "8b19ff3221fcf45756a265f41883ce11145b3fdb18d5166b9b87393633abdae6",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "file": "backbone/config.yaml",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/config.yaml",
+      "bytes": 12102,
+      "sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "file": "tokenizers/WAC_vis/config.yaml",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/tokenizers/WAC_vis/config.yaml",
+      "bytes": 1614,
+      "sha256": "5845a0a02ef736cff8c7e6c1aa7cfc9b6869cfd3e11fa53995c3fb62fb7ec5ab",
+      "status": "VERIFIED_SMALL_FILE"
+    },
+    {
+      "repo": "datasets/ayushprd/Moonstone",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "file": "benchmark/lunar_patches_v4.h5",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+      "total_size": 74449119347,
+      "status": "VERIFIED_RANGE_ONLY_NOT_FULL_CHECKSUM",
+      "bytes": 16,
+      "prefix_hex": "894844460d0a1a0a0000000000080800"
+    },
+    {
+      "repo": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+      "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+      "file": "backbone/checkpoint.pt",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/checkpoint.pt",
+      "total_size": 2425755440,
+      "status": "VERIFIED_RANGE_ONLY_NOT_FULL_CHECKSUM",
+      "bytes": 16,
+      "prefix_hex": "504b0304000008080000000000000000"
+    }
+  ]
+}

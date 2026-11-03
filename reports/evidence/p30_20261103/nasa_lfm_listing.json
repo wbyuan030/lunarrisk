@@ -1,0 +1,214 @@
+{
+  "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+  "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "card_data": {
+    "license": "apache-2.0",
+    "library_name": "terratorch",
+    "pipeline_tag": "image-feature-extraction",
+    "tags": [
+      "lunar",
+      "moon",
+      "planetary-science",
+      "remote-sensing",
+      "foundation-model",
+      "multimodal",
+      "masked-token-modeling",
+      "terramind",
+      "terratorch",
+      "flexivit",
+      "crater-detection",
+      "vision"
+    ],
+    "datasets": [
+      "nasa-ibm-ai4science/Sombench-pretraining-data"
+    ]
+  },
+  "files": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "90feeaab0883f801f6b2809d78c48d3c2b92712b",
+      "size": 1636
+    },
+    {
+      "rfilename": "NI_LFM_Technical_Report.pdf",
+      "blobId": "2b258f9b0fea2e5e14acadf3deeee90410c57394",
+      "size": 24960658,
+      "lfs": {
+        "sha256": "ba8311a531245de60848203b18abd31d3770f54de6b8fb3c2af2235a42dec2cf",
+        "size": 24960658,
+        "pointerSize": 133
+      }
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "cbc8551272bb56dfe1e623d2bba9ebe2bbfe231b",
+      "size": 13387
+    },
+    {
+      "rfilename": "backbone/checkpoint.pt",
+      "blobId": "2e19a9960078621667de2da53d670e2db403882a",
+      "size": 2425755440,
+      "lfs": {
+        "sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+        "size": 2425755440,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "backbone/config.yaml",
+      "blobId": "17b6b828dd625584720aa5ea5172d35dffaec3b6",
+      "size": 12102
+    },
+    {
+      "rfilename": "config.json",
+      "blobId": "a152c49d61a41dd300b3df6bbd27db8a90ae530a",
+      "size": 165
+    },
+    {
+      "rfilename": "model_scheme.png",
+      "blobId": "dd44fc19ff9f561bae15d724875828d69b98fe53",
+      "size": 688643,
+      "lfs": {
+        "sha256": "caf653fceb888b372e762738e45781635405507ed3f92571efac6519dc5a3dcb",
+        "size": 688643,
+        "pointerSize": 131
+      }
+    },
+    {
+      "rfilename": "tokenizers/NAC_aspect3m/checkpoint.pt",
+      "blobId": "6085cd24d0545c718d4f031aab36cd42903808b0",
+      "size": 1148953180,
+      "lfs": {
+        "sha256": "c4371b6c59e2db1e7deb6eedb09ba67c9f4dcd4497d72715324ac8e5f85bd809",
+        "size": 1148953180,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/NAC_aspect3m/config.yaml",
+      "blobId": "7b31f8ec378a1221bec053de4b39edcb4e033e61",
+      "size": 1231
+    },
+    {
+      "rfilename": "tokenizers/NAC_dtm3m_local/checkpoint.pt",
+      "blobId": "50291a89ed925d330e683d1e84192618d6b62cfe",
+      "size": 1147871772,
+      "lfs": {
+        "sha256": "6389580caa4e9f6998be5928c8ec5d9d4db161beb29f92af824b389354ce557a",
+        "size": 1147871772,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/NAC_dtm3m_local/config.yaml",
+      "blobId": "4654af5804e20b87ff591a875863340aa8154ae0",
+      "size": 1132
+    },
+    {
+      "rfilename": "tokenizers/NAC_nac/checkpoint.pt",
+      "blobId": "9cf5a6627c13dc8c6f750ca68d15971dfd3a2fa1",
+      "size": 1147871772,
+      "lfs": {
+        "sha256": "8ef66be7a44b5d6b9172d56da19c20917a70bcce111c6da57c9fa8a5ec768072",
+        "size": 1147871772,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/NAC_nac/config.yaml",
+      "blobId": "5d582f58bf35bceb6b3a67cfaef04fcf4aeacc7b",
+      "size": 1133
+    },
+    {
+      "rfilename": "tokenizers/NAC_slope3m/checkpoint.pt",
+      "blobId": "742e828b00a071be147eb5f021a3d1d834664db4",
+      "size": 1147871772,
+      "lfs": {
+        "sha256": "dabf0805f92fbfc2dc8dc0e5ba93529c71652781842a5b54a7e09d945a11f685",
+        "size": 1147871772,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/NAC_slope3m/config.yaml",
+      "blobId": "e0e84538f0680ada68d6b8e9b497f190bdc49374",
+      "size": 1137
+    },
+    {
+      "rfilename": "tokenizers/WAC_aspect/checkpoint.pt",
+      "blobId": "96c35f9db60bce727eda819b17427b1973bd4b8b",
+      "size": 1148953180,
+      "lfs": {
+        "sha256": "1aed634ba30b3e3c2d84ac183d596f4a33b9787c4b1693f9662555edefdd871e",
+        "size": 1148953180,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/WAC_aspect/config.yaml",
+      "blobId": "259b40ea78e472277f890ab13f0c7f301283fe86",
+      "size": 1208
+    },
+    {
+      "rfilename": "tokenizers/WAC_dtm/checkpoint.pt",
+      "blobId": "4039df94b07c494f4cff84c1971ebf054a9a31f2",
+      "size": 1147871772,
+      "lfs": {
+        "sha256": "6996714fc70c42178dae8490e505af6653477e41ec04cd419f6e47ea28ec1a5d",
+        "size": 1147871772,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/WAC_dtm/config.yaml",
+      "blobId": "d9f61839a675503040eb06007cba1122b566f5f7",
+      "size": 1145
+    },
+    {
+      "rfilename": "tokenizers/WAC_slope/checkpoint.pt",
+      "blobId": "7bfc1e74e6575ea58aa6c257db7b0e58076d8ef3",
+      "size": 1147871772,
+      "lfs": {
+        "sha256": "d09f861d19f0cb3f0325d028332ba90d89b0b4205b8aaad3c42656d8f2c89080",
+        "size": 1147871772,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/WAC_slope/config.yaml",
+      "blobId": "ab543e11b385a18b33f6aade1dff44762ab3711f",
+      "size": 1099
+    },
+    {
+      "rfilename": "tokenizers/WAC_uv/checkpoint.pt",
+      "blobId": "3a80a52677f5e75666201691ff37187c7c7df07f",
+      "size": 1148953180,
+      "lfs": {
+        "sha256": "b16b35d3dda5befb1267d7709d79806d6b81627fe15018551bce620228e56be7",
+        "size": 1148953180,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/WAC_uv/config.yaml",
+      "blobId": "7101f17531e04912d053600b18ec11811da1bff2",
+      "size": 1215
+    },
+    {
+      "rfilename": "tokenizers/WAC_vis/checkpoint.pt",
+      "blobId": "f568cd39ce7b7842436e2daaeb76a92c0395c548",
+      "size": 1152197404,
+      "lfs": {
+        "sha256": "e2309b66117d08af89d9a3aeda23d513565febe8e0fcb9b0af7d1986e89f1170",
+        "size": 1152197404,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "tokenizers/WAC_vis/config.yaml",
+      "blobId": "46e39783b70e652ea9568200755200022ac04f13",
+      "size": 1614
+    }
+  ],
+  "listing_sha256": "2488311ad34477d1da0e0daca296ca6670b27946fe05b4947549b2cea6c3753e"
+}

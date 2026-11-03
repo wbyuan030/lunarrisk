@@ -1,0 +1,25 @@
+{
+  "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "response_body_bytes": 70444,
+  "tree_truncated": false,
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 6090,
+      "sha256": "66c86f3cd0d3d4416edf1252aeb5ec16c3c5e0d7706823b3dd814d7834a05cc6",
+      "blob": "3bfda07ba03d00aa3716306f6257b6c0d72b091d"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 11355,
+      "sha256": "9b00f43643ca3c0f99c0d4345ea6182735c0a1897b2e2681593012238cb70150",
+      "blob": "61e0ef2615aee561d88ce5095633a56b69f8f238"
+    },
+    {
+      "file": "pyproject.toml",
+      "bytes": 1175,
+      "sha256": "41a884607aabf6dcf71de7c2036c5e95e58c796ae474adb28de12c4c4010d7f9",
+      "blob": "bc0ffc590e6174b5e11fce2d817a69130232107d"
+    }
+  ]
+}
