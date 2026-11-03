@@ -1,0 +1,10 @@
+{
+  "prior_actual_body_bytes": 39016735,
+  "new_actual_body_bytes": 688128,
+  "cumulative_actual_body_bytes": 39704863,
+  "prior_conservative_body_bytes": 43982703,
+  "cumulative_conservative_body_bytes": 44670831,
+  "first_round_cap_bytes": 1073741824,
+  "http_tls_overhead_measured": false,
+  "automatic_retries": false
+}

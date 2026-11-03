@@ -83,6 +83,27 @@ class TestSamplePlan(unittest.TestCase):
         with self.assertRaises(ValueError):
             pilot.sample_plan(self.metadata, 1000)
 
+    def test_first_per_age_class_is_deterministic_split_specific_and_keeps_original_ids(self):
+        names = ["Cc", "pNt", "EIp", "Nc", "Ec"]
+        metadata = {"status": self.metadata["status"], "metadata": {
+            "metadata/split": [2]*5+[0]*5+[1]*5+[0],
+            "metadata/patch_id": list(range(100, 116)),
+            "metadata/geology/dominant_unit_name": names*3+["pNt"]}}
+        plan = pilot.sample_plan(metadata, 5, "first_per_age_class")
+        self.assertEqual(plan["indices"], [6, 8, 7, 9, 5, 11, 13, 12, 14, 10])
+        self.assertEqual(plan["patch_ids"], [106, 108, 107, 109, 105, 111, 113, 112, 114, 110])
+        self.assertEqual(plan["age_targets"], list(range(5))*2)
+        self.assertEqual(plan["stored_splits"], [0]*5+[1]*5)
+        self.assertEqual(plan["test_pixels_requested"], 0)
+
+    def test_missing_class_and_wrong_stratified_budget_cannot_borrow_test(self):
+        with self.assertRaisesRegex(ValueError, "not enough classes"):
+            pilot.sample_plan(self.metadata, 5, "first_per_age_class")
+        with self.assertRaisesRegex(ValueError, "exactly 5"):
+            pilot.sample_plan(self.metadata, 4, "first_per_age_class")
+        with self.assertRaisesRegex(ValueError, "unknown"):
+            pilot.sample_plan(self.metadata, 5, "best_model_score")
+
 
 class TestMetadataAudit(unittest.TestCase):
     def fixture(self):

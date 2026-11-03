@@ -1,0 +1,20 @@
+{
+  "tests": 476,
+  "passed": 475,
+  "skipped": 1,
+  "compileall_exit": 0,
+  "logs": [
+    {
+      "path": "probe.log",
+      "source_sha256": "7f8709b90cf4d496f7d766fcd512005257d35be8ff07becb3b8723b89a63de8a",
+      "archive_sha256": "7f8709b90cf4d496f7d766fcd512005257d35be8ff07becb3b8723b89a63de8a"
+    },
+    {
+      "path": "tests_476.log",
+      "source_sha256": "ba00c8cf3f3dff28a64c8b25b51d08e59135c7ae6b800b987e18079f7344cef3",
+      "archive_sha256": "47c8d142bb24e08e5ae53ad291a1d1182937b2b278f88db97f61aeed170d823a"
+    }
+  ],
+  "skip": "Legacy labels_hydrated.csv optional check absent in isolated source snapshot",
+  "probe_success_is_not_equivalence_pass": true
+}

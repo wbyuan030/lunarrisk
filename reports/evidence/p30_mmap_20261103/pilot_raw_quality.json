@@ -1,0 +1,202 @@
+{
+  "pilot": "age_pilot_01.h5",
+  "samples": 8,
+  "channels": {
+    "wac_morphology": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": 1.0,
+      "finite_max": 227.06356811523438
+    },
+    "elevation": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": -1100.109375,
+      "finite_max": 598.2109375
+    },
+    "slope": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 2,
+      "finite_min": 0.0,
+      "finite_max": 86.42427825927734
+    },
+    "roughness": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "diviner_tbol_midnight": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "diviner_temp_night": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "rock_abundance": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "christiansen_feature": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_750": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_950": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_1000": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_1250": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_1580": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_2000": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_2817": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "m3_2857": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "grail_freeair": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": -79.28365325927734,
+      "finite_max": 56.0574951171875
+    },
+    "grail_bouguer": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": -5.199270248413086,
+      "finite_max": 18.342002868652344
+    },
+    "grail_uncertainty": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": 0.22815968096256256,
+      "finite_max": 0.3261571228504181
+    },
+    "minirf_cpr": {
+      "finite_pixels": 268088,
+      "nonfinite_pixels": 256200,
+      "finite_zero_pixels": 0,
+      "finite_min": 0.00022754078963771462,
+      "finite_max": 3.638821601867676
+    },
+    "minirf_s1": {
+      "finite_pixels": 268718,
+      "nonfinite_pixels": 255570,
+      "finite_zero_pixels": 0,
+      "finite_min": 8.80954903550446e-05,
+      "finite_max": 1.7301719188690186
+    },
+    "wac_hapke_415nm": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "wac_hapke_566nm": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "wac_hapke_604nm": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "wac_hapke_689nm": {
+      "finite_pixels": 0,
+      "nonfinite_pixels": 524288,
+      "finite_zero_pixels": 0,
+      "finite_min": null,
+      "finite_max": null
+    },
+    "clementine_uvvis_750nm": {
+      "finite_pixels": 523034,
+      "nonfinite_pixels": 1254,
+      "finite_zero_pixels": 0,
+      "finite_min": 1.0,
+      "finite_max": 255.0
+    },
+    "lpgrs_tio2": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 446749,
+      "finite_min": 0.0,
+      "finite_max": 0.0036326060071587563
+    },
+    "lpgrs_feo": {
+      "finite_pixels": 524288,
+      "nonfinite_pixels": 0,
+      "finite_zero_pixels": 0,
+      "finite_min": 0.03668300062417984,
+      "finite_max": 0.05164285749197006
+    }
+  }
+}

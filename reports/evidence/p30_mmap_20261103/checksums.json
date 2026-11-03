@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "channel_comparison.csv",
+      "bytes": 2909,
+      "sha256": "fb6262f7a2999a1fb5952d6937d6ef82da5c384a64dd5c7850b3b42e16c80a52"
+    },
+    {
+      "path": "pilot_raw_quality.json",
+      "bytes": 5096,
+      "sha256": "9b579a70f0375a563932bf799b908149cdf2d0d4cf8f81ee2d3891efe065bb74"
+    },
+    {
+      "path": "probe.log",
+      "bytes": 60574,
+      "sha256": "7f8709b90cf4d496f7d766fcd512005257d35be8ff07becb3b8723b89a63de8a"
+    },
+    {
+      "path": "probe_report.json",
+      "bytes": 239826,
+      "sha256": "343360b2e2c616b1f9243e804087bb1860e1fc9173505d12e771898d9dad837f"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 14666,
+      "sha256": "2c9d68a2453c9bf7b65ea296e78ee9f8728c5121c414be4e0e7909f9343547bc"
+    },
+    {
+      "path": "tests_476.log",
+      "bytes": 57318,
+      "sha256": "47c8d142bb24e08e5ae53ad291a1d1182937b2b278f88db97f61aeed170d823a"
+    },
+    {
+      "path": "transfer_ledger.json",
+      "bytes": 324,
+      "sha256": "aab29fea355d6b994510e17eac463041db0e99eb4283a5c3e1192b8f21b8f291"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 679,
+      "sha256": "d6ed59ef43320eda540262ef53edaffa0d13098dfd6352469b0a4b88b6b71a4f"
+    }
+  ]
+}
