@@ -1,0 +1,207 @@
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at ../aten/src/ATen/Context.cpp:296.)
+  return F.linear(input, self.weight, self.bias)
+[compare_p22] training point_seed42
+{
+  "variant": "point",
+  "seed": 42,
+  "epochs_run": 14,
+  "trainable_parameters": 98464,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0562 g15_MAE=0.0418 roughness_9m_MAE=0.0114 relief_p95_p5_MAE=18.4492 brier(g10>0.05)=0.0984
+val: n=120 groups=26 g10_MAE=0.0403 g15_MAE=0.0272 roughness_9m_MAE=0.0090 relief_p95_p5_MAE=9.6777 brier(g10>0.05)=0.0777
+cal: n=120 groups=26 g10_MAE=0.0662 g15_MAE=0.0584 roughness_9m_MAE=0.0129 relief_p95_p5_MAE=25.9832 brier(g10>0.05)=0.0991
+test: n=110 groups=25 g10_MAE=0.0648 g15_MAE=0.0568 roughness_9m_MAE=0.0155 relief_p95_p5_MAE=30.7007 brier(g10>0.05)=0.0813
+[compare_p22] training point_seed43
+{
+  "variant": "point",
+  "seed": 43,
+  "epochs_run": 14,
+  "trainable_parameters": 98464,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0755 g15_MAE=0.0549 roughness_9m_MAE=0.0157 relief_p95_p5_MAE=15.2053 brier(g10>0.05)=0.0932
+val: n=120 groups=26 g10_MAE=0.0519 g15_MAE=0.0281 roughness_9m_MAE=0.0107 relief_p95_p5_MAE=11.4312 brier(g10>0.05)=0.0780
+cal: n=120 groups=26 g10_MAE=0.0855 g15_MAE=0.0715 roughness_9m_MAE=0.0186 relief_p95_p5_MAE=20.2648 brier(g10>0.05)=0.0983
+test: n=110 groups=25 g10_MAE=0.0858 g15_MAE=0.0815 roughness_9m_MAE=0.0258 relief_p95_p5_MAE=25.5788 brier(g10>0.05)=0.0784
+[compare_p22] training point_seed44
+{
+  "variant": "point",
+  "seed": 44,
+  "epochs_run": 18,
+  "trainable_parameters": 98464,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0692 g15_MAE=0.0584 roughness_9m_MAE=0.0094 relief_p95_p5_MAE=14.6244 brier(g10>0.05)=0.0792
+val: n=120 groups=26 g10_MAE=0.0454 g15_MAE=0.0280 roughness_9m_MAE=0.0075 relief_p95_p5_MAE=8.9275 brier(g10>0.05)=0.0674
+cal: n=120 groups=26 g10_MAE=0.0817 g15_MAE=0.0823 roughness_9m_MAE=0.0113 relief_p95_p5_MAE=19.8560 brier(g10>0.05)=0.0832
+test: n=110 groups=25 g10_MAE=0.0699 g15_MAE=0.0823 roughness_9m_MAE=0.0137 relief_p95_p5_MAE=29.0877 brier(g10>0.05)=0.0646
+[compare_p22] training diagonal_seed42
+{
+  "variant": "diagonal",
+  "seed": 42,
+  "epochs_run": 34,
+  "trainable_parameters": 99008,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.1189 g15_MAE=0.0810 roughness_9m_MAE=0.0071 relief_p95_p5_MAE=7.7031 brier(g10>0.05)=0.1196
+val: n=120 groups=26 g10_MAE=0.1094 g15_MAE=0.0556 roughness_9m_MAE=0.0058 relief_p95_p5_MAE=6.3432 brier(g10>0.05)=0.1253
+cal: n=120 groups=26 g10_MAE=0.1307 g15_MAE=0.1152 roughness_9m_MAE=0.0085 relief_p95_p5_MAE=12.6180 brier(g10>0.05)=0.1041
+test: n=110 groups=25 g10_MAE=0.1544 g15_MAE=0.1447 roughness_9m_MAE=0.0126 relief_p95_p5_MAE=13.5450 brier(g10>0.05)=0.1021
+[compare_p22] training diagonal_seed43
+{
+  "variant": "diagonal",
+  "seed": 43,
+  "epochs_run": 28,
+  "trainable_parameters": 99008,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0729 g15_MAE=0.0525 roughness_9m_MAE=0.0094 relief_p95_p5_MAE=7.0574 brier(g10>0.05)=0.0928
+val: n=120 groups=26 g10_MAE=0.0575 g15_MAE=0.0348 roughness_9m_MAE=0.0079 relief_p95_p5_MAE=6.4042 brier(g10>0.05)=0.0802
+cal: n=120 groups=26 g10_MAE=0.0896 g15_MAE=0.0895 roughness_9m_MAE=0.0107 relief_p95_p5_MAE=10.9402 brier(g10>0.05)=0.1011
+test: n=110 groups=25 g10_MAE=0.1195 g15_MAE=0.0973 roughness_9m_MAE=0.0201 relief_p95_p5_MAE=11.3852 brier(g10>0.05)=0.0698
+[compare_p22] training diagonal_seed44
+{
+  "variant": "diagonal",
+  "seed": 44,
+  "epochs_run": 21,
+  "trainable_parameters": 99008,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.1234 g15_MAE=0.0984 roughness_9m_MAE=0.0070 relief_p95_p5_MAE=7.4518 brier(g10>0.05)=0.1060
+val: n=120 groups=26 g10_MAE=0.1072 g15_MAE=0.0731 roughness_9m_MAE=0.0064 relief_p95_p5_MAE=5.8255 brier(g10>0.05)=0.1055
+cal: n=120 groups=26 g10_MAE=0.1484 g15_MAE=0.1403 roughness_9m_MAE=0.0076 relief_p95_p5_MAE=11.3287 brier(g10>0.05)=0.1062
+test: n=110 groups=25 g10_MAE=0.1859 g15_MAE=0.1827 roughness_9m_MAE=0.0117 relief_p95_p5_MAE=13.8953 brier(g10>0.05)=0.0971
+[compare_p22] training joint_seed42
+{
+  "variant": "joint",
+  "seed": 42,
+  "epochs_run": 24,
+  "trainable_parameters": 100096,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0810 g15_MAE=0.0647 roughness_9m_MAE=0.0080 relief_p95_p5_MAE=2148715.1691 brier(g10>0.05)=0.0906
+val: n=120 groups=26 g10_MAE=0.0611 g15_MAE=0.0479 roughness_9m_MAE=0.0060 relief_p95_p5_MAE=336.9051 brier(g10>0.05)=0.0865
+cal: n=120 groups=26 g10_MAE=0.0989 g15_MAE=0.0925 roughness_9m_MAE=0.0096 relief_p95_p5_MAE=44487.5108 brier(g10>0.05)=0.0897
+test: n=110 groups=25 g10_MAE=0.1286 g15_MAE=0.1127 roughness_9m_MAE=0.0165 relief_p95_p5_MAE=167357.8531 brier(g10>0.05)=0.0764
+[compare_p22] training joint_seed43
+{
+  "variant": "joint",
+  "seed": 43,
+  "epochs_run": 13,
+  "trainable_parameters": 100096,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.1435 g15_MAE=0.1279 roughness_9m_MAE=0.0186 relief_p95_p5_MAE=18.1556 brier(g10>0.05)=0.1206
+val: n=120 groups=26 g10_MAE=0.1337 g15_MAE=0.0989 roughness_9m_MAE=0.0128 relief_p95_p5_MAE=13.3337 brier(g10>0.05)=0.1332
+cal: n=120 groups=26 g10_MAE=0.1465 g15_MAE=0.1529 roughness_9m_MAE=0.0208 relief_p95_p5_MAE=21.9957 brier(g10>0.05)=0.1035
+test: n=110 groups=25 g10_MAE=0.1834 g15_MAE=0.1864 roughness_9m_MAE=0.0348 relief_p95_p5_MAE=35.0804 brier(g10>0.05)=0.0976
+[compare_p22] training joint_seed44
+{
+  "variant": "joint",
+  "seed": 44,
+  "epochs_run": 14,
+  "trainable_parameters": 100096,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.1011 g15_MAE=0.1012 roughness_9m_MAE=0.0143 relief_p95_p5_MAE=13.9309 brier(g10>0.05)=0.1084
+val: n=120 groups=26 g10_MAE=0.0953 g15_MAE=0.0760 roughness_9m_MAE=0.0121 relief_p95_p5_MAE=8.1809 brier(g10>0.05)=0.1159
+cal: n=120 groups=26 g10_MAE=0.1132 g15_MAE=0.1271 roughness_9m_MAE=0.0146 relief_p95_p5_MAE=19.8335 brier(g10>0.05)=0.1035
+test: n=110 groups=25 g10_MAE=0.1407 g15_MAE=0.1548 roughness_9m_MAE=0.0150 relief_p95_p5_MAE=27.2495 brier(g10>0.05)=0.0832
+{
+  "models": [
+    "coarse_logistic",
+    "coarse_ridge",
+    "diagonal",
+    "direct_event",
+    "joint",
+    "point"
+  ],
+  "sample_sets": {
+    "union": 749,
+    "intersection": 749,
+    "per_model": {
+      "coarse_logistic_seed42": 749,
+      "coarse_logistic_seed43": 749,
+      "coarse_logistic_seed44": 749,
+      "coarse_ridge_seed42": 749,
+      "coarse_ridge_seed43": 749,
+      "coarse_ridge_seed44": 749,
+      "diagonal_seed42": 749,
+      "diagonal_seed43": 749,
+      "diagonal_seed44": 749,
+      "direct_event_seed42": 749,
+      "direct_event_seed43": 749,
+      "direct_event_seed44": 749,
+      "joint_seed42": 749,
+      "joint_seed43": 749,
+      "joint_seed44": 749,
+      "point_seed42": 749,
+      "point_seed43": 749,
+      "point_seed44": 749
+    }
+  }
+}
+coarse_logistic_seed42   brier=0.0728 nll=0.2283 prevalence=0.691
+coarse_logistic_seed43   brier=0.0728 nll=0.2283 prevalence=0.691
+coarse_logistic_seed44   brier=0.0728 nll=0.2283 prevalence=0.691
+coarse_ridge_seed42      brier=0.1020 nll=0.3003 prevalence=0.691
+coarse_ridge_seed43      brier=0.1024 nll=0.3019 prevalence=0.691
+coarse_ridge_seed44      brier=0.1016 nll=0.2997 prevalence=0.691
+diagonal_seed42          brier=0.1021 nll=0.3237 prevalence=0.691
+diagonal_seed43          brier=0.0698 nll=0.2490 prevalence=0.691
+diagonal_seed44          brier=0.0971 nll=0.3258 prevalence=0.691
+direct_event_seed42      brier=0.0801 nll=0.2403 prevalence=0.691
+direct_event_seed43      brier=0.1001 nll=0.2924 prevalence=0.691
+direct_event_seed44      brier=0.0586 nll=0.2013 prevalence=0.691
+joint_seed42             brier=0.0764 nll=0.2698 prevalence=0.691
+joint_seed43             brier=0.0976 nll=0.3249 prevalence=0.691
+joint_seed44             brier=0.0832 nll=0.2768 prevalence=0.691
+point_seed42             brier=0.0813 nll=0.2686 prevalence=0.691
+point_seed43             brier=0.0784 nll=0.2546 prevalence=0.691
+point_seed44             brier=0.0646 nll=0.2120 prevalence=0.691

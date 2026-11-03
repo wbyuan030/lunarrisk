@@ -1,0 +1,12 @@
+{
+  "status": "UNCERTIFIED_NEEDS_FULL_PAIRWISE_POLYGON_AUDIT",
+  "group_count": 41,
+  "selected_group_count": 15,
+  "threshold_km": 10.0,
+  "centroid_collision_pairs": 0,
+  "pairs_touching_selection": 0,
+  "examples": [],
+  "warning": "Centroids cannot prove polygon separation. Even if there are NO centroid collisions, final signoff REQUIRES all eligible polygon-to-polygon pairs, connected components and inter-group min-distance.",
+  "gate3": "NOT_FROZEN",
+  "gate4": "HOLD"
+}

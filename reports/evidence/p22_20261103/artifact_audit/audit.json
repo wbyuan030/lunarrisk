@@ -1,0 +1,326 @@
+{
+  "environment": {
+    "python": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "device": "AMD Radeon RX 7900 XT"
+  },
+  "source_sha256": {
+    "scripts/train_posterior_p21.py": "1be8af1be74e11ca644123519fc6cf81dab297403b02cb7d52a746d4f576e65a",
+    "scripts/train_baseline.py": "496b4e699f835d13cbbdfa61935303e7ef9fdd5ac5f99ee73ca603e95fc65ae1",
+    "scripts/compare_p22.py": "587089caea2b675d02b2da16f93af544c8435db95bd0314bcaac85fc088f3467",
+    "scripts/audit_p22_artifacts.py": "b258a48ea0d86c5809d045917880bea74652443f7b58e797fa520d3cb59588d6",
+    "scripts/diagnose_p22_rules.py": "f7f3fc54ff6a95f05e3f49fd08d40acf0caff7e34cf76867b4b85cf702b39cf3",
+    "scripts/run_p22_evidence.py": "029e375bcf1e8ffb48300e5cbfc881f64a2427386c57503549894871248ab45b",
+    "src/lunarrisk/__init__.py": "f1e08fc3ff4662f391bf80e82be8115fd03ec1e8d834f13b3e3bc551a18f258e",
+    "src/lunarrisk/probabilistic/__init__.py": "90edc4ce50221951519c925ff06303bdcb12a7c16c53f9f004385ceb8a5b174a",
+    "src/lunarrisk/probabilistic/posterior.py": "44d9b458116848918f8408aaa96d8f4a9fd057f8cb0dc174ea9f231fbc7b2736",
+    "src/lunarrisk/probabilistic/transforms.py": "f06a823cbfef0c8e0e9dc34fddfe3a91d181abd89a3e5a91e0958a3475322dd7",
+    "src/lunarrisk/rules/__init__.py": "3ea65cbf1a6108a82da533073e9c26a13ed330144f21a4e70addbe9f583ae3ff",
+    "src/lunarrisk/rules/ast.py": "8542cadf51e41486d11be33717ec0b662f6393e00117bfa97339d0d1d6df06f8"
+  },
+  "replay": {
+    "diagonal_seed42": {
+      "checkpoint_file_sha256": "76af292b2be96bb021fb4f22aaf02bc7353de2d4b58cf662b248b2a682eb1439",
+      "weights_sha256": "dd6c2b4b9ea721a40a5243c703f1c63b41535604c9d3857352ebd593255fcce4",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "diagonal_seed43": {
+      "checkpoint_file_sha256": "cb5daf6b0ef8bc007ba1ed4f1c301a6ba73c6290b988b85b9d66327110e2d0fc",
+      "weights_sha256": "ecf3575a3d2c4977efb9237167e6fd727a4e3a57025b1f80a3b6094ce22a6386",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "diagonal_seed44": {
+      "checkpoint_file_sha256": "ff1c7a5481acd2f4252b7d6d66389988069dfa1943ee03625aa2b1fedf7f98bb",
+      "weights_sha256": "14937c4510879b9db011413c430a031546e2ddbafc1d196d647ae8d26963d6d3",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "joint_seed42": {
+      "checkpoint_file_sha256": "347fb3f39c66d3dd4514ef2e76e51b86e8728f0cd2952129b52519fa352425a1",
+      "weights_sha256": "4e1f2b6f558c0c9b9945f41cec3de64b5116d321f42d07077a78c4eaaf1625f0",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "joint_seed43": {
+      "checkpoint_file_sha256": "a1db9ddeb9ce141fb34286cd00d894fa18b6a848f835c1baddb097aa5c5d3fb7",
+      "weights_sha256": "de3a5b97a478a291c4389963de13d9bcc8e579369fed2ae8e0bfa56b2d600969",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "joint_seed44": {
+      "checkpoint_file_sha256": "765e45eaaab5e95da6b82bdd606733614d34a3af1cb1d38c05c40f28ee92f027",
+      "weights_sha256": "835350550559ee4876498223ac8462cf66659ed8060510483123823188648b87",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "point_seed42": {
+      "checkpoint_file_sha256": "5fcbf8197c6c7e65219aba3ff2331b2e4372e1214bea94d29828fa96a2c70f72",
+      "weights_sha256": "a8d21d1c3d4f91d0286fb318475c1ed22e155e15b9363ccdfa5c66a5b5698364",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "point_seed43": {
+      "checkpoint_file_sha256": "af0010655c70bb22b5aa92da66abbdd97fd91023b241445beb81b0d477eabf0b",
+      "weights_sha256": "414d4fd874691b24bbfe70b2dc3c62388a92c21b0d2527d9f1d8eb286a1dbf5f",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    },
+    "point_seed44": {
+      "checkpoint_file_sha256": "a6af5e64b239e4349f3ad522e66241bfc072591f34827a3a0dde7c9e25e8fb53",
+      "weights_sha256": "179dc266b6bf0273fcbaf7746e4480798ca89bc9151eea6b2e0532b8b6b53cae",
+      "max_probability_delta": 0.0,
+      "max_brier_delta": 0.0,
+      "passed": true
+    }
+  },
+  "repetitions": [
+    {
+      "variant": "point",
+      "seed": 42,
+      "repetition": 1,
+      "command": [
+        "/usr/bin/python3",
+        "${SOURCE_ROOT}/scripts/train_posterior_p21.py",
+        "--labels",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/labels_p22.csv",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--variant",
+        "point",
+        "--seed",
+        "42",
+        "--epochs",
+        "40",
+        "--calibrate",
+        "--deterministic",
+        "--batch-size",
+        "32",
+        "--lr",
+        "0.001",
+        "--draws",
+        "4096",
+        "--sampling-seed",
+        "42",
+        "--device",
+        "cuda",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat1/report.json",
+        "--save-checkpoint",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat1/model.pt",
+        "--predictions-out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat1/pred.csv"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 9.030041128396988,
+      "weights_equal": true,
+      "temperature_equal": true,
+      "u0_temperatures_equal": true,
+      "max_probability_delta": 0.0
+    },
+    {
+      "variant": "point",
+      "seed": 42,
+      "repetition": 2,
+      "command": [
+        "/usr/bin/python3",
+        "${SOURCE_ROOT}/scripts/train_posterior_p21.py",
+        "--labels",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/labels_p22.csv",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--variant",
+        "point",
+        "--seed",
+        "42",
+        "--epochs",
+        "40",
+        "--calibrate",
+        "--deterministic",
+        "--batch-size",
+        "32",
+        "--lr",
+        "0.001",
+        "--draws",
+        "4096",
+        "--sampling-seed",
+        "42",
+        "--device",
+        "cuda",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat2/report.json",
+        "--save-checkpoint",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat2/model.pt",
+        "--predictions-out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat2/pred.csv"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 9.061725556850433,
+      "weights_equal": true,
+      "temperature_equal": true,
+      "u0_temperatures_equal": true,
+      "max_probability_delta": 0.0
+    },
+    {
+      "variant": "joint",
+      "seed": 42,
+      "repetition": 1,
+      "command": [
+        "/usr/bin/python3",
+        "${SOURCE_ROOT}/scripts/train_posterior_p21.py",
+        "--labels",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/labels_p22.csv",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--variant",
+        "joint",
+        "--seed",
+        "42",
+        "--epochs",
+        "40",
+        "--calibrate",
+        "--deterministic",
+        "--batch-size",
+        "32",
+        "--lr",
+        "0.001",
+        "--draws",
+        "4096",
+        "--sampling-seed",
+        "42",
+        "--device",
+        "cuda",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat1/report.json",
+        "--save-checkpoint",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat1/model.pt",
+        "--predictions-out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat1/pred.csv",
+        "--ablate-u",
+        "--ablate-u-calibration-mode",
+        "both",
+        "--matched-marginals"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 13.937333198264241,
+      "weights_equal": true,
+      "temperature_equal": true,
+      "u0_temperatures_equal": true,
+      "max_probability_delta": 0.0
+    },
+    {
+      "variant": "joint",
+      "seed": 42,
+      "repetition": 2,
+      "command": [
+        "/usr/bin/python3",
+        "${SOURCE_ROOT}/scripts/train_posterior_p21.py",
+        "--labels",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/labels_p22.csv",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--variant",
+        "joint",
+        "--seed",
+        "42",
+        "--epochs",
+        "40",
+        "--calibrate",
+        "--deterministic",
+        "--batch-size",
+        "32",
+        "--lr",
+        "0.001",
+        "--draws",
+        "4096",
+        "--sampling-seed",
+        "42",
+        "--device",
+        "cuda",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat2/report.json",
+        "--save-checkpoint",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat2/model.pt",
+        "--predictions-out",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat2/pred.csv",
+        "--ablate-u",
+        "--ablate-u-calibration-mode",
+        "both",
+        "--matched-marginals"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 14.057845072820783,
+      "weights_equal": true,
+      "temperature_equal": true,
+      "u0_temperatures_equal": true,
+      "max_probability_delta": 0.0
+    }
+  ],
+  "baseline_replay": {
+    "coarse_logistic_seed42": {
+      "max_abs_delta": 1.1102230246251565e-16,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "223859b18ef00050deff623ec9e25c74cfd7d0b5dae72b18797fe4124f4d50ef"
+    },
+    "coarse_logistic_seed43": {
+      "max_abs_delta": 1.1102230246251565e-16,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "d13e71afcf3745190be4d3342674a4770eba013eb70c14bcb0f2c53b234828bd"
+    },
+    "coarse_logistic_seed44": {
+      "max_abs_delta": 1.1102230246251565e-16,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "330f69c3cf8ca04e551086e891688308914c155b74059e6d2e7319479e31cca0"
+    },
+    "coarse_ridge_seed42": {
+      "max_abs_delta": 2.842170943040401e-14,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "a8b8667a73da577f7d4f4dfd3497f620b1a78644fa1b1d386ac7169ee492ac9b"
+    },
+    "coarse_ridge_seed43": {
+      "max_abs_delta": 2.842170943040401e-14,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "49d83d6a53ac7cfd9b3ad51d858cc6daf4b4df4bc4803c59f1adc7500e0e9ee0"
+    },
+    "coarse_ridge_seed44": {
+      "max_abs_delta": 2.842170943040401e-14,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "a16b1f23b53b09db7333b9c9946f4df64d16284e485db7783ca29c31332ec5a2"
+    },
+    "direct_event_seed42": {
+      "max_abs_delta": 2.976837154555767e-08,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "bbef248b0b5e354b4ddf0a8dcafcec845d16eb577aa92221e1f9bb403a76821c"
+    },
+    "direct_event_seed43": {
+      "max_abs_delta": 2.9604339646382982e-08,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "5bd39167f1816572b0669cab5d0b28b8b690deb86bc81a3c430f7ce471946123"
+    },
+    "direct_event_seed44": {
+      "max_abs_delta": 2.9688262959126632e-08,
+      "atol": 1e-07,
+      "passed": true,
+      "checkpoint_sha256": "b0cfe6cd0799f9ffa76f27fa4b4dcf018cf68cf72f4c8008971f94a198fa2c45"
+    }
+  },
+  "passed": true
+}

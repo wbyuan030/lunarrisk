@@ -1,0 +1,8 @@
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at ../aten/src/ATen/Context.cpp:296.)
+  return F.linear(input, self.weight, self.bias)
+{
+  "rule_count": 18,
+  "model_count": 12,
+  "rule_sha256": "1283b9812e6e633afd6582664663e06593364c9b2f24c041cdee5dfc50314951",
+  "status": "retrospective development diagnostic; no selection"
+}

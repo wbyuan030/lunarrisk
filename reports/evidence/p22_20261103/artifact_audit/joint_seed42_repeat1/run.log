@@ -1,0 +1,18 @@
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/linear.py:125: UserWarning: Attempting to use hipBLASLt on an unsupported architecture! Overriding blas backend to hipblas (Triggered internally at ../aten/src/ATen/Context.cpp:296.)
+  return F.linear(input, self.weight, self.bias)
+{
+  "variant": "joint",
+  "seed": 42,
+  "epochs_run": 24,
+  "trainable_parameters": 100096,
+  "rows": {
+    "train": 399,
+    "val": 120,
+    "cal": 120,
+    "test": 110
+  }
+}
+train: n=399 groups=195 g10_MAE=0.0810 g15_MAE=0.0647 roughness_9m_MAE=0.0080 relief_p95_p5_MAE=2148715.1691 brier(g10>0.05)=0.0906
+val: n=120 groups=26 g10_MAE=0.0611 g15_MAE=0.0479 roughness_9m_MAE=0.0060 relief_p95_p5_MAE=336.9051 brier(g10>0.05)=0.0865
+cal: n=120 groups=26 g10_MAE=0.0989 g15_MAE=0.0925 roughness_9m_MAE=0.0096 relief_p95_p5_MAE=44487.5108 brier(g10>0.05)=0.0897
+test: n=110 groups=25 g10_MAE=0.1286 g15_MAE=0.1127 roughness_9m_MAE=0.0165 relief_p95_p5_MAE=167357.8531 brier(g10>0.05)=0.0764

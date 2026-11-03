@@ -1,0 +1,93 @@
+{
+  "model": "coarse_ridge",
+  "seed": 44,
+  "temperature": 1.386820015205136,
+  "sigma_physical": [
+    0.05668096114179796,
+    0.03820340285348249,
+    0.012795332717790462,
+    5.630193928353604
+  ],
+  "ridge_coef": [
+    [
+      0.2641529258482274,
+      -0.011470074789568966,
+      -0.020838873733097542,
+      0.050477724079110116,
+      0.013165442610187041,
+      0.0405490653544924,
+      0.0
+    ],
+    [
+      0.03793621507881009,
+      0.22316213571074692,
+      -0.008665270391765637,
+      0.003538849494584212,
+      0.008912955280068833,
+      0.019643953419660885,
+      0.0
+    ],
+    [
+      -0.009883693599786705,
+      0.001854907366863934,
+      0.015579975285172014,
+      0.0026887447819256777,
+      -0.0046077869624132775,
+      0.004674540592225061,
+      0.0
+    ],
+    [
+      -0.6749802993736991,
+      0.6571465582443557,
+      36.94835273347818,
+      20.024640515293278,
+      8.064979000747059,
+      -6.857132808554013,
+      0.0
+    ]
+  ],
+  "intercept": [
+    0.2527814183384319,
+    0.132583004997189,
+    0.0202047399793305,
+    52.59925342713457
+  ],
+  "features": [
+    "slope60m_frac_gt_10",
+    "slope60m_frac_gt_15",
+    "slope60m_mean",
+    "slope60m_q50",
+    "slope60m_q90",
+    "slope60m_q99",
+    "slope60m_valid_fraction"
+  ],
+  "config": {
+    "epochs": 40,
+    "batch_size": 32,
+    "lr": 0.001,
+    "draws": 4096,
+    "bootstrap_draws": 2000,
+    "min_nac_valid": 0.99,
+    "device": "cuda",
+    "seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "source_sha256": {
+    "scripts/train_posterior_p21.py": "1be8af1be74e11ca644123519fc6cf81dab297403b02cb7d52a746d4f576e65a",
+    "scripts/train_baseline.py": "496b4e699f835d13cbbdfa61935303e7ef9fdd5ac5f99ee73ca603e95fc65ae1",
+    "scripts/compare_p22.py": "587089caea2b675d02b2da16f93af544c8435db95bd0314bcaac85fc088f3467",
+    "scripts/audit_p22_artifacts.py": "b258a48ea0d86c5809d045917880bea74652443f7b58e797fa520d3cb59588d6",
+    "scripts/diagnose_p22_rules.py": "f7f3fc54ff6a95f05e3f49fd08d40acf0caff7e34cf76867b4b85cf702b39cf3",
+    "scripts/run_p22_evidence.py": "029e375bcf1e8ffb48300e5cbfc881f64a2427386c57503549894871248ab45b",
+    "src/lunarrisk/__init__.py": "f1e08fc3ff4662f391bf80e82be8115fd03ec1e8d834f13b3e3bc551a18f258e",
+    "src/lunarrisk/probabilistic/__init__.py": "90edc4ce50221951519c925ff06303bdcb12a7c16c53f9f004385ceb8a5b174a",
+    "src/lunarrisk/probabilistic/posterior.py": "44d9b458116848918f8408aaa96d8f4a9fd057f8cb0dc174ea9f231fbc7b2736",
+    "src/lunarrisk/probabilistic/transforms.py": "f06a823cbfef0c8e0e9dc34fddfe3a91d181abd89a3e5a91e0958a3475322dd7",
+    "src/lunarrisk/rules/__init__.py": "3ea65cbf1a6108a82da533073e9c26a13ed330144f21a4e70addbe9f583ae3ff",
+    "src/lunarrisk/rules/ast.py": "8542cadf51e41486d11be33717ec0b662f6393e00117bfa97339d0d1d6df06f8"
+  },
+  "note": "Misspecified physical-space independent Gaussian residuals, clipped per attribute; does not enforce g15 <= g10. Separate from the historical coarse logistic heads."
+}

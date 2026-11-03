@@ -1,0 +1,183 @@
+{
+  "status": "BLOCKED_NEEDS_FULL_PAIRWISE_POLYGON_AUDIT",
+  "group_count": 51,
+  "selected_group_count": 15,
+  "threshold_km": 10.0,
+  "centroid_collision_pairs": 17,
+  "pairs_touching_selection": 8,
+  "examples": [
+    {
+      "group_a": "GRP_ef0254448b3d",
+      "group_b": "GRP_8379d98b5633",
+      "group_a_members": "LICHTENBER1;LICHTENBER11;LICHTENBER12;LICHTENBER2;LICHTENBER3;LICHTENBER4;LICHTENBER5;LICHTENBER6;LICHTENBER7;LICHTENBER8;LICHTENBER9",
+      "group_b_members": "LICHTENBER10;LICHTENBER13",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_c5dd2d5e0f3e",
+      "group_b": "GRP_5032fe12f95b",
+      "group_a_members": "SPARIM2",
+      "group_b_members": "SPARIM1",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": true,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_c5dd2d5e0f3e",
+      "group_b": "GRP_18b89abdcf32",
+      "group_a_members": "SPARIM2",
+      "group_b_members": "SPARIM3",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_c5dd2d5e0f3e",
+      "group_b": "GRP_85c423392690",
+      "group_a_members": "SPARIM2",
+      "group_b_members": "SPARIM4",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_5032fe12f95b",
+      "group_b": "GRP_18b89abdcf32",
+      "group_a_members": "SPARIM1",
+      "group_b_members": "SPARIM3",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_5032fe12f95b",
+      "group_b": "GRP_85c423392690",
+      "group_a_members": "SPARIM1",
+      "group_b_members": "SPARIM4",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_c319259741ae",
+      "group_b": "GRP_7b868607079e",
+      "group_a_members": "MARIUS2",
+      "group_b_members": "MARIUS3",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_c319259741ae",
+      "group_b": "GRP_e33bd7c7423a",
+      "group_a_members": "MARIUS2",
+      "group_b_members": "MARIUS4",
+      "center_distance_km": 0.0,
+      "a_selected": true,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_18b89abdcf32",
+      "group_b": "GRP_85c423392690",
+      "group_a_members": "SPARIM3",
+      "group_b_members": "SPARIM4",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_8b94fb44d8e7",
+      "group_b": "GRP_336bfc50d2db",
+      "group_a_members": "FRESHMELT1",
+      "group_b_members": "FRESHMELT2",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_ca8a4bfc5e7c",
+      "group_b": "GRP_1479ec90ce2a",
+      "group_a_members": "MRINGENII2",
+      "group_b_members": "MRINGENII3",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_ca8a4bfc5e7c",
+      "group_b": "GRP_1028098e56f1",
+      "group_a_members": "MRINGENII2",
+      "group_b_members": "MRINGENII4",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_ca8a4bfc5e7c",
+      "group_b": "GRP_897f106f7484",
+      "group_a_members": "MRINGENII2",
+      "group_b_members": "MRINGENII1",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_1479ec90ce2a",
+      "group_b": "GRP_1028098e56f1",
+      "group_a_members": "MRINGENII3",
+      "group_b_members": "MRINGENII4",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_1479ec90ce2a",
+      "group_b": "GRP_897f106f7484",
+      "group_a_members": "MRINGENII3",
+      "group_b_members": "MRINGENII1",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_1028098e56f1",
+      "group_b": "GRP_897f106f7484",
+      "group_a_members": "MRINGENII4",
+      "group_b_members": "MRINGENII1",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    },
+    {
+      "group_a": "GRP_7b868607079e",
+      "group_b": "GRP_e33bd7c7423a",
+      "group_a_members": "MARIUS3",
+      "group_b_members": "MARIUS4",
+      "center_distance_km": 0.0,
+      "a_selected": false,
+      "b_selected": false,
+      "note": "centroid proximity only; actual polygon separation UNKNOWN"
+    }
+  ],
+  "warning": "Centroids cannot prove polygon separation. Even if there are NO centroid collisions, final signoff REQUIRES all eligible polygon-to-polygon pairs, connected components and inter-group min-distance.",
+  "gate3": "NOT_FROZEN",
+  "gate4": "HOLD"
+}

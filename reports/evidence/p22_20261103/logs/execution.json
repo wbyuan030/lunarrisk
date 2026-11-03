@@ -1,0 +1,169 @@
+{
+  "started_utc": "2026-11-03T06:13:57.013996+00:00",
+  "code_sha": "ac93b10",
+  "source_sha256": {
+    "scripts/train_posterior_p21.py": "1be8af1be74e11ca644123519fc6cf81dab297403b02cb7d52a746d4f576e65a",
+    "scripts/train_baseline.py": "496b4e699f835d13cbbdfa61935303e7ef9fdd5ac5f99ee73ca603e95fc65ae1",
+    "scripts/compare_p22.py": "587089caea2b675d02b2da16f93af544c8435db95bd0314bcaac85fc088f3467",
+    "scripts/audit_p22_artifacts.py": "b258a48ea0d86c5809d045917880bea74652443f7b58e797fa520d3cb59588d6",
+    "scripts/diagnose_p22_rules.py": "f7f3fc54ff6a95f05e3f49fd08d40acf0caff7e34cf76867b4b85cf702b39cf3",
+    "scripts/run_p22_evidence.py": "029e375bcf1e8ffb48300e5cbfc881f64a2427386c57503549894871248ab45b",
+    "src/lunarrisk/__init__.py": "f1e08fc3ff4662f391bf80e82be8115fd03ec1e8d834f13b3e3bc551a18f258e",
+    "src/lunarrisk/probabilistic/__init__.py": "90edc4ce50221951519c925ff06303bdcb12a7c16c53f9f004385ceb8a5b174a",
+    "src/lunarrisk/probabilistic/posterior.py": "44d9b458116848918f8408aaa96d8f4a9fd057f8cb0dc174ea9f231fbc7b2736",
+    "src/lunarrisk/probabilistic/transforms.py": "f06a823cbfef0c8e0e9dc34fddfe3a91d181abd89a3e5a91e0958a3475322dd7",
+    "src/lunarrisk/rules/__init__.py": "3ea65cbf1a6108a82da533073e9c26a13ed330144f21a4e70addbe9f583ae3ff",
+    "src/lunarrisk/rules/ast.py": "8542cadf51e41486d11be33717ec0b662f6393e00117bfa97339d0d1d6df06f8"
+  },
+  "labels_sha256": "eb2ff9326cd3d3180409355b53b2cf135c02ddd324cec87e583686abccdaafb5",
+  "cache_sha256": "e1bc2134cfdb9290b8b557394c842c59e431102734166700c813f5cdba3e92fa",
+  "protocol_sha256": {
+    "protocols/heldout_v2_external_protocol.json": "e0d99600561226ab131dc613f96790b1bbf6698cbfda6e772c4e78f187371175",
+    "protocols/heldout_v2_external_protocol_v2.json": "17794315acdc710be3a36c753acf422ecff22ace6429ff1c06ea6a3d463f51a8",
+    "protocols/heldout_v2_group_pairs_v2.csv": "46bc10e5092f6440831c33db140d49b5d772881268cdc3a9641cb4a395f24f23",
+    "protocols/heldout_v2_group_pool.csv": "f9180f156bc224d5f9e3d4a011b9ca70e74cc87f117fc307dae2e28388e81427",
+    "protocols/heldout_v2_group_pool_v2.csv": "605582d6081ce6889cb3453c065a4a1102f3ec7eb19761e075ca97007c1a1078",
+    "protocols/heldout_v2_product_level_manifest.csv": "33f0898fca6b4a6c95cf5bda7a19c8181674723f386bae88fd2366184963ed97",
+    "protocols/heldout_v2_product_level_protocol.json": "93ae6c730c34cc3ad73ef2881366679bee0c1f4a08ca05500ced2af94e12da78",
+    "protocols/heldout_v2_protocol.json": "3c3a1029b1c79a908201aedbc47d2a73e30b031549bc427648033dfd35f2d96d",
+    "protocols/p19_cdr_route_amendment_proposal.json": "e2e38cf1c9434b414619f366c6e49af243757c1092d2b7027b2cdcfd75678e3f",
+    "protocols/p19_external_policy.json": "136c57e93fa8b05579e1d6899027781c0c06c4b78c0c67024ce70e9d71acce4f"
+  },
+  "environment": {
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "python": "3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]",
+    "kfd": true,
+    "dri": [
+      "card1",
+      "card2",
+      "renderD128",
+      "renderD129"
+    ],
+    "device": "AMD Radeon RX 7900 XT"
+  },
+  "commands": [
+    {
+      "task": "tests",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 11.245665770024061,
+      "log_sha256": "31df7ab725665694c44c3924ab02fcc880e42bf674dec866c0122b30c8ed657a"
+    },
+    {
+      "task": "compile",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "compileall",
+        "-q",
+        "scripts",
+        "src",
+        "tests"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.03595964424312115,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "task": "comparison",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/compare_p22.py",
+        "--labels",
+        "${PROJECT_DATA}/outputs/labels_hydrated.csv",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--outdir",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation",
+        "--seeds",
+        "42,43,44",
+        "--epochs",
+        "40",
+        "--draws",
+        "4096",
+        "--bootstrap-draws",
+        "2000"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 91.9014853052795,
+      "log_sha256": "269a03936ae7299a4c67a2f19f045ef2e64c4e86c3d7f6dcd7d1bbd3875b7c6a"
+    },
+    {
+      "task": "replay",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/audit_p22_artifacts.py",
+        "--run",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--repetitions",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 64.45152446907014,
+      "log_sha256": "27a92331289a55a8423415b7a2e11ba7abc87f2c302b9f26654643b1c9e9b3f8"
+    },
+    {
+      "task": "diagnostic",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/diagnose_p22_rules.py",
+        "--run",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation",
+        "--cache",
+        "${PROJECT_DATA}/outputs/cache_v3.npz",
+        "--outdir",
+        "${PROJECT_DATA}/outputs/p22_20261103_validation/rule_diagnostic"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 11.256150116212666,
+      "log_sha256": "1ed6b98ca94d67b594c94a5af09fff02abc1106c2b5a28b39d2908479e042f08"
+    },
+    {
+      "task": "collision_v1",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/check_group_pool_collision.py",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_logs/collision_v1.json"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "wall_seconds": 0.02386961691081524,
+      "log_sha256": "a5cd3bad0a53f2e9f34c0d63726be4e4c2cc05a9f496ba665e51a0aca2c3c9ef"
+    },
+    {
+      "task": "collision_v2",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/check_group_pool_collision.py",
+        "--pool",
+        "protocols/heldout_v2_group_pool_v2.csv",
+        "--protocol",
+        "protocols/heldout_v2_external_protocol_v2.json",
+        "--out",
+        "${PROJECT_DATA}/outputs/p22_20261103_logs/collision_v2.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "wall_seconds": 0.02179043833166361,
+      "log_sha256": "2b018f37ffafafa36fae3beb47d4b3159b68af1cbf10e9c8b03d1307a78b4d3a"
+    }
+  ],
+  "passed": true
+}

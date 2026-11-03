@@ -1,0 +1,187 @@
+{
+  "status": "retrospective development diagnostic; no selection",
+  "threshold_source": "train only",
+  "quantiles": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "rules": {
+    "g10_train_q25": {
+      "type": "compare",
+      "attribute": "g10",
+      "op": "gt",
+      "threshold": 0.0163469101603912
+    },
+    "g10_train_q50": {
+      "type": "compare",
+      "attribute": "g10",
+      "op": "gt",
+      "threshold": 0.0792038575972094
+    },
+    "g10_train_q75": {
+      "type": "compare",
+      "attribute": "g10",
+      "op": "gt",
+      "threshold": 0.34118190212373034
+    },
+    "g15_train_q25": {
+      "type": "compare",
+      "attribute": "g15",
+      "op": "gt",
+      "threshold": 0.00059847474436575
+    },
+    "g15_train_q50": {
+      "type": "compare",
+      "attribute": "g15",
+      "op": "gt",
+      "threshold": 0.0096097944666735
+    },
+    "g15_train_q75": {
+      "type": "compare",
+      "attribute": "g15",
+      "op": "gt",
+      "threshold": 0.06694367497691595
+    },
+    "roughness_9m_train_q25": {
+      "type": "compare",
+      "attribute": "roughness_9m",
+      "op": "gt",
+      "threshold": 0.01074641706419545
+    },
+    "roughness_9m_train_q50": {
+      "type": "compare",
+      "attribute": "roughness_9m",
+      "op": "gt",
+      "threshold": 0.0155155435454154
+    },
+    "roughness_9m_train_q75": {
+      "type": "compare",
+      "attribute": "roughness_9m",
+      "op": "gt",
+      "threshold": 0.0217751140029075
+    },
+    "relief_p95_p5_train_q25": {
+      "type": "compare",
+      "attribute": "relief_p95_p5",
+      "op": "gt",
+      "threshold": 12.575225830078125
+    },
+    "relief_p95_p5_train_q50": {
+      "type": "compare",
+      "attribute": "relief_p95_p5",
+      "op": "gt",
+      "threshold": 29.9462890625
+    },
+    "relief_p95_p5_train_q75": {
+      "type": "compare",
+      "attribute": "relief_p95_p5",
+      "op": "gt",
+      "threshold": 68.79852294921875
+    },
+    "g10_AND_roughness_9m_train_medians": {
+      "type": "and",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "g10",
+          "op": "gt",
+          "threshold": 0.0792038575972094
+        },
+        {
+          "type": "compare",
+          "attribute": "roughness_9m",
+          "op": "gt",
+          "threshold": 0.0155155435454154
+        }
+      ]
+    },
+    "g10_OR_roughness_9m_train_medians": {
+      "type": "or",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "g10",
+          "op": "gt",
+          "threshold": 0.0792038575972094
+        },
+        {
+          "type": "compare",
+          "attribute": "roughness_9m",
+          "op": "gt",
+          "threshold": 0.0155155435454154
+        }
+      ]
+    },
+    "g15_AND_relief_p95_p5_train_medians": {
+      "type": "and",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "g15",
+          "op": "gt",
+          "threshold": 0.0096097944666735
+        },
+        {
+          "type": "compare",
+          "attribute": "relief_p95_p5",
+          "op": "gt",
+          "threshold": 29.9462890625
+        }
+      ]
+    },
+    "g15_OR_relief_p95_p5_train_medians": {
+      "type": "or",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "g15",
+          "op": "gt",
+          "threshold": 0.0096097944666735
+        },
+        {
+          "type": "compare",
+          "attribute": "relief_p95_p5",
+          "op": "gt",
+          "threshold": 29.9462890625
+        }
+      ]
+    },
+    "roughness_9m_AND_relief_p95_p5_train_medians": {
+      "type": "and",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "roughness_9m",
+          "op": "gt",
+          "threshold": 0.0155155435454154
+        },
+        {
+          "type": "compare",
+          "attribute": "relief_p95_p5",
+          "op": "gt",
+          "threshold": 29.9462890625
+        }
+      ]
+    },
+    "roughness_9m_OR_relief_p95_p5_train_medians": {
+      "type": "or",
+      "children": [
+        {
+          "type": "compare",
+          "attribute": "roughness_9m",
+          "op": "gt",
+          "threshold": 0.0155155435454154
+        },
+        {
+          "type": "compare",
+          "attribute": "relief_p95_p5",
+          "op": "gt",
+          "threshold": 29.9462890625
+        }
+      ]
+    }
+  },
+  "labels_sha256": "418561718334355843bc3609dad64a0964ca1b5565d2e8ea9ac4419a5ae05596",
+  "script_sha256": "f7f3fc54ff6a95f05e3f49fd08d40acf0caff7e34cf76867b4b85cf702b39cf3"
+}

@@ -1,0 +1,1298 @@
+{
+  "seed42/diagonal_vs_point/g10_train_q25": {
+    "mean": 0.009610006484118375,
+    "p025": -0.018088488564100124,
+    "p975": 0.03861491078647654,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g10_train_q50": {
+    "mean": 0.005809582363475453,
+    "p025": -0.013019940478204211,
+    "p975": 0.02699127558036862,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g10_train_q75": {
+    "mean": 0.0013321676037528298,
+    "p025": -0.01423628673089289,
+    "p975": 0.015909452432304873,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g15_train_q25": {
+    "mean": -0.011844114823774858,
+    "p025": -0.03337101418032647,
+    "p975": 0.014029338257955654,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g15_train_q50": {
+    "mean": 0.00017161260951649058,
+    "p025": -0.0208333217934901,
+    "p975": 0.021052784101721397,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g15_train_q75": {
+    "mean": 0.015593313087116588,
+    "p025": -0.0055909114039462545,
+    "p975": 0.040338087526445146,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/roughness_9m_train_q25": {
+    "mean": -0.030800070545890113,
+    "p025": -0.0626891920140875,
+    "p975": 0.008795827433111055,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/roughness_9m_train_q50": {
+    "mean": -0.07078752788630399,
+    "p025": -0.11694793876862608,
+    "p975": -0.008349821786719999,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/roughness_9m_train_q75": {
+    "mean": -0.05718605247410861,
+    "p025": -0.10669125577917805,
+    "p975": -0.005744764929278101,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/relief_p95_p5_train_q25": {
+    "mean": -0.003767172314903953,
+    "p025": -0.013264809686335779,
+    "p975": 0.006880018698953757,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/relief_p95_p5_train_q50": {
+    "mean": -0.010240408507260408,
+    "p025": -0.019712433490764635,
+    "p975": -0.0013046526265415293,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/relief_p95_p5_train_q75": {
+    "mean": -0.010079660740765658,
+    "p025": -0.03243872943352181,
+    "p975": 0.008126751050553178,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g10_AND_roughness_9m_train_medians": {
+    "mean": -0.05708871700546958,
+    "p025": -0.08872179446648946,
+    "p975": -0.022574699513045013,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g10_OR_roughness_9m_train_medians": {
+    "mean": -0.021366988528858533,
+    "p025": -0.03904878361545795,
+    "p975": -0.005632754760369242,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g15_AND_relief_p95_p5_train_medians": {
+    "mean": -0.013463649424639615,
+    "p025": -0.030752393101048988,
+    "p975": 0.004456990518207971,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.005008125847036188,
+    "p025": -0.0165598132695448,
+    "p975": 0.0054314077169230965,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": -0.05885890072042292,
+    "p025": -0.09684694944968764,
+    "p975": -0.009275597660221116,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/diagonal_vs_point/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": -0.02249205166643316,
+    "p025": -0.046869876121540005,
+    "p975": -0.0014694744528125784,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g10_train_q25": {
+    "mean": -0.008761447668075562,
+    "p025": -0.021750997505636173,
+    "p975": 0.003864658711721451,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g10_train_q50": {
+    "mean": -0.014102903279391203,
+    "p025": -0.0289059194228006,
+    "p975": 0.005174853761566122,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g10_train_q75": {
+    "mean": -0.0019467808983542703,
+    "p025": -0.011016592542594968,
+    "p975": 0.008317695804971464,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g15_train_q25": {
+    "mean": 0.004691540653055364,
+    "p025": -0.005714138608544511,
+    "p975": 0.013152998870313262,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g15_train_q50": {
+    "mean": 0.0023455435579473323,
+    "p025": -0.010048873024107936,
+    "p975": 0.013620478774943604,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g15_train_q75": {
+    "mean": -0.007804221998561512,
+    "p025": -0.031292778414920924,
+    "p975": 0.012096367101722148,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/roughness_9m_train_q25": {
+    "mean": -0.009981140765276822,
+    "p025": -0.053141005100448606,
+    "p975": 0.023499915452177802,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/roughness_9m_train_q50": {
+    "mean": 0.0013119096105748958,
+    "p025": -0.03373983041596053,
+    "p975": 0.03507184833383498,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/roughness_9m_train_q75": {
+    "mean": 0.006266533786600286,
+    "p025": -0.015491259056366467,
+    "p975": 0.030786871914521275,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/relief_p95_p5_train_q25": {
+    "mean": 0.04664376161315224,
+    "p025": 0.028669562195670812,
+    "p975": 0.06431401090449759,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/relief_p95_p5_train_q50": {
+    "mean": 0.07412509267980402,
+    "p025": 0.04519061277836632,
+    "p975": 0.10057100145761132,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/relief_p95_p5_train_q75": {
+    "mean": 0.142708021402359,
+    "p025": 0.09763579498313747,
+    "p975": 0.18482162577233135,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.006800691106102683,
+    "p025": -0.008574815382244725,
+    "p975": 0.024510054867957785,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g10_OR_roughness_9m_train_medians": {
+    "mean": -0.014761520515788685,
+    "p025": -0.054669816100269275,
+    "p975": 0.021381714221622203,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.09113970832391219,
+    "p025": 0.062614893127042,
+    "p975": 0.11941700732960792,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/g15_OR_relief_p95_p5_train_medians": {
+    "mean": 0.002762093869122592,
+    "p025": -0.005757562392255635,
+    "p975": 0.011933349268881156,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": 0.09983386885036122,
+    "p025": 0.03169900775368034,
+    "p975": 0.16078301684737784,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_diagonal/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": -0.004229691353711215,
+    "p025": -0.026139274078085667,
+    "p975": 0.016289429772983886,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g10_train_q25": {
+    "mean": -0.009039598703384399,
+    "p025": -0.024667283335700785,
+    "p975": 0.004889164989444645,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g10_train_q50": {
+    "mean": -0.0021862355145541106,
+    "p025": -0.021065431824442687,
+    "p975": 0.023973837198120764,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g10_train_q75": {
+    "mean": 0.020622023127295754,
+    "p025": -0.004400953394541584,
+    "p975": 0.04119948461651801,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g15_train_q25": {
+    "mean": -0.005528512326153842,
+    "p025": -0.02029522075184754,
+    "p975": 0.0075295703950267,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g15_train_q50": {
+    "mean": -0.03199495618993586,
+    "p025": -0.06267081173472674,
+    "p975": 0.006145563654408021,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g15_train_q75": {
+    "mean": 0.010034795782782815,
+    "p025": -0.011812718353869352,
+    "p975": 0.030600133975619656,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/roughness_9m_train_q25": {
+    "mean": -0.022407980398698287,
+    "p025": -0.051870808550487944,
+    "p975": 0.010314128069040444,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/roughness_9m_train_q50": {
+    "mean": 0.008763054284182462,
+    "p025": -0.030716303068029912,
+    "p975": 0.047109475400712746,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/roughness_9m_train_q75": {
+    "mean": 0.006250086697665128,
+    "p025": -0.047124638301762785,
+    "p975": 0.05871633337021483,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/relief_p95_p5_train_q25": {
+    "mean": 0.04992928830060092,
+    "p025": 0.029671233132544054,
+    "p975": 0.07004988492094763,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/relief_p95_p5_train_q50": {
+    "mean": 0.08721198818900368,
+    "p025": 0.06141811491267861,
+    "p975": 0.11151097267445724,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/relief_p95_p5_train_q75": {
+    "mean": 0.16340005560354753,
+    "p025": 0.11633988786570884,
+    "p975": 0.20843036099440515,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.029924432256005027,
+    "p025": 0.004409152224055819,
+    "p975": 0.054698964147312484,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g10_OR_roughness_9m_train_medians": {
+    "mean": -0.004800889166918668,
+    "p025": -0.042084046859886044,
+    "p975": 0.024799935949445885,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.0759335691278631,
+    "p025": 0.03445346355438232,
+    "p975": 0.1186425516392937,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.012287668748335406,
+    "p025": -0.03307498002224657,
+    "p975": 0.013593368705242352,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": 0.10381754799322648,
+    "p025": 0.02948986192921069,
+    "p975": 0.16927147867004547,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed42/joint_vs_coarse_ridge/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": 0.0019883247939023103,
+    "p025": -0.015539771860928779,
+    "p975": 0.024896477631222436,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g10_train_q25": {
+    "mean": -0.01000816822052002,
+    "p025": -0.02335639683527085,
+    "p975": 0.0022954116928680145,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g10_train_q50": {
+    "mean": -0.001416204192421653,
+    "p025": -0.018044558187818478,
+    "p975": 0.01778571951993606,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g10_train_q75": {
+    "mean": -0.013093518127094616,
+    "p025": -0.03621890313626654,
+    "p975": 0.007824781200540398,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g15_train_q25": {
+    "mean": -0.011979245055805552,
+    "p025": -0.023608568640144212,
+    "p975": 0.0008307778141102175,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g15_train_q50": {
+    "mean": -0.02151083133437417,
+    "p025": -0.03397653255195465,
+    "p975": -0.010060704617123875,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g15_train_q75": {
+    "mean": -0.016485850377516313,
+    "p025": -0.03339975540306865,
+    "p975": 0.0034368519271235276,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/roughness_9m_train_q25": {
+    "mean": -0.01284618919545954,
+    "p025": -0.04037053600995414,
+    "p975": 0.009689086313453004,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/roughness_9m_train_q50": {
+    "mean": -0.03670517856424505,
+    "p025": -0.08354794116021928,
+    "p975": 0.011982192455703373,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/roughness_9m_train_q75": {
+    "mean": -0.1198381093415347,
+    "p025": -0.18418956971557038,
+    "p975": -0.05612240669115736,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/relief_p95_p5_train_q25": {
+    "mean": -0.010145457224412398,
+    "p025": -0.025377383076392854,
+    "p975": 0.004887196661106174,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/relief_p95_p5_train_q50": {
+    "mean": -0.03069929588924755,
+    "p025": -0.0507824408040411,
+    "p975": -0.0129111119253295,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/relief_p95_p5_train_q75": {
+    "mean": -0.07159128026528792,
+    "p025": -0.10476748398666963,
+    "p975": -0.04175544586041951,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g10_AND_roughness_9m_train_medians": {
+    "mean": -0.012174766172062267,
+    "p025": -0.04198112879040935,
+    "p975": 0.01577624079693637,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g10_OR_roughness_9m_train_medians": {
+    "mean": -0.028852043910460038,
+    "p025": -0.060737721358038795,
+    "p975": 0.0007107561794183245,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g15_AND_relief_p95_p5_train_medians": {
+    "mean": -0.027620507912202316,
+    "p025": -0.04402437387844604,
+    "p975": -0.013702752216482617,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.013559340888803655,
+    "p025": -0.036216121117596894,
+    "p975": 0.005139542903235073,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": -0.019766557216644286,
+    "p025": -0.04400646987238101,
+    "p975": 0.007909537086615667,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/diagonal_vs_point/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": -0.032134542140093716,
+    "p025": -0.06282750343510865,
+    "p975": -0.0037396292064501395,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g10_train_q25": {
+    "mean": 0.00653054497458718,
+    "p025": -0.0026568990200757977,
+    "p975": 0.015751448099140645,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g10_train_q50": {
+    "mean": 0.020003556663339788,
+    "p025": -0.0067462632060050955,
+    "p975": 0.039587190659208724,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g10_train_q75": {
+    "mean": 0.03753237399187955,
+    "p025": 0.03055552709732226,
+    "p975": 0.045792210364471314,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g15_train_q25": {
+    "mean": -0.0040945909240029076,
+    "p025": -0.01647721138541345,
+    "p975": 0.00834521971917907,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g15_train_q50": {
+    "mean": 0.04433695077896118,
+    "p025": 0.022758634633822886,
+    "p975": 0.06388669742393074,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g15_train_q75": {
+    "mean": 0.057415352084419946,
+    "p025": 0.04071808384396333,
+    "p975": 0.07389066031275243,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/roughness_9m_train_q25": {
+    "mean": 0.011361877484755083,
+    "p025": -0.0073719938387760775,
+    "p975": 0.031341627855105456,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/roughness_9m_train_q50": {
+    "mean": 0.04047808105295354,
+    "p025": -0.005970594187429594,
+    "p975": 0.08304998101518737,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/roughness_9m_train_q75": {
+    "mean": 0.12204007506370544,
+    "p025": 0.06091478943301828,
+    "p975": 0.18452007263325726,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/relief_p95_p5_train_q25": {
+    "mean": 0.027777342904697765,
+    "p025": 0.00541153576995923,
+    "p975": 0.05461158967145104,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/relief_p95_p5_train_q50": {
+    "mean": 0.08045284639705311,
+    "p025": 0.04427630145140416,
+    "p975": 0.12544575390459198,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/relief_p95_p5_train_q75": {
+    "mean": 0.1725932543927973,
+    "p025": 0.11223872004057359,
+    "p975": 0.24370983663576679,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.0025719805197282272,
+    "p025": -0.028716572809119677,
+    "p975": 0.03091679401667612,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g10_OR_roughness_9m_train_medians": {
+    "mean": 0.03109752969308333,
+    "p025": 0.004321594875774467,
+    "p975": 0.05615736302812541,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.050967945835807105,
+    "p025": 0.01978639245116744,
+    "p975": 0.08497957895510533,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/g15_OR_relief_p95_p5_train_medians": {
+    "mean": 0.017351259968497536,
+    "p025": -0.0008886210199996247,
+    "p975": 0.03406485586485589,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": -0.0033225048672069204,
+    "p025": -0.04908896690323239,
+    "p975": 0.033719112613443486,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_diagonal/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": 0.026285217025063253,
+    "p025": 0.0028691314862672426,
+    "p975": 0.05012403006660048,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g10_train_q25": {
+    "mean": -0.006620705669576472,
+    "p025": -0.017709763835796595,
+    "p975": 0.0029881606376276435,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g10_train_q50": {
+    "mean": 0.01233933838930997,
+    "p025": 0.00029991167223351634,
+    "p975": 0.022909323369995467,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g10_train_q75": {
+    "mean": 0.04211152466860685,
+    "p025": 0.013150097703968567,
+    "p975": 0.06467144094882314,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g15_train_q25": {
+    "mean": -0.007725437662818215,
+    "p025": -0.01756387136588735,
+    "p975": 0.0032253777703795633,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g15_train_q50": {
+    "mean": -0.012601803107695146,
+    "p025": -0.03118164467772371,
+    "p975": 0.006166363660643676,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g15_train_q75": {
+    "mean": 0.04772841930389404,
+    "p025": 0.031433814382401434,
+    "p975": 0.06485832572341439,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/roughness_9m_train_q25": {
+    "mean": -0.00603877685286782,
+    "p025": -0.049012969948243404,
+    "p975": 0.04431290193985808,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/roughness_9m_train_q50": {
+    "mean": 0.03451232585040006,
+    "p025": -0.008169178788690145,
+    "p975": 0.08023701184741328,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/roughness_9m_train_q75": {
+    "mean": 0.128383102200248,
+    "p025": 0.06194847754473463,
+    "p975": 0.2025297043121518,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/relief_p95_p5_train_q25": {
+    "mean": 0.025683294101194902,
+    "p025": 0.009772588919035922,
+    "p975": 0.04392071493682823,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/relief_p95_p5_train_q50": {
+    "mean": 0.08730278556997126,
+    "p025": 0.04870980869340302,
+    "p975": 0.1344136975617518,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/relief_p95_p5_train_q75": {
+    "mean": 0.19930029890754006,
+    "p025": 0.13529222339108515,
+    "p975": 0.2748890822973931,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.00971307483586398,
+    "p025": -0.021787403548965936,
+    "p975": 0.039253968227151895,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g10_OR_roughness_9m_train_medians": {
+    "mean": 0.02778868946162137,
+    "p025": 0.007848205028503003,
+    "p975": 0.049617456164946436,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.023999370770020918,
+    "p025": -0.016052453184947798,
+    "p975": 0.06403701663815549,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.00459732250733809,
+    "p025": -0.02231753335929022,
+    "p975": 0.014927133136257825,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": -0.0004684946753761985,
+    "p025": -0.04202700010409542,
+    "p975": 0.03789283323739399,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed43/joint_vs_coarse_ridge/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": 0.01497239958156239,
+    "p025": -0.007248259981654283,
+    "p975": 0.039850077964924825,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g10_train_q25": {
+    "mean": 0.008499316193840721,
+    "p025": -0.0038792614245189813,
+    "p975": 0.0219659706830797,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g10_train_q50": {
+    "mean": 0.04387795003977689,
+    "p025": 0.03367922549849637,
+    "p975": 0.056154379291193816,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g10_train_q75": {
+    "mean": 0.047656410932540895,
+    "p025": 0.02455317062210411,
+    "p975": 0.07132204844298241,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g15_train_q25": {
+    "mean": -0.004957504705949263,
+    "p025": -0.024028227007702775,
+    "p975": 0.015914663037420843,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g15_train_q50": {
+    "mean": 0.048791262778368864,
+    "p025": 0.03025160405228927,
+    "p975": 0.06664253137526767,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g15_train_q75": {
+    "mean": 0.05461107004772533,
+    "p025": 0.025666642396088252,
+    "p975": 0.08523697918830066,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/roughness_9m_train_q25": {
+    "mean": -0.009035539627075196,
+    "p025": -0.030408258377547542,
+    "p975": 0.012524050714554013,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/roughness_9m_train_q50": {
+    "mean": 0.0024058092724193224,
+    "p025": -0.028417239913487817,
+    "p975": 0.03935025154321162,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/roughness_9m_train_q75": {
+    "mean": -0.03507073250683871,
+    "p025": -0.08771723817111156,
+    "p975": 0.015252389484726814,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/relief_p95_p5_train_q25": {
+    "mean": 4.01085073297674e-06,
+    "p025": -0.01510780888538321,
+    "p975": 0.013894287029190927,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/relief_p95_p5_train_q50": {
+    "mean": -0.02051250392740423,
+    "p025": -0.03451303462346607,
+    "p975": -0.008695395997203757,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/relief_p95_p5_train_q75": {
+    "mean": -0.06424469731070778,
+    "p025": -0.10486073483598991,
+    "p975": -0.027796193374323278,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.02933296181938865,
+    "p025": -0.01034392134645394,
+    "p975": 0.06177833921051229,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g10_OR_roughness_9m_train_medians": {
+    "mean": 0.00842307751828974,
+    "p025": -0.01104249359544264,
+    "p975": 0.030927969208463222,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.03885877403345975,
+    "p025": 0.02239875854658229,
+    "p975": 0.05710703279221013,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.0029421080242503775,
+    "p025": -0.01679666910278172,
+    "p975": 0.010437650607911618,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": 0.012332297455180776,
+    "p025": -0.009477879200130702,
+    "p975": 0.03290411933598218,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/diagonal_vs_point/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": -0.006023526191711426,
+    "p025": -0.023802500038787172,
+    "p975": 0.014256946213946148,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g10_train_q25": {
+    "mean": -0.004038488864898682,
+    "p025": -0.010314310025524177,
+    "p975": 0.0031712128739607944,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g10_train_q50": {
+    "mean": -0.021010042320598256,
+    "p025": -0.031929833950532054,
+    "p975": -0.011975605493145334,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g10_train_q75": {
+    "mean": -0.0322782267223705,
+    "p025": -0.04624809883861028,
+    "p975": -0.019286210717263205,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g15_train_q25": {
+    "mean": -0.009513237259604714,
+    "p025": -0.01821007898674821,
+    "p975": -0.00036042948094530203,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g15_train_q50": {
+    "mean": -0.013147513974796642,
+    "p025": -0.02666583395780837,
+    "p975": 0.0003209284283386825,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g15_train_q75": {
+    "mean": -0.022850543802434748,
+    "p025": -0.04267784361972621,
+    "p975": -0.0037338077007978486,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/roughness_9m_train_q25": {
+    "mean": 0.012590964815833352,
+    "p025": -0.003991239416073016,
+    "p975": 0.027547903218854888,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/roughness_9m_train_q50": {
+    "mean": -0.004958000508221713,
+    "p025": -0.05263801062969523,
+    "p975": 0.037672063412543436,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/roughness_9m_train_q75": {
+    "mean": -0.0005808337168260055,
+    "p025": -0.045586090109178,
+    "p975": 0.04108005319129337,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/relief_p95_p5_train_q25": {
+    "mean": 0.0017190326343883167,
+    "p025": -0.012589956376236533,
+    "p975": 0.016167040634286246,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/relief_p95_p5_train_q50": {
+    "mean": 0.003072198954495517,
+    "p025": -0.010003999188542365,
+    "p975": 0.01468243270461167,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/relief_p95_p5_train_q75": {
+    "mean": 0.06961636976762252,
+    "p025": 0.036703996718098215,
+    "p975": 0.10671398233194279,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g10_AND_roughness_9m_train_medians": {
+    "mean": -0.01714352640238675,
+    "p025": -0.043005290526698756,
+    "p975": 0.0074218344398133155,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g10_OR_roughness_9m_train_medians": {
+    "mean": -0.0029543941671198067,
+    "p025": -0.022031773576716415,
+    "p975": 0.01451363476240332,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g15_AND_relief_p95_p5_train_medians": {
+    "mean": -0.019596329602328214,
+    "p025": -0.032746604953509485,
+    "p975": -0.008195041520939021,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/g15_OR_relief_p95_p5_train_medians": {
+    "mean": 0.007561710205945101,
+    "p025": -0.005055779730018073,
+    "p975": 0.018616787832817328,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": -0.002675164287740534,
+    "p025": -0.029805303259465125,
+    "p975": 0.022843059961138095,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_diagonal/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": -0.000676506215875799,
+    "p025": -0.028823054700227866,
+    "p975": 0.02505641935546718,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g10_train_q25": {
+    "mean": -0.009054019776257602,
+    "p025": -0.019048918363311,
+    "p975": -0.0001851153622362877,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g10_train_q50": {
+    "mean": 0.00046236948533491653,
+    "p025": -0.009960335378112918,
+    "p975": 0.011714668160583804,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g10_train_q75": {
+    "mean": 0.015452019734816119,
+    "p025": -0.009422121343881127,
+    "p975": 0.035490031962913074,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g15_train_q25": {
+    "mean": -0.016916316747665406,
+    "p025": -0.029251754968266524,
+    "p975": -0.0033957615088332786,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g15_train_q50": {
+    "mean": -0.012436289678920399,
+    "p025": -0.028453898344721115,
+    "p975": 0.004039414063375846,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g15_train_q75": {
+    "mean": 0.032025736570358274,
+    "p025": 0.020267754628911158,
+    "p975": 0.044130300251389296,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/roughness_9m_train_q25": {
+    "mean": -0.01090959906578064,
+    "p025": -0.04667314024877306,
+    "p975": 0.03090828510816967,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/roughness_9m_train_q50": {
+    "mean": 0.008434969728643243,
+    "p025": -0.024947650716350408,
+    "p975": 0.04258368292597159,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/roughness_9m_train_q75": {
+    "mean": -0.004278747060082176,
+    "p025": -0.04201379899594278,
+    "p975": 0.03428751747641294,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/relief_p95_p5_train_q25": {
+    "mean": 0.006587768684733998,
+    "p025": -0.00041148296394989984,
+    "p975": 0.013670262689512363,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/relief_p95_p5_train_q50": {
+    "mean": 0.015632043101570823,
+    "p025": 0.0051708832024824816,
+    "p975": 0.02773378959648527,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/relief_p95_p5_train_q75": {
+    "mean": 0.09060335701162164,
+    "p025": 0.052982985221408006,
+    "p975": 0.12911249375771178,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g10_AND_roughness_9m_train_medians": {
+    "mean": 0.019241697138006036,
+    "p025": -0.005920788167266671,
+    "p975": 0.04156808294026197,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g10_OR_roughness_9m_train_medians": {
+    "mean": 0.0036404956470836294,
+    "p025": -0.011222440878857537,
+    "p975": 0.020020166756153906,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g15_AND_relief_p95_p5_train_medians": {
+    "mean": 0.0012080929496071555,
+    "p025": -0.016208617774784724,
+    "p975": 0.020598580819477106,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/g15_OR_relief_p95_p5_train_medians": {
+    "mean": -0.008009452711452137,
+    "p025": -0.01986193129722557,
+    "p975": 0.004428333246378035,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/roughness_9m_AND_relief_p95_p5_train_medians": {
+    "mean": 0.012003635276447643,
+    "p025": -0.026548930813654545,
+    "p975": 0.044786290481564,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  },
+  "seed44/joint_vs_coarse_ridge/roughness_9m_OR_relief_p95_p5_train_medians": {
+    "mean": 0.005114241079850631,
+    "p025": -0.018725248111861593,
+    "p975": 0.030302185101811825,
+    "groups": 25,
+    "bootstrap_draws": 2000,
+    "uncertainty": "test groups only, conditional on trained models and fixed Cal thresholds"
+  }
+}

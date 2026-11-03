@@ -1,0 +1,76 @@
+{
+  "model": "coarse_logistic",
+  "seed": 44,
+  "heads": {
+    "g10_gt_0.05": {
+      "coef": [
+        0.9285166038265309,
+        0.03088859218009127,
+        0.9069539268751083,
+        1.279888377124472,
+        0.9614894892712971,
+        1.6290694155855152,
+        0.0
+      ],
+      "intercept": 2.4721732614414296,
+      "fallback": 0.568922305764411,
+      "degenerate": false,
+      "platt": {
+        "slope": 1.053187134529609,
+        "intercept": 0.15318033562047328,
+        "degenerate": false
+      }
+    },
+    "g15_gt_0.02": {
+      "coef": [
+        2.453505694610092,
+        0.4302932628702179,
+        -0.7528162567789829,
+        -0.9814887744614279,
+        0.502794007641512,
+        1.9391710514703495,
+        0.0
+      ],
+      "intercept": 0.00867264797155564,
+      "fallback": 0.37343358395989973,
+      "degenerate": false,
+      "platt": {
+        "slope": 0.8906405396140294,
+        "intercept": -0.18661546941284432,
+        "degenerate": false
+      }
+    }
+  },
+  "config": {
+    "epochs": 40,
+    "batch_size": 32,
+    "lr": 0.001,
+    "draws": 4096,
+    "bootstrap_draws": 2000,
+    "min_nac_valid": 0.99,
+    "device": "cuda",
+    "seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "source_sha256": {
+    "scripts/train_posterior_p21.py": "1be8af1be74e11ca644123519fc6cf81dab297403b02cb7d52a746d4f576e65a",
+    "scripts/train_baseline.py": "496b4e699f835d13cbbdfa61935303e7ef9fdd5ac5f99ee73ca603e95fc65ae1",
+    "scripts/compare_p22.py": "587089caea2b675d02b2da16f93af544c8435db95bd0314bcaac85fc088f3467",
+    "scripts/audit_p22_artifacts.py": "b258a48ea0d86c5809d045917880bea74652443f7b58e797fa520d3cb59588d6",
+    "scripts/diagnose_p22_rules.py": "f7f3fc54ff6a95f05e3f49fd08d40acf0caff7e34cf76867b4b85cf702b39cf3",
+    "scripts/run_p22_evidence.py": "029e375bcf1e8ffb48300e5cbfc881f64a2427386c57503549894871248ab45b",
+    "src/lunarrisk/__init__.py": "f1e08fc3ff4662f391bf80e82be8115fd03ec1e8d834f13b3e3bc551a18f258e",
+    "src/lunarrisk/probabilistic/__init__.py": "90edc4ce50221951519c925ff06303bdcb12a7c16c53f9f004385ceb8a5b174a",
+    "src/lunarrisk/probabilistic/posterior.py": "44d9b458116848918f8408aaa96d8f4a9fd057f8cb0dc174ea9f231fbc7b2736",
+    "src/lunarrisk/probabilistic/transforms.py": "f06a823cbfef0c8e0e9dc34fddfe3a91d181abd89a3e5a91e0958a3475322dd7",
+    "src/lunarrisk/rules/__init__.py": "3ea65cbf1a6108a82da533073e9c26a13ed330144f21a4e70addbe9f583ae3ff",
+    "src/lunarrisk/rules/ast.py": "8542cadf51e41486d11be33717ec0b662f6393e00117bfa97339d0d1d6df06f8"
+  },
+  "rules": [
+    "g10_gt_0.05",
+    "g15_gt_0.02"
+  ]
+}

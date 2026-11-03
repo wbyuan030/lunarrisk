@@ -6,10 +6,13 @@
 > its residual Gaussian, same-checkpoint U=0 uses the same cal-fitted T, and physical-space
 > NLL uses the target-side positive log-Jacobian. See the
 > [P2.1 pre-fix result erratum](reports/p2_1_joint_posterior.md).
-> **Evidence correction (2026-11-03):** the earlier 431-test run and numerical tables are
-> historical. A replay audit found missing provenance, inconsistent CSV/report sampling and
-> incomplete statistical evidence. Corrected code is being validated on a new source snapshot;
-> see the erratum in [reports/p2_2_baseline_comparison.md](reports/p2_2_baseline_comparison.md).
+> **Evidence rerun (2026-11-03):** committed source `ac93b10` ran 444 tests (443 passed,
+> 1 optional data-path check skipped), compileall, the six-model/three-seed comparison and
+> 18 Train-derived rule diagnostics on the local RX 7900 XT. All posterior probability replays
+> and four independent Point/Joint retrainings matched exactly; baseline reloads passed the stated
+> numerical tolerance. See [the evidence report](reports/p2_2_evidence_completion.md) and archived
+> probabilities and logs with machine paths redacted. Original logs remain local.
+> The earlier 431-test run and tables remain historical.
 > **Decision: `STOP_OR_REFRAME` — stable H1/H2 gains are not established**
 > ([reports/p2_2_hypothesis_decision.md](reports/p2_2_hypothesis_decision.md)).
 > External Gate 3 remains **NOT_FROZEN**; Gate 4 **HOLD**.

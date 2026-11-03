@@ -4,7 +4,8 @@
 > 旧代码未提供部署 UAR/HMR 的配对区间，oracle 平票可能超过名义覆盖率，checkpoint 未保存
 > 全部消融温度，CSV 与汇总抽样形状不同；物理空间独立高斯 Ridge 还可能违反 g15≤g10，
 > 不能称作比原 coarse-logistic 事件基线更强。matched-marginals 只固定**潜变量**边缘，
-> 物理 g15 边缘仍会变化。旧手写显著性汇总含计数错误，须以新证据报告和机器表为准。
+> 物理 g15 边缘仍会变化。旧手写显著性汇总含计数错误，须以
+> [2026-11-03 实测证据报告](p2_2_evidence_completion.md)和其中的机器表为准。
 
 **历史状态：部分实现（development_test 探索性；原“已完成”声明撤回）。**
 所有模型在**同一批 sample_id、同一 train/val/cal/development_test、同一规则 evaluator**
