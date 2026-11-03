@@ -29,7 +29,9 @@ HTTP Range 必须返回 206、精确 Content-Range 与一致长度/编码，否�
 
 固定选择原始顺序最前 4 个有效 Train 与 4 个有效 Val：ID `0,1,2,3 / 20,21,22,23`。全部像素 hash 与 pilot 文件 hash 见 [提取审计](evidence/p30_20261103/pilot_extraction.json)。源数据与缓存留在本地，Git 只保存元数据、hash、代码和日志。
 
-官方下游从全局 mmap 读像素；文件虽以 `.npy` 结尾，源码使用 headerless float32 memmap，不应直接 `np.load`。本轮未获取官方 mmap 的配对像素，因此接口明确为 **HDF5_DERIVED_PILOT**。HF 和 Git 的统计文件有 27/28 通道不同；radar 专门修复流水线与通用标准化的 raw-zero 策略不同。不能将 generic z-score 声称为已证明发布 mmap 的全部处理。
+官方下游从全局 mmap 读像素；文件虽以 `.npy` 结尾，源码使用 headerless float32 memmap，不应直接 `np.load`。首轮审计未读取配对像素；后续 [固定行配对探针](p3_0_mmap_pair.md) 已完成，28 通道共 172,032 个探针像素在既定 HF 处理下误差与 mask 差异均为 0，Git 统计在多个有效通道有差异。但完整裁片与有效模态覆盖未验证，因此接口仍为 **HDF5_DERIVED_PILOT**。HF 和 Git 的统计文件有 27/28 通道不同；不能将局部配对推广为发布 mmap 的全部处理已证明。
+
+后续 [五类工程 smoke](p3_0_age_fiveclass_smoke.md) 已提取 5 Train/5 Val，各类每 split 一张并完成训练/独立回放。加上 mmap 探针后，最新累计响应体为 **78,502,175 字节**，保守累计 **83,468,143 字节**；详见 [最新账本](evidence/p30_fiveclass_20261103/transfer_ledger.json)。首次 8 patch 审计的旧账本保持不变，后续计数连续承接。
 
 ## 权重与输入阻塞
 

@@ -1,0 +1,20 @@
+{
+  "code_sha": "1e32a7bc3a555d64135381c52ec2d882b5ad36be",
+  "separate_python_process": true,
+  "rows": 10,
+  "class_counts_each_split": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "predictions_byte_identical": true,
+  "max_abs_probability_delta": 0.0,
+  "predictions_sha256": "0029925fd03303bee48c08b1c662e8345a1d6ab02c8c8a58e3421b367c44573b",
+  "checkpoint_sha256": "1b463c3b459f4e1ed6012ab03f263d96d8fcc04cd6a58ea735de04e535a7de1f",
+  "source_files_match_commit": true,
+  "overlapping_pilot_ids_0_20_raw_hashes_equal": true,
+  "test_evaluated": false,
+  "formal_benchmark_score": false
+}

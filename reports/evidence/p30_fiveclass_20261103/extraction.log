@@ -1,0 +1,133 @@
+{
+  "protocol": "HDF5_DERIVED_PILOT",
+  "selection": "first original index per Age class 0..4 separately in stored Train/Val; engineering only",
+  "indices": [
+    65,
+    0,
+    81,
+    245,
+    1333,
+    130,
+    20,
+    85,
+    560,
+    2289
+  ],
+  "patch_ids": [
+    65,
+    0,
+    81,
+    245,
+    1333,
+    130,
+    20,
+    85,
+    560,
+    2289
+  ],
+  "stored_splits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "test_pixels_requested": 0,
+  "age_targets": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "per_split": 5,
+  "source_metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+  "mode": "apply"
+}
+{
+  "plan": {
+    "protocol": "HDF5_DERIVED_PILOT",
+    "selection": "first original index per Age class 0..4 separately in stored Train/Val; engineering only",
+    "indices": [
+      65,
+      0,
+      81,
+      245,
+      1333,
+      130,
+      20,
+      85,
+      560,
+      2289
+    ],
+    "patch_ids": [
+      65,
+      0,
+      81,
+      245,
+      1333,
+      130,
+      20,
+      85,
+      560,
+      2289
+    ],
+    "stored_splits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "test_pixels_requested": 0,
+    "age_targets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "per_split": 5,
+    "source_metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d"
+  },
+  "source_url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+  "status": "REAL_PIXEL_PILOT_EXTRACTED_NOT_EQUIVALENCE",
+  "sample_sha256": {
+    "65": "e00697ad1104d4f642f0ca2d875e7b40e79e0758d0a0086409f48e9dc76cb779",
+    "0": "2029bdad5ef61ee739a6576b0a3acf31793af52cb01c7ae57c8834cc9efd57a9",
+    "81": "3e1f43e1a25cb35d6a57c846ccdb1fb0894fa59cf0b5482a6dd9c5421075ea02",
+    "245": "8c6009753b6fd5804d2b1eac5db45070ce72679a48fd368d4a8a7f6fede33a91",
+    "1333": "02ec7932bdf859cf03af13c2cb164a3acc04ed76b4818c2444110279b7d891e5",
+    "130": "c925ee26868fd58a6eaf36baca1757bdd994c7b1eb0c819e8b17b0fd1d9d5697",
+    "20": "6563bdd0e8f73d4f34abbf4734c9a0607c754a16d61c89c74050f59e31a487d8",
+    "85": "b57b2a05d31ef8e4da9703c605b970d80a27394fe2fdd41b1c524f085691be0b",
+    "560": "270c1ec1825be942b28a15ecc5da034fe056058c9031e2714f14f25b3220a10d",
+    "2289": "e788b401f3db8eaba5d091f2c6f696a6d73dbf5583f35ff0904d188a0e2d3237"
+  },
+  "pilot_sha256": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+  "transfer": {
+    "accounted_body_bytes": 83468143,
+    "new_body_bytes": 38797312,
+    "range_requests": 37
+  }
+}

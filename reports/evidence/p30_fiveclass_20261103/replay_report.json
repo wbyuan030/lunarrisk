@@ -1,0 +1,44 @@
+{
+  "status": "REAL_PIXEL_ENGINEERING_SMOKE_ONLY",
+  "protocol": "HDF5_DERIVED_PILOT",
+  "not_benchmark_score": true,
+  "pretrained_weights_used": false,
+  "test_evaluated": false,
+  "code_sha": "1e32a7bc3a555d64135381c52ec2d882b5ad36be",
+  "source_sha256": {
+    "scripts/p30_age_smoke.py": "535a30e7290564f7be3d4acb7b808c8c2a245c2e7fc6dab01fcaddab7eaa1e2e",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "steps": 2,
+  "train_loss": [],
+  "inputs": {
+    "pilot_sha256": "cf106933772b7c08ba973cf9c7cfdfdfbcb9e2d038fb87d34f7e05c4cc2b8a35",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "train_rows": 5,
+  "val_rows": 5,
+  "train_class_counts": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "val_class_counts": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "parameters": 459077,
+  "device": "AMD Radeon RX 7900 XT",
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "wall_seconds": 0.5355296730995178,
+  "peak_gpu_allocated_bytes": 146290688,
+  "peak_gpu_reserved_bytes": 157286400,
+  "predictions_sha256": "0029925fd03303bee48c08b1c662e8345a1d6ab02c8c8a58e3421b367c44573b",
+  "checkpoint_sha256": "1b463c3b459f4e1ed6012ab03f263d96d8fcc04cd6a58ea735de04e535a7de1f"
+}

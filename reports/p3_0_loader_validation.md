@@ -69,4 +69,10 @@ python3 -I scripts/p30_extract_pilot.py --metadata "$METADATA_PATH" --out "$NEW_
 python3 -I scripts/p30_validate_metadata.py --metadata "$METADATA_PATH" --class-map "$CLASS_MAP_PATH" --outdir "$NEW_AUDIT_PATH"
 ```
 
-既有本地 pilot 可直接用于工程 smoke，无需再下载。正式 Age/Geology benchmark、预训练对照、候选条件化和 Test 评分均未完成。
+## 同日续推
+
+[固定 mmap 行探针](p3_0_mmap_pair.md) 已核查原 8-ID 的 28 通道、3 行/裁片，共 172,032 像素，既定 HF 路径误差与 mask 差异均为 0。只覆盖探针行，未满足上述完整裁片/有效模态与 channel/group mask 验收条件，官方等价性仍不标 PASS。
+
+新增 [五类 Age 工程 smoke](p3_0_age_fiveclass_smoke.md) 在读取前固定每类 1 Train/1 Val，真实提取 10 patch、seed42/2 步训练，独立进程回放 CSV 完全相同。支持该选择的最新代码通过 **478 tests（477 PASS/1 旧数据可选 SKIP）与 compileall**。累计实际响应体 78,502,175 字节，初次上限不变；旧 evidence 原样保留，新证据另设命名空间。
+
+正式 Age/Geology benchmark、预训练对照、候选条件化和 Test 评分均未完成。

@@ -1,0 +1,30 @@
+{
+  "code_sha": "1e32a7bc3a555d64135381c52ec2d882b5ad36be",
+  "tests": 478,
+  "passed": 477,
+  "skipped": 1,
+  "compileall_exit": 0,
+  "logs": [
+    {
+      "path": "tests_478.log",
+      "source_sha256": "fcfc203d62b46037b4971e09af80976b114d859ace958a03f15979285b6f6d77",
+      "archive_sha256": "367a678e12c6ff2b2a2cfcd16d86cf995aafc9e72440cfebbe06bfa57860c34e"
+    },
+    {
+      "path": "extraction.log",
+      "source_sha256": "0482227be2ce4b6d872cfaf47c229cff257959fd551f906dac80691bf19bea23",
+      "archive_sha256": "0482227be2ce4b6d872cfaf47c229cff257959fd551f906dac80691bf19bea23"
+    },
+    {
+      "path": "train.log",
+      "source_sha256": "4ad6689dd8e1301b0485dab13fc4e9d98a44f9db373270672cf6d39c354abbc6",
+      "archive_sha256": "47ea19c3c4f883701f3abbfa386546cb6bf2e9fc34a357bade082caebbfd5d93"
+    },
+    {
+      "path": "replay.log",
+      "source_sha256": "a8baf8d0370808d1914e47036df2e752cd47729d76e12e0cf54063747d7026b2",
+      "archive_sha256": "9aaaa6a1670f91590cfd9f4d429e3ecaeddb8cd5b6cd57ae73445c2cb1cc0819"
+    }
+  ],
+  "skip": "Legacy optional labels_hydrated.csv absent from isolated source snapshot"
+}
