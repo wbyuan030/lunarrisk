@@ -1,0 +1,69 @@
+{
+  "record": "lunarjev_public_benchmark_execution_plan",
+  "version": 1,
+  "created_date": "2026-11-03",
+  "base_commit": "461316fb50c10ba4570aa55ba56f96a056e6df32",
+  "status": "AUDIT_FIRST_PLAN_NOT_FROZEN_EVALUATION_PROTOCOL",
+  "plan_document": "docs/P3_0_PUBLIC_BENCHMARKS.md",
+  "purpose": "Test lunar pretrained representations and task/candidate-conditioned decisions using existing public benchmark labels; do not continue scaling the unsupported low-rank posterior hypothesis.",
+  "tasks": {
+    "first_baseline": {"dataset": "ayushprd/Moonstone", "task": "age_classification", "classes_claimed_by_upstream": 5, "valid_rows": null},
+    "main_task": {"dataset": "ayushprd/Moonstone", "task": "geology_classification", "classes_claimed_by_upstream": 49, "valid_rows": null},
+    "deferred": ["composition", "ice_prospectivity", "IMP_segmentation", "crater_detection", "active_sensor_routing", "full_language_backbone_finetuning"]
+  },
+  "source_audit": {
+    "moonstone_code": "https://github.com/ayushprd/Moonstone",
+    "moonstone_data": "https://huggingface.co/datasets/ayushprd/Moonstone",
+    "nasa_lfm_code": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model",
+    "nasa_lfm_weights": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+    "moonstone_code_commit": null,
+    "moonstone_data_revision": null,
+    "mg_mae_weights_status": "UNVERIFIED_DO_NOT_INFER_FROM_latest.pt_EXAMPLE",
+    "nasa_lfm_moonstone_input_mapping": "UNVERIFIED",
+    "hdf5_mmap_pixel_equivalence": "UNVERIFIED",
+    "actual_asset_manifest": null,
+    "note": "Null means pending verification. Resolve commits, hashes, file sizes, task filtering and separate code/data licenses before use."
+  },
+  "execution_order": [
+    {"id": "P30-00", "status": "READY_TO_START", "work": "Read-only asset/weight/license/disk/dependency audit and exact download allowlist"},
+    {"id": "P30-01", "status": "PENDING", "requires": ["P30-00"], "work": "Loader, normalization, missing-mask, class-map and official-split tests; real pixel I/O where available"},
+    {"id": "P30-02", "status": "PENDING", "requires": ["P30-01"], "work": "Age ordinary-head smoke and baseline; frozen feature feasibility before complex decision modules"},
+    {"id": "P30-03", "status": "PENDING", "requires": ["P30-02"], "work": "Geology ordinary head versus candidate-conditioned head with identical visible inputs and encoder"},
+    {"id": "P30-04", "status": "DEFERRED", "requires": ["P30-03"], "work": "Separately specified candidate-order/subset, modality-missing and calibration analyses"}
+  ],
+  "evaluation": {
+    "official_default": "Use stored official split IDs and task filtering; never recreate the 70/15/15 split to match rounded counts",
+    "official_geographic_later": "Verify upstream boundaries: train abs(lat)<=60, val 60<abs(lat)<=70, test 70<abs(lat)<=80",
+    "not_an_ood_claim": "Random benchmark splits are not geographic OOD; downstream geographic holdout is not proof of pretraining-unseen geography",
+    "raw_primary_metrics": ["accuracy", "macro_f1", "per_class_recall"],
+    "extension_metrics": ["multiclass_brier_with_explicit_reduction", "event_or_multiclass_nll_as_applicable", "reliability", "classification_risk_coverage", "end_to_end_latency"],
+    "calibration": "No test fitting. If val_select/val_cal is introduced, lock it before tuning and label it separately from official full-validation reproduction.",
+    "candidate_controls": ["same candidate lists for all methods", "masked-softmax ordinary classifier", "ordering stability is not unseen-class generalization"],
+    "seeds_for_future_small_matrix": [42, 43, 44],
+    "test_execution": "Only after input, model/configuration and analysis are fixed; no score-guided repeated selection"
+  },
+  "resource_limits": {
+    "primary_device": "existing RX 7900 XT and working ROCm environment",
+    "initial_download_mode": "DRY_RUN_ALLOWLIST_FIRST",
+    "initial_metadata_and_sample_transfer_cap_bytes": 1073741824,
+    "cap_origin": "new sprint engineering guardrail; not a user-specified cloud budget",
+    "full_benchmark_download_automatic": false,
+    "full_pretraining_download_automatic": false,
+    "checkpoint_downloads": "Count actual bytes; larger assets require a reviewed, disk-safe plan, not an automatic metadata exception",
+    "paid_compute_allowed": false,
+    "four_gpu_use_in_this_sprint": false,
+    "existing_shared_server_personal_limit_gib": 10,
+    "overwrite_existing_torch_or_shared_environment": false
+  },
+  "protected_legacy": {
+    "p22_decision": "STOP_OR_REFRAME",
+    "p22_hypothesis_status": "NOT_ESTABLISHED",
+    "external_gate3": "NOT_FROZEN",
+    "external_gate4": "HOLD",
+    "do_not_modify": ["reports/evidence/p22_20261103/", "existing raw NAC/DTM/CDR data", "existing labels and cache", "protocols/heldout_*", "protocols/p19_external_policy.json", "protocols/p19_cdr_route_amendment_proposal.json"],
+    "new_artifact_namespace": "p30"
+  },
+  "required_reports": ["reports/p3_0_progress.md", "reports/p3_0_benchmark_audit.md", "reports/p3_0_loader_validation.md", "reports/p3_0_age_baseline.md", "reports/p3_0_geology_baselines.md"],
+  "results_present": false,
+  "tests_executed_for_new_benchmark_code": false
+}
