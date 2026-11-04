@@ -1,22 +1,29 @@
 {
-  "status": "SSH_FETCH_RECOVERED_PUSH_PENDING",
+  "status": "RESULTS_PUSHED_AND_REMOTE_VERIFIED",
   "date": "2026-11-04",
-  "scope": "Remote Git synchronization only; local training and evidence archival continue",
+  "scope": "All six local-prefix baseline result archives and final reports; complete-data acquisition remains paused",
   "local_age_three_seed_results_commit": "06e5f54",
-  "last_verified_remote_main_commit": "6c8ec8c",
+  "results_commit": "44a58acf5a4e227b63a1adf34c8dbf5685452f93",
+  "remote_main_verified_at_results_publication": "44a58acf5a4e227b63a1adf34c8dbf5685452f93",
   "checks": [
     {"operation": "SSH fetch/pull via existing configuration", "status": "FAIL", "error": "Permission denied (publickey)"},
     {"operation": "SSH fetch/pull via existing desktop agent", "status": "FAIL", "error": "Permission denied (publickey)"},
     {"operation": "HTTPS fetch of same repository with temporary URL rewrite override", "status": "PASS", "remote_commit": "6c8ec8c", "remote_is_ancestor_of_local": true},
     {"operation": "HTTPS push of local main with existing credentials and no interactive prompts", "status": "FAIL", "error": "could not read Username for 'https://github.com': terminal prompts disabled"},
-    {"operation": "Later noninteractive SSH fetch via existing configuration", "status": "PASS", "remote_commit": "6c8ec8c", "remote_is_ancestor_of_local": true}
+    {"operation": "Later noninteractive SSH fetch via existing configuration", "status": "PASS", "remote_commit": "6c8ec8c", "remote_is_ancestor_of_local": true},
+    {"operation": "git pull --ff-only origin main", "status": "PASS", "result": "Already up to date"},
+    {"operation": "git merge --ff-only docs/p31-prefix-final-results", "status": "PASS", "from": "926d373", "to": "44a58ac"},
+    {"operation": "Noninteractive SSH git push origin main", "status": "PASS", "from": "6c8ec8c", "to": "44a58ac"},
+    {"operation": "git ls-remote --exit-code origin refs/heads/main", "status": "PASS", "remote_commit": "44a58acf5a4e227b63a1adf34c8dbf5685452f93"}
   ],
-  "remote_push_claimed_complete": false,
+  "results_remote_push_complete": true,
+  "receipt_scope": "Records the verified results push above; this receipt is committed afterward",
   "global_git_configuration_changed": false,
   "remote_url_persistently_changed": false,
   "credentials_or_keys_modified": false,
   "local_training_state": "All six Age/Geology seeds42/43/44 complete with exact replay; final archive and aggregate audit PASS",
-  "next_operation": "Commit final results, integrate main fast-forward, and push origin main",
-  "authentication_recovery_cause": "Unknown; later SSH fetch succeeded without credential modifications",
+  "authentication_recovery_cause": "Unknown; later SSH fetch and push succeeded without credential modifications",
+  "test_evaluated": false,
+  "data_acquisition_state": "PAUSED_VPN_QUOTA_CONCERN; no automatic resume",
   "force_push": false
 }
