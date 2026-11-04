@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "date": "2026-11-05",
+  "tests": {
+    "count": 624,
+    "skips": 0,
+    "seconds": 14.498,
+    "status": "PASS"
+  },
+  "compileall": "PASS",
+  "new_tests": 45,
+  "p31_scientific_runner_changed": false,
+  "gpu_synthetic": {
+    "status": "PASS",
+    "device": "Radeon RX 7900 XT",
+    "all_four_methods_finite_forward_backward": true,
+    "all_four_methods_repeat_exact": true,
+    "parameters": {
+      "B0": 337462,
+      "B1": 305921,
+      "B2": 329729,
+      "J": 329729
+    },
+    "experimental_backend_flags_enabled": false
+  },
+  "prior_failures": [
+    {
+      "status": "FAIL",
+      "scope": "first full suite",
+      "reason": "Missing inherited runtime in old subprocess test; corrected command environment"
+    },
+    {
+      "status": "FAIL",
+      "scope": "second full suite",
+      "reason": "Old same-size mutation fixture shared filesystem clock tick; advanced fixture mtime explicitly; planner unchanged"
+    },
+    {
+      "status": "FAIL",
+      "scope": "first two cache attempts",
+      "reason": "Old report/plan/checkpoint provenance schema field names differed; corrected adapter before pixel export"
+    }
+  ],
+  "commands": {
+    "tests": "LD_LIBRARY_PATH=/opt/rocm/lib:/opt/rocm/lib64 PYTHONPATH=\"$TRUSTED_RUNTIME\" TMPDIR=\"$JOB_TMP\" python3 -I \"$JOB_TMP/p31_python.py\" -m unittest discover -s tests -v",
+    "compileall": "python3 -m compileall -q scripts src tests"
+  },
+  "source_sha256": {
+    "protocols/p32_candidate_catalog.json": "e91ec295dfd1cb1cf96b366b9d2bee1429243566ebc9bf19a7fa7d7b3b162515",
+    "scripts/p32_benchmark.py": "e6f6c5b8cfeee36c2c8dbe68a08ebc3f0385e7888b6109d5367d94c6ecdfd564",
+    "scripts/p32_cache_context.py": "bc85d1451800e22be3879a4ed09796ea23c33cace3fc2e3e6029eb5b8c6bc970",
+    "scripts/p32_run_heads.py": "c7327cb0dd028986a8b457fc50bc5f71d592d776e07f543485dd2fa694e9a740",
+    "scripts/p32_train_heads.py": "055406fcf0dc2bfee8b4865d9e3acff40b3bf0bc1362550818a3b0c7e7af30ee",
+    "src/lunarrisk/lunarjev/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lunarrisk/lunarjev/catalog.py": "cd09760312573ccdc9e75a5bbb995fa19760bd60552c05d6641c0e25dc63039e",
+    "src/lunarrisk/lunarjev/context.py": "d593e1a1fad23635a7bbce72313db164bb2aa6c1f197dc4ba61c714c6f5584ce",
+    "src/lunarrisk/lunarjev/heads.py": "66911a53ba9801f1fe3b286adb69217a147899166416eb706ac56850be3f0807",
+    "tests/test_p31_plan_prefix.py": "a3942ba1e09a2e989007d57f412fe21e3d4cb6797964f1098ae516350c945e26",
+    "tests/test_p32_catalog.py": "02a0b5c8284d014857aa38421a705484d09833b739fd667eb81aefbf72f3a878",
+    "tests/test_p32_context.py": "5aa1480303dd9d4d5ca8206bdbb655a361adafb960dc89c0d42c2fa6c276ed66",
+    "tests/test_p32_heads.py": "a0ad97743634bf1a43c7e3aee5016ad449172c2138562103f87f60fb491009fb",
+    "tests/test_p32_runner.py": "842998e648aee46b5508ee6f9a5dd50f133835599180009a0828b1940a9c55ee"
+  },
+  "logs_sha256": {
+    "tests.log": "fbb30c093e15e6f79134b3f4612364c74a87d1c2cdc5be194f7572f02747acd9",
+    "tests_missing_child_runtime.log": "5328f18e2530ac80efc1e7ccfebb6fe21173095fd5054bd719479bf5a1a548cd",
+    "tests_timestamp_fixture.log": "de4a3ad57cb880d40e92613c9b0db13377bd6a2ae086ec5f0f2e37f1c176d90c",
+    "cache_attempt01.log": "7520b8787801421e8cdc65666b0865bdfaa1ace1587f30e5c033dd1daf257d9b",
+    "cache_attempt02.log": "01dc94a3ea04da4a394bf020bf475306288a84bc8bcd64567114e6992a3ca9d4"
+  },
+  "test_scored": false,
+  "new_downloads": 0,
+  "latest_user_download_scope": "Needed models/data may be downloaded directly without proxy; no download was needed for this tier"
+}

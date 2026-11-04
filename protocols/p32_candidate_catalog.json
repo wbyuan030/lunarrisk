@@ -1,0 +1,1043 @@
+{
+  "catalog_version": "P32_CANDIDATE_CATALOG_V1",
+  "tier": "TAXONOMY_ONLY_LOCAL",
+  "shared_for_all_samples": true,
+  "sources": {
+    "geologic_units": {
+      "path": "reports/evidence/p30_20261103/geologic_units.json",
+      "sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+      "url": "https://huggingface.co/datasets/ayushprd/Moonstone/blob/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/geologic_units.json",
+      "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+      "license": "CC-BY-4.0 per archived dataset card",
+      "content": "Official public 49-symbol to one-based unit ID mapping; no full geological definitions"
+    },
+    "age_mapping": {
+      "path": "src/lunarrisk/benchmarks/moonstone.py",
+      "sha256": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+      "url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/downstream/task_age.py",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "license": "MIT per archived upstream code license",
+      "upstream_sha256": "bd6888790b31df5856446f04fb2232278937f441586289842912931dabaf7b2e",
+      "upstream_manifest": "reports/evidence/p30_20261103/moonstone_code_manifest.json",
+      "content": "Audited AGE_NAMES and case-sensitive prefix priority: pN, EI, N, I, E, C; unknown -> -1"
+    }
+  },
+  "tasks": {
+    "geology": {
+      "definition": "Choose the official Moonstone geology symbol for the lunar observation.",
+      "candidates": [
+        {
+          "task": "geology",
+          "class_id": 0,
+          "symbol": "Cc",
+          "public_name": "Cc",
+          "description": "Public geology symbol Cc. Official Moonstone age category: Copernican.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 1,
+          "age_id": 4
+        },
+        {
+          "task": "geology",
+          "class_id": 1,
+          "symbol": "Ccc",
+          "public_name": "Ccc",
+          "description": "Public geology symbol Ccc. Official Moonstone age category: Copernican.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 2,
+          "age_id": 4
+        },
+        {
+          "task": "geology",
+          "class_id": 2,
+          "symbol": "Csc",
+          "public_name": "Csc",
+          "description": "Public geology symbol Csc. Official Moonstone age category: Copernican.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 3,
+          "age_id": 4
+        },
+        {
+          "task": "geology",
+          "class_id": 3,
+          "symbol": "EIp",
+          "public_name": "EIp",
+          "description": "Public geology symbol EIp. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 4,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 4,
+          "symbol": "Ec",
+          "public_name": "Ec",
+          "description": "Public geology symbol Ec. Official Moonstone age category: Eratosthenian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 5,
+          "age_id": 3
+        },
+        {
+          "task": "geology",
+          "class_id": 5,
+          "symbol": "Ecc",
+          "public_name": "Ecc",
+          "description": "Public geology symbol Ecc. Official Moonstone age category: Eratosthenian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 6,
+          "age_id": 3
+        },
+        {
+          "task": "geology",
+          "class_id": 6,
+          "symbol": "Em",
+          "public_name": "Em",
+          "description": "Public geology symbol Em. Official Moonstone age category: Eratosthenian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 7,
+          "age_id": 3
+        },
+        {
+          "task": "geology",
+          "class_id": 7,
+          "symbol": "Esc",
+          "public_name": "Esc",
+          "description": "Public geology symbol Esc. Official Moonstone age category: Eratosthenian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 8,
+          "age_id": 3
+        },
+        {
+          "task": "geology",
+          "class_id": 8,
+          "symbol": "INp",
+          "public_name": "INp",
+          "description": "Public geology symbol INp. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 9,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 9,
+          "symbol": "INt",
+          "public_name": "INt",
+          "description": "Public geology symbol INt. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 10,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 10,
+          "symbol": "Ib",
+          "public_name": "Ib",
+          "description": "Public geology symbol Ib. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 11,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 11,
+          "symbol": "Ibm",
+          "public_name": "Ibm",
+          "description": "Public geology symbol Ibm. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 12,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 12,
+          "symbol": "Ic",
+          "public_name": "Ic",
+          "description": "Public geology symbol Ic. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 13,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 13,
+          "symbol": "Ic1",
+          "public_name": "Ic1",
+          "description": "Public geology symbol Ic1. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 14,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 14,
+          "symbol": "Ic2",
+          "public_name": "Ic2",
+          "description": "Public geology symbol Ic2. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 15,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 15,
+          "symbol": "Icc",
+          "public_name": "Icc",
+          "description": "Public geology symbol Icc. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 16,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 16,
+          "symbol": "Icf",
+          "public_name": "Icf",
+          "description": "Public geology symbol Icf. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 17,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 17,
+          "symbol": "Id",
+          "public_name": "Id",
+          "description": "Public geology symbol Id. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 18,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 18,
+          "symbol": "Ig",
+          "public_name": "Ig",
+          "description": "Public geology symbol Ig. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 19,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 19,
+          "symbol": "Iia",
+          "public_name": "Iia",
+          "description": "Public geology symbol Iia. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 20,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 20,
+          "symbol": "Iiap",
+          "public_name": "Iiap",
+          "description": "Public geology symbol Iiap. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 21,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 21,
+          "symbol": "Iic",
+          "public_name": "Iic",
+          "description": "Public geology symbol Iic. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 22,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 22,
+          "symbol": "Iif",
+          "public_name": "Iif",
+          "description": "Public geology symbol Iif. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 23,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 23,
+          "symbol": "Im1",
+          "public_name": "Im1",
+          "description": "Public geology symbol Im1. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 24,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 24,
+          "symbol": "Im2",
+          "public_name": "Im2",
+          "description": "Public geology symbol Im2. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 25,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 25,
+          "symbol": "Imd",
+          "public_name": "Imd",
+          "description": "Public geology symbol Imd. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 26,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 26,
+          "symbol": "Iohi",
+          "public_name": "Iohi",
+          "description": "Public geology symbol Iohi. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 27,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 27,
+          "symbol": "Ioho",
+          "public_name": "Ioho",
+          "description": "Public geology symbol Ioho. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 28,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 28,
+          "symbol": "Iohs",
+          "public_name": "Iohs",
+          "description": "Public geology symbol Iohs. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 29,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 29,
+          "symbol": "Iom",
+          "public_name": "Iom",
+          "description": "Public geology symbol Iom. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 30,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 30,
+          "symbol": "Iork",
+          "public_name": "Iork",
+          "description": "Public geology symbol Iork. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 31,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 31,
+          "symbol": "Iorm",
+          "public_name": "Iorm",
+          "description": "Public geology symbol Iorm. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 32,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 32,
+          "symbol": "Ip",
+          "public_name": "Ip",
+          "description": "Public geology symbol Ip. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 33,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 33,
+          "symbol": "Isc",
+          "public_name": "Isc",
+          "description": "Public geology symbol Isc. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 34,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 34,
+          "symbol": "It",
+          "public_name": "It",
+          "description": "Public geology symbol It. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 35,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 35,
+          "symbol": "Itd",
+          "public_name": "Itd",
+          "description": "Public geology symbol Itd. Official Moonstone age category: Imbrian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 36,
+          "age_id": 2
+        },
+        {
+          "task": "geology",
+          "class_id": 36,
+          "symbol": "Nb",
+          "public_name": "Nb",
+          "description": "Public geology symbol Nb. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 37,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 37,
+          "symbol": "Nbl",
+          "public_name": "Nbl",
+          "description": "Public geology symbol Nbl. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 38,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 38,
+          "symbol": "Nbm",
+          "public_name": "Nbm",
+          "description": "Public geology symbol Nbm. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 39,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 39,
+          "symbol": "Nbsc",
+          "public_name": "Nbsc",
+          "description": "Public geology symbol Nbsc. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 40,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 40,
+          "symbol": "Nc",
+          "public_name": "Nc",
+          "description": "Public geology symbol Nc. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 41,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 41,
+          "symbol": "Nnj",
+          "public_name": "Nnj",
+          "description": "Public geology symbol Nnj. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 42,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 42,
+          "symbol": "Np",
+          "public_name": "Np",
+          "description": "Public geology symbol Np. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 43,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 43,
+          "symbol": "Nt",
+          "public_name": "Nt",
+          "description": "Public geology symbol Nt. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 44,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 44,
+          "symbol": "Ntp",
+          "public_name": "Ntp",
+          "description": "Public geology symbol Ntp. Official Moonstone age category: Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 45,
+          "age_id": 1
+        },
+        {
+          "task": "geology",
+          "class_id": 45,
+          "symbol": "pNb",
+          "public_name": "pNb",
+          "description": "Public geology symbol pNb. Official Moonstone age category: Pre-Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 46,
+          "age_id": 0
+        },
+        {
+          "task": "geology",
+          "class_id": 46,
+          "symbol": "pNbm",
+          "public_name": "pNbm",
+          "description": "Public geology symbol pNbm. Official Moonstone age category: Pre-Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 47,
+          "age_id": 0
+        },
+        {
+          "task": "geology",
+          "class_id": 47,
+          "symbol": "pNc",
+          "public_name": "pNc",
+          "description": "Public geology symbol pNc. Official Moonstone age category: Pre-Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 48,
+          "age_id": 0
+        },
+        {
+          "task": "geology",
+          "class_id": 48,
+          "symbol": "pNt",
+          "public_name": "pNt",
+          "description": "Public geology symbol pNt. Official Moonstone age category: Pre-Nectarian.",
+          "source": [
+            "geologic_units",
+            "age_mapping"
+          ],
+          "source_hash": {
+            "geologic_units": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL",
+          "official_unit_id": 49,
+          "age_id": 0
+        }
+      ]
+    },
+    "age": {
+      "definition": "Choose the official Moonstone age category for the lunar observation.",
+      "candidates": [
+        {
+          "task": "age",
+          "class_id": 0,
+          "symbol": "Pre-Nectarian",
+          "public_name": "Pre-Nectarian",
+          "description": "Official Moonstone age category: Pre-Nectarian.",
+          "source": [
+            "age_mapping"
+          ],
+          "source_hash": {
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL"
+        },
+        {
+          "task": "age",
+          "class_id": 1,
+          "symbol": "Nectarian",
+          "public_name": "Nectarian",
+          "description": "Official Moonstone age category: Nectarian.",
+          "source": [
+            "age_mapping"
+          ],
+          "source_hash": {
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL"
+        },
+        {
+          "task": "age",
+          "class_id": 2,
+          "symbol": "Imbrian",
+          "public_name": "Imbrian",
+          "description": "Official Moonstone age category: Imbrian.",
+          "source": [
+            "age_mapping"
+          ],
+          "source_hash": {
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL"
+        },
+        {
+          "task": "age",
+          "class_id": 3,
+          "symbol": "Eratosthenian",
+          "public_name": "Eratosthenian",
+          "description": "Official Moonstone age category: Eratosthenian.",
+          "source": [
+            "age_mapping"
+          ],
+          "source_hash": {
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL"
+        },
+        {
+          "task": "age",
+          "class_id": 4,
+          "symbol": "Copernican",
+          "public_name": "Copernican",
+          "description": "Official Moonstone age category: Copernican.",
+          "source": [
+            "age_mapping"
+          ],
+          "source_hash": {
+            "age_mapping": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+          },
+          "status": "TAXONOMY_ONLY_LOCAL"
+        }
+      ]
+    }
+  },
+  "representation": {
+    "algorithm": "catalog_word_literal_tfidf_v1",
+    "fit_scope": "54 candidates and 2 task definitions only",
+    "lowercase_words": true,
+    "case_sensitive_literal_symbols": true,
+    "term_frequency": "raw count",
+    "idf": "log((1 + N) / (1 + document_frequency)) + 1",
+    "normalization": "L2 per row",
+    "dtype": "float32",
+    "pretrained_language_model": false
+  },
+  "descriptor_control": {
+    "seed": 20261104,
+    "algorithm": "numpy PCG64 sequential per-task permutation; geology then age",
+    "mapping": "destination class row i receives entire source descriptor row permutation[task][i]",
+    "same_mapping_train_and_inference": true,
+    "task_vectors_permuted": false,
+    "prompt_search": false
+  },
+  "asset_inventory": {
+    "inspection_scope": "Repository public-task evidence and local asset-probe tree; local Hugging Face cache metadata. No network requests or downloads.",
+    "full_geological_definitions": {
+      "status": "NOT_FOUND_IN_INSPECTED_LOCAL_ASSETS",
+      "gap": "Source-verified official legend with full definitions covering all 49 public symbols, source revision, SHA256 and license; size not established locally."
+    },
+    "local_text_encoder": {
+      "model_id": "Qwen/Qwen3-Embedding-0.6B",
+      "snapshot_revision": "c54f2e6e80b2d7b7de06f51cec4959f6b3e03418",
+      "status": "LOCAL_PRESENT_NOT_VERIFIED_NOT_USED",
+      "config_sha256": "b5bf1f51fc45be473a54718cef92448d90a1be001bf9b9a44b8c7f10a19feaa9",
+      "modules_sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "weight_bytes": 1191586416,
+      "weights_full_hash_verified": false,
+      "tokenizer_files_present": [
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "vocab.json",
+        "merges.txt"
+      ],
+      "pooling": "last token; word embedding dimension 1024",
+      "license_metadata": "No local model card or license file found in inspected snapshot",
+      "runtime_validated": false,
+      "selection": "Not selected: weight integrity, license provenance and runtime remain unverified; implementation is NumPy-only lexical control."
+    },
+    "selected_encoder": "Deterministic catalog-only TF-IDF; no learned/frozen model weights"
+  },
+  "limitations": [
+    "TAXONOMY_ONLY_LOCAL is weak public-symbol/Age taxonomy, not complete geology definitions or full language semantics.",
+    "Case-sensitive literal:<task>:<symbol> tokens explicitly preserve literal identity and are identity-like fixed features; gains do not establish language understanding.",
+    "Word tokens use lowercase ASCII alphanumeric runs; literal symbols retain original case, including Ic versus Icc and Ic versus IC-like collisions.",
+    "Age knowledge is derived from public geology mapping and is not independent supervision; compare official Geology-to-Age probability aggregation.",
+    "Only 54 public candidates and 2 fixed task definitions fit vocabulary/IDF; no sample labels, sample descriptions, image pixels, split membership or validation errors enter representation.",
+    "Aligned versus fixed full-descriptor permutation is predeclared with seed 20261104; no prompt search or arbitrary-language/zero-shot claim."
+  ]
+}

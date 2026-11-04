@@ -243,7 +243,11 @@ class TestPrefixPlannerIO(unittest.TestCase):
             stream.assert_not_called()
         self.data.write_bytes(b'x'*100)
         def mutate(*args):
+            before=self.data.stat()
             self.data.write_bytes(b'y'*100)
+            # Same-size writes may share a filesystem clock tick. Make this
+            # observable-metadata mutation fixture independent of wall-clock speed.
+            os.utime(self.data,ns=(before.st_atime_ns,before.st_mtime_ns+1_000_000_000))
             return self.audit
         with patch.object(planner,'scan',side_effect=mutate):
             with self.assertRaisesRegex(ValueError,'prefix mutated during planning'): self.invoke()

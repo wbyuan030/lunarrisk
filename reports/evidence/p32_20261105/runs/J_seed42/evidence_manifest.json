@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "identity": {
+    "manifest_sha256": "c7e853c12d2175954a3f1843f6a4536753ccd6d04c443a34a1649e031f735d5f",
+    "method": "J",
+    "seed": 42,
+    "descriptor_permuted": false,
+    "source_sha256": {
+      "scripts/p32_train_heads.py": "71f9fb462b25d002ac7de252a3377c79164f0f2705cfff0450eaa8c1275ab82e",
+      "scripts/p32_run_heads.py": "c7327cb0dd028986a8b457fc50bc5f71d592d776e07f543485dd2fa694e9a740",
+      "src/lunarrisk/lunarjev/heads.py": "66911a53ba9801f1fe3b286adb69217a147899166416eb706ac56850be3f0807",
+      "src/lunarrisk/lunarjev/catalog.py": "cd09760312573ccdc9e75a5bbb995fa19760bd60552c05d6641c0e25dc63039e",
+      "src/lunarrisk/lunarjev/context.py": "d593e1a1fad23635a7bbce72313db164bb2aa6c1f197dc4ba61c714c6f5584ce",
+      "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+      "scripts/p31_run_baselines.py": "5b47e8161c4a1fd8d1731e23d4a62b2501c67c1b81aba06e01896586b5ac0b80"
+    },
+    "cache_sha256": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+    "text_identity": "641c03084a2c5de605b11221071d32c6ed875ffb4a41520904cddaf944382e14"
+  },
+  "archived_sha256": {
+    "report.json": "4c2d5324643ef2296e4c1756f79b2cb1f521d454d74a3277e8fa65ef53a19d84",
+    "completion.json": "64dfaf28918f18a615b9ceff04b6a7ef1bc60fb2d73226cfc1a8ec816c0a5d4c",
+    "replay_report.json": "8249cf8a2b9ae7fab0ae3c682b2c18eb290ac56622a91c8251185ea21cbc3778",
+    "train_geology_predictions.csv": "36ae262ee973e71c3df70fe16428945312adf9b1c7a0c1486ff343488fc31f6f",
+    "train_age_predictions.csv": "4e765a8d7ea71fb92a0090b063d000ebba030d457aa6f972c11428194d2fc0ea",
+    "train_age_from_geology_predictions.csv": "87016e91e7dec23e9da893b688c3dd4263458ced0af8021c0ca69678f71edb04",
+    "val_geology_predictions.csv": "83d1d71647197c3d27b4af8153c0cece1b269677d7c1e30c75b3ad1e2c2b2d7f",
+    "val_age_predictions.csv": "9b8ceca781f7ca388c7edb3e70015482598b43f61124cb0707b8f8216d31cc4a",
+    "val_age_from_geology_predictions.csv": "f181ac0ad7257db92837c7e9d8243fe97df020802426cc4e4ee9624199f70ac2",
+    "stdout.log": "8d7c23c708dd42d79f0fb178e71bb3ec5874d94352fcfba295b98b870f1aff25"
+  },
+  "checkpoint_local": "outputs/p32/heads_02/J_seed42/checkpoint.pt",
+  "checkpoint_sha256": "c67a06859482385114f2cee19c410b907354521f824606720e18780ee6dca57f",
+  "csvs_exact_original_bytes": true,
+  "test_scored": false
+}

@@ -1,0 +1,252 @@
+{
+  "status": "PASS",
+  "scope": "FP32 resident Train pixels; no HDF5 I/O or host/device transfer in timed regions",
+  "probe_ordered_ids": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+  ],
+  "batch_size": 16,
+  "device": "Radeon RX 7900 XT",
+  "script_sha256": "e6f6c5b8cfeee36c2c8dbe68a08ebc3f0385e7888b6109d5367d94c6ecdfd564",
+  "manifest_sha256": "c7e853c12d2175954a3f1843f6a4536753ccd6d04c443a34a1649e031f735d5f",
+  "test_scored": false,
+  "network_requests": 0,
+  "encoders": {
+    "42": {
+      "shared_visual_context": {
+        "median_ms": 1.9835559651255608,
+        "mean_ms": 2.0533811766654253,
+        "repeats": 20,
+        "warmup": 5
+      },
+      "methods": {
+        "B0": {
+          "head_two_tasks": {
+            "median_ms": 0.45450683683156967,
+            "mean_ms": 0.4603566601872444,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 2.3138406686484814,
+            "mean_ms": 2.308337762951851,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "c68005fb050f3afc78edf4af92fff04cba3af2d809457545e1148d6a1fbe5850",
+          "context_reuse_predictions_exact": true
+        },
+        "B1": {
+          "head_two_tasks": {
+            "median_ms": 1.6531017608940601,
+            "mean_ms": 1.6631584148854017,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.023888450115919,
+            "mean_ms": 3.027606848627329,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "63fe6a91dd8c09c281288f445dcb72ceacc08c69277eee76eef7d41bf11309ac",
+          "context_reuse_predictions_exact": true
+        },
+        "B2": {
+          "head_two_tasks": {
+            "median_ms": 1.776265911757946,
+            "mean_ms": 1.7774950247257948,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.0753868632018566,
+            "mean_ms": 3.074746299535036,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "fc37067464ad236980fb0697276cda12c9183d580ade15683875749e76cabebd",
+          "context_reuse_predictions_exact": true
+        },
+        "J": {
+          "head_two_tasks": {
+            "median_ms": 1.734997145831585,
+            "mean_ms": 1.8403517082333565,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.1352615915238857,
+            "mean_ms": 3.142515616491437,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "c67a06859482385114f2cee19c410b907354521f824606720e18780ee6dca57f",
+          "context_reuse_predictions_exact": true
+        }
+      }
+    },
+    "43": {
+      "shared_visual_context": {
+        "median_ms": 2.0160027779638767,
+        "mean_ms": 2.0259087439626455,
+        "repeats": 20,
+        "warmup": 5
+      },
+      "methods": {
+        "B0": {
+          "head_two_tasks": {
+            "median_ms": 0.39397599175572395,
+            "mean_ms": 0.3994891420006752,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 2.335457131266594,
+            "mean_ms": 2.333787363022566,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "3190c1d5fb169f2486bab580a800e212a2e36daefb8d916f29bb9d76fd730204",
+          "context_reuse_predictions_exact": true
+        },
+        "B1": {
+          "head_two_tasks": {
+            "median_ms": 1.65173364803195,
+            "mean_ms": 1.6890715807676315,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.045910969376564,
+            "mean_ms": 3.0388209968805313,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "ec2ee818f039191982087d0fc6de8743d7e0b24f852a2bd82c4a7921a732cdb7",
+          "context_reuse_predictions_exact": true
+        },
+        "B2": {
+          "head_two_tasks": {
+            "median_ms": 1.7018290236592293,
+            "mean_ms": 1.7053371295332909,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.0874651856720448,
+            "mean_ms": 3.128994442522526,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "1e916bcbce97e990a03eda77c090bb23c8475e5e42ccfb7a7cea8546b536245c",
+          "context_reuse_predictions_exact": true
+        },
+        "J": {
+          "head_two_tasks": {
+            "median_ms": 1.736961305141449,
+            "mean_ms": 1.747366227209568,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.1286682933568954,
+            "mean_ms": 3.1246199272572994,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "473189ef33c7236ec287ff8324fc20b97245cc7a10dc8c4ab684d46804ddb60d",
+          "context_reuse_predictions_exact": true
+        }
+      }
+    },
+    "44": {
+      "shared_visual_context": {
+        "median_ms": 2.0419363863766193,
+        "mean_ms": 2.041049348190427,
+        "repeats": 20,
+        "warmup": 5
+      },
+      "methods": {
+        "B0": {
+          "head_two_tasks": {
+            "median_ms": 0.395994633436203,
+            "mean_ms": 0.40014274418354034,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 2.3415335454046726,
+            "mean_ms": 2.3450342938303947,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "03572fb2eb77e6442e8eb836f542185abe32c563b16fdd9ce587f3ab2765a2fc",
+          "context_reuse_predictions_exact": true
+        },
+        "B1": {
+          "head_two_tasks": {
+            "median_ms": 1.7054914496839046,
+            "mean_ms": 1.7234062310308218,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.0299159698188305,
+            "mean_ms": 3.028739197179675,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "10b5f416b0708e98df044bba98522acac17e1e5625f98bb9342dea548d708290",
+          "context_reuse_predictions_exact": true
+        },
+        "B2": {
+          "head_two_tasks": {
+            "median_ms": 1.761171966791153,
+            "mean_ms": 1.7703099641948938,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.07638430967927,
+            "mean_ms": 3.0754942912608385,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "fdb6aeb621e7c92d207d3f05f4b77ef624fc25183bfebd4123c8433103f171eb",
+          "context_reuse_predictions_exact": true
+        },
+        "J": {
+          "head_two_tasks": {
+            "median_ms": 1.7483774572610855,
+            "mean_ms": 1.7622163519263268,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "encoder_plus_two_tasks": {
+            "median_ms": 3.1187799759209156,
+            "mean_ms": 3.2021154183894396,
+            "repeats": 20,
+            "warmup": 5
+          },
+          "checkpoint_sha256": "fd9049c3fb9d0c2fb7c1967637f62514f5c7818871f4f201a4e7312a68909dfd",
+          "context_reuse_predictions_exact": true
+        }
+      }
+    }
+  }
+}

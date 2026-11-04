@@ -1,0 +1,657 @@
+{
+  "comparisons": {
+    "J minus B2": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": 0.01731601731601734,
+          "macro49_difference": 0.0044097857940680885,
+          "first_correct_second_wrong": 131,
+          "second_correct_first_wrong": 111,
+          "different_argmax": 471
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": -0.01904761904761909,
+          "macro49_difference": -0.05237437418612767,
+          "first_correct_second_wrong": 122,
+          "second_correct_first_wrong": 144,
+          "different_argmax": 466
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": -0.03549783549783547,
+          "macro49_difference": -0.008596396526106692,
+          "first_correct_second_wrong": 122,
+          "second_correct_first_wrong": 163,
+          "different_argmax": 498
+        }
+      ],
+      "mean_macro49_difference": -0.018853661639388758,
+      "sample_std_ddof1_difference": 0.029749265904677906,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "B2 minus B1": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": 0.0025974025974025983,
+          "macro49_difference": -0.003141400962486246,
+          "first_correct_second_wrong": 85,
+          "second_correct_first_wrong": 82,
+          "different_argmax": 331
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": 0.012121212121212144,
+          "macro49_difference": 0.027410299561609036,
+          "first_correct_second_wrong": 101,
+          "second_correct_first_wrong": 87,
+          "different_argmax": 325
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": 0.019913419913419883,
+          "macro49_difference": 0.0037781528701249234,
+          "first_correct_second_wrong": 120,
+          "second_correct_first_wrong": 97,
+          "different_argmax": 387
+        }
+      ],
+      "mean_macro49_difference": 0.009349017156415904,
+      "sample_std_ddof1_difference": 0.016019597307694887,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "B2 minus B0": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": -0.027705627705627733,
+          "macro49_difference": -0.04413940779203887,
+          "first_correct_second_wrong": 94,
+          "second_correct_first_wrong": 126,
+          "different_argmax": 429
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": -0.016450216450216437,
+          "macro49_difference": -0.011872056500935646,
+          "first_correct_second_wrong": 101,
+          "second_correct_first_wrong": 120,
+          "different_argmax": 402
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": 0.024242424242424232,
+          "macro49_difference": -0.045570913277013764,
+          "first_correct_second_wrong": 139,
+          "second_correct_first_wrong": 111,
+          "different_argmax": 450
+        }
+      ],
+      "mean_macro49_difference": -0.03386079252332943,
+      "sample_std_ddof1_difference": 0.01905625057258816,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "B1 minus B0": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": -0.03030303030303033,
+          "macro49_difference": -0.040998006829552625,
+          "first_correct_second_wrong": 90,
+          "second_correct_first_wrong": 125,
+          "different_argmax": 426
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": -0.02857142857142858,
+          "macro49_difference": -0.03928235606254468,
+          "first_correct_second_wrong": 96,
+          "second_correct_first_wrong": 129,
+          "different_argmax": 391
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": 0.004329004329004349,
+          "macro49_difference": -0.04934906614713869,
+          "first_correct_second_wrong": 117,
+          "second_correct_first_wrong": 112,
+          "different_argmax": 410
+        }
+      ],
+      "mean_macro49_difference": -0.04320980967974533,
+      "sample_std_ddof1_difference": 0.005385509898598934,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "J minus B0": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": -0.010389610389610393,
+          "macro49_difference": -0.03972962199797078,
+          "first_correct_second_wrong": 124,
+          "second_correct_first_wrong": 136,
+          "different_argmax": 511
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": -0.03549783549783553,
+          "macro49_difference": -0.06424643068706332,
+          "first_correct_second_wrong": 103,
+          "second_correct_first_wrong": 144,
+          "different_argmax": 464
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": -0.01125541125541124,
+          "macro49_difference": -0.054167309803120456,
+          "first_correct_second_wrong": 134,
+          "second_correct_first_wrong": 147,
+          "different_argmax": 513
+        }
+      ],
+      "mean_macro49_difference": -0.05271445416271819,
+      "sample_std_ddof1_difference": 0.012322806872148784,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "B2 minus B2_permuted": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": -0.014718614718614742,
+          "macro49_difference": -0.013384500571194724,
+          "first_correct_second_wrong": 88,
+          "second_correct_first_wrong": 105,
+          "different_argmax": 368
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": 0.03549783549783553,
+          "macro49_difference": -0.0004324953498521522,
+          "first_correct_second_wrong": 147,
+          "second_correct_first_wrong": 106,
+          "different_argmax": 435
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": 0.027705627705627678,
+          "macro49_difference": -0.015894870140705758,
+          "first_correct_second_wrong": 117,
+          "second_correct_first_wrong": 85,
+          "different_argmax": 371
+        }
+      ],
+      "mean_macro49_difference": -0.009903955353917545,
+      "sample_std_ddof1_difference": 0.00829800607377095,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    },
+    "J minus J_permuted": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "accuracy_difference": 0.009523809523809545,
+          "macro49_difference": 0.0014271069832290095,
+          "first_correct_second_wrong": 137,
+          "second_correct_first_wrong": 126,
+          "different_argmax": 498
+        },
+        {
+          "seed": 43,
+          "accuracy_difference": 0.006926406926406892,
+          "macro49_difference": -0.022890455851004993,
+          "first_correct_second_wrong": 135,
+          "second_correct_first_wrong": 127,
+          "different_argmax": 506
+        },
+        {
+          "seed": 44,
+          "accuracy_difference": -0.007792207792207795,
+          "macro49_difference": 0.012862689531709492,
+          "first_correct_second_wrong": 140,
+          "second_correct_first_wrong": 149,
+          "different_argmax": 503
+        }
+      ],
+      "mean_macro49_difference": -0.0028668864453554968,
+      "sample_std_ddof1_difference": 0.018259261646159868,
+      "interpretation": "paired exploratory reused Val; no CI or p-value"
+    }
+  },
+  "minority_rule": "0 < Train support <= 50; frozen in run manifest before head scores",
+  "minority_metrics": {
+    "B0_seed42": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.288842062392787,
+      "val_samples": 89
+    },
+    "B1_seed42": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.18940177262068947,
+      "val_samples": 89
+    },
+    "B2_seed42": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.18776844070961715,
+      "val_samples": 89
+    },
+    "J_seed42": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.22050264550264548,
+      "val_samples": 89
+    },
+    "B0_seed43": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.25565910203591363,
+      "val_samples": 89
+    },
+    "B1_seed43": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.16348439536845336,
+      "val_samples": 89
+    },
+    "B2_seed43": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.2363207886196392,
+      "val_samples": 89
+    },
+    "J_seed43": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.09287152571466298,
+      "val_samples": 89
+    },
+    "B0_seed44": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.3211688275413766,
+      "val_samples": 89
+    },
+    "B1_seed44": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.23818342151675484,
+      "val_samples": 89
+    },
+    "B2_seed44": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.24847763347763344,
+      "val_samples": 89
+    },
+    "J_seed44": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.22531789198455865,
+      "val_samples": 89
+    },
+    "B2_seed42_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.21414219595334147,
+      "val_samples": 89
+    },
+    "J_seed42_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.2287349427700305,
+      "val_samples": 89
+    },
+    "B2_seed43_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.2509762796028332,
+      "val_samples": 89
+    },
+    "J_seed43_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.18654684095860566,
+      "val_samples": 89
+    },
+    "B2_seed44_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.28657687991021324,
+      "val_samples": 89
+    },
+    "J_seed44_permuted": {
+      "class_ids": [
+        3,
+        8,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        23,
+        26,
+        28,
+        34,
+        35,
+        36,
+        38,
+        39,
+        42
+      ],
+      "mean_f1_train_defined_classes": 0.20544737066476199,
+      "val_samples": 89
+    }
+  },
+  "test_scored": false
+}

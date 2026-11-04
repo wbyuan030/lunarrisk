@@ -1,0 +1,10 @@
+{"seed": 42, "split": "train", "rows": 5135, "status": "EXPORTED"}
+{"seed": 42, "split": "val", "rows": 1155, "status": "EXPORTED"}
+{"seed": 42, "status": "CACHE_VERIFIED", "seconds": 218.05136997625232}
+{"seed": 43, "split": "train", "rows": 5135, "status": "EXPORTED"}
+{"seed": 43, "split": "val", "rows": 1155, "status": "EXPORTED"}
+{"seed": 43, "status": "CACHE_VERIFIED", "seconds": 224.1608431832865}
+{"seed": 44, "split": "train", "rows": 5135, "status": "EXPORTED"}
+{"seed": 44, "split": "val", "rows": 1155, "status": "EXPORTED"}
+{"seed": 44, "status": "CACHE_VERIFIED", "seconds": 222.69396483525634}
+ALL_CONTEXT_CACHES_VERIFIED

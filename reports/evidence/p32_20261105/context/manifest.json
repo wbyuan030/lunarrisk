@@ -1,0 +1,136 @@
+{
+  "protocol": "P32_FROZEN_SPATIAL_CONTEXT_V1",
+  "sources": {
+    "scripts/p32_cache_context.py": "bc85d1451800e22be3879a4ed09796ea23c33cace3fc2e3e6029eb5b8c6bc970",
+    "src/lunarrisk/lunarjev/context.py": "d593e1a1fad23635a7bbce72313db164bb2aa6c1f197dc4ba61c714c6f5584ce",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "subset_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "inputs": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "bytes": 33964443553,
+    "sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+    "normalization": "Audited HF global statistics; raw nonfinite restored to zero, finite zero retained, finite/nonzero presence, group ANY. Fixed 28 channels in moonstone.CHANNELS order.",
+    "track": "partial_stored_prefix",
+    "train_rows": 5135,
+    "val_rows": 1155,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+    "val_ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+    "loader_claim": "HDF5_DERIVED_PILOT; full-crop pair is separately reported within selected sample coverage, never global exact reproduction",
+    "upstream_bytes": 74449119347,
+    "upstream_sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "upstream_full_integrity_verified": false,
+    "upstream_integrity_status": "UNVERIFIED",
+    "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e"
+  },
+  "prefix_hash_verified": true,
+  "hash_seconds": 49.66915181372315,
+  "test_accessed": false,
+  "network_requests": 0,
+  "encoders": {
+    "42": {
+      "seed": 42,
+      "file": "context_seed42.h5",
+      "sha256": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+      "bytes": 110118080,
+      "checkpoint_sha256": "e17a605d14a7b6856201509c03f67ae7506fb9ac95ca1ce919e9bc8c8eb80c4d",
+      "receipt_sha256": "cbb9b604957ba97ab95f1f4d15981df2b2014d2fb88f71b856131b058ef4b52c",
+      "best_weights_sha256": "c2efc0ac1c6f9aafc704bdf1e8091fb8e09fd4ab3cc4c734bc177e4dc1d14c25",
+      "selected_epoch": 13,
+      "frozen_parameters_and_bn": true,
+      "actual_tokens_shape_per_sample": [
+        16,
+        256
+      ],
+      "pooled_from_same_tokens": true,
+      "split_arrays_ids_targets_verified": true,
+      "repeat_probe": {
+        "train": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        },
+        "val": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        }
+      },
+      "export_wall_seconds": 218.05136997625232,
+      "batch_size": 16,
+      "parent_peak_rss_bytes": 2065154048,
+      "gpu_peak_allocated_bytes": 236718592,
+      "gpu_peak_reserved_bytes": 281018368
+    },
+    "43": {
+      "seed": 43,
+      "file": "context_seed43.h5",
+      "sha256": "84cecee9b7e17c9628451f8be4200edf749196521d0bc03ef4b341c180de6138",
+      "bytes": 110118080,
+      "checkpoint_sha256": "d134e3cb52b0ee2f95fb543c05a8ab7964e275c45247950c588bd4129a01c38c",
+      "receipt_sha256": "1b3ab0dabc178c6be1dafdef9e494b3b2a98541c5b6c10d17a569e43775fd7a9",
+      "best_weights_sha256": "d06cdfebf5d193390343212f5dfa841be6bf881dc729304d5773bcbbda65a101",
+      "selected_epoch": 18,
+      "frozen_parameters_and_bn": true,
+      "actual_tokens_shape_per_sample": [
+        16,
+        256
+      ],
+      "pooled_from_same_tokens": true,
+      "split_arrays_ids_targets_verified": true,
+      "repeat_probe": {
+        "train": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        },
+        "val": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        }
+      },
+      "export_wall_seconds": 224.1608431832865,
+      "batch_size": 16,
+      "parent_peak_rss_bytes": 2079260672,
+      "gpu_peak_allocated_bytes": 236718592,
+      "gpu_peak_reserved_bytes": 283115520
+    },
+    "44": {
+      "seed": 44,
+      "file": "context_seed44.h5",
+      "sha256": "38a06f49546d0f524a56fe5ee01e8a843a18feb3ed47b3584c64025075bb05f0",
+      "bytes": 110118080,
+      "checkpoint_sha256": "3c3ba40a4d2f4745253ced18cfb8b1e0dae8e026f65eee1f8c663fd354afd700",
+      "receipt_sha256": "a53783fb86076e8f07aaa8ea90af91d50c98bd1fe3a411a43efa68600726af10",
+      "best_weights_sha256": "283b61d5a8b208ee4b3be70ed4f4a1fb9c00579b829bf0487bcc48d934c203ea",
+      "selected_epoch": 15,
+      "frozen_parameters_and_bn": true,
+      "actual_tokens_shape_per_sample": [
+        16,
+        256
+      ],
+      "pooled_from_same_tokens": true,
+      "split_arrays_ids_targets_verified": true,
+      "repeat_probe": {
+        "train": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        },
+        "val": {
+          "batch_rows": 16,
+          "repeat_exact": true
+        }
+      },
+      "export_wall_seconds": 222.69396483525634,
+      "batch_size": 16,
+      "parent_peak_rss_bytes": 2079387648,
+      "gpu_peak_allocated_bytes": 236718592,
+      "gpu_peak_reserved_bytes": 283115520
+    }
+  },
+  "status": "PASS"
+}

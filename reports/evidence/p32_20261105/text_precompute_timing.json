@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "CPU public-catalog load/source verification and deterministic TF-IDF construction; Python imports excluded",
+  "cold_once_ms": 3.0162567272782326,
+  "median_ms": 1.8127746880054474,
+  "mean_ms": 2.01997640542686,
+  "warmup": 5,
+  "repeats": 20,
+  "catalog_sha256": "e91ec295dfd1cb1cf96b366b9d2bee1429243566ebc9bf19a7fa7d7b3b162515",
+  "text_identity": "641c03084a2c5de605b11221071d32c6ed875ffb4a41520904cddaf944382e14",
+  "text_features_width": 120,
+  "candidate_rows": 54,
+  "task_rows": 2,
+  "pretrained_text_encoder": false,
+  "inference_requires_text_encoding": false,
+  "network_requests": 0
+}

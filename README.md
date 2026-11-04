@@ -1,10 +1,10 @@
 # LunarRisk / LunarJEV
 
-**Active sprint — P3.2, 2026-11-04: build a task- and candidate-semantic LunarJEV prototype using existing lunar features.**
+**P3.2 first comparison complete — 2026-11-05: LunarJEV-lite implemented and18 paired runs verified; the current taxonomy-query head does not improve on the ordinary pooled head.**
 
 Start with [AGENTS.md](AGENTS.md), the [LunarJEV MVP design](docs/P3_2_LUNARJEV_MVP.md), and the [machine-readable scope](protocols/p32_lunarjev_design.json).
 
-The six P3.1 scratch baselines are complete. They provide enough evidence of learnable input signal to begin a decision architecture; they do **not** already establish frozen-feature sufficiency, pretrained gains, language understanding or semantic gains. P3.2 is a **new design and implementation handoff, not completed model results**. More scratch runs, a full dataset download, pretrained checkpoints and performance profiling are not prerequisites.
+Three existing Geology encoders now provide verified frozen spatial caches. B0/B1/B2/J × seeds42/43/44 plus six predeclared descriptor controls are complete, with exact independent-process prediction replay. Val full49 Geology Macro-F1: **B0 .255488±.014813, B1 .212279±.009432, B2 .221628±.014017, J .202774±.020098** (sample std, n=3). Correct taxonomy alignment also fails to beat the fixed permutation control. Shared-context/two-task execution works; semantic/spatial gains and speed advantages are **not established**. See [P3.2 results](reports/p3_2_lunarjev_mvp.md), [decision](reports/p3_2_decision.md), [actual run manifest](protocols/p32_head_run_manifest_v2.json) and [626-test/final evidence](reports/p3_2_progress.md).
 
 ## Completed reference results
 
@@ -19,7 +19,7 @@ These are development-set results on an availability-selected northern subset, *
 
 Sources: [progress](reports/p3_1_progress.md), [Age](reports/p3_1_age_baseline.md), [Geology](reports/p3_1_geology_baseline.md), [final aggregate](reports/evidence/p31_prefix_runs_20261104/aggregate_final.json), [sequence audit](reports/evidence/p31_prefix_runs_20261104/sequence_verification.json).
 
-## What LunarJEV-lite will test
+## What LunarJEV-lite tested
 
 ```text
 Existing lunar observations -> frozen encoder -> cached spatial evidence
@@ -49,7 +49,7 @@ The first scope is **Choice**. Noul/refusal, continuous Score, LLM backbone trai
 
 The existing49-class JSON primarily contains geological symbols, not complete verified descriptions. Build a source-traceable public catalog shared by all samples. Prefer already local audited definitions and a verified local frozen text encoder. Never inject a sample's true unit name or age prefix into its prompt.
 
-If richer local definitions or text weights are missing, implementation can proceed using an explicitly marked `TAXONOMY_ONLY_LOCAL` catalog and deterministic lexical representation. Such results are weak-semantic/ontology controls, **not evidence of pretrained-language or full geological-semantic reasoning**. Missing assets limit the relevant scientific claim, not the entire cache/module workflow. No new data or weight download is authorized here.
+If richer local definitions or text weights are missing, implementation can proceed using an explicitly marked `TAXONOMY_ONLY_LOCAL` catalog and deterministic lexical representation. Such results are weak-semantic/ontology controls, **not evidence of pretrained-language or full geological-semantic reasoning**. Missing assets limit the relevant scientific claim, not the entire cache/module workflow. The latest user instruction permits needed model/data downloads directly without proxy. No new download was needed for this completed lexical tier; full geological definitions and audited text representations require a separate tier/manifest.
 
 The current ID head and a candidate-independent semantic scorer satisfy their own full-softmax/subset-mask identity. Candidate ordering and subset support are interface checks, not evidence of semantic or new-class generalization. Record actual parameter count and compute; similar parameter counts do not establish equal runtime.
 
@@ -61,11 +61,11 @@ The current ID head and a candidate-independent semantic scorer satisfy their ow
 4. Freeze the actual run manifest and train small heads: default FP32/batch128/AdamW1e-3, max50 epochs/patience8, paired seeds42/43/44. Select by Val Geology full-49 Macro-F1; report Age from the same checkpoint. No hyperparameter search or scratch-backbone reruns.
 5. Report J1 semantic contribution, J2 spatial-query contribution and J3 shared-context capability, with ordinary masked-softmax and a predeclared description-alignment control. All development analyses remain exploratory.
 
-The planned scripts/modules in the design are **not yet implemented by this handoff**. Future results go to `reports/p3_2_progress.md` and `reports/p3_2_lunarjev_mvp.md`; local binary artifacts use `outputs/p32/`. Preserve all prior code and results for replay.
+The scripts/modules above are implemented in `src/lunarrisk/lunarjev/` and `scripts/p32_*`; results are in [progress](reports/p3_2_progress.md) and [final comparison](reports/p3_2_lunarjev_mvp.md). The original design's unimplemented wording is historical. Actual caches use `outputs/p32/context_03`, completed runs use `outputs/p32/heads_02`; do not repeat this completed matrix or overwrite old artifacts.
 
 ## Acquisition, resources and protected experiments
 
-**Acquisition remains PAUSED for VPN quota.** The retained file is33,964,443,553 bytes;40,484,675,794 bytes remain. Its local-prefix hash is recorded, but upstream full-file integrity is unverified. The newer pause instruction supersedes the earlier permission to acquire the full asset. Do not resume the transfer or download mmap files, pretrained weights or snapshots automatically.
+**Needed acquisitions may now use direct connections without proxy, per the latest user instruction.** Pin source/revision/size/hash and license before needed downloads; no paid or unrelated snapshot scope is added. This P3.2 tier used existing assets and no new data/weights. The retained file remains33,964,443,553 bytes with40,484,675,794 bytes missing; full upstream integrity is unverified. Completing that file is unnecessary for this subset experiment and has not been resumed.
 
 Use existing RX7900XT/ROCm and local assets. No paid resources, four-GPU runs or shared-environment replacement. Keep raw data, checkpoints, feature/text caches and credentials out of Git. The shared four-4090 machine's10GiB personal-storage limit remains unchanged.
 

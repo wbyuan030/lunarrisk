@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "identity": {
+    "manifest_sha256": "c7e853c12d2175954a3f1843f6a4536753ccd6d04c443a34a1649e031f735d5f",
+    "method": "B0",
+    "seed": 42,
+    "descriptor_permuted": false,
+    "source_sha256": {
+      "scripts/p32_train_heads.py": "71f9fb462b25d002ac7de252a3377c79164f0f2705cfff0450eaa8c1275ab82e",
+      "scripts/p32_run_heads.py": "c7327cb0dd028986a8b457fc50bc5f71d592d776e07f543485dd2fa694e9a740",
+      "src/lunarrisk/lunarjev/heads.py": "66911a53ba9801f1fe3b286adb69217a147899166416eb706ac56850be3f0807",
+      "src/lunarrisk/lunarjev/catalog.py": "cd09760312573ccdc9e75a5bbb995fa19760bd60552c05d6641c0e25dc63039e",
+      "src/lunarrisk/lunarjev/context.py": "d593e1a1fad23635a7bbce72313db164bb2aa6c1f197dc4ba61c714c6f5584ce",
+      "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+      "scripts/p31_run_baselines.py": "5b47e8161c4a1fd8d1731e23d4a62b2501c67c1b81aba06e01896586b5ac0b80"
+    },
+    "cache_sha256": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+    "text_identity": "641c03084a2c5de605b11221071d32c6ed875ffb4a41520904cddaf944382e14"
+  },
+  "artifact_sha256": {
+    "train_geology_predictions.csv": "312e97bf53e43c48ce713be61b1e06ce1477461a4fb897ecd9d1e98497e213a4",
+    "train_age_predictions.csv": "c758f660a4a21ae7038765ef329a29aac53dd051600ecfdb8e1a5e623e7d89c6",
+    "train_age_from_geology_predictions.csv": "de8ddb8b5d2d7115aceea5d54588336570974b75accfc232fac8f7fc66c0f496",
+    "val_geology_predictions.csv": "4337547d388ee16640345d1b4ee6c291feb0ac3c5c90878d7b9c8c721fc2e68f",
+    "val_age_predictions.csv": "7dad94ef271ca1a9774f571facdeed2144e814effd9fb3b1acd4f159e322272e",
+    "val_age_from_geology_predictions.csv": "285a0e441951f9a2c525bc164c703ddf5a5c0d54218d6f37afefe675cd040368",
+    "checkpoint.pt": "c68005fb050f3afc78edf4af92fff04cba3af2d809457545e1148d6a1fbe5850",
+    "report.json": "a46740646d5093171262c7aa3d662c218f43bd7dc87f07b9a774b2f23145c22a"
+  },
+  "stdout_sha256": "8e7d7cf006860705744f0d2c1b1c67b53d4071e15526e9662d1558bc260e9d0d",
+  "replay": {
+    "status": "PASS",
+    "fresh_process": true,
+    "prediction_files_exact": true,
+    "csv_count": 6,
+    "report_sha256": "ad574a71ff233b8e797b7eaea80810392fceb2fc2195ccb35b807344bf42aad5"
+  },
+  "test_scored": false
+}

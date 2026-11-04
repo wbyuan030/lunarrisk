@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/usr/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "$REPO/scripts/p32_train_heads.py", line 291, in <module>
+    if __name__=='__main__': raise SystemExit(main())
+  File "$REPO/scripts/p32_train_heads.py", line 287, in main
+    run(args)
+  File "$REPO/scripts/p32_train_heads.py", line 206, in run
+    if device.type=='cuda': torch.cuda.reset_peak_memory_stats(device)
+  File "$TRUSTED_RUNTIME/torch/cuda/memory.py", line 344, in reset_peak_memory_stats
+    return torch._C._cuda_resetPeakMemoryStats(device)
+RuntimeError: Invalid device argument

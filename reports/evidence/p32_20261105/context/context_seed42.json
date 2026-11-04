@@ -1,0 +1,32 @@
+{
+  "seed": 42,
+  "file": "context_seed42.h5",
+  "sha256": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+  "bytes": 110118080,
+  "checkpoint_sha256": "e17a605d14a7b6856201509c03f67ae7506fb9ac95ca1ce919e9bc8c8eb80c4d",
+  "receipt_sha256": "cbb9b604957ba97ab95f1f4d15981df2b2014d2fb88f71b856131b058ef4b52c",
+  "best_weights_sha256": "c2efc0ac1c6f9aafc704bdf1e8091fb8e09fd4ab3cc4c734bc177e4dc1d14c25",
+  "selected_epoch": 13,
+  "frozen_parameters_and_bn": true,
+  "actual_tokens_shape_per_sample": [
+    16,
+    256
+  ],
+  "pooled_from_same_tokens": true,
+  "split_arrays_ids_targets_verified": true,
+  "repeat_probe": {
+    "train": {
+      "batch_rows": 16,
+      "repeat_exact": true
+    },
+    "val": {
+      "batch_rows": 16,
+      "repeat_exact": true
+    }
+  },
+  "export_wall_seconds": 218.05136997625232,
+  "batch_size": 16,
+  "parent_peak_rss_bytes": 2065154048,
+  "gpu_peak_allocated_bytes": 236718592,
+  "gpu_peak_reserved_bytes": 281018368
+}

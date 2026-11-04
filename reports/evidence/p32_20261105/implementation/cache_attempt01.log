@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "$JOB_TMP/p31_python.py", line 14, in <module>
+    runpy.run_path(script,run_name='__main__')
+  File "/usr/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/usr/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "scripts/p32_cache_context.py", line 151, in <module>
+    raise SystemExit(main())
+  File "scripts/p32_cache_context.py", line 67, in main
+    base.require(checkpoint[key] == report[key], 'checkpoint/report mismatch: '+key)
+KeyError: 'plan_sha256'

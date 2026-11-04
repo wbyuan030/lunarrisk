@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "tests": 626,
+  "skips": 0,
+  "seconds": 18.113,
+  "new_tests": 47,
+  "compileall": "PASS",
+  "gpu_cold_start_preflight": "PASS; initialize device before resetting peak allocator counters",
+  "gpu_four_head_forward_backward": "PASS; actual D=120; see implementation verification",
+  "preserved_attempt": "heads_01 failed before model training with RuntimeError: Invalid device argument at cold allocator reset; no epoch or scores",
+  "active_manifest": "protocols/p32_head_run_manifest_v2.json",
+  "active_runs": "outputs/p32/heads_02",
+  "initial_manifest_preserved": "protocols/p32_head_run_manifest.json",
+  "source_sha256": {
+    "protocols/p32_candidate_catalog.json": "e91ec295dfd1cb1cf96b366b9d2bee1429243566ebc9bf19a7fa7d7b3b162515",
+    "scripts/p32_benchmark.py": "e6f6c5b8cfeee36c2c8dbe68a08ebc3f0385e7888b6109d5367d94c6ecdfd564",
+    "scripts/p32_cache_context.py": "bc85d1451800e22be3879a4ed09796ea23c33cace3fc2e3e6029eb5b8c6bc970",
+    "scripts/p32_run_heads.py": "c7327cb0dd028986a8b457fc50bc5f71d592d776e07f543485dd2fa694e9a740",
+    "scripts/p32_train_heads.py": "71f9fb462b25d002ac7de252a3377c79164f0f2705cfff0450eaa8c1275ab82e",
+    "src/lunarrisk/lunarjev/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/lunarrisk/lunarjev/catalog.py": "cd09760312573ccdc9e75a5bbb995fa19760bd60552c05d6641c0e25dc63039e",
+    "src/lunarrisk/lunarjev/context.py": "d593e1a1fad23635a7bbce72313db164bb2aa6c1f197dc4ba61c714c6f5584ce",
+    "src/lunarrisk/lunarjev/heads.py": "66911a53ba9801f1fe3b286adb69217a147899166416eb706ac56850be3f0807",
+    "tests/test_p31_plan_prefix.py": "a3942ba1e09a2e989007d57f412fe21e3d4cb6797964f1098ae516350c945e26",
+    "tests/test_p32_catalog.py": "02a0b5c8284d014857aa38421a705484d09833b739fd667eb81aefbf72f3a878",
+    "tests/test_p32_context.py": "5aa1480303dd9d4d5ca8206bdbb655a361adafb960dc89c0d42c2fa6c276ed66",
+    "tests/test_p32_heads.py": "a0ad97743634bf1a43c7e3aee5016ad449172c2138562103f87f60fb491009fb",
+    "tests/test_p32_runner.py": "38e37c678fe36344b966e3cf1ec9fbefb5463975544be5386a5beffd38c17113"
+  },
+  "logs_sha256": {
+    "tests.log": "e3330f4cd12af8154be26ace2409514dd1a0bbbdc8e72111b2f43842fd60b27b",
+    "initial_head_failure.log": "b24ecc66babb256f3f29b646195c9a1c0876f12a519b9a2777774a10cd08f02e"
+  },
+  "test_scored": false,
+  "new_downloads": 0
+}
