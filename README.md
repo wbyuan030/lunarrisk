@@ -1,65 +1,79 @@
 # LunarRisk / LunarJEV
 
-**Active sprint — P3.1, 2026-11-03: move from engineering smoke to data-sufficient public-benchmark baselines.**
+**Active sprint — P3.2, 2026-11-04: build a task- and candidate-semantic LunarJEV prototype using existing lunar features.**
 
-Start with [AGENTS.md](AGENTS.md), the [P3.1 execution plan](docs/P3_1_BENCHMARK_BASELINES.md), and the [machine-readable task scope](protocols/p31_execution_plan.json).
-This update is a handoff, not completed P3.1 training or approval for a bulk download.
+Start with [AGENTS.md](AGENTS.md), the [LunarJEV MVP design](docs/P3_2_LUNARJEV_MVP.md), and the [machine-readable scope](protocols/p32_lunarjev_design.json).
 
-## Current research direction
+The six P3.1 scratch baselines are complete. They provide enough evidence of learnable input signal to begin a decision architecture; they do **not** already establish frozen-feature sufficiency, pretrained gains, language understanding or semantic gains. P3.2 is a **new design and implementation handoff, not completed model results**. More scratch runs, a full dataset download, pretrained checkpoints and performance profiling are not prerequisites.
 
-Test whether lunar representations and task/candidate-conditioned decisions improve reproducible performance on public labels. First establish ordinary baselines with adequate data; verify pretrained and semantic contributions separately rather than treating an interface smoke test as evidence.
+## Completed reference results
 
-- **First training integration:** Moonstone five-class age classification.
-- **Core task:** Moonstone 49-class geology classification.
-- **Controls:** ordinary classifier, ordinary masked-softmax, and candidate-ID structural control on the same encoder/features. A semantic class-description model requires a separately specified experiment.
-- **Not presently included:** full language-backbone joint training, Latent TiM generation, active routing, global pretraining, or further low-rank terrain-posterior expansion.
+The separate local-prefix track uses 5,135 original Train and 1,155 original Val samples, selected by complete chunks available in the retained northern HDF5 prefix. All fixed seeds42/43/44 are included:
 
-Official source pointers: [Moonstone code](https://github.com/ayushprd/Moonstone), [dataset card](https://huggingface.co/datasets/ayushprd/Moonstone/blob/main/README.md), [downstream loader](https://github.com/ayushprd/Moonstone/blob/main/downstream_dataset.py), and [NASA LFM model card](https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/blob/main/README.md).
-Pinned revisions, license distinctions and observed access limits are in the [P3.0 asset audit](reports/p3_0_benchmark_audit.md).
+| Task | Val Accuracy, mean ± sample std | Val full-K Macro-F1, mean ± sample std |
+|---|---:|---:|
+| Age, K=5 | 58.6436% ± 2.0070 percentage points | 0.403084 ± 0.035138 |
+| Geology, K=49 | 43.6075% ± 2.2583 percentage points | 0.208791 ± 0.014977 |
 
-## Completed P3.0 evidence — engineering only
+These are development-set results on an availability-selected northern subset, **not the full Moonstone benchmark, a global holdout or an unseen-class test**. Each task has an independently initialized scratch encoder; Geology did not receive Age supervision. Archived prediction replays are exact. The final implementation suite records 579 passing tests; that is P3.1 evidence, not validation of the new model.
 
-The asset/metadata audit, HDF5-derived partial I/O, five-class Age smoke and same-feature 49-output Geology smoke are complete. The main pilot is **5 Train + 5 Val**. Geology uses the two-update Age-supervised scratch CNN, not MG-MAE or NASA pretrained weights. Independent process replay is documented, but **no official benchmark performance, pretrained gain or semantic gain is claimed**.
+Sources: [progress](reports/p3_1_progress.md), [Age](reports/p3_1_age_baseline.md), [Geology](reports/p3_1_geology_baseline.md), [final aggregate](reports/evidence/p31_prefix_runs_20261104/aggregate_final.json), [sequence audit](reports/evidence/p31_prefix_runs_20261104/sequence_verification.json).
 
-The latest recorded P3.0 checks are **482 tests: 481 passed, one optional legacy-data-path check skipped; compileall passed**. These are historical checks, not validation of future P3.1 changes.
+## What LunarJEV-lite will test
 
-The 172,032-pixel mmap row probe matched the pinned HF processing, but the original polar samples have 17/28 channels entirely missing. Full-crop comparison with valid observations across modality groups remains necessary; the existing interface stays **HDF5_DERIVED_PILOT**.
+```text
+Existing lunar observations -> frozen encoder -> cached spatial evidence
+                                                   ^
+Task definition + public candidate descriptions -> semantic queries
+                                                   |
+                                 candidate logits / Choice probabilities
+                                  Geology (49) and Age (5)
+```
 
-Evidence: [progress](reports/p3_0_progress.md), [loader validation](reports/p3_0_loader_validation.md), [mmap pairing](reports/p3_0_mmap_pair.md), [five-class Age smoke](reports/p3_0_age_fiveclass_smoke.md), [Geology engineering comparison](reports/p3_0_geology_baselines.md), and [next acquisition/research decision](reports/p3_0_next_decision.md).
+The first prototype is a lightweight discriminative **Semantic Query Decider**, not a claimed RSJEV/Clef reproduction. It reuses one observation context for parallel candidate/task queries. This operational meaning of one-pass does not imply a speed advantage over ordinary multi-head classification or arbitrary-language reasoning.
 
-## P3.1 execution order
+Use each existing Geology checkpoint's verified `best_state_dict`, frozen and in eval mode. Export the pre-global-pooling feature map, fixed-pool it to 4×4, and cache 16×256 float32 tokens per sample. All head comparisons receive the same encoder, sample IDs, task supervision and cache; a pooled control is derived from these same tokens. The pure token payload is about98.3MiB per encoder for Train+Val, calculated from shape, not measured storage peak.
 
-| Task | Work | Gate |
-|---|---|---|
-| P31-01 | New scalable runner: streaming SHA256, batchwise HDF5 reads, minibatch training/inference, checkpoints and memory logs | Implement now; reuse existing pilot for regression |
-| P31-02 | Representative full-crop pairing across valid/missing modalities, finite zeros and radar | Lock IDs, tolerances and access budget before reads |
-| P31-03 | Data-sufficient ordinary Age and Geology baselines with fixed metrics and Val selection | Requires suitable authorized data and a locked evaluation plan |
-| P31-04 | Candidate-ID equivalence/control tests and a separately designed semantic comparison | No semantic/new-class claims from ID lookup or ordering tests |
+| Method | Evidence | Candidate information | Role |
+|---|---|---|---|
+| B0 ordinary | Pooled same-context features | Ordinary task heads + masked-softmax | Required baseline |
+| B1 candidate_id_control | Same pooled features | Learned known-class IDs | Structural/parameter-sharing control |
+| B2 pooled_semantic | Same pooled features | Fixed public task/candidate descriptions | Separate semantic input from spatial querying |
+| J lunarjev_query | Same spatial-token cache | Same descriptions as B2 query spatial evidence | Proposed LunarJEV-lite |
 
-Do not merely remove limits from the smoke scripts: they hash files using `read_bytes()` and stack the whole small dataset before sending it to the GPU. Those choices are valid for the existing smoke but unsuitable for the full benchmark. Keep the historical runners as regression tools and build a separate production-size training path.
+All four heads are fitted anew. Do not use the original end-to-end P3.1 classifier as the sole supposedly identical-feature control. The Geology-supervised encoder is extra related supervision for Age, applied equally to all models. Age labels derive from Geology, so include a Geology-probability-to-Age aggregation control rather than presenting Age as independent evidence.
 
-The current candidate-ID scorer evaluates each known candidate independently. Its subset probabilities equal its own full-softmax probabilities masked and renormalized. This does **not** say it learns the same classifier as the ordinary MLP; it says subset support/permutation consistency alone does not establish semantic reasoning. Similar parameter counts also do not imply equal computation. Report head-only and full-pipeline costs separately.
+The first scope is **Choice**. Noul/refusal, continuous Score, LLM backbone training, latent modality synthesis, active routing and NASA/MG-MAE replacement are later, separately evaluated extensions. Do not invent hazard labels or unseen-class claims from the existing classification set.
 
-The stored dataset has 11,400/2,400/2,400 Train/Val/Test rows. It has 46 supported training geology classes; the other three are also absent from stored Val/Test, so this is not an unseen-class test. Preserve 49 outputs and document absent-class Macro-F1 handling. Age is derived from geology labels; any Age-supervised encoder is additional supervised training, not independent unsupervised pretraining evidence.
+## Semantic provenance, not another ID head under a new name
 
-## Data acquisition and pretrained routes
+The existing49-class JSON primarily contains geological symbols, not complete verified descriptions. Build a source-traceable public catalog shared by all samples. Prefer already local audited definitions and a verified local frozen text encoder. Never inject a sample's true unit name or age prefix into its prompt.
 
-The review recommends the bounded single-HDF5 data-first route, but [the acquisition proposal](protocols/p30_next_acquisition_proposal.json) remains **PENDING_USER_DECISION_NOT_AUTHORIZED**. This handoff does not start or approve the 74,449,119,347-byte download. The initial cumulative **1 GiB** guardrail is unchanged; no full pretraining snapshot, mmap corpus or large weights are implicitly authorized.
+If richer local definitions or text weights are missing, implementation can proceed using an explicitly marked `TAXONOMY_ONLY_LOCAL` catalog and deterministic lexical representation. Such results are weak-semantic/ontology controls, **not evidence of pretrained-language or full geological-semantic reasoning**. Missing assets limit the relevant scientific claim, not the entire cache/module workflow. No new data or weight download is authorized here.
 
-Without new download approval, implement the scalable runner, use existing assets for regression, and lock the baseline/pairing protocols. Do not keep retraining ten images as a substitute for research. If the fixed-file acquisition is explicitly approved, use a single new partial file, streaming size/hash checks, atomic finalization, and a fresh disk check; do not duplicate the asset in a second snapshot/cache.
+The current ID head and a candidate-independent semantic scorer satisfy their own full-softmax/subset-mask identity. Candidate ordering and subset support are interface checks, not evidence of semantic or new-class generalization. Record actual parameter count and compute; similar parameter counts do not establish equal runtime.
 
-MG-MAE weights remain unverified in the audited sources. NASA LFM has a reachable checkpoint, while physical input mapping, missing geometry, Python compatibility and weight acquisition remain separate blockers. Do not invent channels/context or train from scratch and label it pretrained. Missing pretrained weights need not block an honest scratch baseline.
+## Execution
 
-Full-file storage may contain Test pixels; training, model selection and test scoring must still remain isolated. Public Test scoring waits until model/configuration/analysis is fixed. Official stored, geographic, derived-loader, calibration and new semantic protocols are distinct tracks.
+1. Export audited frozen-context caches from existing Train/Val and verify IDs, weights and source hashes.
+2. Assemble the global candidate catalog, document its semantic tier, and fix one local text representation before new scores.
+3. Implement the four heads, dual-task masking and essential leakage/frozen-state/replay tests in new `p32_` modules.
+4. Freeze the actual run manifest and train small heads: default FP32/batch128/AdamW1e-3, max50 epochs/patience8, paired seeds42/43/44. Select by Val Geology full-49 Macro-F1; report Age from the same checkpoint. No hyperparameter search or scratch-backbone reruns.
+5. Report J1 semantic contribution, J2 spatial-query contribution and J3 shared-context capability, with ordinary masked-softmax and a predeclared description-alignment control. All development analyses remain exploratory.
 
-## Existing LunarRisk evidence and resource boundaries
+The planned scripts/modules in the design are **not yet implemented by this handoff**. Future results go to `reports/p3_2_progress.md` and `reports/p3_2_lunarjev_mvp.md`; local binary artifacts use `outputs/p32/`. Preserve all prior code and results for replay.
 
-- [P2.2 evidence](reports/p2_2_evidence_completion.md) and [corrected decision](reports/p2_2_hypothesis_decision.md) remain unchanged: **STOP_OR_REFRAME**, stable H1/H2 gains **NOT ESTABLISHED**.
-- [External heldout v2](protocols/heldout_v2_external_protocol_v2.json) remains **PENDING_SIGNOFF / NOT_FROZEN / HOLD**. This sprint does not approve EDR-to-CDR changes or old Gate 4 scoring.
-- Preserve all previous raw data, labels/cache, frozen/pending protocols and evidence. New outputs use a P3.1 namespace.
-- Use the existing RX 7900 XT and working ROCm environment. Do not replace torch, buy cloud resources, start four-GPU runs or write large data/weights/credentials into Git. The shared four-4090 server's 10 GiB personal storage constraint remains.
+## Acquisition, resources and protected experiments
 
-Validation commands:
+**Acquisition remains PAUSED for VPN quota.** The retained file is33,964,443,553 bytes;40,484,675,794 bytes remain. Its local-prefix hash is recorded, but upstream full-file integrity is unverified. The newer pause instruction supersedes the earlier permission to acquire the full asset. Do not resume the transfer or download mmap files, pretrained weights or snapshots automatically.
+
+Use existing RX7900XT/ROCm and local assets. No paid resources, four-GPU runs or shared-environment replacement. Keep raw data, checkpoints, feature/text caches and credentials out of Git. The shared four-4090 machine's10GiB personal-storage limit remains unchanged.
+
+Profiling may independently compare GPU-resident, CPU-resident and real-HDF5 paths using a small local sample. Low allocator memory alone does not prove low compute utilization. Profiling is not a gate for designing LunarJEV, and must not change archived baseline budgets.
+
+P2.2's [negative evidence](reports/p2_2_evidence_completion.md) and [corrected conclusions](reports/p2_2_hypothesis_decision.md) remain intact. The old low-rank route is STOP_OR_REFRAME, not a general rejection of probabilistic decision models. Old LROC Gate3 remains NOT_FROZEN and Gate4 HOLD; public Test model scoring also remains HOLD. New head experiments do not approve EDR/CDR policy changes or rewriting previous heldout assets.
+
+## Verification and history
 
 ```bash
 git pull --ff-only origin main
@@ -67,6 +81,6 @@ python3 -m unittest discover -s tests -v
 python3 -m compileall -q scripts src tests
 ```
 
-Record real PASS/FAIL/BLOCKED status, source/data hashes, commands, predictions and replay evidence in `reports/p3_1_progress.md`. Push completed work directly to main without force-pushing or discarding concurrent changes.
+Use the existing validated private runtime where required. Report real commands, source/data/cache/text hashes, PASS/FAIL/BLOCKED and checkpoint/prediction replay evidence, then push completed changes to main without force-pushing or losing concurrent work.
 
-Previous plans/reports remain under docs/reports. The P3.0 README and agent handoff are preserved at [25c8ac9](https://github.com/wbyuan030/lunarrisk/tree/25c8ac93e6ea94a1f402c3daecf547bba1990278); older instructions are historical, not concurrent active sprints.
+Historical P3.0/P3.1 plans and P0–P2.2 evidence remain under docs/reports. The previous handoff is preserved at [edffc0a](https://github.com/wbyuan030/lunarrisk/tree/edffc0a7c274efb4c1cee03e6c0f3203d87ebba7). Current instructions are P3.2, not the unexecuted wording in older plans.
