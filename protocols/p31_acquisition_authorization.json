@@ -20,7 +20,10 @@
   },
   "download": {
     "chunk_bytes": 4194304,
-    "attempts_per_invocation": 3,
+    "initial_unbounded_attempts_per_invocation": 3,
+    "range_window_bytes": 67108864,
+    "interruption_limit_per_invocation": 3,
+    "transport_update_2026_11_04": "After three premature EOFs, retain the same 14,590,953,377-byte partial and continue in bounded exact 64MiB ranges; successful windows do not consume the interruption limit. Asset/scope/size/SHA256 are unchanged.",
     "redirects": "HTTPS only; bounded redirects, no redirect-body reads; signed URLs and credentials excluded from evidence",
     "resume": "HTTP206 and exact Content-Range/length required before body; HTTP200 rejected for nonzero offset",
     "initial_sample_ledger_preserved": {"cap_bytes": 1073741824, "cumulative_conservative_body_bytes": 165257071},

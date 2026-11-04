@@ -88,6 +88,35 @@ class TestAcquisition(unittest.TestCase):
         (self.root/'fixture.h5').write_bytes(b'X'*16)
         with self.assertRaises(ValueError): self.invoke(forbidden)
 
+    def ranged_opener(self,requests):
+        def opener(request,**kwargs):
+            header=request.get_header('Range')
+            requests.append(header)
+            start,end=map(int,header.removeprefix('bytes=').split('-'))
+            return Response(self.body[start:end+1],206,
+                            {'Content-Length':str(end-start+1),'Content-Range':f'bytes {start}-{end}/16'})
+        return opener
+
+    def test_finite_windows_and_last_short_range_append_exactly_once(self):
+        requests=[]
+        result=self.invoke(self.ranged_opener(requests),window_bytes=6,attempts=1)
+        self.assertEqual(requests,['bytes=0-5','bytes=6-11','bytes=12-15'])
+        self.assertEqual((self.root/'fixture.h5').read_bytes(),self.body)
+        self.assertEqual(result['returned_body_bytes'],16)
+
+    def test_windowed_process_restart_preserves_existing_prefix(self):
+        self.make_interrupted()
+        requests=[]
+        self.invoke(self.ranged_opener(requests),window_bytes=6,resume=True)
+        self.assertEqual(requests,['bytes=8-13','bytes=14-15'])
+        self.assertEqual((self.root/'fixture.h5').read_bytes(),self.body)
+
+    def test_initial_bounded_window_requires_http206_before_body(self):
+        response=Response(self.body)
+        with self.assertRaises(ValueError): self.invoke(lambda *a,**k:response,window_bytes=6)
+        self.assertEqual(response.read_sizes,[])
+        self.assertFalse((self.root/'fixture.h5.partial').exists())
+
     def test_unowned_partial_and_insufficient_disk_fail_before_network(self):
         def forbidden(*args,**kwargs): raise AssertionError('network before preflight')
         partial=self.root/'fixture.h5.partial'

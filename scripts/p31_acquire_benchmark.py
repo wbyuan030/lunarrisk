@@ -29,7 +29,7 @@ def main():
     from lunarrisk.benchmarks.p31_pair import PersistentOpener
     opener=PersistentOpener()
     try:
-        report=acquire(asset,args.outdir,opener,resume=args.resume,
+        report=acquire(asset,args.outdir,opener,resume=args.resume,window_bytes=64*1024**2,
                        progress=lambda row:print(json.dumps(row),flush=True))
     finally:
         opener.close()

@@ -16,23 +16,25 @@ def file_hash(path,chunk=4*1024*1024):
     return digest.hexdigest()
 
 
-def response_contract(response,offset,size):
+def response_contract(response,offset,size,end=None):
+    end=size-1 if end is None else end
     if response.headers.get('Content-Encoding','identity').lower()!='identity':
         raise ValueError('encoded body forbidden')
     status=response.status
-    if offset or status==206:
-        if status!=206 or response.headers.get('Content-Range')!=f'bytes {offset}-{size-1}/{size}':
+    if offset or end!=size-1 or status==206:
+        if status!=206 or response.headers.get('Content-Range')!=f'bytes {offset}-{end}/{size}':
             raise ValueError('resume requires exact HTTP206 and Content-Range before body')
     elif status!=200:
         raise ValueError('full download requires HTTP200 or exact HTTP206')
     length=response.headers.get('Content-Length')
-    if length is not None and int(length)!=size-offset:
+    if length is not None and int(length)!=end-offset+1:
         raise ValueError('response length differs from fixed asset')
 
 
 def acquire(asset,outdir,opener,*,resume=False,chunk=4*1024*1024,attempts=3,
-            workspace_bytes=80*1024**3,progress=None):
-    if chunk<1 or attempts<1: raise ValueError('positive chunk and attempts required')
+            workspace_bytes=80*1024**3,progress=None,window_bytes=None):
+    if chunk<1 or attempts<1 or (window_bytes is not None and window_bytes<1):
+        raise ValueError('positive chunk, interruption limit and optional window required')
     outdir=Path(outdir)
     outdir.mkdir(parents=True,exist_ok=True)
     final=outdir/Path(asset['path']).name
@@ -62,26 +64,30 @@ def acquire(asset,outdir,opener,*,resume=False,chunk=4*1024*1024,attempts=3,
         offset=partial.stat().st_size if partial.exists() else 0
         if shutil.disk_usage(outdir).free<max(0,workspace_bytes-offset):
             raise ValueError('insufficient free workspace for single-copy acquisition')
-        save('DOWNLOADING',partial_bytes=offset,chunk_bytes=chunk)
+        save('DOWNLOADING',partial_bytes=offset,chunk_bytes=chunk,window_bytes=window_bytes,
+             interruption_limit_per_invocation=attempts)
         begin=time.monotonic()
+        failures=0
         try:
-            for attempt in range(attempts):
+            while True:
                 offset=partial.stat().st_size if partial.exists() else 0
                 if offset==size: break
+                end=min(size,offset+window_bytes)-1 if window_bytes is not None else size-1
                 headers={'Accept-Encoding':'identity'}
-                if offset: headers['Range']=f'bytes={offset}-'
-                row={'start_offset':offset,'returned_body_bytes':0,'status':'STARTED'}
+                if offset or end!=size-1:
+                    headers['Range']=f'bytes={offset}-{end}' if window_bytes is not None else f'bytes={offset}-'
+                row={'start_offset':offset,'end_offset':end,'returned_body_bytes':0,'status':'STARTED'}
                 manifest['attempts'].append(row)
                 save('DOWNLOADING')
                 try:
                     with opener(Request(asset['url'],headers=headers),timeout=90) as response:
-                        response_contract(response,offset,size)
+                        response_contract(response,offset,size,end)
                         with partial.open('ab') as target:
                             last=time.monotonic()
-                            while offset<size:
-                                body=response.read(min(chunk,size-offset))
-                                if not body: raise EOFError('truncated fixed asset')
-                                if len(body)>min(chunk,size-offset): raise ValueError('body exceeds requested read')
+                            while offset<=end:
+                                body=response.read(min(chunk,end-offset+1))
+                                if not body: raise EOFError('truncated fixed asset range')
+                                if len(body)>min(chunk,end-offset+1): raise ValueError('body exceeds requested read')
                                 target.write(body)
                                 offset+=len(body)
                                 row['returned_body_bytes']+=len(body)
@@ -92,13 +98,15 @@ def acquire(asset,outdir,opener,*,resume=False,chunk=4*1024*1024,attempts=3,
                                     if progress: progress({'status':'DOWNLOADING','bytes':offset,'total_bytes':size,
                                                            'elapsed_seconds':time.monotonic()-begin})
                                     last=time.monotonic()
-                            if response.read(1): raise ValueError('body exceeds fixed size')
+                            if response.read(1): raise ValueError('body exceeds fixed range')
                     row['status']='COMPLETE'
-                    break
+                    save('DOWNLOADING',partial_bytes=offset)
+                    if offset==size: break
                 except (OSError,EOFError) as error:
                     row.update(status='INTERRUPTED',error_type=type(error).__name__)
                     save('INTERRUPTED',partial_bytes=partial.stat().st_size if partial.exists() else 0)
-                    if attempt+1==attempts: raise
+                    failures+=1
+                    if failures>=attempts: raise
             if not partial.exists() or partial.stat().st_size!=size: raise ValueError('asset size incomplete')
             save('VERIFYING',partial_bytes=size,download_seconds_this_process=time.monotonic()-begin)
             hash_begin=time.monotonic()
