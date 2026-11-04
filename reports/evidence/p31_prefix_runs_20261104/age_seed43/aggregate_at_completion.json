@@ -1,0 +1,258 @@
+{
+  "status": "PARTIAL",
+  "test_evaluated": false,
+  "std_definition": "sample standard deviation, ddof=1; null for n<2",
+  "prior_note": "Train-only deterministic prior repeated per seed; repetitions are not independent prior fits",
+  "tasks": {
+    "age": {
+      "completed_seeds": [
+        42,
+        43
+      ],
+      "missing_seeds": [
+        44
+      ],
+      "baselines": {
+        "independent_task_scratch_cnn": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.7265822784810126,
+                "43": 0.6917234664070107
+              },
+              "n": 2,
+              "mean": 0.7091528724440117,
+              "sample_std_ddof1": 0.024648902401634306
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.659738216225511,
+                "43": 0.5310605054186421
+              },
+              "n": 2,
+              "mean": 0.5953993608220766,
+              "sample_std_ddof1": 0.09098888189909846
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.659738216225511,
+                "43": 0.5310605054186421
+              },
+              "n": 2,
+              "mean": 0.5953993608220766,
+              "sample_std_ddof1": 0.09098888189909846
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.5731601731601732,
+                "43": 0.6095238095238096
+              },
+              "n": 2,
+              "mean": 0.5913419913419914,
+              "sample_std_ddof1": 0.02571297386132901
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.43133159398943255,
+                "43": 0.4141837013460071
+              },
+              "n": 2,
+              "mean": 0.42275764766771984,
+              "sample_std_ddof1": 0.012125391171225028
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.43133159398943255,
+                "43": 0.4141837013460071
+              },
+              "n": 2,
+              "mean": 0.42275764766771984,
+              "sample_std_ddof1": 0.012125391171225028
+            }
+          }
+        },
+        "train_empirical_prior": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.4370009737098345,
+                "43": 0.4370009737098345
+              },
+              "n": 2,
+              "mean": 0.4370009737098345,
+              "sample_std_ddof1": 0.0
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.1216424989836021,
+                "43": 0.1216424989836021
+              },
+              "n": 2,
+              "mean": 0.1216424989836021,
+              "sample_std_ddof1": 0.0
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.1216424989836021,
+                "43": 0.1216424989836021
+              },
+              "n": 2,
+              "mean": 0.1216424989836021,
+              "sample_std_ddof1": 0.0
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.4077922077922078,
+                "43": 0.4077922077922078
+              },
+              "n": 2,
+              "mean": 0.4077922077922078,
+              "sample_std_ddof1": 0.0
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.11586715867158673,
+                "43": 0.11586715867158673
+              },
+              "n": 2,
+              "mean": 0.11586715867158673,
+              "sample_std_ddof1": 0.0
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.11586715867158673,
+                "43": 0.11586715867158673
+              },
+              "n": 2,
+              "mean": 0.11586715867158673,
+              "sample_std_ddof1": 0.0
+            }
+          }
+        }
+      }
+    },
+    "geology": {
+      "completed_seeds": [
+        42
+      ],
+      "missing_seeds": [
+        43,
+        44
+      ],
+      "baselines": {
+        "independent_task_scratch_cnn": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.5760467380720545
+              },
+              "n": 1,
+              "mean": 0.5760467380720545,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.31816855077213324
+              },
+              "n": 1,
+              "mean": 0.31816855077213324,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.43306274966207026
+              },
+              "n": 1,
+              "mean": 0.43306274966207026,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.4103896103896104
+              },
+              "n": 1,
+              "mean": 0.4103896103896104,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.22332162074468997
+              },
+              "n": 1,
+              "mean": 0.22332162074468997,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.3419612317653065
+              },
+              "n": 1,
+              "mean": 0.3419612317653065,
+              "sample_std_ddof1": null
+            }
+          }
+        },
+        "train_empirical_prior": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.16241480038948394
+              },
+              "n": 1,
+              "mean": 0.16241480038948394,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.005702934549594674
+              },
+              "n": 1,
+              "mean": 0.005702934549594674,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.007762327581392751
+              },
+              "n": 1,
+              "mean": 0.007762327581392751,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.16277056277056276
+              },
+              "n": 1,
+              "mean": 0.16277056277056276,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.005713677876213777
+              },
+              "n": 1,
+              "mean": 0.005713677876213777,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.008749069247952346
+              },
+              "n": 1,
+              "mean": 0.008749069247952346,
+              "sample_std_ddof1": null
+            }
+          }
+        }
+      }
+    }
+  }
+}

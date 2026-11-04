@@ -1,0 +1,398 @@
+{
+  "status": "P31_PARTIAL_DATA_TRAINVAL",
+  "purpose": "subset_baseline",
+  "mode": "replay",
+  "protocol": "P31_LOCAL_PREFIX_STORED_DERIVED_V1",
+  "test_evaluated": false,
+  "code_sha": "2f90c5b3903da9bbd5ce31171b8446595f3df9f7",
+  "source_sha256": {
+    "scripts/p31_train_classifier.py": "991895637c80726fbcf0bf24b7aca1355aed28a17c208dba6a3b80dc110d938d",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2"
+  },
+  "config": {
+    "task": "age",
+    "track": "partial_stored_prefix",
+    "planned_epochs": 50,
+    "batch_size": 16,
+    "workers": 0,
+    "seed": 43,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "patience": 5,
+    "precision": "fp32",
+    "purpose": "subset_baseline",
+    "schedule": "upstream cosine with min(2 epochs, total_steps//10) warmup",
+    "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties"
+  },
+  "inputs": {
+    "data_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "data_bytes": 33964443553,
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+    "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e"
+  },
+  "splits": {
+    "train": {
+      "rows": 5135,
+      "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+      "class_counts": [
+        811,
+        1697,
+        2244,
+        283,
+        100
+      ]
+    },
+    "val": {
+      "rows": 1155,
+      "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+      "class_counts": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ]
+    }
+  },
+  "completed_epochs": 20,
+  "best_epoch": 15,
+  "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties",
+  "metrics": {
+    "train": {
+      "accuracy": 0.6917234664070107,
+      "macro_f1_full": 0.5310605054186421,
+      "macro_f1_supported": 0.5310605054186421,
+      "per_class_f1": [
+        0.391304347826087,
+        0.7063277447268794,
+        0.800755033557047,
+        0.2597402597402597,
+        0.4971751412429379
+      ],
+      "per_class_recall": [
+        0.2996300863131936,
+        0.769593400117855,
+        0.8507130124777184,
+        0.17667844522968199,
+        0.44
+      ],
+      "support": [
+        811,
+        1697,
+        2244,
+        283,
+        100
+      ],
+      "predicted_counts": [
+        431,
+        2001,
+        2524,
+        102,
+        77
+      ],
+      "confusion": [
+        [
+          243,
+          401,
+          162,
+          0,
+          5
+        ],
+        [
+          123,
+          1306,
+          260,
+          1,
+          7
+        ],
+        [
+          53,
+          225,
+          1909,
+          48,
+          9
+        ],
+        [
+          12,
+          55,
+          154,
+          50,
+          12
+        ],
+        [
+          0,
+          14,
+          39,
+          3,
+          44
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5135,
+      "nll": 0.7432450827976513,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.4162309624523128,
+      "largest_observed_batch": 16
+    },
+    "val": {
+      "accuracy": 0.6095238095238096,
+      "macro_f1_full": 0.4141837013460071,
+      "macro_f1_supported": 0.4141837013460071,
+      "per_class_f1": [
+        0.3267605633802817,
+        0.6305418719211823,
+        0.7421875,
+        0.14285714285714285,
+        0.22857142857142856
+      ],
+      "per_class_recall": [
+        0.25,
+        0.6994535519125683,
+        0.8067940552016986,
+        0.0967741935483871,
+        0.16666666666666666
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        123,
+        446,
+        553,
+        22,
+        11
+      ],
+      "confusion": [
+        [
+          58,
+          140,
+          34,
+          0,
+          0
+        ],
+        [
+          36,
+          256,
+          72,
+          0,
+          2
+        ],
+        [
+          25,
+          48,
+          380,
+          16,
+          2
+        ],
+        [
+          4,
+          0,
+          49,
+          6,
+          3
+        ],
+        [
+          0,
+          2,
+          18,
+          0,
+          4
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0363155909946986,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5502666863528165,
+      "largest_observed_batch": 16
+    }
+  },
+  "train_prior_probabilities": [
+    0.15793573515092502,
+    0.33047711781889,
+    0.4370009737098345,
+    0.055111976630963976,
+    0.019474196689386564
+  ],
+  "train_prior_metrics": {
+    "train": {
+      "accuracy": 0.4370009737098345,
+      "macro_f1_full": 0.1216424989836021,
+      "macro_f1_supported": 0.1216424989836021,
+      "per_class_f1": [
+        0.0,
+        0.0,
+        0.6082124949180105,
+        0.0,
+        0.0
+      ],
+      "per_class_recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        811,
+        1697,
+        2244,
+        283,
+        100
+      ],
+      "predicted_counts": [
+        0,
+        0,
+        5135,
+        0,
+        0
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          811,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1697,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2244,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          283,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          100,
+          0,
+          0
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 5135,
+      "nll": 1.2555875540476114,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.671454722600415,
+      "largest_observed_batch": 16
+    },
+    "val": {
+      "accuracy": 0.4077922077922078,
+      "macro_f1_full": 0.11586715867158673,
+      "macro_f1_supported": 0.11586715867158673,
+      "per_class_f1": [
+        0.0,
+        0.0,
+        0.5793357933579336,
+        0.0,
+        0.0
+      ],
+      "per_class_recall": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        0,
+        0,
+        1155,
+        0,
+        0
+      ],
+      "confusion": [
+        [
+          0,
+          0,
+          232,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          366,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          471,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          62,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          24,
+          0,
+          0
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.2965753749335482,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.6925149224021218,
+      "largest_observed_batch": 16
+    }
+  },
+  "last_weights_sha256": "316785d3a04a972ece70d15db0a81d11f4777814905c5dcd16a6dca6f9378156",
+  "best_weights_sha256": "b018aa94ef2857487d9f353a133453b6b3f663bc3b8c3d584fa7916032868378",
+  "prediction_sha256": {
+    "train": "f8a545797c241fadcc64fa16b60ac5550283d4f9038b2d7cfc75a208641cb55d",
+    "val": "a78c8c4a295fade537eae734ce495f36a2535a5f46e4cb7bb784f5026f718b6f"
+  },
+  "peak_process_rss_bytes": 2208825344,
+  "peak_rss_scope": "parent process; workers=0 initially",
+  "peak_gpu_allocated_bytes": 240403456,
+  "peak_gpu_reserved_bytes": 281018368,
+  "train_window_seconds_this_process": 0.0,
+  "train_examples_this_process": 0,
+  "train_samples_per_second_this_process": null,
+  "train_and_export_wall_seconds": 218.69595832098275,
+  "asset_hash_seconds": 45.38892402127385,
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "parameters": 459077
+}

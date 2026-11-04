@@ -1,6 +1,6 @@
 # P3.1 Geology baseline
 
-Updated: 2026-11-04. **Local-prefix Geology seed42 PASS, including independent exact prediction replay.** Both task seed42 runs have passed the execution gate; Age seed43 is now running. Complete-data official baseline remains pending and acquisition stays paused for VPN quota.
+Updated: 2026-11-04. **Local-prefix Geology seed42 PASS, including independent exact prediction replay.** Both task seed42 runs and Age seed43 have passed the execution gate; Age seed44 is now running. Complete-data official baseline remains pending and acquisition stays paused for VPN quota.
 
 The core task remains official 49-output classification with unit_id minus one and audited HF global normalization. This result uses the separately locked [`P31_LOCAL_PREFIX_STORED_DERIVED_V1`](../protocols/p31_local_prefix_eval_plan.json): 5,135 original Train and 1,155 original Val rows whose complete pixel chunks are available in the retained prefix. Train supports 36 classes and Val supports 32; all Val-supported classes occur in Train. Original stored membership/order is retained. This northern availability-selected subset is not the full official benchmark or an unseen-class protocol. Full upstream file integrity remains unverified; Test was not scored. [Subset scope/reproduction](p3_1_partial_data_baselines.md).
 
