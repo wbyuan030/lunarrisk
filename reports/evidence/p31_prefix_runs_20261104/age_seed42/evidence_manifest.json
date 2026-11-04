@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "run": "age_seed42",
+  "scope": "Separate availability-selected local-prefix Train/Val baseline; no full official benchmark or semantic gain claim",
+  "source_commit": "2f90c5b3903da9bbd5ce31171b8446595f3df9f7",
+  "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "completed_epochs": 28,
+  "selected_epoch": 23,
+  "checkpoint_local_path": "outputs/p31/local_prefix_baselines_01/age_seed42/checkpoint.pt",
+  "checkpoint_sha256": "8b3c39f9bc85cf1cdd2476f2ed9a039c3387f98f64e501a637d3480eea5b3a93",
+  "archived_artifact_sha256": {
+    "aggregate_at_completion.json": "4eed65a63f12c80c9dc0a4951a73e1c3729d4b9336bc8338541365369764249d",
+    "asset_manifest.json": "154d043e18addb46c1228dede6dbe507dcf8c2b5a39051423594ad67b98ea6c1",
+    "completion.json": "a93a5d1773a48e7f116adcda00e5449a672ea45e50fd239f6f3e1353f6a1f0b6",
+    "history.json": "9dc917ad6d8b3f5adc03046534db2c2de0b26ba31772804e8009cfca593e25be",
+    "replay_report.json": "8bfe2420a19818a745c0c96b90796564869f52c30df8ad45451565a72dadcd12",
+    "report.json": "ce37438cbb2253e7bb390207d9716a4171bd43a0c0e1dabc8c89e4492a92d38e",
+    "stdout.log": "91d7f0823cd18f7cd41bbb818333931fd29ddd80d0a5540f749a0118f1da950b",
+    "train_predictions.csv": "c76d70ccf5b93c63d61165679a09aa22eec8150c93827604b69aef0285faf70a",
+    "train_prior_predictions.csv": "bf197d1d9f9d14a6aef0bc26283f6f8328ac8e0b62aeb20a395aadae840d0add",
+    "val_predictions.csv": "1f4a20608300dbddfe8bf1a6531d40d35125cae15a01e35817472ce19f888506",
+    "val_prior_predictions.csv": "b7e24ca88cb3fbf72e0fee519ee679b1a8a0bb6165e4672a0b7a9f012c84c27d"
+  },
+  "checks": {
+    "checkpoint_history_config_resources": true,
+    "sample_ids_probabilities_confusion": true,
+    "receipt_unchanged": true,
+    "fresh_process_prediction_csv_exact": true
+  },
+  "network_requests": 0,
+  "test_evaluated": false,
+  "upstream_full_integrity_verified": false
+}

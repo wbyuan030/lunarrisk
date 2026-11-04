@@ -1,0 +1,221 @@
+{
+  "status": "PARTIAL",
+  "test_evaluated": false,
+  "std_definition": "sample standard deviation, ddof=1; null for n<2",
+  "prior_note": "Train-only deterministic prior repeated per seed; repetitions are not independent prior fits",
+  "tasks": {
+    "age": {
+      "completed_seeds": [
+        42
+      ],
+      "missing_seeds": [
+        43,
+        44
+      ],
+      "baselines": {
+        "independent_task_scratch_cnn": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.7265822784810126
+              },
+              "n": 1,
+              "mean": 0.7265822784810126,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.659738216225511
+              },
+              "n": 1,
+              "mean": 0.659738216225511,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.659738216225511
+              },
+              "n": 1,
+              "mean": 0.659738216225511,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.5731601731601732
+              },
+              "n": 1,
+              "mean": 0.5731601731601732,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.43133159398943255
+              },
+              "n": 1,
+              "mean": 0.43133159398943255,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.43133159398943255
+              },
+              "n": 1,
+              "mean": 0.43133159398943255,
+              "sample_std_ddof1": null
+            }
+          }
+        },
+        "train_empirical_prior": {
+          "train": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.4370009737098345
+              },
+              "n": 1,
+              "mean": 0.4370009737098345,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.1216424989836021
+              },
+              "n": 1,
+              "mean": 0.1216424989836021,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.1216424989836021
+              },
+              "n": 1,
+              "mean": 0.1216424989836021,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {
+                "42": 0.4077922077922078
+              },
+              "n": 1,
+              "mean": 0.4077922077922078,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {
+                "42": 0.11586715867158673
+              },
+              "n": 1,
+              "mean": 0.11586715867158673,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {
+                "42": 0.11586715867158673
+              },
+              "n": 1,
+              "mean": 0.11586715867158673,
+              "sample_std_ddof1": null
+            }
+          }
+        }
+      }
+    },
+    "geology": {
+      "completed_seeds": [],
+      "missing_seeds": [
+        42,
+        43,
+        44
+      ],
+      "baselines": {
+        "independent_task_scratch_cnn": {
+          "train": {
+            "accuracy": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            }
+          }
+        },
+        "train_empirical_prior": {
+          "train": {
+            "accuracy": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            }
+          },
+          "val": {
+            "accuracy": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_full": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            },
+            "macro_f1_supported": {
+              "per_seed": {},
+              "n": 0,
+              "mean": null,
+              "sample_std_ddof1": null
+            }
+          }
+        }
+      }
+    }
+  }
+}

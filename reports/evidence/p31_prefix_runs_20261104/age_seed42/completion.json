@@ -1,0 +1,54 @@
+{
+  "identity": {
+    "config": {
+      "task": "age",
+      "track": "partial_stored_prefix",
+      "planned_epochs": 50,
+      "batch_size": 16,
+      "workers": 0,
+      "seed": 42,
+      "lr": 0.001,
+      "weight_decay": 0.01,
+      "grad_clip": 1.0,
+      "patience": 5,
+      "precision": "fp32",
+      "purpose": "subset_baseline",
+      "schedule": "upstream cosine with min(2 epochs, total_steps//10) warmup",
+      "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties"
+    },
+    "inputs": {
+      "data_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+      "data_bytes": 33964443553,
+      "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+      "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+      "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+      "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e"
+    },
+    "source_sha256": {
+      "scripts/p31_train_classifier.py": "991895637c80726fbcf0bf24b7aca1355aed28a17c208dba6a3b80dc110d938d",
+      "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+      "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+      "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2"
+    },
+    "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "launcher_sha256": "8faea23012f34499fb2213d98bf3f8bb5b924d1a11c66065f7f1e7ba97471fa5",
+    "verifier_sha256": "5b47e8161c4a1fd8d1731e23d4a62b2501c67c1b81aba06e01896586b5ac0b80"
+  },
+  "artifact_sha256": {
+    "report.json": "ce37438cbb2253e7bb390207d9716a4171bd43a0c0e1dabc8c89e4492a92d38e",
+    "checkpoint.pt": "8b3c39f9bc85cf1cdd2476f2ed9a039c3387f98f64e501a637d3480eea5b3a93",
+    "asset_manifest.json": "154d043e18addb46c1228dede6dbe507dcf8c2b5a39051423594ad67b98ea6c1",
+    "train_predictions.csv": "c76d70ccf5b93c63d61165679a09aa22eec8150c93827604b69aef0285faf70a",
+    "train_prior_predictions.csv": "bf197d1d9f9d14a6aef0bc26283f6f8328ac8e0b62aeb20a395aadae840d0add",
+    "val_predictions.csv": "1f4a20608300dbddfe8bf1a6531d40d35125cae15a01e35817472ce19f888506",
+    "val_prior_predictions.csv": "b7e24ca88cb3fbf72e0fee519ee679b1a8a0bb6165e4672a0b7a9f012c84c27d",
+    "stdout": "7d6a08a801fe190e2f6759d9b96f335f31b472b2766b45c1edb9993c3cb4af6f"
+  },
+  "verification": "PASS",
+  "replay": {
+    "status": "PASS",
+    "fresh_process": true,
+    "prediction_files_exact": true,
+    "report_sha256": "8bfe2420a19818a745c0c96b90796564869f52c30df8ad45451565a72dadcd12"
+  }
+}
