@@ -1,6 +1,6 @@
 # P3.1 local-prefix Train/Val baselines
 
-Updated: 2026-11-04. **Offline subset protocol locked and implementation validated; no model scores reported yet.** The user directed: “先用这些数据吧，vpn流量快顶不住了”. Acquisition stays paused. This is a separate availability-selected, HDF5-derived experiment; the complete-data baseline protocol and gates remain unchanged.
+Updated: 2026-11-04. **Offline subset protocol locked; fixed serial baselines RUNNING from `2f90c5b`, beginning with Age seed42. No completed model scores reported yet.** The user directed: “先用这些数据吧，vpn流量快顶不住了”. Acquisition stays paused. This is a separate availability-selected, HDF5-derived experiment; the complete-data baseline protocol and gates remain unchanged.
 
 The retained single partial contains **33,964,443,553 bytes** of the pinned 74,449,119,347-byte HDF5. The upstream full-file SHA256 has **not** been verified. An offline metadata scan found 7,400 physically complete pixel chunks, ten descriptors outside the retained prefix and 8,790 rows whose chunk-index metadata is unavailable. Missing intervals raise errors; no missing pixels or file holes are filled. Existing individually hashed range-cache bodies provide previously acquired metadata beyond the prefix's physical EOF. They do not expand eligibility to pixel chunks outside the physical prefix. The original partial is read in place without a second data copy or modification.
 
