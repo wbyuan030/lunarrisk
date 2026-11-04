@@ -1,0 +1,54 @@
+{
+  "identity": {
+    "config": {
+      "task": "geology",
+      "track": "partial_stored_prefix",
+      "planned_epochs": 50,
+      "batch_size": 16,
+      "workers": 0,
+      "seed": 43,
+      "lr": 0.001,
+      "weight_decay": 0.01,
+      "grad_clip": 1.0,
+      "patience": 5,
+      "precision": "fp32",
+      "purpose": "subset_baseline",
+      "schedule": "upstream cosine with min(2 epochs, total_steps//10) warmup",
+      "selection": "strictly higher Val full-K macro-F1; earliest epoch on ties"
+    },
+    "inputs": {
+      "data_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+      "data_bytes": 33964443553,
+      "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+      "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+      "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+      "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e"
+    },
+    "source_sha256": {
+      "scripts/p31_train_classifier.py": "991895637c80726fbcf0bf24b7aca1355aed28a17c208dba6a3b80dc110d938d",
+      "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+      "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+      "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2"
+    },
+    "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "launcher_sha256": "8faea23012f34499fb2213d98bf3f8bb5b924d1a11c66065f7f1e7ba97471fa5",
+    "verifier_sha256": "5b47e8161c4a1fd8d1731e23d4a62b2501c67c1b81aba06e01896586b5ac0b80"
+  },
+  "artifact_sha256": {
+    "report.json": "00a3682fa133dcfc98abab8f3ac77aa9a0838ab18c18d1792e01b01b96032c8f",
+    "checkpoint.pt": "d134e3cb52b0ee2f95fb543c05a8ab7964e275c45247950c588bd4129a01c38c",
+    "asset_manifest.json": "c4d29af2dc6ac369753d4b5d34ab2c45d69e86cc80a334bb4007bc39913078c7",
+    "train_predictions.csv": "6e39506d8fec82b49ebed4da4fdfb3cf844677ef496c9224474fd6c6449eeb85",
+    "train_prior_predictions.csv": "230a53e60510fdce8a06289dcb5b12699cfeff47e74cb67507a786961e09947a",
+    "val_predictions.csv": "d2e6ad8f2a04b319bc764c33f954e8f867f3cf1b89b9a3331debdad37a4df3d7",
+    "val_prior_predictions.csv": "cc221a769a4578d9257e0d0dd747b2688605e8b54adbc36dec108388ab1b8212",
+    "stdout": "3c42e208048723b50ac6f0162219d0975ed1345de532d3755f1b9d4fb1c22af5"
+  },
+  "verification": "PASS",
+  "replay": {
+    "status": "PASS",
+    "fresh_process": true,
+    "prediction_files_exact": true,
+    "report_sha256": "13d618d21fd8239acd5442f4b848ac6a73ae894bb20dac2f73bd136e315e9573"
+  }
+}

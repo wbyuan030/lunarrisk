@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "run": "geology_seed43",
+  "scope": "Separate availability-selected local-prefix Train/Val baseline; no full official benchmark or semantic gain claim",
+  "source_commit": "2f90c5b3903da9bbd5ce31171b8446595f3df9f7",
+  "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "completed_epochs": 23,
+  "selected_epoch": 18,
+  "checkpoint_local_path": "outputs/p31/local_prefix_baselines_01/geology_seed43/checkpoint.pt",
+  "checkpoint_sha256": "d134e3cb52b0ee2f95fb543c05a8ab7964e275c45247950c588bd4129a01c38c",
+  "archived_artifact_sha256": {
+    "aggregate_at_completion.json": "6a113be487aca90a686c747018fa6b6e8375d7e4f90bf3635f656b767992c4e5",
+    "asset_manifest.json": "c4d29af2dc6ac369753d4b5d34ab2c45d69e86cc80a334bb4007bc39913078c7",
+    "completion.json": "1b3ab0dabc178c6be1dafdef9e494b3b2a98541c5b6c10d17a569e43775fd7a9",
+    "history.json": "be32d79eca09581ea6cd2e449ee0ab21731ddae2ff72cbc0815308ee0bec5c49",
+    "replay_report.json": "13d618d21fd8239acd5442f4b848ac6a73ae894bb20dac2f73bd136e315e9573",
+    "report.json": "00a3682fa133dcfc98abab8f3ac77aa9a0838ab18c18d1792e01b01b96032c8f",
+    "stdout.log": "09c4dd6e45e2f3e1ea5a326e7d86a967d76fed6e9d1bf235ac8503429a6a2d52",
+    "train_predictions.csv": "6e39506d8fec82b49ebed4da4fdfb3cf844677ef496c9224474fd6c6449eeb85",
+    "train_prior_predictions.csv": "230a53e60510fdce8a06289dcb5b12699cfeff47e74cb67507a786961e09947a",
+    "val_predictions.csv": "d2e6ad8f2a04b319bc764c33f954e8f867f3cf1b89b9a3331debdad37a4df3d7",
+    "val_prior_predictions.csv": "cc221a769a4578d9257e0d0dd747b2688605e8b54adbc36dec108388ab1b8212"
+  },
+  "checks": {
+    "checkpoint_history_config_resources": true,
+    "sample_ids_probabilities_confusion": true,
+    "receipt_unchanged": true,
+    "fresh_process_prediction_csv_exact": true
+  },
+  "network_requests": 0,
+  "test_evaluated": false,
+  "upstream_full_integrity_verified": false
+}

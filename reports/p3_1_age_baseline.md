@@ -1,6 +1,6 @@
 # P3.1 Age baseline
 
-Updated: 2026-11-04. **Local-prefix Age seeds42/43/44 COMPLETE and PASS, including independent exact prediction replay for every run.** Geology seed43 is now running. Complete-data official baseline remains pending; acquisition stays paused for VPN quota.
+Updated: 2026-11-04. **Local-prefix Age seeds42/43/44 COMPLETE and PASS, including independent exact prediction replay for every run.** Geology seed44 is now running. Complete-data official baseline remains pending; acquisition stays paused for VPN quota.
 
 This result uses [`P31_LOCAL_PREFIX_STORED_DERIVED_V1`](../protocols/p31_local_prefix_eval_plan.json): 5,135 original stored Train and 1,155 original stored Val rows, official five-class targets, fixed 28 channels and audited HF normalization. This availability-selected northern prefix is a separate derived track, not the full official benchmark. Full upstream integrity remains unverified and Test was not scored. [Subset scope/reproduction](p3_1_partial_data_baselines.md).
 
