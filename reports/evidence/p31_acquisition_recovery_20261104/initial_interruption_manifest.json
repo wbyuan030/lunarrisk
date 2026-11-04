@@ -1,0 +1,37 @@
+{
+  "asset": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "url": "https://huggingface.co/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/benchmark/lunar_patches_v4.h5",
+    "bytes": 74449119347,
+    "sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "license_declared_by_data_card": "CC-BY-4.0"
+  },
+  "returned_body_bytes": 14590953377,
+  "attempts": [
+    {
+      "start_offset": 0,
+      "returned_body_bytes": 265922355,
+      "status": "INTERRUPTED",
+      "error_type": "EOFError"
+    },
+    {
+      "start_offset": 265922355,
+      "returned_body_bytes": 6172113664,
+      "status": "INTERRUPTED",
+      "error_type": "EOFError"
+    },
+    {
+      "start_offset": 6438036019,
+      "returned_body_bytes": 8152917358,
+      "status": "INTERRUPTED",
+      "error_type": "EOFError"
+    }
+  ],
+  "policy": "single partial/final copy; no snapshot; no automatic restart from zero",
+  "status": "FAILED",
+  "partial_bytes": 14590953377,
+  "chunk_bytes": 4194304,
+  "error_type": "EOFError"
+}

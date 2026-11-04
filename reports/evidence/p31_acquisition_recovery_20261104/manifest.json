@@ -1,0 +1,38 @@
+{
+  "status": "RETAINED_PREFIX_RESUME_STARTED_FULL_CHECKSUM_PENDING",
+  "recovery_source_commit": "ce7216097c3faa085924b8d1d43418eab5f3c195",
+  "initial_failure": "three premature EOFs; exact upstream/proxy cause unknown",
+  "partial_bytes_at_recovery": 14590953377,
+  "range_window_bytes": 67108864,
+  "interruption_limit": 3,
+  "tests": {
+    "total": 534,
+    "passed": 534,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 11.617
+  },
+  "compileall": "PASS",
+  "full_asset_verified": false,
+  "formal_training_started": false,
+  "source_sha256": {
+    "scripts/p31_acquire_benchmark.py": "1b245bc76e97f313c5e37b79c1cdc15710e859ba267f1c38d957eaf9f0f673f9",
+    "src/lunarrisk/benchmarks/acquisition.py": "cf393a7427abb5d4037825a371a6575eb1e2786f9c71e2fe208446669fcb9f08",
+    "tests/test_p31_acquisition.py": "54f2c9e6272577cd2c56396da737234e86ffe7f2d6c70cfe71d626162bf0ee40",
+    "protocols/p31_acquisition_authorization.json": "a3d27d6abc27744b2a1963785a352cce7722704088b589d1915587dabd82bda4"
+  },
+  "public_files": {
+    "unittest.log": {
+      "bytes": 63239,
+      "sha256": "576a2b5ca365a9ba8be4c8498d9e5961c784208a1feff6e4af71f0f790085bab"
+    },
+    "retained_prefix_checks.json": {
+      "bytes": 6935,
+      "sha256": "e5db7d03b4b7b91dca3c37f9c0320aaef1b3c66c07bb33ecb7eb6c9acf8d8267"
+    },
+    "initial_interruption_manifest.json": {
+      "bytes": 1158,
+      "sha256": "8fb20416f25a45e6f1395a528d7a9d2f4e297e7a2095618e438e83acc91cc9d2"
+    }
+  }
+}
