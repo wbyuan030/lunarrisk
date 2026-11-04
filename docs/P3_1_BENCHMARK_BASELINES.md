@@ -1,6 +1,6 @@
 # P3.1 — 从公开 Benchmark 工程 smoke 转向正式基线
 
-**日期：2026-11-03；执行状态更新：2026-11-04。** 原交接的权限判断保留在下文作为历史。P31-01/02工程验收及ID结构控制已完成，当前见 [进度](../reports/p3_1_progress.md)。用户于2026-11-04明确授权“允许大文件下载 推进基线”；新增权限以 [单文件授权记录](../protocols/p31_acquisition_authorization.json) 为准。现在执行固定HDF5单副本下载与已冻结的Age/Geology Train/Val基线，不再等待重复确认；全mmap/额外权重/付费资源不在本次范围，Test评分仍HOLD。
+**日期：2026-11-03；执行状态更新：2026-11-04。** 原交接的权限判断保留在下文作为历史。P31-01/02工程验收及ID结构控制已完成，当前见 [进度](../reports/p3_1_progress.md)。用户于2026-11-04明确授权“允许大文件下载 推进基线”；新增权限以 [单文件授权记录](../protocols/p31_acquisition_authorization.json) 为准。之后用户因VPN流量要求“先用这些数据吧，vpn流量快顶不住了”：完整文件下载现暂停在33,964,443,553字节，不自动恢复。独立冻结的本地前缀轨已完成Age/Geology各seeds42/43/44，共六次训练与独立进程精确预测回放；见[部分数据最终报告](../reports/p3_1_partial_data_baselines.md)和[最终核验](../reports/evidence/p31_prefix_runs_20261104/sequence_verification.json)。完整资产SHA256未核实，完整官方基线仍待数据齐备；不把北半球子集结果充作完整benchmark。下文保留原设计与历史权限判断，不构成恢复下载或重复训练指令；全mmap/额外权重/付费资源不在范围，Test评分仍HOLD。
 
 评审基线：`main@25c8ac93e6ea94a1f402c3daecf547bba1990278`。本次用户要求将评审与下一步动作推送到 main。本文件承接 [P3.0](P3_0_PUBLIC_BENCHMARKS.md)，当前入口为 [AGENTS.md](../AGENTS.md)，机器可读任务在 [p31_execution_plan.json](../protocols/p31_execution_plan.json)。旧 P3.0 计划、实验和资产提案不覆盖。
 

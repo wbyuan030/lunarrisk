@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "protocol": "P31_LOCAL_PREFIX_STORED_DERIVED_V1",
+  "source_commit": "2f90c5b3903da9bbd5ce31171b8446595f3df9f7",
+  "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "completed_runs": [
+    "age_seed42",
+    "geology_seed42",
+    "age_seed43",
+    "age_seed44",
+    "geology_seed43",
+    "geology_seed44"
+  ],
+  "archived_artifact_sha256_checks": 66,
+  "live_artifact_sha256_checks": 48,
+  "prediction_csvs_independently_validated": 24,
+  "aggregate_cells_recomputed": 24,
+  "aggregation": "all fixed seeds42/43/44; sample std ddof=1; Train/Val and full/supported macro retained",
+  "checks": {
+    "archived_and_live_artifacts_match_receipts": true,
+    "each_fresh_process_prediction_replay_exact": true,
+    "probabilities_reproduce_counts_confusion_and_metrics": true,
+    "fixed_source_plan_configuration_inputs_splits": true,
+    "current_training_source_matches_run_hashes": true,
+    "same_per_task_inputs_sources_splits_across_seeds": true,
+    "no_Train_Val_ID_overlap": true,
+    "all_planned_seeds_included": true,
+    "full_and_supported_macro_separate": true
+  },
+  "aggregate_sha256": "136ae99aab33adb43f1d09d16664d28a00cc676f60703ddcca1de260c378a3f3",
+  "test_evaluated": false,
+  "upstream_full_integrity_verified": false,
+  "full_official_benchmark": false,
+  "network_requests_for_data": 0,
+  "data_bytes": 33964443553,
+  "data_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+  "data_current_size_matches": true,
+  "resource_totals": {
+    "train_window_seconds": 21254.121241002344,
+    "train_examples": 605930,
+    "train_and_export_wall_seconds": 27324.829029213637,
+    "parent_peak_rss_bytes_max": 2740465664,
+    "torch_peak_allocated_bytes_max": 354242048,
+    "torch_peak_reserved_bytes_max": 442499072
+  }
+}
