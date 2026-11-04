@@ -1,21 +1,24 @@
 # P3.1 Geology baseline
 
-Updated: 2026-11-04. **Acquisition AUTHORIZED and RUNNING; formal Train/Val result pending verified full asset.**
+Updated: 2026-11-04. **Local-prefix Geology seed42 PASS, including independent exact prediction replay.** Both task seed42 runs have passed the execution gate; Age seed43 is now running. Complete-data official baseline remains pending and acquisition stays paused for VPN quota.
 
-The core task remains official 49-output classification. [p31_baseline_eval_plan.json](../protocols/p31_baseline_eval_plan.json) fixes independent-task scratch CNN and Train empirical prior, stored split, hashes, training budget and Val model selection before scores. Full 49-class Macro-F1 includes zero F1 for absent classes, matching pinned upstream `downstream_base.py`; supported-class macro is additional, with per-class counts and confusion. Train has 46 represented classes; the three absent classes are also absent from Val/Test. This is not an unseen-class protocol.
+The core task remains official 49-output classification with unit_id minus one and audited HF global normalization. This result uses the separately locked [`P31_LOCAL_PREFIX_STORED_DERIVED_V1`](../protocols/p31_local_prefix_eval_plan.json): 5,135 original Train and 1,155 original Val rows whose complete pixel chunks are available in the retained prefix. Train supports 36 classes and Val supports 32; all Val-supported classes occur in Train. Original stored membership/order is retained. This northern availability-selected subset is not the full official benchmark or an unseen-class protocol. Full upstream file integrity remains unverified; Test was not scored. [Subset scope/reproduction](p3_1_partial_data_baselines.md).
 
-The user explicitly authorized the fixed single HDF5 acquisition and advancing baselines on 2026-11-04; see [authorization](../protocols/p31_acquisition_authorization.json). Download is running, with size/SHA256 verification required before training. No formal Geology run, multi-seed aggregate or Test score is reported yet. P3.0's Age-supervised five-example feature cache is preserved as old engineering evidence and is not relabeled scratch Geology or lunar pretraining. The ordinary P3.1 Geology CNN is initialized independently, receiving no extra Age supervision.
+The scratch CNN was initialized independently for Geology, with no extra Age supervision. Seed42 completed **18 epochs**, stopping after five non-improving epochs, and selected **epoch13** by Val full-49 Macro-F1. The unchanged budget is maximum50 epochs, batch16, workers0, FP32 and AdamW with the predeclared learning-rate schedule. Train loss fell from 2.606980 at epoch1 to 1.243889 at epoch18. All metrics below use that same selected epoch13 checkpoint.
 
-Prepared command after the fixed full asset becomes available under an explicit acquisition decision and after first Age training-chain validation:
+| Baseline | Train Accuracy | Train Macro-F1, all 49 | Val Accuracy | Val Macro-F1, all 49 | Val Macro-F1, supported 32 |
+|---|---:|---:|---:|---:|---:|
+| Train empirical prior | 16.2415% | 0.005703 | 16.2771% | 0.005714 | 0.008749 |
+| Independent scratch CNN, seed42 | 57.6047% | 0.318169 | **41.0390%** | **0.223322** | **0.341961** |
 
-```bash
-python3 -I scripts/p31_train_classifier.py \
-  --data "$P31_FULL_HDF5" \
-  --stats reports/evidence/p30_20261103/hf_channel_stats.json \
-  --class-map reports/evidence/p30_20261103/geologic_units.json \
-  --purpose baseline --plan protocols/p31_baseline_eval_plan.json \
-  --task geology --epochs 50 --batch-size 16 --seed 42 --precision fp32 \
-  --outdir outputs/p31/geology_seed42
-```
+Full-49 Macro-F1 includes zero F1 for absent classes, matching the pinned upstream definition; the supported-class macro is secondary. The CNN exceeds the Train prior on Val by 24.76 Accuracy percentage points and 0.217608 full-49 Macro-F1. Val NLL is 1.884506 versus prior 2.908877; multiclass Brier sum is 0.751598 versus 0.924160. Per-class support, predictions, F1, recall and confusion are preserved in the completed report. These are single-seed ordinary-baseline results, with no multi-seed variance, semantic/candidate/pretrained gain or unseen-class claim.
 
-Use an existing compatible ROCm runtime. Seeds 43/44 follow the locked configuration after first-seed verification. Any candidate training comparison must share encoder, modality, examples and budget with ordinary masked-softmax; ID-head parameter similarity alone does not establish equal compute. Semantic descriptions and any new class holdout require a separate design. Test scoring remains HOLD.
+Executed training source: `2f90c5b3903da9bbd5ce31171b8446595f3df9f7`. The local prefix SHA256 is `77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8`; selected weight fingerprint is `c2efc0ac1c6f9aafc704bdf1e8091fb8e09fd4ab3cc4c734bc177e4dc1d14c25`. [Completed report](evidence/p31_prefix_runs_20261104/geology_seed42/report.json), [completion receipt](evidence/p31_prefix_runs_20261104/geology_seed42/completion.json), [epoch history](evidence/p31_prefix_runs_20261104/geology_seed42/history.json), [independent replay](evidence/p31_prefix_runs_20261104/geology_seed42/replay_report.json), [two-run aggregate](evidence/p31_prefix_runs_20261104/geology_seed42/aggregate_at_completion.json) and [archive hashes](evidence/p31_prefix_runs_20261104/geology_seed42/evidence_manifest.json) are committed. Four adjacent Train/Val model/prior prediction CSVs retain exact original bytes. The checkpoint stays local at `outputs/p31/local_prefix_baselines_01/geology_seed42/checkpoint.pt`; its SHA256 is in the receipt. Missing seeds remain explicit and standard deviations are null for n=1.
+
+Completed-run verification checked checkpoint/history/config/source/input/ID consistency, selection and stopping, probabilities/class counts/confusion, and resources. A fresh independent process reproduced all four prediction CSVs exactly; the receipt and archive were reverified before publication. This proves replay for these weights/data, not repeat-training determinism across the larger subset.
+
+Measured training-window throughput was **28.3307 examples/s**, over 3,262.534 seconds and 92,430 examples. Training plus final evaluation/export took 4,209.140 seconds, excluding the 55.450-second input hash pass and the separate replay process. Parent peak RSS was 2.2907 GiB with workers0; torch peak allocated/reserved GPU memory was 337.83/422.00 MiB. These GPU fields measure the torch allocator, not total card/process VRAM. The existing RX7900XT/ROCm runtime was retained without installation or shared-environment changes.
+
+The complete-data plan remains [p31_baseline_eval_plan.json](../protocols/p31_baseline_eval_plan.json), with stored 11,400 Train / 2,400 Val, complete size/SHA256 and ordered-ID checks, and predeclared seeds42/43/44. Full Train has 46 represented classes; the three absent classes are also absent from full Val/Test, so that original split also is not an unseen-class protocol. Complete-data scores remain pending until the complete asset is available and verified. Old P3.0 Age-supervised five-example features remain engineering evidence and are not relabeled scratch Geology or pretraining.
+
+Remaining subset seeds proceed under the existing configuration. Any candidate comparison must share encoder, modalities, examples and budget with ordinary masked-softmax; ID-head parameter similarity does not establish equal compute. Semantic descriptions and any new class holdout require a separate design. Test scoring remains HOLD.

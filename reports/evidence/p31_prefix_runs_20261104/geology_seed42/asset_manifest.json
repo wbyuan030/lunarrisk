@@ -1,0 +1,16 @@
+{
+  "data_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+  "data_bytes": 33964443553,
+  "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+  "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+  "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+  "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+  "data_revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+  "full_content_hash_verified_this_invocation": false,
+  "hash_chunk_bytes": 4194304,
+  "hash_seconds": 55.44990420807153,
+  "local_prefix_hash_verified_this_invocation": true,
+  "upstream_full_integrity_verified": false,
+  "upstream_bytes": 74449119347,
+  "upstream_sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f"
+}

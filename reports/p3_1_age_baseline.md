@@ -4,7 +4,7 @@ Updated: 2026-11-04. **Local-prefix Age seed42 PASS, including independent exact
 
 The partial-data result uses [`P31_LOCAL_PREFIX_STORED_DERIVED_V1`](../protocols/p31_local_prefix_eval_plan.json): original stored Train/Val membership, 5,135 Train and 1,155 Val, official five-class targets and audited HF normalization. It is availability-selected from a retained northern HDF5 prefix, not the full official benchmark. Full upstream integrity remains unverified. Test was not scored. [Subset scope and reproduction](p3_1_partial_data_baselines.md).
 
-Seed42 completed 28 epochs under the unchanged maximum50/patience5 budget and selected **epoch23** by strict Val full-five-class Macro-F1. Accuracy and Macro-F1 below come from that same selected checkpoint. Train loss fell from 1.117469 at epoch1 to 0.687579 at epoch28. Geology seed42 has now started independently, with no Age-supervised encoder transfer.
+Seed42 completed 28 epochs under the unchanged maximum50/patience5 budget and selected **epoch23** by strict Val full-five-class Macro-F1. Accuracy and Macro-F1 below come from that same selected checkpoint. Train loss fell from 1.117469 at epoch1 to 0.687579 at epoch28. [Geology seed42](p3_1_geology_baseline.md) subsequently completed and passed independently, with no Age-supervised encoder transfer; Age seed43 is now running under the frozen settings.
 
 | Baseline | Train Accuracy | Train Macro-F1, all 5 | Val Accuracy | Val Macro-F1, all 5 |
 |---|---:|---:|---:|---:|
