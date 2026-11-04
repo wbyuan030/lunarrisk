@@ -1,0 +1,20 @@
+{
+  "status": "BLOCKED_AUTHENTICATION",
+  "date": "2026-11-04",
+  "scope": "Remote Git synchronization only; local training and evidence archival continue",
+  "local_age_three_seed_results_commit": "06e5f54",
+  "last_verified_remote_main_commit": "6c8ec8c",
+  "checks": [
+    {"operation": "SSH fetch/pull via existing configuration", "status": "FAIL", "error": "Permission denied (publickey)"},
+    {"operation": "SSH fetch/pull via existing desktop agent", "status": "FAIL", "error": "Permission denied (publickey)"},
+    {"operation": "HTTPS fetch of same repository with temporary URL rewrite override", "status": "PASS", "remote_commit": "6c8ec8c", "remote_is_ancestor_of_local": true},
+    {"operation": "HTTPS push of local main with existing credentials and no interactive prompts", "status": "FAIL", "error": "could not read Username for 'https://github.com': terminal prompts disabled"}
+  ],
+  "remote_push_claimed_complete": false,
+  "global_git_configuration_changed": false,
+  "remote_url_persistently_changed": false,
+  "credentials_or_keys_modified": false,
+  "local_training_state": "Age seeds42/43/44 and Geology42 complete with exact replay; Geology43 running",
+  "user_action_after_restoring_GitHub_SSH_authentication": "git push origin main",
+  "force_push": false
+}
