@@ -1,6 +1,6 @@
 # P3.1 authorized full benchmark acquisition
 
-Updated: 2026-11-04. **Explicit user authorization recorded; single-file download RUNNING. Full asset integrity has not yet been reported PASS.** No formal model scores are available at this checkpoint.
+Updated: 2026-11-04. **Single-file acquisition PAUSED for VPN quota at 33,964,443,553 bytes.** Explicit large-file authorization remains recorded, but the user's later direction is to use existing data without further transfer. Full asset integrity has not been reported PASS. A [separate offline subset track](p3_1_partial_data_baselines.md) uses complete local Train/Val chunks; complete-data formal scores remain pending. Recovery narration below records the earlier running state.
 
 The user instructed: “允许大文件下载 推进基线”. [The new authorization record](../protocols/p31_acquisition_authorization.json) permits the previously recommended fixed HDF5 and locked local Age/Geology Train/Val baselines. The original P3.0 proposal and P3.1 scientific plan remain unchanged as historical artifacts; their old not-authorized fields do not revoke this later explicit instruction. This does not authorize full mmap, new weights, snapshots, paid compute, four GPUs or Test scoring.
 

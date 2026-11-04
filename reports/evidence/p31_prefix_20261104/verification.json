@@ -1,0 +1,233 @@
+{
+  "status": "PASS",
+  "scope": "Offline implementation and pre-score subset lock; no model performance results",
+  "commands": [
+    {
+      "command": "LD_LIBRARY_PATH=/opt/rocm/lib:/opt/rocm/lib64 PYTHONPATH=\"$JOB_TMP/p31_runtime\" TMPDIR=\"$JOB_TMP\" python3 -I \"$JOB_TMP/p31_python.py\" -m unittest discover -s tests -v",
+      "status": "PASS",
+      "tests": 579,
+      "skipped": 0,
+      "seconds": 13.347
+    },
+    {
+      "command": "python3 -m compileall -q scripts src tests",
+      "status": "PASS"
+    },
+    {
+      "command": "p31_plan_prefix.py with retained data, audited metadata, cached range report, HF stats/map; see reproduction report",
+      "status": "PASS",
+      "network_requests": 0,
+      "pixel_reads": 0
+    },
+    {
+      "command": "p31_run_prefix_baselines.py preview with sealed plan and trusted runtime; see reproduction report",
+      "status": "PASS",
+      "model_execution": false
+    }
+  ],
+  "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "data": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "path": "benchmark/lunar_patches_v4.h5",
+    "bytes": 33964443553,
+    "sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba",
+    "normalization": "Audited HF global statistics; raw nonfinite restored to zero, finite zero retained, finite/nonzero presence, group ANY. Fixed 28 channels in moonstone.CHANNELS order.",
+    "track": "partial_stored_prefix",
+    "train_rows": 5135,
+    "val_rows": 1155,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+    "val_ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+    "loader_claim": "HDF5_DERIVED_PILOT; full-crop pair is separately reported within selected sample coverage, never global exact reproduction",
+    "upstream_bytes": 74449119347,
+    "upstream_sha256": "e3e96bccc044d856cd55883c9cda7628f02afbdc1b2d1818b401bbcc590df83f",
+    "upstream_full_integrity_verified": false,
+    "upstream_integrity_status": "UNVERIFIED",
+    "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e"
+  },
+  "availability": {
+    "source_rows": 16200,
+    "prefix_bytes": 33964443553,
+    "complete_chunk_count": 7400,
+    "outside_count": 10,
+    "metadata_unavailable_count": 8790,
+    "by_original_split": {
+      "train": {
+        "complete": 5135,
+        "outside_prefix": 5,
+        "metadata_unavailable": 6260
+      },
+      "val": {
+        "complete": 1155,
+        "outside_prefix": 5,
+        "metadata_unavailable": 1240
+      },
+      "test": {
+        "complete": 1110,
+        "outside_prefix": 0,
+        "metadata_unavailable": 1290
+      }
+    },
+    "missing_metadata_ranges": [
+      {
+        "start": 34051207669,
+        "length": 3656,
+        "affected_indices": 8790
+      }
+    ],
+    "test_chunks_complete_but_excluded": 1110,
+    "excluded_test_rows": 2400
+  },
+  "splits": {
+    "train": {
+      "rows": 5135,
+      "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+      "age_class_counts": [
+        811,
+        1697,
+        2244,
+        283,
+        100
+      ],
+      "geology_class_counts": [
+        100,
+        0,
+        0,
+        12,
+        158,
+        0,
+        125,
+        0,
+        14,
+        203,
+        73,
+        0,
+        1,
+        179,
+        174,
+        17,
+        6,
+        3,
+        31,
+        43,
+        8,
+        0,
+        169,
+        33,
+        709,
+        0,
+        27,
+        121,
+        7,
+        0,
+        0,
+        0,
+        377,
+        0,
+        36,
+        1,
+        36,
+        335,
+        17,
+        44,
+        414,
+        0,
+        17,
+        834,
+        0,
+        58,
+        61,
+        425,
+        267
+      ],
+      "latitude_min": 7.0,
+      "latitude_max": 89.0
+    },
+    "val": {
+      "rows": 1155,
+      "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+      "age_class_counts": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "geology_class_counts": [
+        24,
+        0,
+        0,
+        12,
+        24,
+        0,
+        38,
+        0,
+        0,
+        83,
+        1,
+        0,
+        0,
+        23,
+        45,
+        6,
+        0,
+        0,
+        5,
+        9,
+        5,
+        0,
+        32,
+        4,
+        141,
+        0,
+        1,
+        21,
+        4,
+        0,
+        0,
+        0,
+        68,
+        0,
+        10,
+        1,
+        6,
+        48,
+        7,
+        16,
+        98,
+        0,
+        3,
+        188,
+        0,
+        11,
+        29,
+        112,
+        80
+      ],
+      "latitude_min": 9.0,
+      "latitude_max": 89.0
+    }
+  },
+  "source_sha256": {
+    "scripts/p31_plan_prefix.py": "1f4682b96f3b7224019088157537d90555101d4e26fafadfe55e0b7ddc8b98ad",
+    "scripts/p31_run_prefix_baselines.py": "8faea23012f34499fb2213d98bf3f8bb5b924d1a11c66065f7f1e7ba97471fa5",
+    "scripts/p31_run_baselines.py": "5b47e8161c4a1fd8d1731e23d4a62b2501c67c1b81aba06e01896586b5ac0b80",
+    "scripts/p31_train_classifier.py": "991895637c80726fbcf0bf24b7aca1355aed28a17c208dba6a3b80dc110d938d",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/classifier.py": "d18e4063f44e688c27fcb6b595f44527971d4cad2524192541adbd27f59927f1",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "tests_log_sha256": "a6f06e2439d7b738eca2fe068d357209e608082a4119d18306c1f7c11d8e696b",
+  "upstream_full_integrity_verified": false,
+  "network_requests": 0,
+  "test_evaluated": false,
+  "gpu_preflight": {
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "device": "Radeon RX 7900 XT",
+    "available": true
+  }
+}

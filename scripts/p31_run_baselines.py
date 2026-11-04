@@ -205,12 +205,16 @@ def check_predictions(path, split, split_info, metrics, classes, prior=None):
     return seen
 
 
-def verify_run(directory, log, identity, plan, runtime):
+def verify_run(directory, log, identity, plan, runtime, *, subset=False):
     report = read_json(directory / "report.json")
     checkpoint = inspect_checkpoint(directory / "checkpoint.pt", runtime)
     asset = read_json(directory / "asset_manifest.json")
-    require(report["status"] == "P31_BASELINE_TRAINVAL" and report["purpose"] == "baseline"
-            and report["mode"] == "train", "not a formal training report")
+    status, purpose = ("P31_PARTIAL_DATA_TRAINVAL", "subset_baseline") if subset else ("P31_BASELINE_TRAINVAL", "baseline")
+    require(report["status"] == status and report["purpose"] == purpose
+            and report["mode"] == "train", "unexpected training report track")
+    if subset:
+        require(report["protocol"] == plan["protocol"] == "P31_LOCAL_PREFIX_STORED_DERIVED_V1"
+                and plan["data"]["track"] == "partial_stored_prefix", "unexpected subset protocol")
     for evidence in (report, checkpoint):
         require(evidence["test_evaluated"] is False, "Test scoring forbidden")
         for key in ("config", "inputs", "source_sha256"):
@@ -219,8 +223,13 @@ def verify_run(directory, log, identity, plan, runtime):
     require(checkpoint["plan_sha256"] == identity["plan_sha256"], "checkpoint plan mismatch")
     require(checkpoint["splits"] == report["splits"], "checkpoint/report splits mismatch")
     require(all(asset[key] == value for key, value in identity["inputs"].items())
-            and asset["full_content_hash_verified_this_invocation"] is True
+            and asset["full_content_hash_verified_this_invocation"] is (not subset)
             and asset["data_revision"] == plan["data"]["revision"], "asset manifest mismatch")
+    if subset:
+        require(asset["local_prefix_hash_verified_this_invocation"] is True
+                and asset["upstream_full_integrity_verified"] is False
+                and asset["upstream_bytes"] == plan["data"]["upstream_bytes"]
+                and asset["upstream_sha256"] == plan["data"]["upstream_sha256"], "subset integrity scope mismatch")
     require(set(report["metrics"]) == set(report["train_prior_metrics"]) ==
             set(report["prediction_sha256"]) == {"train", "val"}, "unexpected metric/prediction split")
     task = identity["config"]["task"]
@@ -238,6 +247,9 @@ def verify_run(directory, log, identity, plan, runtime):
                 and len(info["class_counts"]) == classes
                 and all(type(n) is int and n >= 0 for n in info["class_counts"])
                 and sum(info["class_counts"]) == info["rows"], "official split counts/IDs mismatch")
+        if subset:
+            require(info["class_counts"] == plan["splits"][split][task + "_class_counts"],
+                    "subset labels differ from pre-score class inventory")
         for kind, metrics in (("", report["metrics"][split]), ("_prior", report["train_prior_metrics"][split])):
             check_metrics(metrics, info["class_counts"], classes, split + kind, prior=bool(kind))
             finite(metrics["largest_observed_batch"], "largest batch", minimum=1)

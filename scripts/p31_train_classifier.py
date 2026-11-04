@@ -12,12 +12,32 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"src"))
 
 
+def validate_subset_plan(args,plan,inputs):
+    """Keep the local-prefix track separate from the unchanged complete-data gate."""
+    if (plan.get("protocol")!="P31_LOCAL_PREFIX_STORED_DERIVED_V1" or
+            plan["data"]["track"]!="partial_stored_prefix" or args.track!=plan["data"]["track"] or
+            plan["data"].get("upstream_full_integrity_verified") is not False):
+        raise ValueError("expected a locked partial-data plan with unverified upstream integrity")
+    if inputs["data_bytes"]!=plan["data"]["bytes"] or inputs["data_sha256"]!=plan["data"]["sha256"]:
+        raise ValueError("local prefix size/hash differs from locked subset")
+    if any(inputs[key]!=plan["data"][key] for key in
+           ("stats_sha256","class_map_sha256","metadata_sha256","range_report_sha256")):
+        raise ValueError("subset statistics/map/metadata/cache report differs from locked plan")
+    for key in ("epochs","batch_size","seed","lr","patience","precision","workers"):
+        allowed=plan["training"][key]
+        value=getattr(args,key)
+        if (value not in allowed if isinstance(allowed,list) else value!=allowed):
+            raise ValueError("subset configuration differs from locked plan: "+key)
+    if plan["test"]["runner_allows_test"] is not False:
+        raise ValueError("subset plan must prohibit Test scoring")
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("data","stats","class-map","outdir"):
         parser.add_argument("--"+name,type=Path,required=True)
     parser.add_argument("--task",choices=("age","geology"),default="age")
-    parser.add_argument("--track",choices=("official_stored","official_geographic"),default="official_stored")
+    parser.add_argument("--track",choices=("official_stored","official_geographic","partial_stored_prefix"),default="official_stored")
     parser.add_argument("--mode",choices=("train","replay"),default="train")
     parser.add_argument("--checkpoint",type=Path)
     parser.add_argument("--resume",type=Path)
@@ -31,8 +51,10 @@ def main(argv=None):
     parser.add_argument("--precision",choices=("fp32","bf16"),default="fp32")
     parser.add_argument("--device",default="cuda")
     parser.add_argument("--expected-data-sha256")
-    parser.add_argument("--purpose",choices=("runner_validation","baseline"),default="runner_validation")
+    parser.add_argument("--purpose",choices=("runner_validation","baseline","subset_baseline"),default="runner_validation")
     parser.add_argument("--plan",type=Path)
+    parser.add_argument("--metadata",type=Path)
+    parser.add_argument("--range-report",type=Path)
     parser.add_argument("--export-features",action="store_true")
     args=parser.parse_args(argv)
     if args.epochs<1 or args.batch_size<1 or args.workers<0 or args.lr<=0 or args.patience<0:
@@ -43,6 +65,15 @@ def main(argv=None):
         raise ValueError("replay requires --checkpoint and forbids --resume")
     if args.mode=="train" and args.checkpoint is not None:
         raise ValueError("use --resume for continuation")
+    subset=args.purpose=="subset_baseline"
+    if subset:
+        if args.track!="partial_stored_prefix" or any(p is None for p in (args.plan,args.metadata,args.range_report)):
+            raise ValueError("subset baseline requires its own plan, metadata, range report and partial_stored_prefix track")
+        if args.stop_after_epoch is not None:
+            raise ValueError("subset baseline uses its complete locked epoch/early-stop budget")
+    elif args.track=="partial_stored_prefix" or args.metadata is not None or args.range_report is not None:
+        raise ValueError("local-prefix inputs require the separate subset_baseline purpose")
+    plan=json.loads(args.plan.read_text()) if args.plan is not None else None
     import torch
     from lunarrisk.benchmarks.classifier import (
         ClassifierDataset,MetadataTargets,ScratchClassifier,make_loader,evaluate,seed_all,rng_state,restore_rng,
@@ -61,13 +92,24 @@ def main(argv=None):
         raise ValueError("full data SHA256 does not match expected asset")
     inputs={"data_sha256":data_hash,"data_bytes":args.data.stat().st_size,
             "stats_sha256":stream_sha256(args.stats),"class_map_sha256":stream_sha256(args.class_map)}
+    if subset:
+        inputs.update(metadata_sha256=stream_sha256(args.metadata),range_report_sha256=stream_sha256(args.range_report))
+        validate_subset_plan(args,plan,inputs)
     asset={**inputs,"data_revision":"53099efd0f2db81eee96b28eae87e1efdd281310",
-           "full_content_hash_verified_this_invocation":True,"hash_chunk_bytes":4*1024*1024,
+           "full_content_hash_verified_this_invocation":not subset,"hash_chunk_bytes":4*1024*1024,
            "hash_seconds":time.monotonic()-hash_start}
+    if subset:
+        asset.update(local_prefix_hash_verified_this_invocation=True,upstream_full_integrity_verified=False,
+                     upstream_bytes=plan["data"]["upstream_bytes"],upstream_sha256=plan["data"]["upstream_sha256"])
     (args.outdir/"asset_manifest.json").write_text(json.dumps(asset,indent=2)+"\n")
     stats,mapping=json.loads(args.stats.read_text()),json.loads(args.class_map.read_text())
-    datasets={name:ClassifierDataset(args.data,stats,mapping,args.task,code,args.track)
-              for name,code in (("train",0),("val",1))}
+    if subset:
+        from lunarrisk.benchmarks.prefix import PrefixClassifierDataset
+        datasets={name:PrefixClassifierDataset(args.data,stats,mapping,args.metadata,args.range_report,plan,args.task,code)
+                  for name,code in (("train",0),("val",1))}
+    else:
+        datasets={name:ClassifierDataset(args.data,stats,mapping,args.task,code,args.track)
+                  for name,code in (("train",0),("val",1))}
     if set(map(str,datasets["train"].ids[datasets["train"].indices])) & set(map(str,datasets["val"].ids[datasets["val"].indices])):
         raise ValueError("Train/Val ID overlap")
     splits={name:{"rows":len(ds),"ordered_ids_sha256":ds.ordered_ids_hash,"class_counts":ds.class_counts.tolist()}
@@ -97,7 +139,10 @@ def main(argv=None):
             mismatch = value not in allowed if isinstance(allowed,list) else value!=allowed
             if mismatch:
                 raise ValueError("baseline configuration differs from locked plan: "+key)
+    if subset: plan_hash=stream_sha256(args.plan)
+    protocol=plan["protocol"] if subset else "HDF5_DERIVED_PILOT"
     source_paths=(Path(__file__).resolve(),ROOT/"src/lunarrisk/benchmarks/classifier.py",ROOT/"src/lunarrisk/benchmarks/moonstone.py")
+    if subset: source_paths+= (ROOT/"src/lunarrisk/benchmarks/prefix.py",)
     sources={str(p.relative_to(ROOT)):stream_sha256(p) for p in source_paths}
     classes=5 if args.task=="age" else 49
     model=ScratchClassifier(classes).to(device)
@@ -158,7 +203,7 @@ def main(argv=None):
                  "train_seconds":elapsed,"train_samples_per_second":seen/elapsed,"val":metrics}
             history.append(row)
             completed=epoch+1
-            payload={"format_version":1,"architecture":"P31_scratch_CNN_28_64_128_256", "protocol":"HDF5_DERIVED_PILOT",
+            payload={"format_version":1,"architecture":"P31_scratch_CNN_28_64_128_256", "protocol":protocol,
                      "code_sha":os.environ.get("LUNARRISK_GIT_SHA","UNKNOWN"),"source_sha256":sources,
                      "config":config,"inputs":inputs,"splits":splits,"plan_sha256":plan_hash,
                      "completed_epochs":completed,"state_dict":cpu_state(model),"optimizer_state_dict":optimizer.state_dict(),
@@ -183,8 +228,9 @@ def main(argv=None):
         export_features(model,datasets,args.outdir/"features.h5",device,args.batch_size,
                         {"inputs":inputs,"source_sha256":sources,"splits":splits,"config":config,
                          "plan_sha256":plan_hash,"selected_epoch":best_epoch})
-    report={"status":"P31_RUNNER_VALIDATION" if args.purpose=="runner_validation" else "P31_BASELINE_TRAINVAL",
-            "purpose":args.purpose,"mode":args.mode,"protocol":"HDF5_DERIVED_PILOT","test_evaluated":False,
+    status="P31_PARTIAL_DATA_TRAINVAL" if subset else ("P31_RUNNER_VALIDATION" if args.purpose=="runner_validation" else "P31_BASELINE_TRAINVAL")
+    report={"status":status,
+            "purpose":args.purpose,"mode":args.mode,"protocol":protocol,"test_evaluated":False,
             "code_sha":payload["code_sha"],"source_sha256":sources,"config":config,"inputs":inputs,"splits":splits,
             "completed_epochs":completed,"best_epoch":best_epoch,"selection":config["selection"],"metrics":final,
             "train_prior_probabilities":prior.tolist(),"train_prior_metrics":prior_metrics,
