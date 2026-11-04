@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "Final predeclared three-seed Age aggregate on the separately frozen local-prefix subset",
+  "protocol": "P31_LOCAL_PREFIX_STORED_DERIVED_V1",
+  "source_commit": "2f90c5b3903da9bbd5ce31171b8446595f3df9f7",
+  "seeds": [42, 43, 44],
+  "missing_age_seeds": [],
+  "completed_epochs": [28, 20, 9],
+  "selected_epochs": [23, 15, 4],
+  "archive_hashes_checked": 33,
+  "checks": {
+    "all_per_seed_archived_artifact_sha256_match": true,
+    "all_per_seed_fresh_process_four_prediction_csv_replays_exact": true,
+    "same_source_input_and_split_hashes": true,
+    "train_and_val_accuracy_full_and_supported_macro_mean_std_recomputed": true,
+    "sample_standard_deviation_ddof_1": true,
+    "all_predeclared_seeds_included": true
+  },
+  "val_accuracy": {
+    "per_seed": {"42": 0.5731601731601732, "43": 0.6095238095238096, "44": 0.5766233766233766},
+    "n": 3,
+    "mean": 0.5864357864357864,
+    "sample_std_ddof1": 0.02006965500803894
+  },
+  "val_macro_f1_full": {
+    "per_seed": {"42": 0.43133159398943255, "43": 0.4141837013460071, "44": 0.3637367722918932},
+    "n": 3,
+    "mean": 0.4030840225424443,
+    "sample_std_ddof1": 0.03513783049986481
+  },
+  "aggregate_snapshot": "age_seed44/aggregate_at_completion.json",
+  "geology_status": "seed42 complete; seed43 running; seed44 pending",
+  "test_evaluated": false,
+  "network_requests_for_data": 0,
+  "upstream_full_integrity_verified": false,
+  "full_official_benchmark": false
+}

@@ -1,0 +1,758 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.1048285960338595,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 181.90968500450253,
+    "train_samples_per_second": 28.228293616543294,
+    "val": {
+      "accuracy": 0.5670995670995671,
+      "macro_f1_full": 0.26510733124694863,
+      "macro_f1_supported": 0.26510733124694863,
+      "per_class_f1": [
+        0.008333333333333333,
+        0.6141248720573184,
+        0.7030784508440914,
+        0.0,
+        0.0
+      ],
+      "per_class_recall": [
+        0.004310344827586207,
+        0.819672131147541,
+        0.7515923566878981,
+        0.0,
+        0.0
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        8,
+        611,
+        536,
+        0,
+        0
+      ],
+      "confusion": [
+        [
+          1,
+          190,
+          41,
+          0,
+          0
+        ],
+        [
+          3,
+          300,
+          63,
+          0,
+          0
+        ],
+        [
+          4,
+          113,
+          354,
+          0,
+          0
+        ],
+        [
+          0,
+          5,
+          57,
+          0,
+          0
+        ],
+        [
+          0,
+          3,
+          21,
+          0,
+          0
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0520780901888231,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5784782203244957,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 2,
+    "train_loss": 0.9984511901480313,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 180.12256338633597,
+    "train_samples_per_second": 28.50836621165663,
+    "val": {
+      "accuracy": 0.567965367965368,
+      "macro_f1_full": 0.32186329928487767,
+      "macro_f1_supported": 0.32186329928487767,
+      "per_class_f1": [
+        0.08633093525179857,
+        0.6160249739854319,
+        0.7085478887744593,
+        0.05555555555555555,
+        0.14285714285714285
+      ],
+      "per_class_recall": [
+        0.05172413793103448,
+        0.8087431693989071,
+        0.7303609341825902,
+        0.03225806451612903,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        46,
+        595,
+        500,
+        10,
+        4
+      ],
+      "confusion": [
+        [
+          12,
+          191,
+          29,
+          0,
+          0
+        ],
+        [
+          16,
+          296,
+          52,
+          0,
+          2
+        ],
+        [
+          17,
+          102,
+          344,
+          8,
+          0
+        ],
+        [
+          1,
+          4,
+          55,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          20,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.051247279881399,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5632265724661031,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 3,
+    "train_loss": 0.9649991822567747,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 179.67027693241835,
+    "train_samples_per_second": 28.580130713170174,
+    "val": {
+      "accuracy": 0.554978354978355,
+      "macro_f1_full": 0.3060850574763977,
+      "macro_f1_supported": 0.3060850574763977,
+      "per_class_f1": [
+        0.14482758620689656,
+        0.5796178343949044,
+        0.7084188911704312,
+        0.0,
+        0.0975609756097561
+      ],
+      "per_class_recall": [
+        0.09051724137931035,
+        0.7459016393442623,
+        0.732484076433121,
+        0.0,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        58,
+        576,
+        503,
+        1,
+        17
+      ],
+      "confusion": [
+        [
+          21,
+          184,
+          27,
+          0,
+          0
+        ],
+        [
+          29,
+          273,
+          59,
+          0,
+          5
+        ],
+        [
+          7,
+          110,
+          345,
+          1,
+          8
+        ],
+        [
+          1,
+          5,
+          54,
+          0,
+          2
+        ],
+        [
+          0,
+          4,
+          18,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0517516925737456,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5661776011382347,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 0.9439302109116589,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 180.0321776960045,
+    "train_samples_per_second": 28.52267892171346,
+    "val": {
+      "accuracy": 0.5766233766233766,
+      "macro_f1_full": 0.3637367722918932,
+      "macro_f1_supported": 0.3637367722918932,
+      "per_class_f1": [
+        0.35944700460829493,
+        0.5714285714285714,
+        0.7256461232604374,
+        0.0,
+        0.16216216216216217
+      ],
+      "per_class_recall": [
+        0.33620689655172414,
+        0.6010928961748634,
+        0.7749469214437368,
+        0.0,
+        0.125
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        202,
+        404,
+        535,
+        1,
+        13
+      ],
+      "confusion": [
+        [
+          78,
+          126,
+          28,
+          0,
+          0
+        ],
+        [
+          72,
+          220,
+          71,
+          0,
+          3
+        ],
+        [
+          49,
+          51,
+          365,
+          1,
+          5
+        ],
+        [
+          3,
+          4,
+          53,
+          0,
+          2
+        ],
+        [
+          0,
+          3,
+          18,
+          0,
+          3
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0487885396717946,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5566620427292662,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 5,
+    "train_loss": 0.9337467646529171,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 181.55454699136317,
+    "train_samples_per_second": 28.283510851668616,
+    "val": {
+      "accuracy": 0.5783549783549784,
+      "macro_f1_full": 0.33132863876462715,
+      "macro_f1_supported": 0.33132863876462715,
+      "per_class_f1": [
+        0.19169329073482427,
+        0.5944700460829493,
+        0.7276227141482194,
+        0.0,
+        0.14285714285714285
+      ],
+      "per_class_recall": [
+        0.12931034482758622,
+        0.7049180327868853,
+        0.802547770700637,
+        0.0,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        81,
+        502,
+        568,
+        0,
+        4
+      ],
+      "confusion": [
+        [
+          30,
+          163,
+          39,
+          0,
+          0
+        ],
+        [
+          31,
+          258,
+          75,
+          0,
+          2
+        ],
+        [
+          18,
+          75,
+          378,
+          0,
+          0
+        ],
+        [
+          2,
+          4,
+          56,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          20,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.052595244031964,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5523820917327683,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 6,
+    "train_loss": 0.9086828527339129,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 181.831228537485,
+    "train_samples_per_second": 28.240473549577352,
+    "val": {
+      "accuracy": 0.5714285714285714,
+      "macro_f1_full": 0.3453230762576042,
+      "macro_f1_supported": 0.3453230762576042,
+      "per_class_f1": [
+        0.2622107969151671,
+        0.6223698781838317,
+        0.7041036717062635,
+        0.0,
+        0.13793103448275862
+      ],
+      "per_class_recall": [
+        0.21982758620689655,
+        0.76775956284153,
+        0.692144373673036,
+        0.0,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        157,
+        537,
+        455,
+        1,
+        5
+      ],
+      "confusion": [
+        [
+          51,
+          164,
+          17,
+          0,
+          0
+        ],
+        [
+          47,
+          281,
+          36,
+          0,
+          2
+        ],
+        [
+          57,
+          86,
+          326,
+          1,
+          1
+        ],
+        [
+          2,
+          4,
+          56,
+          0,
+          0
+        ],
+        [
+          0,
+          2,
+          20,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.082649950547652,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5844992408504733,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 0.896592067673933,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 180.10353474039584,
+    "train_samples_per_second": 28.51137823253537,
+    "val": {
+      "accuracy": 0.5454545454545454,
+      "macro_f1_full": 0.2918695685295548,
+      "macro_f1_supported": 0.2918695685295548,
+      "per_class_f1": [
+        0.08333333333333333,
+        0.5559481743227326,
+        0.7089552238805971,
+        0.0,
+        0.1111111111111111
+      ],
+      "per_class_recall": [
+        0.05172413793103448,
+        0.644808743169399,
+        0.8067940552016986,
+        0.0,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        56,
+        483,
+        601,
+        3,
+        12
+      ],
+      "confusion": [
+        [
+          12,
+          172,
+          47,
+          0,
+          1
+        ],
+        [
+          27,
+          236,
+          100,
+          1,
+          2
+        ],
+        [
+          15,
+          71,
+          380,
+          2,
+          3
+        ],
+        [
+          2,
+          1,
+          55,
+          0,
+          4
+        ],
+        [
+          0,
+          3,
+          19,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.1320448140561323,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5907360286423654,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 8,
+    "train_loss": 0.8797539110657303,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 180.5598230632022,
+    "train_samples_per_second": 28.439327824344243,
+    "val": {
+      "accuracy": 0.5887445887445888,
+      "macro_f1_full": 0.34746146555061613,
+      "macro_f1_supported": 0.34746146555061613,
+      "per_class_f1": [
+        0.3035230352303523,
+        0.6009852216748769,
+        0.7375609756097561,
+        0.0,
+        0.09523809523809523
+      ],
+      "per_class_recall": [
+        0.2413793103448276,
+        0.6666666666666666,
+        0.802547770700637,
+        0.0,
+        0.08333333333333333
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        137,
+        446,
+        554,
+        0,
+        18
+      ],
+      "confusion": [
+        [
+          56,
+          137,
+          35,
+          0,
+          4
+        ],
+        [
+          48,
+          244,
+          65,
+          0,
+          9
+        ],
+        [
+          29,
+          63,
+          378,
+          0,
+          1
+        ],
+        [
+          4,
+          0,
+          56,
+          0,
+          2
+        ],
+        [
+          0,
+          2,
+          20,
+          0,
+          2
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0411860108891606,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5467323772835009,
+      "largest_observed_batch": 16
+    }
+  },
+  {
+    "epoch": 9,
+    "train_loss": 0.8725247753862049,
+    "train_rows": 5135,
+    "largest_train_batch": 16,
+    "train_seconds": 180.13878472242504,
+    "train_samples_per_second": 28.505799058833976,
+    "val": {
+      "accuracy": 0.5662337662337662,
+      "macro_f1_full": 0.32058970835491846,
+      "macro_f1_supported": 0.32058970835491846,
+      "per_class_f1": [
+        0.05343511450381679,
+        0.607773851590106,
+        0.7059907834101382,
+        0.057971014492753624,
+        0.17777777777777778
+      ],
+      "per_class_recall": [
+        0.03017241379310345,
+        0.7049180327868853,
+        0.8131634819532909,
+        0.03225806451612903,
+        0.16666666666666666
+      ],
+      "support": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ],
+      "predicted_counts": [
+        30,
+        483,
+        614,
+        7,
+        21
+      ],
+      "confusion": [
+        [
+          7,
+          160,
+          64,
+          0,
+          1
+        ],
+        [
+          10,
+          258,
+          96,
+          0,
+          2
+        ],
+        [
+          11,
+          62,
+          383,
+          5,
+          10
+        ],
+        [
+          2,
+          1,
+          53,
+          2,
+          4
+        ],
+        [
+          0,
+          2,
+          18,
+          0,
+          4
+        ]
+      ],
+      "absent_class_policy": "full K, absent F1/recall=0; supported macro secondary",
+      "rows": 1155,
+      "nll": 1.0622419501795912,
+      "nll_is_infinite": false,
+      "multiclass_brier_sum": 0.5660302535280005,
+      "largest_observed_batch": 16
+    }
+  }
+]
