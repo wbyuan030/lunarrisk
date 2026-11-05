@@ -43,3 +43,7 @@ Only then validate distribution closure, normal official imports, actual device/
 ## CPU-only preparation after the driver decision
 
 [CPU feasibility report](../reports/p3_3_cpu_feasibility.md) and [candidate plan](../protocols/p33_cpu_feasibility_plan.json) now record a Python3.12/torch2.12.1+cpu/vision0.27.1+cpu direct-dependency candidate. The 28 direct pins and 72 checked direct constraints match, with444,858,870 advertised direct-wheel bytes before transitives/interpreter/unpacking. Full closure remains unresolved, including the examined ANTLR4.9.3 source-only branch. No CPU environment or model execution is authorized by this metadata research; use the standalone offline direct-metadata auditor only in an already available environment. GPU support and the no-system-change boundary remain unchanged.
+
+## Later dependency and storage candidate
+
+[The CPU dependency report](../reports/p3_3_cpu_dependency_closure.md) records 128 package nodes, 307 validated active edges and the explicit ANTLR build exception. The one approved source archive is now hash-verified and statically inspected; dynamic hooks, build and runtime remain unexecuted. Total proposed archive bytes including deduplicated build tools are 649,568,457; installed/peak space and interpreter provisioning remain unapproved and incompletely known. Use its gates rather than repeating completed local tests or assuming metadata compatibility proves a runtime.

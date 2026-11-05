@@ -1,0 +1,185 @@
+{
+  "observed_date_utc": "2026-11-05",
+  "status": "SOURCE_ARCHIVE_HASH_AND_PACKAGING_IDENTITY_VERIFIED_BUILD_AND_RUNTIME_NOT_RUN",
+  "release_catalogue_url": "https://pypi.org/pypi/antlr4-python3-runtime/json",
+  "allowed_release_inventory": [
+    {
+      "version": "4.9",
+      "wheel_count": 0,
+      "sdist_count": 1,
+      "artifacts": [
+        {
+          "filename": "antlr4-python3-runtime-4.9.tar.gz",
+          "bytes": 114184,
+          "url": "https://files.pythonhosted.org/packages/ab/8e/f72c4523030ea8cecb1f2b26a9151fe916292ae05f42fea1981872a787f1/antlr4-python3-runtime-4.9.tar.gz",
+          "sha256_advertised": "02d9afb720c13c52b336234286966cdf5aff704f230a513e635adb0d94de97ae",
+          "yanked": false
+        }
+      ]
+    },
+    {
+      "version": "4.9.1",
+      "wheel_count": 0,
+      "sdist_count": 1,
+      "artifacts": [
+        {
+          "filename": "antlr4-python3-runtime-4.9.1.tar.gz",
+          "bytes": 173261,
+          "url": "https://files.pythonhosted.org/packages/0a/89/d1926c443bbfdc28321b1435bf9b05019e6d1cc7a685e32bbfb751cf3a78/antlr4-python3-runtime-4.9.1.tar.gz",
+          "sha256_advertised": "759eddb70061ff7387bc877f5b59e3344ab374843604f757afa5b308cb68669a",
+          "yanked": false
+        }
+      ]
+    },
+    {
+      "version": "4.9.2",
+      "wheel_count": 0,
+      "sdist_count": 1,
+      "artifacts": [
+        {
+          "filename": "antlr4-python3-runtime-4.9.2.tar.gz",
+          "bytes": 117220,
+          "url": "https://files.pythonhosted.org/packages/04/9c/d5ef93dc1e5a862cae004a64d15425c2a1ae8ba967a08f03dfb11aedf7bf/antlr4-python3-runtime-4.9.2.tar.gz",
+          "sha256_advertised": "31f5abdc7faf16a1a6e9bf2eb31565d004359b821b09944436a34361929ae85a",
+          "yanked": false
+        }
+      ]
+    },
+    {
+      "version": "4.9.3",
+      "wheel_count": 0,
+      "sdist_count": 1,
+      "artifacts": [
+        {
+          "filename": "antlr4-python3-runtime-4.9.3.tar.gz",
+          "bytes": 117034,
+          "url": "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz",
+          "sha256_advertised": "f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b",
+          "yanked": false
+        }
+      ]
+    }
+  ],
+  "official_source": {
+    "commit": "e4c1a74c66bd5290364ea2b36c97cd724b247357",
+    "setup_py_url": "https://github.com/antlr/antlr4/blob/e4c1a74c66bd5290364ea2b36c97cd724b247357/runtime/Python3/setup.py",
+    "setup_py_git_blob": "75d0dc5f55c117e03801da4fe0f8a6552ef3f62a",
+    "setup_py_bytes": 527,
+    "findings": [
+      "Static setuptools.setup call; no ext_modules, cmdclass, setup_requires, subprocess, download or Java generation in inspected setup.py",
+      "typing runtime requirement only for Python<3.5; inactive on target3.12",
+      "No pyproject.toml/setup.cfg in inspected official tag directory",
+      "Official source BSD-3-Clause; packaged setup/PKG-INFO declare BSD, but no standalone LICENSE/COPYING file is present"
+    ],
+    "limits": [
+      "Only setup.py is verified byte-identical to the official tag; other packaged runtime source files were not compared to the Git tree",
+      "No explicit Requires-Python is not Python 3.12 compatibility evidence"
+    ]
+  },
+  "static_build_tool_plan": {
+    "status": "Static candidate plan only; build closure NOT established",
+    "tools": [
+      {
+        "name": "pip",
+        "version": "25.3",
+        "metadata_url": "https://pypi.org/pypi/pip/25.3/json",
+        "requires_python": ">=3.9",
+        "base_requires_dist": [],
+        "file": "pip-25.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl",
+        "sha256": "9655943313a94722b7774661c21049070f6bbb0a1516bf02f7c8d5d9201514cd",
+        "bytes": 1778622,
+        "yanked": false
+      },
+      {
+        "name": "setuptools",
+        "version": "81.0.0",
+        "metadata_url": "https://pypi.org/pypi/setuptools/81.0.0/json",
+        "requires_python": ">=3.9",
+        "base_requires_dist": [],
+        "file": "setuptools-81.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e1/e3/c164c88b2e5ce7b24d667b9bd83589cf4f3520d97cad01534cd3c4f55fdb/setuptools-81.0.0-py3-none-any.whl",
+        "sha256": "fdd925d5c5d9f62e4b74b30d6dd7828ce236fd6ed998a08d81de62ce5a6310d6",
+        "bytes": 1062021,
+        "yanked": false
+      },
+      {
+        "name": "wheel",
+        "version": "0.45.1",
+        "metadata_url": "https://pypi.org/pypi/wheel/0.45.1/json",
+        "requires_python": ">=3.8",
+        "base_requires_dist": [],
+        "file": "wheel-0.45.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl",
+        "sha256": "708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248",
+        "bytes": 72494,
+        "yanked": false
+      }
+    ],
+    "pip_core_metadata_verified": {
+      "url": "https://files.pythonhosted.org/packages/44/3c/d717024885424591d5376220b5e836c2d5293ce2011523c9de23ff7bf068/pip-25.3-py3-none-any.whl.metadata",
+      "sha256": "2a1ba0725e7d236fbe2d5c50a4fff9c9e3fe34ca494f2cebde5c45c3791379d3",
+      "size": 4672,
+      "requires_dist": [],
+      "requires_python": [
+        "Requires-Python: >=3.9"
+      ]
+    },
+    "antlr_sdist": {
+      "url": "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz",
+      "size": 117034,
+      "digests": {
+        "blake2b_256": "3e387859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e",
+        "md5": "ecdf93d9a4c8acd16ec3ade04e2b5195",
+        "sha256": "f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b"
+      }
+    },
+    "tools_download_bytes": 2913137,
+    "tools_plus_antlr_sdist_download_bytes": 3030171,
+    "official_evidence": [
+      {
+        "url": "https://github.com/pypa/pip/blob/25.3/docs/html/reference/build-system.md",
+        "blob_sha": "e48c1d726d6436ce1ace08f4ae87c6c72d7ff12a",
+        "finding": "Absent pyproject build-system plus setup.py falls back to setuptools>=40.8.0 with setuptools.build_meta:__legacy__. --no-build-isolation makes caller responsible for preinstalled build requirements."
+      },
+      {
+        "url": "https://github.com/pypa/pip/blob/25.3/src/pip/_internal/cli/cmdoptions.py",
+        "finding": "--no-index ignores indexes, but still permits find-links URLs. --no-deps skips dependency installation. --no-index implies disabled pip version check. --build-constraint cannot be combined with --no-build-isolation."
+      },
+      {
+        "url": "https://github.com/pypa/pip/blob/25.3/src/pip/_internal/distributions/sdist.py",
+        "blob_sha": "f7bd7836d0ec04f2f69894b0f8f9cd8851cf887a",
+        "finding": "With no build isolation pip skips dynamic build requirement discovery/installation; --check-build-dependencies checks pyproject_requires only, not proof of full dynamic requirements."
+      },
+      {
+        "url": "https://github.com/pypa/setuptools/blob/v81.0.0/setuptools/build_meta.py",
+        "blob_sha": "1d93b6193be40883b113265aac44ccd775075a0d",
+        "finding": "get_requires_for_build_wheel starts empty but calls _get_build_requires, which runs setup.py egg_info via exec and collects SetupRequirementsError specifiers."
+      }
+    ],
+    "dynamic_requirements": "Verified sdist setup.py and setup.cfg declare no extra build requirements. Backend hooks were not executed, so actual dynamic requirements and build success remain unverified. No-build-isolation skips dynamic discovery; it does not prove absence.",
+    "offline_plan": "After separately authorized provisioning and remaining tool acquisition, verify all tool artifact hashes; pre-provision dedicated Python3.12 build environment with pinned pip/setuptools/wheel. Build only a verified local sdist with no-index, no-deps, no-build-isolation, no-cache-dir and disable-pip-version-check, with remote find-links/config absent and OS-level network blocked. Flags are resolver behavior, not a network sandbox: backend code can itself use network. No command was executed.",
+    "unknowns": [
+      "Interpreter patch/source and provisioning",
+      "Actual hook results and build success",
+      "Produced wheel hash, size and metadata",
+      "Python3.12 import and OmegaConf runtime behavior",
+      "Installed/unpacked/temp disk usage"
+    ],
+    "scope": "Tool metadata and official packaging source reads, followed by the one separately authorized ANTLR archive inspection. No complete wheels, builds, imports or installations.",
+    "official_source_commits": {
+      "pypa/pip tag25.3": "a52069365063ea813fe3a3f8bac90397c9426d35",
+      "pypa/setuptools tagv81.0.0": "049815b259805879f2fd60987f1d9e0d39c9dc96"
+    }
+  },
+  "sdist_payload_acquisition": "COMPLETED_ONCE_AFTER_SPECIFIC_APPROVAL_STATIC_INSPECTION_ONLY",
+  "sdist_payload_hash_verified": true,
+  "sdist_expanded_bytes": 477312,
+  "produced_wheel": null,
+  "runtime_and_build_execution": "NOT_RUN",
+  "full_build_closure_verified": false,
+  "sdist_uncompressed_tar_bytes": 624640,
+  "source_inspection": "reports/evidence/p33_20261105/cpu_closure_01/antlr_source_inspection.json",
+  "packaging_recipe_matches_official_tag": true,
+  "all_runtime_source_files_compared_to_official_tag": false
+}

@@ -1,0 +1,47 @@
+# P3.3 CPU dependency and storage research
+
+2026-11-05, after `f3d82c9`. The local offline-auditor validation was integrated without rerunning its 18 tests, 75/701 suites or real native256 input preparation. This phase reads public package metadata, selected official packaging source and wheel ZIP-directory metadata, followed by one explicitly approved 117 KB ANTLR source archive inspection. It does not install, build or execute NASA, change the host, acquire model/data assets or access Test.
+
+[Runtime candidate graph](evidence/p33_20261105/cpu_closure_01/runtime_candidate_graph.json) · [Source inspection](evidence/p33_20261105/cpu_closure_01/antlr_source_inspection.json) · [Build review](evidence/p33_20261105/cpu_closure_01/antlr_build_review.json) · [Capacity evidence](evidence/p33_20261105/cpu_closure_01/capacity_analysis.json) · [Plan](../protocols/p33_cpu_dependency_candidate.json) · [Verification](evidence/p33_20261105/cpu_closure_01/verification.json).
+
+## Declared dependency graph result
+
+The bounded metadata-only resolver found **128 packages: 127 wheels plus ANTLR 4.9.3 as the explicit source exception**. All 28 fixed direct pins are unchanged. All 307 active dependency edges satisfy the selected versions and propagated extras; 2,093 requirements are excluded by target markers and remain reconstructible from the complete Requires-Dist statements. Requested extras are fsspec[http] and jsonargparse[signatures,typing-extensions].
+
+All 127 selected wheel metadata SHA256s were checked against index advertisements; no whole-wheel payload hash was verified. Independent review rehashed 125 new wheel metadata records from cache and reused the two earlier verified CPU-pair records. The graph is declared-dependency consistency only. The verified ANTLR archive adds its static typing requirement, active only for Python<3.5 and therefore excluded on the Python 3.12 target; this increases the original excluded count from 2,092 to 2,093 without changing the 307 active edges. Dynamic build hooks and generated wheel metadata remain unverified.
+
+The maximum selected manylinux floor is **2.31**, from tensorboard-data-server, within the recorded host's glibc 2.35. This is different from the earlier direct-only 2.28 floor and does not establish native-library behavior. Markers were evaluated at Python 3.12.0; no patch/kernel-sensitive dependency markers were found in the selected graph, but the exact interpreter artifact still needs selection.
+
+A real conflict was resolved without changing NASA pins: Transformers 5.22.1 requires hub>=1.31 and tokenizers>=0.23.1, conflicting with fixed 1.15.0/0.22.2. The selected 5.15.1 declares ranges that admit them. This is not a tested API combination. Large grpcio/stringzilla/aiohttp catalogues were searched only for their current stable candidate to bound metadata reads; the valid selected graph is not proof of the newest possible global solution. No pip/uv installer or build backend ran.
+
+## Status boundaries
+
+The new runtime graph is a candidate derived from declared dependencies for CPython 3.12.0/Linux x86_64/glibc 2.35. Exact interpreter patch/source, executed ANTLR build behavior, the resulting wheel and empirical imports remain unresolved. Dependency consistency is not executable-environment compatibility, a final installation lock or permission to provision.
+
+## ANTLR cannot be made all-wheel by choosing another 4.9 release
+
+All published versions admitted by OmegaConf's 4.9.* constraint, 4.9/4.9.1/4.9.2/4.9.3, advertise only source distributions. The 4.9.3 archive is 117,034 bytes with SHA256 f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b. After specific approval, that exact archive was acquired once and its size/hash verified. Static in-memory inspection found 78 members (68 files, 10 directories), 477,312 file-data bytes and a 624,640-byte decompressed tar stream. No unsafe paths, links or device entries were found; no filesystem extraction or upstream execution occurred.
+
+The [official 4.9.3 setup.py](https://github.com/antlr/antlr4/blob/e4c1a74c66bd5290364ea2b36c97cd724b247357/runtime/Python3/setup.py) contains a static setuptools call, with no extensions, custom hooks, subprocesses or downloads. Its only declared dependency is typing for Python<3.5, inactive here. The packaged setup.py exactly matches that official Git blob. Packaged setup.cfg contains only egg_info tag settings, with no pyproject.toml. This authenticates the archive and packaging recipe, not every runtime file against the source Git tree or Python 3.12 compatibility. PKG-INFO declares BSD but no standalone LICENSE/COPYING file is bundled; preserve the official BSD-3-Clause license obligations in any later approved build/distribution. Replacing ANTLR with 4.13 to obtain a wheel would violate the frozen OmegaConf requirement and is not selected.
+
+An explicit, unexecuted build-tool candidate is pip 25.3/setuptools 81.0.0/wheel 0.45.1. Tool metadata supports Python 3.12; setuptools 81 satisfies the chosen build floor and Torch's <82 runtime cap. Tools plus source archive advertise 3,030,171 bytes before deduplication or expansion. A runtime constraint does not automatically constrain an isolated build environment.
+
+[Pip 25.3's documented fallback](https://github.com/pypa/pip/blob/25.3/docs/html/reference/build-system.md) uses setuptools.build_meta:__legacy__ when setup.py exists without a build-system declaration. [Setuptools 81's backend](https://github.com/pypa/setuptools/blob/v81.0.0/setuptools/build_meta.py) executes setup.py egg_info to discover dynamic requirements. No extra requirements are visible in the reviewed source, but the hooks were not run. In pip's no-build-isolation path dynamic discovery is skipped; that is not proof the dynamic requirements are empty. No-index is a package-index selection flag, not a network sandbox. Any later approved build needs verified local artifacts, explicitly provisioned build tools and a network-restricted execution environment; no system/firewall/permission changes are authorized here.
+
+## Capacity: compressed archives are not installation size
+
+Runtime wheels advertise **647,600,307 bytes**, or **647,717,341 bytes** including the now-verified ANTLR source. Deduplicating the shared setuptools artifact across runtime and build tools gives **649,568,457 bytes** for all proposed archives, before the interpreter and generated build artifact. The 127 runtime wheel directories declare **2,185,259,846 member-data bytes**. Separate build-tool copies add **9,295,335 bytes**. Retaining archives and both environments yields an accounting subtotal of **2,844,123,638 bytes** before all unknown additions below; this is not a measured or bounded installation peak.
+
+Only the 22-byte ZIP end record and central directory were read through exact HTTP 206 ranges, with a 2 MB directory cap and no whole-response fallback. These are metadata portions of the wheel files; no compressed member contents were read or inflated. Unsupported ZIP layouts fail closed. Whole-wheel hashes and member/local-header consistency remain unverified.
+
+Directory declarations give archive member-data sums, not verified extraction sizes, installed footprint, peak disk requirements or runtime memory. Per-file 4 KiB rounding is a comparison for file data only; it excludes directory blocks, filesystem metadata and installer-created, rewritten or removed files. Empty basic path flags are not an extraction-safety audit. ANTLR source file-data size is now known. Adding one retained source file copy gives a conditional subtotal of 2,844,600,950 bytes; no extraction occurred, and tar-stream bytes must not be double-counted as another source copy. Build workspace, generated wheel, actual installation, interpreter files, bytecode, caches and filesystem overhead remain unknown.
+
+The prior host report observed 462,071,136,256 free bytes, but this phase did not re-query the user's filesystem. That historical capacity is not a current guarantee or an approved installation budget. Capacity and constructor RAM are separate; decoder modules are transiently allocated before pruning.
+
+## Verification
+
+Independently reconstructed the graph's reachability, fixed pins, 307 active/2,093 excluded requirements, extras, compatible tags and advertised sizes. Four new synthetic checks validated the ZIP-directory accounting reader; these are research-method checks, not a new NASA/model test pass. JSON, links, file hashes and unchanged historical science/evidence were checked before publication. The completed local 18 tests and older suites were not repeated. Only the explicitly approved ANTLR source archive was fully acquired and hash-verified. No complete wheel, runtime import, installation, build or model execution is claimed.
+
+## Handoff
+
+Do not repeat completed local checks or inventory. Do not repeat the completed ANTLR acquisition or install, invoke a build backend, fetch other package payloads, change drivers, relax declarations or change scientific pins under this report. After the interpreter, remaining tool acquisition, provisioning/build scope and budget are approved, verify complete artifact hashes, build the verified ANTLR archive only in the approved sandbox, and record the produced wheel/hash/metadata before any normal NASA import. CPU construction, checkpoint loading, paired gradients, full cohort and budget locks remain later independent gates. GPU support and Test HOLD remain unchanged.

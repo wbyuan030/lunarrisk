@@ -1,0 +1,120 @@
+{
+  "observed_date_utc": "2026-11-05",
+  "base_commit": "f3d82c9539a6a33427ad022bc9acbb418fa73a9b",
+  "scope": "Dependency/build/capacity metadata research plus one explicitly approved static ANTLR source inspection; no production code or runtime execution",
+  "checks": {
+    "json_and_local_links": "PASS",
+    "local_link_count": 58,
+    "128_unique_reachable_nodes": "PASS",
+    "28_fixed_pins_preserved": "PASS",
+    "versions_markers_and_extras": "PASS",
+    "127_wheel_tags_and_python_metadata": "PASS",
+    "127_index_metadata_hash_verification_records": "PASS",
+    "advertised_sizes_and_deduplication": "PASS",
+    "129_directory_observations_and_conditional_accounting": "PASS",
+    "old_code_science_and_evidence_unchanged": "PASS",
+    "allowlisted_files_and_git_diff_check": "PASS",
+    "307_active_edges_and2093_excluded_requirements_reconstructed": "PASS",
+    "source_hash_and_static_recipe_verified_build_gap_preserved": "PASS"
+  },
+  "independent_review": {
+    "status": "APPROVED_GRAPH_BUILD_SCOPE_AND_FINAL_CAPACITY",
+    "metadata": "Reviewer rehashed 125 new wheel metadata records plus ANTLR release JSON; 2 CPU-pair records inherited earlier verified evidence",
+    "scope": "Initial graph/capacity review used no new network/payload access or old tests; source follow-up reviewed separately",
+    "capacity": "129 unique observations, runtime/build memberships, shared setuptools deduplication, advertised totals and conditional2,844,123,638/2,928,046,281-byte accounting independently recomputed",
+    "followup": "Prose spacing clarified after review; no dependency or capacity values changed"
+  },
+  "new_research_method_tests": {
+    "count": 4,
+    "result": "PASS",
+    "scope": "Synthetic ZIPdirectory-reader fixtures only; not project/model tests"
+  },
+  "old_tests": "18 new-tool and 75/701 historical suites NOT_RERUN; local f3d82c9 results read only",
+  "full_payload_hashes_verified": false,
+  "full_build_closure_verified": false,
+  "runtime_execution": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "full_installation_lock": false,
+  "not_performed": [
+    "User computer access",
+    "Complete wheel or compressed wheel-member acquisition",
+    "Installation or build backend execution",
+    "GPU query",
+    "NASA source execution",
+    "Model/data/weight download",
+    "Test access",
+    "Historical experiment repetition"
+  ],
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "size_bytes": 16502,
+      "sha256": "d5dc8b32f417e6719d4069a4278337c89d03cd63bc89ae228dd3ea97eff30a6a"
+    },
+    {
+      "path": "docs/P3_3_PRIVATE_RUNTIME_PLAN.md",
+      "size_bytes": 9063,
+      "sha256": "053eabf2c5ac3bb555dfdb35d7e87fa30f4c62ecdff70131ccc65bae10a8cf17"
+    },
+    {
+      "path": "reports/p3_3_cpu_feasibility.md",
+      "size_bytes": 7175,
+      "sha256": "d716d38808a5a7e7a6ea4fd74d6341ce527615f1a6760b3a9d2486f7f1f93f41"
+    },
+    {
+      "path": "reports/p3_3_cpu_dependency_closure.md",
+      "size_bytes": 9485,
+      "sha256": "0f99fc6dbb92070b708f72c9c24f96eb647066a7284ec935cae154049a09375a"
+    },
+    {
+      "path": "protocols/p33_cpu_dependency_candidate.json",
+      "size_bytes": 3093,
+      "sha256": "4c32cdc6a9d0f05c187d88a93effe29b1531828946efab521bda381100073569"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_closure_01/runtime_candidate_graph.json",
+      "size_bytes": 356307,
+      "sha256": "7a9b08300c2f496d6d0b8e4db603bca28e2e7c4c0ced8f7bb5922738ae379eac"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_closure_01/antlr_build_review.json",
+      "size_bytes": 9502,
+      "sha256": "e069a4ca2347e7fb5104a5f7a6a28a9f28dbf7ada0e025729dbb870687795813"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_closure_01/capacity_analysis.json",
+      "size_bytes": 169171,
+      "sha256": "40c47096fd99c16add45d604cb07bea5032e6c248b6bc2b44a4e22eee35b0a97"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_closure_01/antlr_source_inspection.json",
+      "size_bytes": 16076,
+      "sha256": "08cf9936b8f97e44f8ace81e8d6d87909afb708412ff9baac5979fc800da1299"
+    }
+  ],
+  "source_archive_hash_verified": true,
+  "source_followup_review": {
+    "status": "APPROVED_AFTER_SCOPE_AND_MARKER_WORDING_FIXES",
+    "scope": "Independent local record/diff review; no repeat download or backend execution",
+    "checks": [
+      "Recomputed setup.py Git blob",
+      "78 members, 68 files and 477312 file-data bytes",
+      "307 active and 2093 excluded requirements reconstructed; 28 fixed pins unchanged",
+      "Optional source file copy accounting and all remaining build/runtime/permission limits preserved"
+    ],
+    "limits": "Archive SHA256 verification relies on acquisition record; reviewer did not redownload original archive. Full runtime source identity and license-compliance review remain incomplete."
+  },
+  "final_consistency_check": {
+    "status": "PASS",
+    "nodes": 128,
+    "active_edges": 307,
+    "excluded_requirements": 2093,
+    "wheel_tags_and_metadata_hash_records": 127,
+    "directory_observations": 129,
+    "local_links": 58,
+    "delivery_file_hashes": 9,
+    "changed_files": 10,
+    "old_tests": "NOT_RERUN",
+    "upstream_execution": "NOT_RUN"
+  }
+}

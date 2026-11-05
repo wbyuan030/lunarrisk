@@ -1,0 +1,430 @@
+{
+  "url": "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz",
+  "archive_bytes": 117034,
+  "sha256": "f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b",
+  "uncompressed_tar_bytes": 624640,
+  "source_archive_downloaded": true,
+  "extracted_to_filesystem": false,
+  "executed": false,
+  "members": [
+    {
+      "name": "antlr4-python3-runtime-4.9.3",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/MANIFEST.in",
+      "bytes": 46,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/PKG-INFO",
+      "bytes": 282,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/README.txt",
+      "bytes": 186,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/RELEASE-4.5.txt",
+      "bytes": 387,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/bin",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/bin/pygrun",
+      "bytes": 6111,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/setup.cfg",
+      "bytes": 38,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/setup.py",
+      "bytes": 527,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/BufferedTokenStream.py",
+      "bytes": 10780,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/CommonTokenFactory.py",
+      "bytes": 2110,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/CommonTokenStream.py",
+      "bytes": 2770,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/FileStream.py",
+      "bytes": 868,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/InputStream.py",
+      "bytes": 2334,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/IntervalSet.py",
+      "bytes": 5965,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/LL1Analyzer.py",
+      "bytes": 7752,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/Lexer.py",
+      "bytes": 11542,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/ListTokenSource.py",
+      "bytes": 5356,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/Parser.py",
+      "bytes": 22883,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/ParserInterpreter.py",
+      "bytes": 7206,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/ParserRuleContext.py",
+      "bytes": 6762,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/PredictionContext.py",
+      "bytes": 22977,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/Recognizer.py",
+      "bytes": 5383,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/RuleContext.py",
+      "bytes": 8099,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/StdinStream.py",
+      "bytes": 303,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/Token.py",
+      "bytes": 5206,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/TokenStreamRewriter.py",
+      "bytes": 10324,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/Utils.py",
+      "bytes": 931,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/__init__.py",
+      "bytes": 1125,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATN.py",
+      "bytes": 5789,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNConfig.py",
+      "bytes": 6565,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNConfigSet.py",
+      "bytes": 8312,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNDeserializationOptions.py",
+      "bytes": 1010,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNDeserializer.py",
+      "bytes": 22252,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNSimulator.py",
+      "bytes": 2298,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNState.py",
+      "bytes": 7663,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ATNType.py",
+      "bytes": 422,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/LexerATNSimulator.py",
+      "bytes": 25465,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/LexerAction.py",
+      "bytes": 10014,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/LexerActionExecutor.py",
+      "bytes": 6420,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/ParserATNSimulator.py",
+      "bytes": 80365,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/PredictionMode.py",
+      "bytes": 22486,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/SemanticContext.py",
+      "bytes": 10495,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/Transition.py",
+      "bytes": 8762,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/atn/__init__.py",
+      "bytes": 28,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/dfa",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/dfa/DFA.py",
+      "bytes": 5388,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/dfa/DFASerializer.py",
+      "bytes": 2518,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/dfa/DFAState.py",
+      "bytes": 5583,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/dfa/__init__.py",
+      "bytes": 28,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error/DiagnosticErrorListener.py",
+      "bytes": 4430,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error/ErrorListener.py",
+      "bytes": 2722,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error/ErrorStrategy.py",
+      "bytes": 30391,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error/Errors.py",
+      "bytes": 6759,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/error/__init__.py",
+      "bytes": 28,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/Chunk.py",
+      "bytes": 695,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/ParseTreeMatch.py",
+      "bytes": 4485,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/ParseTreePattern.py",
+      "bytes": 2825,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/ParseTreePatternMatcher.py",
+      "bytes": 16388,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/RuleTagToken.py",
+      "bytes": 2022,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/TokenTagToken.py",
+      "bytes": 1576,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/Tree.py",
+      "bytes": 5572,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/Trees.py",
+      "bytes": 3968,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/tree/__init__.py",
+      "bytes": 0,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/xpath",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/xpath/XPath.py",
+      "bytes": 13015,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4/xpath/__init__.py",
+      "bytes": 28,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info",
+      "bytes": 0,
+      "type": "dir"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/PKG-INFO",
+      "bytes": 282,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/SOURCES.txt",
+      "bytes": 1968,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/dependency_links.txt",
+      "bytes": 1,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/requires.txt",
+      "bytes": 34,
+      "type": "file"
+    },
+    {
+      "name": "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/top_level.txt",
+      "bytes": 7,
+      "type": "file"
+    }
+  ],
+  "selected_text": {
+    "antlr4-python3-runtime-4.9.3/MANIFEST.in": "include *.txt\nrecursive-include test *.py *.c\n",
+    "antlr4-python3-runtime-4.9.3/PKG-INFO": "Metadata-Version: 1.0\nName: antlr4-python3-runtime\nVersion: 4.9.3\nSummary: ANTLR 4.9.3 runtime for Python 3.7\nHome-page: http://www.antlr.org\nAuthor: Eric Vergnaud, Terence Parr, Sam Harwell\nAuthor-email: eric.vergnaud@wanadoo.fr\nLicense: BSD\nDescription: UNKNOWN\nPlatform: UNKNOWN\n",
+    "antlr4-python3-runtime-4.9.3/setup.cfg": "[egg_info]\ntag_build = \ntag_date = 0\n\n",
+    "antlr4-python3-runtime-4.9.3/setup.py": "from setuptools import setup\n\nsetup(\n    name='antlr4-python3-runtime',\n    version='4.9.3',\n    packages=['antlr4', 'antlr4.atn', 'antlr4.dfa', 'antlr4.tree', 'antlr4.error', 'antlr4.xpath'],\n    package_dir={'': 'src'},\n    install_requires=[\n        \"typing ; python_version<'3.5'\",\n    ],\n    url='http://www.antlr.org',\n    license='BSD',\n    author='Eric Vergnaud, Terence Parr, Sam Harwell',\n    author_email='eric.vergnaud@wanadoo.fr',\n    scripts=[\"bin/pygrun\"],\n    description='ANTLR 4.9.3 runtime for Python 3.7'\n)\n",
+    "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/PKG-INFO": "Metadata-Version: 1.0\nName: antlr4-python3-runtime\nVersion: 4.9.3\nSummary: ANTLR 4.9.3 runtime for Python 3.7\nHome-page: http://www.antlr.org\nAuthor: Eric Vergnaud, Terence Parr, Sam Harwell\nAuthor-email: eric.vergnaud@wanadoo.fr\nLicense: BSD\nDescription: UNKNOWN\nPlatform: UNKNOWN\n",
+    "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/SOURCES.txt": "MANIFEST.in\nREADME.txt\nRELEASE-4.5.txt\nsetup.py\nbin/pygrun\nsrc/antlr4/BufferedTokenStream.py\nsrc/antlr4/CommonTokenFactory.py\nsrc/antlr4/CommonTokenStream.py\nsrc/antlr4/FileStream.py\nsrc/antlr4/InputStream.py\nsrc/antlr4/IntervalSet.py\nsrc/antlr4/LL1Analyzer.py\nsrc/antlr4/Lexer.py\nsrc/antlr4/ListTokenSource.py\nsrc/antlr4/Parser.py\nsrc/antlr4/ParserInterpreter.py\nsrc/antlr4/ParserRuleContext.py\nsrc/antlr4/PredictionContext.py\nsrc/antlr4/Recognizer.py\nsrc/antlr4/RuleContext.py\nsrc/antlr4/StdinStream.py\nsrc/antlr4/Token.py\nsrc/antlr4/TokenStreamRewriter.py\nsrc/antlr4/Utils.py\nsrc/antlr4/__init__.py\nsrc/antlr4/atn/ATN.py\nsrc/antlr4/atn/ATNConfig.py\nsrc/antlr4/atn/ATNConfigSet.py\nsrc/antlr4/atn/ATNDeserializationOptions.py\nsrc/antlr4/atn/ATNDeserializer.py\nsrc/antlr4/atn/ATNSimulator.py\nsrc/antlr4/atn/ATNState.py\nsrc/antlr4/atn/ATNType.py\nsrc/antlr4/atn/LexerATNSimulator.py\nsrc/antlr4/atn/LexerAction.py\nsrc/antlr4/atn/LexerActionExecutor.py\nsrc/antlr4/atn/ParserATNSimulator.py\nsrc/antlr4/atn/PredictionMode.py\nsrc/antlr4/atn/SemanticContext.py\nsrc/antlr4/atn/Transition.py\nsrc/antlr4/atn/__init__.py\nsrc/antlr4/dfa/DFA.py\nsrc/antlr4/dfa/DFASerializer.py\nsrc/antlr4/dfa/DFAState.py\nsrc/antlr4/dfa/__init__.py\nsrc/antlr4/error/DiagnosticErrorListener.py\nsrc/antlr4/error/ErrorListener.py\nsrc/antlr4/error/ErrorStrategy.py\nsrc/antlr4/error/Errors.py\nsrc/antlr4/error/__init__.py\nsrc/antlr4/tree/Chunk.py\nsrc/antlr4/tree/ParseTreeMatch.py\nsrc/antlr4/tree/ParseTreePattern.py\nsrc/antlr4/tree/ParseTreePatternMatcher.py\nsrc/antlr4/tree/RuleTagToken.py\nsrc/antlr4/tree/TokenTagToken.py\nsrc/antlr4/tree/Tree.py\nsrc/antlr4/tree/Trees.py\nsrc/antlr4/tree/__init__.py\nsrc/antlr4/xpath/XPath.py\nsrc/antlr4/xpath/__init__.py\nsrc/antlr4_python3_runtime.egg-info/PKG-INFO\nsrc/antlr4_python3_runtime.egg-info/SOURCES.txt\nsrc/antlr4_python3_runtime.egg-info/dependency_links.txt\nsrc/antlr4_python3_runtime.egg-info/requires.txt\nsrc/antlr4_python3_runtime.egg-info/top_level.txt",
+    "antlr4-python3-runtime-4.9.3/src/antlr4_python3_runtime.egg-info/requires.txt": "\n[:python_version < \"3.5\"]\ntyping\n"
+  },
+  "setup_py_git_blob": "75d0dc5f55c117e03801da4fe0f8a6552ef3f62a",
+  "member_count": 78,
+  "regular_file_count": 68,
+  "sum_member_bytes": 477312,
+  "setup_matches_official_tag": true,
+  "findings": {
+    "safe_member_types": "68 regular files and10 directories; no symlinks, hardlinks or device entries; no absolute/parent-traversal/backslash paths",
+    "pyproject_present": false,
+    "packaged_setup_cfg": "Only [egg_info], tag_build empty, tag_date=0. No build hooks or dependency declarations.",
+    "build_recipe": "Static setuptools.setup; no ext_modules, cmdclass, setup_requires, subprocess/download/grammar generation. No compiler or Java requirement declared.",
+    "requires_python": "Absent in setup and PKG-INFO; Python3.12 compatibility remains untested.",
+    "runtime_requirements": "typing only when Python<3.5, confirmed requires.txt; inactive on3.12.",
+    "license": "PKG-INFO/setup declare BSD. No LICENSE/COPYING-named archive member. Prior official source evidence identifies BSD-3-Clause, but archive does not bundle standalone license text.",
+    "source_identity": "Packaged setup.py bytes exactly match known official tag4.9.3 blob75d0dc5f55c117e03801da4fe0f8a6552ef3f62a at commit e4c1a74c66bd5290364ea2b36c97cd724b247357. This verifies packaging recipe identity, not every runtime source file.",
+    "dynamic_build_requirements": "Static package declarations disclose no extra build dependencies. No backend hooks executed, so actual dynamic requirements and successful build remain unverified.",
+    "build_status": "NOT_RUN",
+    "payload_scope": "One explicitly approved small source archive downloaded in memory and hash-verified. No wheel/model/weights payloads. No extraction, import, build, install or upstream execution."
+  },
+  "observed_date_utc": "2026-11-05",
+  "inspection_scope": "One specifically authorized static source archive read; no extraction to filesystem, build, import or install."
+}

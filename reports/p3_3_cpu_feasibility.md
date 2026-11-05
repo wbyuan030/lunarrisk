@@ -38,3 +38,7 @@ At `2f59986`, the local follow-up passes all18 new metadata tests with zero skip
 4. Checkpoint acquisition/strict coverage, actual paired forward/backward and full fixed-cohort/budget gates remain separate. No GPU query, driver change, asset download, Test access or training is included here.
 
 The GPU driver-support findings remain unchanged. CPU feasibility preparation does not establish that the old driver is incompatible, nor does it solve the GPU training objective. No transfer result is claimed.
+
+## Later transitive research after local validation
+
+[The dependency/build/capacity report](p3_3_cpu_dependency_closure.md) now extends the direct-only candidate to 128 declared-metadata nodes, preserving all 28 pins. The approved ANTLR archive and packaging identity are now verified; dynamic build/produced wheel and exact interpreter/provisioning gates remain unresolved. This does not rewrite the original direct-only observations or local 18-test results, and does not authorize installation.
