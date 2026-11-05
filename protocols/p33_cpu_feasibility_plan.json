@@ -75,6 +75,19 @@
     "Fixed NASA source/model pins, spatial policy, physics statements, budgets and historical evidence unchanged",
     "No repeated75/701 or native256 input-only checks"
   ],
+  "local_tool_validation": {
+    "base_commit": "2f59986",
+    "report": "reports/p3_3_metadata_local_validation.md",
+    "evidence": "reports/evidence/p33_20261105/metadata_local_01/verification.json",
+    "new_offline_tests_pass": 18,
+    "tests_skipped": 0,
+    "compile_three_new_files": "PASS",
+    "direct_bounds_recomputed": 28,
+    "direct_to_direct_constraints_recomputed": 72,
+    "scope": "Synthetic metadata and CLI safety fixtures; archived candidate declarations only, not environment or NASA execution",
+    "old75_or701_or_real_input_checks_repeated": false,
+    "runtime_provisioned": false
+  },
   "runtime_execution": "NOT_RUN",
   "gpu_compatibility": "NOT_ESTABLISHED",
   "transfer_benefit": "NOT_ESTABLISHED"

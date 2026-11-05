@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "relative_links_checked": 41,
+  "upstream_snapshot_file_hashes": 11,
+  "new_source_hashes_preserved": 3,
+  "tests": "18_NEW_ONLY_PASS",
+  "historical_evidence_unchanged": true,
+  "actual_runtime": "NOT_PROVISIONED",
+  "model_execution": "NOT_RUN",
+  "files": {
+    "AGENTS.md": {
+      "bytes": 15268,
+      "sha256": "3f75b697ca3eebd30b54991d8270c5c02e6067fa1102813eee02440084551b89"
+    },
+    "protocols/p33_cpu_feasibility_plan.json": {
+      "bytes": 4475,
+      "sha256": "dec001d1c4c0b7d43a62618b4afc2a1284d35aa5e6d72d49817dc0de9aa94d50"
+    },
+    "reports/p3_3_cpu_feasibility.md": {
+      "bytes": 6676,
+      "sha256": "e9d0751b100deee3cd19099dcec8dccf84324b7714acc09cb7d3f406691b54b2"
+    },
+    "reports/p3_3_metadata_local_validation.md": {
+      "bytes": 3653,
+      "sha256": "041cc43f9c0d797a55d400d5647c0f60f067bc03ec3992a3f2150c5ea0b33951"
+    },
+    "reports/evidence/p33_20261105/metadata_local_01/focused_tests.log": {
+      "bytes": 1755,
+      "sha256": "6a7c20f6f60c057c2bc89b7ec1e8e986458f2cfa8239b5623714e9719325a7dd"
+    },
+    "reports/evidence/p33_20261105/metadata_local_01/verification.json": {
+      "bytes": 4191,
+      "sha256": "885c686b08d63ae973db35c3b7d200ad9d3771de1f35940421c9d8e60479208f"
+    }
+  },
+  "self_excluded": true
+}

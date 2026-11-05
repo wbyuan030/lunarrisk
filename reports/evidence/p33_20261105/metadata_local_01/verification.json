@@ -1,0 +1,70 @@
+{
+  "status": "NEW_OFFLINE_METADATA_TESTS_PASS_RUNTIME_STILL_NOT_PROVISIONED",
+  "base_commit": "2f599861618f582fe9c23150ab8388c3a7cf6dcc",
+  "focused_tests": {
+    "pass": 18,
+    "skip": 0,
+    "seconds": 0.425,
+    "log_sha256": "6a7c20f6f60c057c2bc89b7ec1e8e986458f2cfa8239b5623714e9719325a7dd",
+    "scope": "Synthetic metadata and CLI safety/exclusive-output fixtures; CLI fixtures read metadata only. No standalone old-environment audit was run."
+  },
+  "compile_three_files": "PASS",
+  "diff_check": "PASS",
+  "upstream_evidence_file_hashes_verified": 11,
+  "fixed_nasa_implementation_source_hashes_preserved": 22,
+  "direct_bounds_recomputed": 28,
+  "direct_to_direct_constraints_recomputed": 72,
+  "non_torch_selected_wheel_tags_python_and_yanked_recomputed": 26,
+  "cpu_pair_tags_and_python_recomputed": 2,
+  "direct_wheel_advertised_bytes_recomputed": 444858870,
+  "payload_hashes_verified": false,
+  "public_metadata_refetched": false,
+  "complete_dependency_lock": false,
+  "provisioning_authorized": false,
+  "source_sha256": {
+    "scripts/p33_runtime_metadata.py": "237cc2daf4d859521096a3aba7d76dc12c04c951bb180636eb97cbcea9d19672",
+    "src/lunarrisk/nasa_transfer/runtime_metadata.py": "b213b82e49ce5869ae038f11cd5ace8a774e19dc2ca082480d9035e9351df9f5",
+    "tests/test_p33_runtime_metadata.py": "92fde6c174ddbc5d88bbe32dd9b5ff4ebc840482c8881f3a06f063bb76e75927"
+  },
+  "input_evidence_sha256": {
+    "AGENTS.md": "47868731261aafeda45916b3cef831c3d7daa4354f7f55a2baa3b8a6f0c38a0f",
+    "docs/P3_3_PRIVATE_RUNTIME_PLAN.md": "cfc5e6d8896d2adce9889136cf3b73522d85437aed9d6a7dc86ba5d184800833",
+    "protocols/p33_cpu_feasibility_plan.json": "1cac8476d84ff982dbfc85c8576fded76096d899528032921de28950f7593c83",
+    "reports/p3_3_cpu_feasibility.md": "77157c8f8854bd5139cab4c05dc535ea7e4c9e9af426e9d08049f81ed1522b3f",
+    "reports/evidence/p33_20261105/cpu_candidate_01/direct_candidates.json": "080b22f91b8a83c779ebc0374165b8d47e052d3e9549149f6a0c1143f7a6a54c",
+    "reports/evidence/p33_20261105/cpu_candidate_01/cpu_pair.json": "df4f2d44f2f6aa27b669484131b03acc4b759908dbb1ed89b03ea6690e038903",
+    "reports/evidence/p33_20261105/cpu_candidate_01/transitive_samples.json": "1f8f4b8beeedac29f19981d3428d9b8c0eaf766066434d74404c262b9cc30435",
+    "reports/evidence/p33_20261105/cpu_candidate_01/focused_tests.log": "d3125406d278ff3962c0695cdfd3c9cb0b802eb4adf4c912c7df08a2446eedb8",
+    "src/lunarrisk/nasa_transfer/runtime_metadata.py": "b213b82e49ce5869ae038f11cd5ace8a774e19dc2ca082480d9035e9351df9f5",
+    "scripts/p33_runtime_metadata.py": "237cc2daf4d859521096a3aba7d76dc12c04c951bb180636eb97cbcea9d19672",
+    "tests/test_p33_runtime_metadata.py": "92fde6c174ddbc5d88bbe32dd9b5ff4ebc840482c8881f3a06f063bb76e75927"
+  },
+  "commands": {
+    "environment": {
+      "PYTHONPATH": "$JOB_TMP/p31_runtime",
+      "TMPDIR": "$JOB_TMP"
+    },
+    "new_tests": "python3 -I \"$JOB_TMP/p31_python.py\" -m unittest discover -s tests -p 'test_p33_runtime_metadata.py' -v",
+    "compile": "python3 -m py_compile scripts/p33_runtime_metadata.py src/lunarrisk/nasa_transfer/runtime_metadata.py tests/test_p33_runtime_metadata.py",
+    "diff": "git diff --check"
+  },
+  "known_gaps": [
+    "Full transitive closure and transitively requested extras are unresolved",
+    "Examined antlr4-python3-runtime4.9.3 in OmegaConf-required4.9.* branch advertises no compatible wheel; other permitted versions and source-build path not fully reviewed",
+    "Exact interpreter patch and artifacts not selected; no complete hash/download/storage budget",
+    "Advertised wheel hashes are not verified payload hashes; binary/native dependency behavior unknown",
+    "Normal official imports and full base constructor with transient decoder allocation have not run"
+  ],
+  "old75_or701_tests_repeated": false,
+  "native_input_preflight_repeated": false,
+  "standalone_host_inventory_repeated": false,
+  "environment_created": false,
+  "packages_installed": false,
+  "resolver_or_build_backend_executed": false,
+  "driver_changed": false,
+  "new_downloads": 0,
+  "gpu_inspection": false,
+  "official_model_execution": "NOT_RUN",
+  "runtime_compatibility": "NOT_ESTABLISHED",
+  "test_access": "HOLD"
+}

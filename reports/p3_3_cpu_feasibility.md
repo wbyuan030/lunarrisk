@@ -26,6 +26,10 @@ The standalone `scripts/p33_runtime_metadata.py` entrypoint checks direct instal
 
 A metadata match means only that the checked declarations match. It is not a full dependency-closure, binary-ABI, source-cleanliness, model-construction, checkpoint, GPU or numerical certificate. Its intended local use is a later, already authorized candidate environment; its existence does not authorize creating one or installing packages. The current old ROCm environment already fails the known declarations, so do not repeat its inventory or rerun this new tool there merely to rediscover that blocker. Do not rerun completed75/701 tests or the real native256 input preflight to fill those unrelated gaps.
 
+## Local tool validation completed
+
+At `2f59986`, the local follow-up passes all18 new metadata tests with zero skips and compiles the three new files. Independent checks reproduce28 direct bounds,72 direct-to-direct constraints,26+2 advertised wheel/Python tag checks and the444,858,870-byte direct subtotal against archived evidence. Existing NASA source hashes match. [Local report](p3_3_metadata_local_validation.md), [verification](evidence/p33_20261105/metadata_local_01/verification.json). This is tool/metadata validation, not runtime compatibility or a complete lock. No standalone old-environment inventory, old75/701 suite or native256 input preflight was repeated; no provisioning/model execution occurred.
+
 ## Later CPU execution remains gated
 
 1. Resolve the bounded transitive/source-build questions and choose exact interpreter/artifact hashes and a complete download/storage budget.

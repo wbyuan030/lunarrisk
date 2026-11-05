@@ -1,0 +1,23 @@
+test_all_direct_match_is_not_runtime_approval (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_cli_exclusive_output (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_cli_no_package_imports_or_network (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_collection_reads_only_distribution_metadata (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_duplicates_are_not_silently_selected (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_installed_requires_python (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_invalid_metadata (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_local_cpu_version_and_candidate (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_malformed_python_version_fails_closed (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_marker_changes_rejected_not_silently_skipped (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_missing (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_missing_version_or_name_fails_closed (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_pinned_evidence_and_edited_declarations (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_prerelease_distribution_is_not_approved (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_python_bounds_and_candidate (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_source_audit_path_mutation_rejected (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_torchvision_cpu_candidate_mismatch (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+test_version_conflict (test_p33_runtime_metadata.TestRuntimeMetadata) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.425s
+
+OK

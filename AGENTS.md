@@ -12,7 +12,9 @@
 
 **最新CPU候选准备：** 已核实Python3.12的官方torch2.12.1+cpu/vision0.27.1+cpu元数据，以及28个直接候选约束和72个直接包间约束；28个直接轮子公布大小合计444,858,870字节，不是完整预算。OmegaConf依赖的已查ANTLR4.9.3没有兼容轮子，完整transitive/build闭包仍缺。见[CPU报告](reports/p3_3_cpu_feasibility.md)、[候选计划](protocols/p33_cpu_feasibility_plan.json)。新增独立离线metadata检查入口不导入torch/NASA、不联网，不等于运行兼容性PASS，也不批准新建/安装环境；模型与原守卫不改。新增18项离线测试PASS，独立审查及三文件compile检查通过；不延伸旧701证据。
 
-**本地下一步：** 当前保持系统/驱动不动的范围内，没有核实到受官方支持且满足固定NASA依赖的GPU方案。停止在路径决定处，不重复inventory、75/701或native256预检，不安装、不拉容器、不改驱动、不下载权重、不降依赖或换源码pin。CPU仅可作为另行批准的有限兼容性研究，不冒充GPU方案；若以后考虑驱动路径，先另行核实RX7900XT/OS/kernel目标、旧ROCm6.2保留及回退，再获明确批准。完整依赖锁/大小/hash和预算仍缺。官方runtime、checkpoint、真实双臂forward/backward、完整cohort和预算锁定仍是独立门槛，Test HOLD。
+**新增metadata工具本地验证：** `2f59986`后仅运行新增18项离线测试，零跳过PASS/0.425s，三文件编译和diff PASS；独立复核28直接约束、72直接包间约束、26+2轮子标签/Python及444,858,870字节公布subtotal，11上游证据hash/22既有源码hash一致。见[本地报告](reports/p3_3_metadata_local_validation.md)、[证据](reports/evidence/p33_20261105/metadata_local_01/verification.json)。仅新测试的CLI夹具读取metadata；未额外运行旧环境inventory，不代表候选runtime已建立，未重跑75/701或真实input-only。
+
+**本地下一步：** 新metadata工具本地验证完成，不反复重跑。当前保持系统/驱动不动的范围内，没有核实到受官方支持且满足固定NASA依赖的GPU方案。停止在路径决定处，不重复inventory、75/701或native256预检，不安装、不拉容器、不改驱动、不下载权重、不降依赖或换源码pin。CPU仅可作为另行批准的有限兼容性研究，不冒充GPU方案；若以后考虑驱动路径，先另行核实RX7900XT/OS/kernel目标、旧ROCm6.2保留及回退，再获明确批准。完整依赖锁/大小/hash和预算仍缺。官方runtime、checkpoint、真实双臂forward/backward、完整cohort和预算锁定仍是独立门槛，Test HOLD。
 
 **首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取，并合并并发`ce8b1ef`的固定根Train身份核验；此前pre-runner本地新增28项及完整654项测试零跳过PASS，compileall PASS。身份/标签认证通过后，真实裁片仍在空间策略处被拒绝；[最新合并验证](reports/evidence/p33_20261105/local_02/verification.json)。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
 
