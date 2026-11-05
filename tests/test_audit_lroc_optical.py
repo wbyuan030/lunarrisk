@@ -7,6 +7,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 import pandas as pd
@@ -86,7 +87,8 @@ class TestClassification(unittest.TestCase):
 
 
 class TestMainWithCache(unittest.TestCase):
-    def test_summary_counts_from_cached_pages(self):
+    @patch.object(optical.urllib.request, "urlopen", side_effect=AssertionError("offline cache test attempted network"))
+    def test_summary_counts_from_cached_pages(self, urlopen):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             cache = base / "pages"
@@ -94,6 +96,7 @@ class TestMainWithCache(unittest.TestCase):
             (cache / "NAC_DTM_ALPHA.html").write_text(DTM_ONLY_HTML, encoding="utf-8")
             (cache / "NAC_DTM_BETA.html").write_text(FULL_HTML, encoding="utf-8")
             (cache / "NAC_DTM_GAMMA.html").write_text("<html>no links here</html>", encoding="utf-8")
+            (cache / "NAC_DTM_DELTA.html").write_text("<html>no links here</html>", encoding="utf-8")
             (cache / "scene_NAC_DTM_ALPHA.html").write_text(SCENE_DTM_ONLY, encoding="utf-8")
             (cache / "scene_NAC_DTM_BETA.html").write_text(SCENE_WITH_SIBLINGS, encoding="utf-8")
             (cache / "scene_NAC_DTM_GAMMA.html").write_text(SCENE_DTM_ONLY, encoding="utf-8")
@@ -127,6 +130,7 @@ class TestMainWithCache(unittest.TestCase):
             self.assertEqual(all_report["audited_scenes"], 4)  # includes the footprint-failing scene
             self.assertEqual(report["with_optical_product"], 1)
             self.assertEqual(report["with_dtm_product"], 2)
+            urlopen.assert_not_called()
 
 
 if __name__ == "__main__":

@@ -49,6 +49,10 @@ First, an input-only preflight may be run with the actual audited config and exi
 
 Only after private runtime, provenance and asset checks pass should a new **actual paired forward/backward** receipt be produced under the same policy/device/adaptation. The runner now requires the policy receipt and locks it in `P33_NASA_TERRAIN_PAIRED_V2`; missing/old/different policy receipts fail. The config, policy source, other implementation sources, assets and runtime remain locked. Run/replay cannot switch policy, and complete fixed-cohort scanning plus an actual budget lock are still mandatory before scores. No existing real budget or manifest has been frozen.
 
+## Local input validation completed
+
+The local follow-up at `f74af37` passes75 focused and701 full tests with zero skips, plus authentic Train2705 input-only CLI and independent exact elementwise normalization/hash checks. The original config and raw batch are unchanged; new provenance and receipts live under ignored `outputs/p33/native256_input_01/`. [Local report](../reports/p3_3_native256_local_validation.md) and [verification](../reports/evidence/p33_20261105/native256_local_01/verification.json). Historical strict failures remain preserved. This is one-crop input preparation; official model execution remains NOT_RUN and no actual training manifest is locked. Do not repeat this completed input check without a new implementation or unresolved concern.
+
 ## Still blocked or unverified
 
 - No compatible private NASA runtime is available in the existing local audit. Do not replace the shared Python/ROCm/torch environment, install packages or treat passing toy tests as compatibility.

@@ -1,0 +1,92 @@
+{
+  "status": "REAL_NATIVE256_INPUT_PASS_OFFICIAL_EXECUTION_STILL_BLOCKED",
+  "base_commit": "f74af37973658788dd307c3928ad4a987ebf6122",
+  "focused_tests": {
+    "tests_pass": 75,
+    "tests_skipped": 0,
+    "seconds": 3.502,
+    "sha256": "e9b2b80e886f47c4e0aad78b4f0c8260daf2a59fcf9b78f712e62132263ab188"
+  },
+  "full_tests": {
+    "tests_pass": 701,
+    "tests_skipped": 0,
+    "seconds": 14.508,
+    "sha256": "51342a1eb0e27d5e9eabdbb6cc979a53e3a6397e5251e16726c624ba3a2f3aaf"
+  },
+  "compileall": "PASS",
+  "diff_check": "PASS",
+  "runtime": {
+    "python": "3.10.12",
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "numpy": "2.2.6",
+    "h5py": "3.16.0"
+  },
+  "source_sha256": {
+    "protocols/p33_native256_spatial_policy.json": "08b4c9b71ffce4a7b8ff9b99977ae897579a7ead83f67d31988d8e159cd7af5a",
+    "scripts/audit_lroc_optical.py": "fefe61520a9cebf72988b387846c0f32b760e17e9caf0fe2b2fe91c6d9864fc8",
+    "scripts/p33_nasa_preflight.py": "7df03c49b9aa8995eba49679c58efe2d9155af6b38ca90799256ed4c0fc1cf1f",
+    "scripts/p33_train_pair.py": "31edd3b3395b62fa0927144fa73aca06a86f4340ea6c43cdda86ed28ed418ddc",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/nasa_transfer/__init__.py": "132473f6a56c9c20b1e4de2119e91f77f810164d394f8e848f403fe7a1953c5f",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd",
+    "src/lunarrisk/nasa_transfer/dataset.py": "4d027a8022b00ccce1dea102440daea875d8447cda5b9bf500f7b9e3d66da4f7",
+    "src/lunarrisk/nasa_transfer/experiment.py": "dcb193eaf771aeddc40d8f2fd32200820f4c8d2d0026efa9cad6667cfd043b51",
+    "src/lunarrisk/nasa_transfer/torch_adapter.py": "69109a8e955dad3762ee7734955dd71fff002b477b376816bb001582ff6b0533",
+    "src/lunarrisk/nasa_transfer/training.py": "a1f451a77e2124d2f4eed238d3a6fd48a827e10eee95787646dca8334c9470f2",
+    "tests/test_audit_lroc_optical.py": "24427f0918795a1559538ae57912e26f23f4a347c5139936fad8d6f12470da6d",
+    "tests/test_p33_nasa_contracts.py": "a6a1663b615ebd1fde36cdd284432577d58eeef516223622c19fbbae58e2e706",
+    "tests/test_p33_nasa_dataset.py": "d006200f36d0f9628e05af142b241fff4cc46a8b7be3aa43d6000c25bfd4244f",
+    "tests/test_p33_nasa_experiment.py": "ad9970756d2e5d939d89e3f3d996fc3421dcd452e37c171ef3bfad3f70a30203",
+    "tests/test_p33_nasa_preflight.py": "1f13cd3d914304129c8d549c310cb046b25abbead0fe56eccb0d765ac1d3d865",
+    "tests/test_p33_nasa_runner.py": "615bfb96d47de63acd0d6d48df134cd6e6f715bf85f8697207a9978967e44f56",
+    "tests/test_p33_nasa_spatial.py": "0f3e963077a1ac4d68d447c65830f26599225db797183f244a27751718a689af",
+    "tests/test_p33_nasa_torch.py": "877514dbf0860cb20e76fd234c034ed76a81e39a1cb623844093566caf152cec",
+    "tests/test_p33_nasa_training.py": "84a8120118935a3330b9aa7e6a67afc4678dcd449e4950a278d5a1e8c5dd15df"
+  },
+  "cloud_skipped_tests_now_executed": 16,
+  "fixture_scope": [
+    "Synthetic CPU torch backbones and temporary HDF5, not official NASA execution.",
+    "Mock LOCKED stdout is not an actual NASA budget lock.",
+    "The cached-only legacy LROC fixture now includes the missing DELTA product page and asserts urlopen was never called."
+  ],
+  "real_input": {
+    "sample_ids": [
+      "2705"
+    ],
+    "targets": [
+      43
+    ],
+    "membership": "AUTHENTICATED_FIXED_TRAIN",
+    "raw_crop_batch_exact": true,
+    "config_bytes_sha256_verified": true,
+    "spatial_policy": "moonstone_native256_v1",
+    "input_contract": "PASS",
+    "manual_elementwise_normalization_exact": true,
+    "prepared_sha256": "7942299d25842593b32765c28d6866e6e6efa8dfcc1abbc966195f890d77029b",
+    "receipt": "input_preflight.json",
+    "independent_verification": "input_independent_input_verification.json",
+    "scope": "One existing crop; no whole-cohort eligibility assertion or independent original-raster execution audit."
+  },
+  "historical_strict_failures_preserved": true,
+  "official_model_execution": "NOT_RUN",
+  "official_gpu_validation": "NOT_RUN",
+  "real_full_cohort_scan": "NOT_RUN",
+  "actual_training_manifest": "NOT_FROZEN",
+  "actual_training": "NOT_RUN",
+  "actual_fresh_process_nasa_replay": "NOT_RUN",
+  "remaining_gates": [
+    "Compatible private NASA runtime without shared environment replacement.",
+    "Original-raster/finite-sentinel provenance and complete fixed-cohort eligibility.",
+    "Fixed checkpoint size/hash and strict complete inference key/shape audit.",
+    "Actual paired forward/backward on intended device and adaptation under the same spatial policy.",
+    "Full fixed Train/Val scan and actual paired budget lock before task scores."
+  ],
+  "new_downloads": 0,
+  "packages_installed": false,
+  "environment_replaced": false,
+  "test_scored": false,
+  "old_experiments_repeated": false
+}

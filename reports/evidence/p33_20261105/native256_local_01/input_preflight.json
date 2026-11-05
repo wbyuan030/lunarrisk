@@ -1,0 +1,50 @@
+{
+  "kind": "ENGINEERING_PREFLIGHT_NOT_TRANSFER_SCORE",
+  "input_contract": "PASS",
+  "authoritative_train_membership": {
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "train_rows": 5135,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17"
+  },
+  "spatial_policy": {
+    "policy_id": "moonstone_native256_v1",
+    "spatial_transform": "none",
+    "interpolation": "none",
+    "test_access": "FORBIDDEN",
+    "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "raw_shape": [
+      256,
+      256
+    ],
+    "model_shape": [
+      256,
+      256
+    ],
+    "patch_shape": [
+      16,
+      16
+    ],
+    "upstream_pre_resize": [
+      512,
+      512
+    ],
+    "upstream_dataset_pipeline": "NOT_APPLIED_DOWNSTREAM_NATIVE_GRID_PROTOCOL",
+    "normalization": "UNCHANGED_PINNED_CONFIG",
+    "nominal_north_south_mpp": 236.90117518866782,
+    "east_west_spacing": "nominal_north_south_mpp * cos(latitude)",
+    "nasa_native_scale_equivalence": false,
+    "positional_embedding_compatibility": "REQUIRES_STRICT_CHECKPOINT_AND_REAL_PREFLIGHT"
+  },
+  "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "nasa_model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "batch_sha256": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+  "provenance_sha256": "0a7527930da6261f433962a95f37992f0dfd1241026b664afe8b061a42c6e218",
+  "sample_ids": [
+    "2705"
+  ],
+  "prepared_sha256": "7942299d25842593b32765c28d6866e6e6efa8dfcc1abbc966195f890d77029b",
+  "official_model_execution": "NOT_RUN",
+  "science_claim": "NOT_ESTABLISHED"
+}

@@ -1,0 +1,27 @@
+{
+  "input_space": "raw_physical",
+  "units": {
+    "elevation": "m",
+    "slope": "degree"
+  },
+  "spatial_transform": "none",
+  "domain_shift": "MOONSTONE_TERRAIN_NOT_NASA_NATIVE",
+  "meters_per_pixel": 236.90117518866782,
+  "elevation_source": "Moonstone pinned code cbd4720653eb05afd975d2a36280858c5c56a275: elevation_blended SLDEM2015/LOLA; sample2705 spans58-60N in the58-62 blend zone. LOLA fallback depends on source availability/finite pixels; actual mix is not independently recomputed.",
+  "slope_source": "Same pinned step03_derive.py: np.degrees(arctan(norm(DEM gradients))); latitude-corrected EW step with cos clamp0.01; step04/12/14 preserve raw terrain.",
+  "units_evidence": "Pinned config.py channel annotations; step02_align.py lines282-338 applies LOLA0.5 and SLDEM1000 to metres; step03_derive.py lines88-100 converts slope to degrees. Source hashes recorded separately.",
+  "nodata_evidence": "Pinned step02 scaling maps declared src.nodata toNaN; reprojection dst_nodata isNaN, blend uses finite checks; slope propagates nonfinite. Masks here are raw isfinite, zeros retained; original raster headers/build execution not independently audited.",
+  "split": "train",
+  "batch_sha256": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+  "provenance_scope": "PINNED_CODE_LINEAGE; actual upstream raw-raster header verification remains outside this local audit",
+  "grid_note": "meters_per_pixel is nominal NS/equatorial equirectangular spacing; EW ground spacing varies with latitude, not isotropic237m",
+  "raw_crop_sha256": "da95889c23cd001a43b3ab9dc388fe4271f86d2a7be5ab626bcf3978507c9008",
+  "spatial_policy": "moonstone_native256_v1",
+  "ground_sampling": {
+    "grid": "equirectangular",
+    "pixels_per_degree": 128,
+    "lunar_radius_m": 1737400,
+    "east_west_spacing": "latitude_dependent",
+    "nasa_native_60m_equivalence": false
+  }
+}

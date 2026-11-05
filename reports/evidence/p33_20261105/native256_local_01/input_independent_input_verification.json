@@ -1,0 +1,88 @@
+{
+  "status": "REAL_TRAIN_INPUT_ONLY_PASS_OFFICIAL_MODEL_NOT_RUN",
+  "command": [
+    "python3",
+    "-I",
+    "$JOB_TMP/p31_python.py",
+    "scripts/p33_nasa_preflight.py",
+    "--batch",
+    "outputs/p33/input_01/train_batch.npz",
+    "--provenance",
+    "outputs/p33/native256_input_01/provenance.json",
+    "--config",
+    "outputs/p30_asset_probe/nasa_lfm/backbone/config.yaml",
+    "--config-sha256",
+    "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "--spatial-policy",
+    "moonstone_native256_v1",
+    "--output",
+    "outputs/p33/native256_input_01/preflight.json"
+  ],
+  "exit_code": 0,
+  "authenticated_assets_sha256": {
+    "outputs/p31/loader_pair_01/raw_2705.npy": "da95889c23cd001a43b3ab9dc388fe4271f86d2a7be5ab626bcf3978507c9008",
+    "outputs/p33/input_01/train_batch.npz": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+    "outputs/p33/input_01/provenance.json": "89ad20d5ef736b13f03a19facff5bd0219ee54dbf0f12820e441e8b9ed104f03",
+    "outputs/p30_asset_probe/nasa_lfm/backbone/config.yaml": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619"
+  },
+  "sample_ids": [
+    "2705"
+  ],
+  "targets": [
+    43
+  ],
+  "authoritative_train_membership": {
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "train_rows": 5135,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17"
+  },
+  "raw_crop_batch_exact": true,
+  "raw_validity_masks_exact": true,
+  "original_assets_unchanged": true,
+  "prepared": {
+    "dtm": {
+      "shape": [
+        1,
+        1,
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "bytes_sha256": "1d16c93c62fde17172b730fa5d63c48fa78ef5459c10bcf12c3528630196a257",
+      "minimum": 0.0778803676366806,
+      "maximum": 1.5377658605575562,
+      "normalization_mean": -637.2084107556901,
+      "normalization_std": 1920.7233898703932,
+      "all_finite": true,
+      "manual_elementwise_normalization_exact": true
+    },
+    "slope": {
+      "shape": [
+        1,
+        1,
+        256,
+        256
+      ],
+      "dtype": "float32",
+      "bytes_sha256": "a1796aae8cf6417f67fef514b682b89b8169e4803fcfad0e55a221bd5f255315",
+      "minimum": -1.2618783712387085,
+      "maximum": 3.730240821838379,
+      "normalization_mean": 7.980291966975289,
+      "normalization_std": 6.310896777386625,
+      "all_finite": true,
+      "manual_elementwise_normalization_exact": true
+    }
+  },
+  "prepared_receipt_hash_exact": true,
+  "new_provenance_sha256": "0a7527930da6261f433962a95f37992f0dfd1241026b664afe8b061a42c6e218",
+  "preflight_receipt_sha256": "d3423ac388047e45517df2ca277c70439f5132efb1bab5f5b1dc5358eed3b081",
+  "official_model_execution": "NOT_RUN",
+  "full_cohort_scan": "NOT_RUN",
+  "actual_training_manifest": "NOT_FROZEN",
+  "training": "NOT_RUN",
+  "test_access": "HOLD",
+  "downloads": 0,
+  "environment_changed": false,
+  "source_lineage_limit": "PINNED_CODE_LINEAGE; actual upstream raw-raster header verification remains outside this local audit"
+}

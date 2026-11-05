@@ -1,0 +1,37 @@
+{
+  "files": {
+    "reports/evidence/p33_20261105/native256_local_01/commands.json": {
+      "bytes": 1054,
+      "sha256": "a617c90b5e4eb25ae430330c7070f10b2101a16687c983e180ceb17f3ad04f3b"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/focused_tests.log": {
+      "bytes": 8022,
+      "sha256": "e9b2b80e886f47c4e0aad78b4f0c8260daf2a59fcf9b78f712e62132263ab188"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/full_tests.log": {
+      "bytes": 79961,
+      "sha256": "51342a1eb0e27d5e9eabdbb6cc979a53e3a6397e5251e16726c624ba3a2f3aaf"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/input_independent_input_verification.json": {
+      "bytes": 3170,
+      "sha256": "b5f684f9c9b84db2a52b8de427a78e932b9200f7db13bddeda7a906f7f190393"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/input_preflight.json": {
+      "bytes": 1880,
+      "sha256": "d3423ac388047e45517df2ca277c70439f5132efb1bab5f5b1dc5358eed3b081"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/input_preflight.log": {
+      "bytes": 66,
+      "sha256": "f888c658ae971c295c329c3e950863d21b9ea9e18e0eef72df56298c6cd63896"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/input_provenance.json": {
+      "bytes": 1889,
+      "sha256": "0a7527930da6261f433962a95f37992f0dfd1241026b664afe8b061a42c6e218"
+    },
+    "reports/evidence/p33_20261105/native256_local_01/verification.json": {
+      "bytes": 5052,
+      "sha256": "73243385f481b288cd5e2c24e5428daa4e23b15601e07080198182a996f722e8"
+    }
+  },
+  "self_excluded": true
+}

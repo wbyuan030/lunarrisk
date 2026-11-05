@@ -2,7 +2,7 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "EXPLICIT_NATIVE256_POLICY_IMPLEMENTED_OFFICIAL_EXECUTION_BLOCKED",
+  "status": "NATIVE256_REAL_INPUT_PASS_OFFICIAL_EXECUTION_BLOCKED",
   "local_followup": {
     "base_commit": "8eeab47",
     "integrated_upstream_fix": "ce8b1ef",
@@ -34,7 +34,7 @@
   },
   "domain_shift": "MOONSTONE_TERRAIN_NOT_NASA_NATIVE",
   "missingness": "Explicit masks; finite zeros are observed; any invalid pixel blocks first-tier input",
-  "spatial_policy": "Strict default preserved; explicit moonstone_native256_v1 declared before scores, unchanged256/16 geometry with no interpolation/crop and non-NASA physical scale; actual input/model execution not yet verified",
+  "spatial_policy": "Strict default preserved; explicit moonstone_native256_v1 declared before scores, unchanged256/16 geometry with no interpolation/crop and non-NASA physical scale; authenticated Train2705 input-only PASS, official model NOT_RUN",
   "normalization": "Only supplied audited config; no guessed NASA statistics; raw physical input only",
   "model_loading": "100 percent selected inference keys and shapes including buffers; strict load after decoder pruning",
   "pretrained_arm": "Official base encoder with verified checkpoint, ordinary Geology head",
@@ -57,7 +57,7 @@
     "No raw Moonstone pixels"
   ],
   "remaining_gates": [
-    "Validate new policy tests locally and run new input-only preflight on authenticated real Train crop with original config and explicit native-grid provenance; preserve original strict failure and raster-lineage limits",
+    "Retain single-crop input PASS scope; original-raster execution and whole-cohort finite-sentinel provenance remain unverified",
     "Resolve compatible isolated Python/ROCm dependencies without replacing shared runtime",
     "Verify local fixed-revision weights by size/hash",
     "Run wrapper tests and one real paired forward/backward with memory record",
@@ -83,6 +83,25 @@
     "actual_training_manifest": "NOT_FROZEN",
     "real_full_cohort_scan": "NOT_RUN",
     "environment_changed": false
+  },
+  "native256_local_validation": {
+    "base_commit": "f74af37973658788dd307c3928ad4a987ebf6122",
+    "report": "reports/p3_3_native256_local_validation.md",
+    "evidence": "reports/evidence/p33_20261105/native256_local_01/verification.json",
+    "focused_tests_pass": 75,
+    "full_tests_pass": 701,
+    "tests_skipped": 0,
+    "compileall": "PASS",
+    "legacy_network_test": "Missing DELTA product page fixture supplied; urlopen mocked and assert_not_called; production audit unchanged",
+    "actual_native_input_preflight": "PASS_TRAIN2705_ONLY",
+    "manual_elementwise_normalization": "EXACT",
+    "prepared_sha256": "7942299d25842593b32765c28d6866e6e6efa8dfcc1abbc966195f890d77029b",
+    "historical_strict_failures_preserved": true,
+    "official_model_execution": "NOT_RUN",
+    "real_full_cohort_scan": "NOT_RUN",
+    "actual_training_manifest": "NOT_FROZEN",
+    "environment_changed": false,
+    "new_downloads": 0
   },
   "automatic_resume": "NOT_IMPLEMENTED; interrupted outputs preserved",
   "spatial_policy_update": {

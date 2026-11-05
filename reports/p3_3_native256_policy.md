@@ -20,6 +20,12 @@ At pinned256/16 geometry, the official image embedding has16×16 positions and d
 
 This establishes a declared, guarded engineering input path only. It does not establish checkpoint/runtime compatibility, original raster lineage, actual prepared-input success or transfer benefit. No packages or shared runtime were changed, no model/data downloads were initiated by the new P33 path, no user computer was accessed, and no Test pixels/scores were used. P3.2's18 runs, old budgets and all prior evidence remain untouched.
 
-## Next local action
+## Local follow-up completed
+
+At `f74af37`, local validation completed **75 P33 and 701 full tests PASS, zero skips**, plus compileall/diff PASS. The legacy cached-only test's missing DELTA product-page fixture was repaired and `urlopen.assert_not_called()` added before the complete run. The original cloud partial result above is preserved.
+
+An authentic existing Train2705/target43 raw batch now passes input-only CLI with the unchanged fixed config and new explicit native256 provenance. Independent elementwise normalization and prepared fingerprint checks pass exactly. **Official model execution remains NOT_RUN**; runtime, checkpoint, actual paired gradients, whole-cohort provenance/scan and budget gates remain. [Full local report](p3_3_native256_local_validation.md), [receipts and source hashes](evidence/p33_20261105/native256_local_01/verification.json).
+
+## Original local handoff (completed for tests and input-only)
 
 Pull main safely and inspect concurrent work. Validate the new focused tests in the existing private runtime; all tests still use synthetic backbones, not official NASA. Then, if the existing authenticated raw Train batch and source provenance are suitable, create a new provenance file explicitly declaring this spatial policy and run **input-only** preflight with the original audited config and policy flag. Preserve the old strict-policy failure. This may establish actual input preparation, not official model success. Runtime, checkpoint, actual paired preflight, complete fixed-cohort scan and budget lock remain required before training. Do not install/replace environments, acquire weights while runtime remains unresolved, resume large data transfers or access Test.

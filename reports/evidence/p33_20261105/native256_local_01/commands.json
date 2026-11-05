@@ -1,0 +1,30 @@
+{
+  "runtime": "Existing private runtime; no installs or environment replacement",
+  "environment": {
+    "LD_LIBRARY_PATH": "/opt/rocm/lib:/opt/rocm/lib64",
+    "PYTHONPATH": "$JOB_TMP/p31_runtime",
+    "TMPDIR": "$JOB_TMP"
+  },
+  "focused": "python3 -I \"$JOB_TMP/p31_python.py\" -m unittest discover -s tests -p 'test_p33_nasa*.py' -v",
+  "full": "python3 -I \"$JOB_TMP/p31_python.py\" -m unittest discover -s tests -v",
+  "compileall": "python3 -m compileall -q scripts src tests",
+  "diff": "git diff --check",
+  "input": [
+    "python3",
+    "-I",
+    "$JOB_TMP/p31_python.py",
+    "scripts/p33_nasa_preflight.py",
+    "--batch",
+    "outputs/p33/input_01/train_batch.npz",
+    "--provenance",
+    "outputs/p33/native256_input_01/provenance.json",
+    "--config",
+    "outputs/p30_asset_probe/nasa_lfm/backbone/config.yaml",
+    "--config-sha256",
+    "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "--spatial-policy",
+    "moonstone_native256_v1",
+    "--output",
+    "outputs/p33/native256_input_01/preflight.json"
+  ]
+}
