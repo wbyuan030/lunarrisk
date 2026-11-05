@@ -1,6 +1,18 @@
-# 当前任务：P3.2 — 首轮 LunarJEV-lite 已完成，转向完整语义来源核实（更新2026-11-05）
+# 当前任务：P3.3 — NASA地形迁移本地审计完成，官方执行仍阻塞（更新2026-11-05）
 
-**首先阅读 [`reports/p3_2_progress.md`](reports/p3_2_progress.md)、[`reports/p3_2_lunarjev_mvp.md`](reports/p3_2_lunarjev_mvp.md) 和 [`reports/p3_2_decision.md`](reports/p3_2_decision.md)。** 原设计 [`docs/P3_2_LUNARJEV_MVP.md`](docs/P3_2_LUNARJEV_MVP.md)、[`protocols/p32_lunarjev_design.json`](protocols/p32_lunarjev_design.json) 保留为实施前交接；其未实施措辞不代表最新状态。实际运行清单是 [`protocols/p32_head_run_manifest_v2.json`](protocols/p32_head_run_manifest_v2.json)。P3.1入口可在 [edffc0a](https://github.com/wbyuan030/lunarrisk/blob/edffc0a7c274efb4c1cee03e6c0f3203d87ebba7/AGENTS.md) 追溯。
+**首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取；本地新增26项及完整652项测试零跳过PASS，compileall PASS。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
+
+## P3.3下一项与真实边界
+
+- 现有主机/ROCm容器均为Python3.10.12、torch2.5.1；官方声明Python>=3.11,<3.13、torch>=2.12，且缺少OmegaConf/timm/einops/TerraTorch/Lightning等依赖。未找到现成兼容runtime，未安装包、创建新环境或替换共享ROCm。不能称官方模型已兼容。
+- 先明确配对空间策略和兼容私有运行时方案。官方数据transform先resize512、再归一化及crop/resize；backbone接收张量。当前守卫拒绝不代表模型不能接受256张量，但不得修改YAML或静默跳过策略检查。
+- 已核实源码声明的高程米/坡度度、58–62°SLDEM/LOLA混合、NaN处理与HDF5原通道传递。原始栅格header、完整执行谱系、逐样本fallback未独立复现。236.901m是名义南北/赤道间距，东西地面间距随纬度变化；presence不是像素mask，finite zero保留。
+- 两个先决门通过后再核实必要固定checkpoint、真实配对forward/backward，然后在任何task分数前另立完整有效Train/Val cohort、训练runner和预算。checkpoint未下载/完整核验，官方模型构造/梯度/训练/迁移收益均NOT_RUN/NOT_ESTABLISHED；不把合成wrapper测试当模型执行。
+- 保留P3.2负结果与18run，不重跑。完整地质语义来源核实仍是独立后续项，不与NASA预训练迁移混写。只用Train/Val，Test HOLD；必要数据/权重直连授权及下文其他资源边界不变。
+
+## P3.2已完成阶段与独立语义后续项
+
+**阅读 [`reports/p3_2_progress.md`](reports/p3_2_progress.md)、[`reports/p3_2_lunarjev_mvp.md`](reports/p3_2_lunarjev_mvp.md) 和 [`reports/p3_2_decision.md`](reports/p3_2_decision.md)。** 原设计 [`docs/P3_2_LUNARJEV_MVP.md`](docs/P3_2_LUNARJEV_MVP.md)、[`protocols/p32_lunarjev_design.json`](protocols/p32_lunarjev_design.json) 保留为实施前交接；其未实施措辞不代表最新状态。实际运行清单是 [`protocols/p32_head_run_manifest_v2.json`](protocols/p32_head_run_manifest_v2.json)。P3.1入口可在 [edffc0a](https://github.com/wbyuan030/lunarrisk/blob/edffc0a7c274efb4c1cee03e6c0f3203d87ebba7/AGENTS.md) 追溯。
 
 ## 本轮已完成，不能反复重跑
 

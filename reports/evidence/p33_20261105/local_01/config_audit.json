@@ -1,0 +1,77 @@
+{
+  "config_status": "LOCAL_PINNED_CONFIG_VERIFIED",
+  "model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/config.yaml",
+  "bytes": 12102,
+  "sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "git_blob": "17b6b828dd625584720aa5ea5172d35dffaec3b6",
+  "prior_receipt": "reports/evidence/p30_20261103/asset_probe.json",
+  "listing": "reports/evidence/p30_20261103/nasa_lfm_listing.json",
+  "domains": {
+    "dtm": {
+      "input_size": 256,
+      "pre_resize": 512,
+      "num_channels": 1,
+      "patch_size": 16,
+      "scaler": "std",
+      "stats": {
+        "min": [
+          -9128.724609375
+        ],
+        "max": [
+          10783.029296875
+        ],
+        "mean": [
+          -637.2084107556901
+        ],
+        "std": [
+          1920.7233898703932
+        ],
+        "channels": [
+          "band_data"
+        ],
+        "image_size": 853,
+        "gsd_m": 60.0
+      },
+      "current_contract": "BLOCKED",
+      "error": "pre_resize differs from input_size; audit spatial preprocessing first"
+    },
+    "slope": {
+      "input_size": 256,
+      "pre_resize": 512,
+      "num_channels": 1,
+      "patch_size": 16,
+      "scaler": "std",
+      "stats": {
+        "min": [
+          0.0
+        ],
+        "max": [
+          87.77169036865234
+        ],
+        "mean": [
+          7.980291966975289
+        ],
+        "std": [
+          6.310896777386625
+        ],
+        "channels": [
+          "band_data"
+        ],
+        "image_size": 853,
+        "gsd_m": 60.0
+      },
+      "current_contract": "BLOCKED",
+      "error": "pre_resize differs from input_size; audit spatial preprocessing first"
+    }
+  },
+  "official_constructor_guard": {
+    "status": "EXPECTED_REJECTION",
+    "error": "NASA requires Python >=3.11,<3.13; preserve the working ROCm runtime",
+    "boundary": "Python guard only; no upstream import, source check, model construction or checkpoint loading occurred."
+  },
+  "spatial_policy": "NOT_FROZEN: current first-tier contract rejects pre_resize512 versus input_size256; config not modified.",
+  "official_forward_backward": "NOT_RUN",
+  "task_scores": "NOT_RUN",
+  "test_scored": false
+}

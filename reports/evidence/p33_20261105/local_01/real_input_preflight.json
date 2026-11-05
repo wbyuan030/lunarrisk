@@ -1,0 +1,26 @@
+{
+  "status": "EXPECTED_FAIL_CLOSED_AT_AUTHENTIC_CONFIG_SPATIAL_GUARD",
+  "exit_code": 1,
+  "sample_ids": [
+    "2705"
+  ],
+  "split": "train",
+  "batch_sha256": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+  "provenance_sha256": "89ad20d5ef736b13f03a19facff5bd0219ee54dbf0f12820e441e8b9ed104f03",
+  "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "failure": "pre_resize differs from input_size; audit spatial preprocessing first",
+  "raw_shape": [
+    1,
+    1,
+    256,
+    256
+  ],
+  "raw_terrain_complete_finite": true,
+  "input_contract_success_receipt_created": false,
+  "official_model_execution": "NOT_RUN",
+  "upstream_python_code_executed": false,
+  "checkpoint_downloaded": false,
+  "test_scored": false,
+  "log_sha256": "ca9df3158ecc9f1bc740747d46d17af348d7235f306f90721d143fa757df2663",
+  "command": "LD_LIBRARY_PATH=/opt/rocm/lib:/opt/rocm/lib64 python3 -I \"$JOB_TMP/p31_python.py\" scripts/p33_nasa_preflight.py --batch outputs/p33/input_01/train_batch.npz --provenance outputs/p33/input_01/provenance.json --config outputs/p30_asset_probe/nasa_lfm/backbone/config.yaml --config-sha256 fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619 --output outputs/p33/input_01/input_preflight.json"
+}

@@ -1,0 +1,40 @@
+{
+  "proxy_policy": "ProxyHandler({}); no environment proxies",
+  "files": [
+    {
+      "file": "config.yaml",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/config.yaml",
+      "status": "BLOCKED",
+      "error": "URLError: <urlopen error timed out>",
+      "seconds": 40.21468023955822
+    },
+    {
+      "file": "model_README.md",
+      "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/README.md",
+      "status": "BLOCKED",
+      "error": "URLError: <urlopen error timed out>",
+      "seconds": 40.20129094924778
+    },
+    {
+      "file": "pyproject.toml",
+      "url": "https://raw.githubusercontent.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/d54c67aad513cb9daca444afa425cfb278e4fbf8/pyproject.toml",
+      "status": "BLOCKED",
+      "error": "TimeoutError: The read operation timed out",
+      "seconds": 100.68907314538956
+    },
+    {
+      "file": "lunar_backbone.py",
+      "url": "https://raw.githubusercontent.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_backbone.py",
+      "http_status": 200,
+      "status": "PASS",
+      "bytes": 33902,
+      "sha256": "8953e97fe2309bf57bb1f10c819b5bee2c34ce793f54016bac6c8f7150261135",
+      "git_blob": "5e90a62ec2326f6ed5e05d6f9d4609a645a5d3de",
+      "seconds": 81.22877214476466
+    }
+  ],
+  "overall_status": "STOPPED_AFTER_DIRECT_HTTPS_TIMEOUTS",
+  "reason": "Pinned config/model card found in existing cache; direct SSH source acquisition succeeded; stopped pending fourth HTTPS request.",
+  "successful_files": 1,
+  "checkpoint_requests": 0
+}

@@ -1,0 +1,46 @@
+{
+  "python": "3.10.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "modules": {
+    "numpy": {
+      "status": "AVAILABLE",
+      "version": "2.2.6"
+    },
+    "h5py": {
+      "status": "AVAILABLE",
+      "version": "3.16.0"
+    },
+    "yaml": {
+      "status": "AVAILABLE",
+      "version": "5.4.1"
+    },
+    "torch": {
+      "status": "AVAILABLE",
+      "version": "2.5.1+rocm6.2",
+      "hip": "6.2.41133-dd7f95766",
+      "cuda_available": true
+    },
+    "omegaconf": {
+      "status": "UNAVAILABLE",
+      "error": "ModuleNotFoundError: No module named 'omegaconf'"
+    },
+    "timm": {
+      "status": "UNAVAILABLE",
+      "error": "ModuleNotFoundError: No module named 'timm'"
+    },
+    "einops": {
+      "status": "UNAVAILABLE",
+      "error": "ModuleNotFoundError: No module named 'einops'"
+    },
+    "terratorch": {
+      "status": "UNAVAILABLE",
+      "error": "ModuleNotFoundError: No module named 'terratorch'"
+    },
+    "lightning": {
+      "status": "UNAVAILABLE",
+      "error": "ModuleNotFoundError: No module named 'lightning'"
+    }
+  },
+  "nasa_python_requirement": ">=3.11,<3.13",
+  "official_runtime_status": "BLOCKED_PYTHON_VERSION"
+}

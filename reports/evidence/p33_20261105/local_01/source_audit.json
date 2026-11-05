@@ -1,0 +1,136 @@
+{
+  "status": "PINNED_SOURCE_TEXT_AUDIT_COMPLETE",
+  "route": "direct SSH, BatchMode, all proxy environment removed",
+  "file_count": 10,
+  "extracted_text_bytes": 143980,
+  "extracted_text_bytes_note": "File sizes, not measured network transfer; shallow filtered Git object transfers were not byte-metered.",
+  "files": [
+    {
+      "file": "pyproject.toml",
+      "status": "PASS",
+      "bytes": 1175,
+      "sha256": "41a884607aabf6dcf71de7c2036c5e95e58c796ae474adb28de12c4c4010d7f9",
+      "git_blob": "bc0ffc590e6174b5e11fce2d817a69130232107d",
+      "repository": "nasa",
+      "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+      "source_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/pyproject.toml"
+    },
+    {
+      "file": "terratorch_integration/lunar_backbone.py",
+      "status": "PASS",
+      "bytes": 33902,
+      "sha256": "8953e97fe2309bf57bb1f10c819b5bee2c34ce793f54016bac6c8f7150261135",
+      "git_blob": "5e90a62ec2326f6ed5e05d6f9d4609a645a5d3de",
+      "repository": "nasa",
+      "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+      "source_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_backbone.py"
+    },
+    {
+      "file": "ni_lfm/data/modality_transforms.py",
+      "status": "PASS",
+      "bytes": 20364,
+      "sha256": "814685e07d6c26f6eec0796f073d0df4f3bbd2e13605db1f79546563b31bea3a",
+      "git_blob": "84068e0244baa3c7902277cc6701651bd743f64e",
+      "repository": "nasa",
+      "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+      "source_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/data/modality_transforms.py"
+    },
+    {
+      "file": "config.py",
+      "status": "PASS",
+      "bytes": 15823,
+      "sha256": "5e9c79e552c595676cc0992e219ad8fbad5c8b894b8c55d8fd8c47adfbe9da5d",
+      "git_blob": "d828de6f56fc8adae9524316b50b0e008d189d31",
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/config.py"
+    },
+    {
+      "file": "data_preparation/step02_align.py",
+      "status": "PASS",
+      "bytes": 22583,
+      "sha256": "5c19e986ecf0cd593a17eafd7cb58d658f5a1e21338e0dd100877102252379fe",
+      "git_blob": "dfeed464b351928bfaa1ac5e929fd1e28ed28c51",
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step02_align.py"
+    },
+    {
+      "file": "data_preparation/step03_derive.py",
+      "status": "PASS",
+      "bytes": 10829,
+      "sha256": "9d264c3e3fbdb7aaf9dc9c3dfd8e39eb551acdfb21a9fbdc6272721cb1e3e599",
+      "git_blob": "2feb524a2d159f1ecbf1984a5b10b9a0cd5d2f2d",
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step03_derive.py"
+    },
+    {
+      "file": "data_preparation/step14_build_v4.py",
+      "status": "PASS",
+      "bytes": 9450,
+      "sha256": "88ec4d52df7122534f666e06c7530007c5a57ae9200e77f9b3e0c51a993dc7da",
+      "git_blob": "f266bd539b88bb43cc65b63b3a8a9ce656dc7f3e",
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step14_build_v4.py"
+    },
+    {
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "file": "data_preparation/step04_tile.py",
+      "status": "PASS",
+      "bytes": 12024,
+      "sha256": "598c37941fea8667cbbf22fd114395615df8ca3ce9934683c190821add5c4988",
+      "git_blob": "8f16a05fb02fbbe07036216a0bd79d12d241888b",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step04_tile.py"
+    },
+    {
+      "repository": "moonstone",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "file": "data_preparation/step12_m3_integrate.py",
+      "status": "PASS",
+      "bytes": 17130,
+      "sha256": "adcf47decbda4811fde0d51e63e0dcc7608c1fe686d5e241a47ef13dbe60bf26",
+      "git_blob": "ca71e08958eb2b541ec662634453fad8ed53c562",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step12_m3_integrate.py"
+    },
+    {
+      "repository": "nasa",
+      "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+      "file": "requirements.txt",
+      "status": "PASS",
+      "bytes": 700,
+      "sha256": "f9b4aea5cf5272114e4c8306fece9858aff0e909252a4cfc596b9a16b939d18f",
+      "git_blob": "8880b935e9054260a3b906e643f6d1278bdadc34",
+      "source_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/requirements.txt"
+    }
+  ],
+  "upstream_code_executed": false,
+  "model_or_raw_data_downloaded": false,
+  "findings": {
+    "terrain_channel_indices": {
+      "elevation": 1,
+      "slope": 2
+    },
+    "elevation_units": "Metres: LOLA half-metre values x0.5; SLDEM kilometres x1000.",
+    "elevation_regional_rule": "SLDEM for abs(lat)<58 when finite, fallback LOLA;58<=abs(lat)<62 weighted blend when both finite;>=62 LOLA. Missing SLDEM file gives LOLA-only fallback.",
+    "raw_train2705_region": "58-60N transition; no assertion of actual per-pixel blend weights or source-file availability.",
+    "slope": "np.degrees(arctan(sqrt(dx**2+dy**2))); latitude-corrected spacing with cos floor0.01.",
+    "nodata": "Scaling maps declared src.nodata toNaN; reprojection dst_nodataNaN; slope propagates nonfinite; raw channels copied through HDF5 V1/V2/V4 without z-score.",
+    "nasa_preprocessing": "LunarTransform.preprocess explicitly resizes to pre_resize then normalizes; image_augment then crops/resizes to target. This is a data-transform path; backbone forward consumes tensors. The new no-transform contract rejects the authentic config before either path is executed.",
+    "nasa_requirements": {
+      "python": ">=3.11,<3.13",
+      "torch": ">=2.12.0,<3",
+      "numpy": ">=2.4.4,<3",
+      "timm": ">=1.0.27,<2",
+      "omegaconf": ">=2.3.0,<3"
+    }
+  },
+  "limitations": [
+    "Pinned source establishes declared pipeline semantics, not independent reproduction of original rasters or executed upstream build history.",
+    "Original raster headers and source/fallback provenance for every eligible sample not audited.",
+    "One raw Train crop audited; final complete-terrain cohort not frozen.",
+    "No accepted NASA spatial policy, official model construction, checkpoint validation, forward/backward or task scores."
+  ]
+}

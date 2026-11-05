@@ -1,0 +1,60 @@
+{
+  "status": "RAW_TRAIN_CROP_AUTHENTICATED_NUMERICAL_AUDIT_ONLY",
+  "raw_crop_sha256": "da95889c23cd001a43b3ab9dc388fe4271f86d2a7be5ab626bcf3978507c9008",
+  "raw_crop_bytes": 7340160,
+  "shape": [
+    28,
+    256,
+    256
+  ],
+  "dtype": "float32",
+  "prior_receipt": "reports/evidence/p31_pair_20261104/manifest.json",
+  "metadata_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+  "plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+  "sample": {
+    "sample_id": "2705",
+    "row_idx": "15",
+    "col_idx": "5",
+    "center_lat": "59.0",
+    "center_lon": "-169.0",
+    "lat_min": "58.0",
+    "lat_max": "60.0",
+    "lon_min": "-170.0",
+    "lon_max": "-168.0",
+    "stored_split": "0"
+  },
+  "geology_target": 43,
+  "channels": {
+    "elevation": {
+      "index": 1,
+      "finite_pixels": 65536,
+      "nonfinite_pixels": 0,
+      "zero_pixels": 0,
+      "min": -487.6217956542969,
+      "max": 2316.414306640625,
+      "finite_not_proof_of_validity": "Finite-sentinel behavior needs pinned source lineage; presence metadata is not a pixel mask."
+    },
+    "slope": {
+      "index": 2,
+      "finite_pixels": 65536,
+      "nonfinite_pixels": 0,
+      "zero_pixels": 0,
+      "min": 0.016707932576537132,
+      "max": 31.521455764770508,
+      "finite_not_proof_of_validity": "Finite-sentinel behavior needs pinned source lineage; presence metadata is not a pixel mask."
+    }
+  },
+  "grid": {
+    "radius_m": 1737400,
+    "pixels_per_degree": 128,
+    "angular_pixel_degrees": 0.0078125,
+    "nominal_ns_m": 236.90117518866782,
+    "ew_ground_spacing": "nominal_ns_m*cos(latitude); non-isotropic at high latitude; upstream slope uses cos clamp0.01"
+  },
+  "source_lineage_status": "PENDING_PINNED_SOURCE_REVIEW",
+  "provenance_or_npz_created": false,
+  "eligibility_filter_run": false,
+  "full_hdf5_rehashed": false,
+  "test_pixels_read": 0,
+  "slope_numerical_range_0_90": true
+}

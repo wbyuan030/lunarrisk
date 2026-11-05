@@ -1,0 +1,33 @@
+{
+  "status": "LOCAL_AUDIT_COMPLETE_OFFICIAL_EXECUTION_BLOCKED",
+  "base_commit": "8eeab47",
+  "config": "LOCAL_FIXED_REVISION_HASH_AND_GIT_BLOB_VERIFIED",
+  "source_audit": "source_audit.json",
+  "wrapper_tests": {
+    "pass": 26,
+    "skipped": 0
+  },
+  "full_regression": {
+    "pass": 652,
+    "skipped": 0
+  },
+  "compileall": "PASS",
+  "raw_train_crop": "2705 authenticated by original pair receipt; numerical audit only",
+  "real_input_cli": "EXPECTED_FAIL_CLOSED: authentic pre_resize512/input_size256 rejected by unchanged current contract",
+  "blockers": [
+    "Existing host/container Python3.10.12 is outside NASA >=3.11,<3.13; torch2.5.1 below declared >=2.12; required packages missing. No compatible existing runtime found.",
+    "An explicit paired spatial policy must reconcile authentic pre_resize512 with256 input before model execution.",
+    "Original raster headers/full per-region lineage and final complete-valid cohort not independently audited."
+  ],
+  "official_model_execution": "NOT_RUN",
+  "checkpoint_local_verification": "NOT_RUN",
+  "checkpoint_downloaded": false,
+  "training_runner": "NOT_IMPLEMENTED",
+  "training_manifest": "NOT_FROZEN",
+  "model_training": "NOT_RUN",
+  "test_scored": false,
+  "packages_installed": false,
+  "shared_runtime_modified": false,
+  "paid_resources": false,
+  "p32_matrix_repeated": false
+}
