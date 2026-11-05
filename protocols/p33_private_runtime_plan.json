@@ -1,0 +1,91 @@
+{
+  "plan_id": "p33_private_nasa_runtime_candidate_v1",
+  "created_date": "2026-11-05",
+  "base_commit": "c9245665fab0213b598b23031c50e9c68c997cf0",
+  "status": "CANDIDATE_ONLY_HOST_DRIVER_AND_RESOLUTION_PENDING_NO_INSTALL_AUTHORITY",
+  "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "preserve_existing_runtime": "Python3.10.12/torch2.5.1+rocm6.2 and existing ROCm host/container remain unchanged",
+  "candidate": {
+    "python": "3.12.x, exact patch/source/hash not yet selected",
+    "platform": "Linux x86_64; cp312 manylinux_2_28 wheels",
+    "torch": "2.12.1+rocm7.2",
+    "torchvision": "0.27.1+rocm7.2",
+    "torch_source_index": "https://download.pytorch.org/whl/rocm7.2",
+    "all_other_nasa_requirements": "Honor full fixed-revision requirements.txt; exact transitive pins/hashes pending metadata resolution",
+    "isolation": "New private interpreter/environment only after explicit approval; never reuse current site-packages, shared torch, system Python, ROCm or driver",
+    "source_import": "Keep pinned NASA source clean. No editable install into that checkout; current wrapper verifies git clean and imports source directly.",
+    "status": "PUBLISHED_WHEEL_CANDIDATE_NOT_INSTALLED_OR_VALIDATED"
+  },
+  "declared_requirements": [
+    "terratorch>=1.2.6,<2",
+    "torch>=2.12.0,<3",
+    "torchvision>=0.27.0,<0.28",
+    "torchmetrics>=1.9.0,<2",
+    "lightning>=2.6.5,<3",
+    "timm>=1.0.27,<2",
+    "einops>=0.8.2,<0.9",
+    "numpy>=2.4.4,<3",
+    "omegaconf>=2.3.0,<3",
+    "pillow>=12.2.0,<13",
+    "rasterio>=1.5.0,<2",
+    "torchgeo>=0.9.0,<0.10",
+    "albumentations>=2.0,<3",
+    "segmentation-models-pytorch>=0.4,<0.6",
+    "tensorboard>=2.18,<3",
+    "h5py>=3.16.0,<4",
+    "hdf5plugin>=6.0.0,<7",
+    "pandas>=3.0.3,<4",
+    "pyarrow>=24.0.0,<25",
+    "diffusers>=0.38.0,<0.39",
+    "tokenizers>=0.22.2,<0.23",
+    "vector-quantize-pytorch>=1.29.0,<2",
+    "huggingface-hub>=1.15.0,<2",
+    "peft>=0.19.1,<0.20",
+    "scipy>=1.17.1,<2",
+    "scikit-image>=0.26.0,<0.27",
+    "matplotlib>=3.10.9,<4",
+    "tqdm>=4.67.3,<5"
+  ],
+  "source_audit": "reports/evidence/p33_20261105/runtime_plan_01/source_audit.json",
+  "public_sources": "reports/evidence/p33_20261105/runtime_plan_01/public_runtime_sources.json",
+  "known_gaps": [
+    "Actual amdgpu module/package identity not recorded; torch.version.hip is user-space build identity, not host driver",
+    "Exact OS release not established by kernel/glibc record alone",
+    "All28 official requirements and external closure unresolved; wheel availability/ABI and total size/hash unverified",
+    "Private Python3.12 absent in existing inventory; install is not authorized in this phase",
+    "PyTorch-distributed2.12.1 wheels are not AMD Radeon matrix-certified2.9.1 and must not be labeled AMD-validated for this host",
+    "Current wrapper checks Python and source/config, not every distribution bound; passing guard is not full runtime approval"
+  ],
+  "next_permitted_action": {
+    "owner": "local Git-collaboration agent",
+    "action": "Read-only host driver/OS and intended storage capacity audit; use already recorded Python/package inventory rather than repeating it",
+    "collect": [
+      "OS VERSION_ID",
+      "kernel release",
+      "architecture",
+      "glibc version",
+      "amdgpu module/package version or explicit UNKNOWN with reason",
+      "available capacity on intended private environment volume without publishing absolute private path"
+    ],
+    "forbidden": [
+      "No apt/pip/uv install or environment creation",
+      "No Docker pull or container/driver changes",
+      "No pip dry-run that downloads wheels/sdists",
+      "No model/data download or NASA import/constructor",
+      "No repeated native256 input preflight or completed701-test suite",
+      "No Test access or old P3.2 runs"
+    ],
+    "stop": "If amdgpu identity/support remains unknown or requires host changes, report blocker; do not install or relax support/requirements"
+  },
+  "later_only_after_permission": [
+    "Resolve complete dependency metadata to exact platform-specific lock and sizes/hashes; stop on conflicts or unavailable wheels instead of silently lowering bounds",
+    "Present private interpreter/environment changes and download/storage budget; do not request or perform host upgrades implicitly",
+    "Install only approved isolated assets, preserving source cleanliness and existing torch/ROCm; verify package closure and no shared-library mixing",
+    "Then record normal official import/constructor and device validation in fresh process before checkpoint acquisition/paired model preflight",
+    "Fixed checkpoint and actual paired forward/backward, complete unchanged cohort scan and real budget lock remain later gates"
+  ],
+  "model_execution": "NOT_RUN",
+  "compatibility": "NOT_ESTABLISHED",
+  "scientific_protocol_changed": false,
+  "tests_repeated": false
+}

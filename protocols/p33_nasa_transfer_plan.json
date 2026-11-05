@@ -116,5 +116,15 @@
     "actual_native_input_preflight": "NOT_RUN",
     "official_model_execution": "NOT_RUN",
     "manifest_schema": "P33_NASA_TERRAIN_PAIRED_V2"
+  },
+  "private_runtime_plan": {
+    "path": "protocols/p33_private_runtime_plan.json",
+    "guide": "docs/P3_3_PRIVATE_RUNTIME_PLAN.md",
+    "report": "reports/p3_3_private_runtime_plan.md",
+    "status": "CANDIDATE_ONLY_HOST_DRIVER_AND_FULL_RESOLUTION_PENDING",
+    "candidate": "Python3.12 / torch2.12.1+rocm7.2 / torchvision0.27.1+rocm7.2",
+    "install_performed": false,
+    "official_execution": "NOT_RUN",
+    "next_action": "Read-only missing host amdgpu/OS/capacity evidence; no repeated checks, installations or big downloads"
   }
 }

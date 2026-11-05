@@ -1,0 +1,38 @@
+{
+  "status": "READ_ONLY_RUNTIME_RESEARCH_COMPLETE_EXECUTION_BLOCKED",
+  "base_commit": "c9245665fab0213b598b23031c50e9c68c997cf0",
+  "source_blob_checks": {
+    "pass": 27,
+    "fail": 0
+  },
+  "python_source_ast_parse": {
+    "pass": 25,
+    "execution": false
+  },
+  "plan_requirements_reproduced_exactly": 28,
+  "candidate_core_version_bounds": "PASS_NOT_RESOLVED_CLOSURE",
+  "json_files_validated": 4,
+  "relative_doc_links_checked": 8,
+  "missing_links": 0,
+  "diff_check": "PASS",
+  "independent_source_and_plan_review": "PASS_AFTER_RESOLUTION_PERMISSION_WORDING_FIX",
+  "new_test_count": 0,
+  "completed_tests_repeated": false,
+  "scientific_python_or_model_source_changed": false,
+  "asset_or_package_downloaded": false,
+  "install_performed": false,
+  "user_desktop_accessed": false,
+  "actual_host_driver": "UNKNOWN",
+  "dependency_resolution": "NOT_RUN",
+  "runtime_compatibility": "NOT_ESTABLISHED",
+  "official_model_execution": "NOT_RUN",
+  "file_sha256": {
+    "AGENTS.md": "7f41c54ecefac693fe96a416eaac438f608ea013e1ec0366fa6867fc12ad900e",
+    "docs/P3_3_PRIVATE_RUNTIME_PLAN.md": "8fb290729812d439bc79b74fb06f60dbb3a2a04683ac8f903492efa7acfe8d8e",
+    "protocols/p33_private_runtime_plan.json": "ac6706611e48fa785814fd8f80c9653c38c4b3c881030ef8cadd3dfb2bae0a16",
+    "protocols/p33_nasa_transfer_plan.json": "8f3e4d9fdc65f6fb93d986712bdc179f400247a443a184e52285f69b531a282d",
+    "reports/p3_3_private_runtime_plan.md": "1045a6d42227ce6a75b410c076310323ff13babd9b4936cf4222286ef87e9c65",
+    "reports/evidence/p33_20261105/runtime_plan_01/public_runtime_sources.json": "de21bec9feedf6f0c1e89237b939d50e76217aad4ee93435beee521f0992a5e1",
+    "reports/evidence/p33_20261105/runtime_plan_01/source_audit.json": "fe555785c530d9beda559d7ee8d2736379ae325d8223a17342458d1e96651e24"
+  }
+}

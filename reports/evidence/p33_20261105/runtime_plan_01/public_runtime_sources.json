@@ -1,0 +1,33 @@
+{
+  "status": "PUBLIC_DOCUMENT_AND_INDEX_READ_ONLY",
+  "sources": [
+    {
+      "url": "https://pytorch.org/get-started/previous-versions/",
+      "observed_date": "2026-11-05",
+      "finding": "Official matched pair torch2.12.1/torchvision0.27.1, ROCm7.2 Linux wheels."
+    },
+    {
+      "url": "https://download.pytorch.org/whl/rocm7.2/torch/",
+      "observed_date": "2026-11-05",
+      "finding": "Index lists torch-2.12.1+rocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl and cp311; no wheel fetched."
+    },
+    {
+      "url": "https://download.pytorch.org/whl/rocm7.2/torchvision/",
+      "observed_date": "2026-11-05",
+      "finding": "Index lists torchvision-0.27.1+rocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl and cp311; no wheel fetched."
+    },
+    {
+      "url": "https://rocm.docs.amd.com/projects/radeon-ryzen/en/docs-7.2/docs/compatibility/compatibilityrad/native_linux/native_linux_compatibility.html",
+      "observed_date": "2026-11-05",
+      "finding": "RX7900XT and Ubuntu22.04.5 HWE kernel6.8 listed; production framework2.9.1, not2.12.1."
+    },
+    {
+      "url": "https://rocm.docs.amd.com/en/docs-7.2.0/compatibility/compatibility-matrix.html",
+      "observed_date": "2026-11-05",
+      "finding": "ROCm7.2 driver column includes30.30.0/30.20.1/30.20.0/30.10.2/30.10.1/30.10/6.4.x. Existing HIP6.2 is not actual host driver identification."
+    }
+  ],
+  "packages_fetched": 0,
+  "wheel_hashes_verified": false,
+  "resolved_lockfile": false
+}

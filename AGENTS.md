@@ -4,7 +4,9 @@
 
 **最新云端交接：** 先读[`docs/P3_3_MOONSTONE_NATIVE256.md`](docs/P3_3_MOONSTONE_NATIVE256.md)和[`reports/p3_3_native256_policy.md`](reports/p3_3_native256_policy.md)。在任何迁移分数前新增独立`moonstone_native256_v1`协议：保留Moonstone原256网格、原NASA配置归一化和256/16模型位置几何，不复现NASA数据resize512/crop/flip，不声称60m物理尺度等价；默认strict路径仍拒绝原差异。必须显式选择协议、匹配固定配置SHA和新provenance，贯通preflight/dataset/model/manifestV2/run/replay。独立源码/diff审查通过；本轮75项P33中59PASS/16SKIP，compileall/diff检查PASS；完整套件因旧LROC网络请求被停止，只有部分日志，绝非全套PASS。本地旧690PASS不能延伸到新代码。
 
-**本地下一步：** native256合成测试与单裁片真实input-only已完成，不反复重跑。继续核实符合资源边界的兼容私有NASA runtime方案；现有Python3.10/torch2.5不满足官方声明，不能把合成测试或输入PASS当官方兼容。保留历史strict失败，不覆盖证据。官方runtime、checkpoint、真实双臂forward/backward、完整cohort和预算锁定仍是独立门槛；不安装/替换共享环境、不因输入策略已验证就下载权重或开始训练，不恢复大数据下载，Test HOLD。
+**最新runtime方案：** 见[`docs/P3_3_PRIVATE_RUNTIME_PLAN.md`](docs/P3_3_PRIVATE_RUNTIME_PLAN.md)、[`protocols/p33_private_runtime_plan.json`](protocols/p33_private_runtime_plan.json)和[研究报告](reports/p3_3_private_runtime_plan.md)。已只读核实27个固定源码文件及官方发行信息：独立Python3.12 + torch2.12.1/torchvision0.27.1的ROCm7.2轮子是候选，绝非已安装/已兼容环境。正常包初始化会导入训练/数据依赖，不能只补torch/einops。宿主amdgpu实际版本、完整依赖解析/大小/hash仍缺；不凭现有HIP6.2推断驱动兼容。
+
+**本地下一步：** native256合成测试与单裁片真实input-only已完成，不反复重跑。仅做新指南中的只读OS/amdgpu身份及可用存储核实；不要重新查已知Python/包或跑75/701检查，不安装、不拉容器、不改驱动、不下载权重。候选依赖解析和私有环境创建需后续明确决定；现有Python3.10/torch2.5不满足官方声明，不能把合成测试或输入PASS当官方兼容。保留历史strict失败，不覆盖证据。官方runtime、checkpoint、真实双臂forward/backward、完整cohort和预算锁定仍是独立门槛；不安装/替换共享环境、不因输入策略已验证就下载权重或开始训练，不恢复大数据下载，Test HOLD。
 
 **首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取，并合并并发`ce8b1ef`的固定根Train身份核验；此前pre-runner本地新增28项及完整654项测试零跳过PASS，compileall PASS。身份/标签认证通过后，真实裁片仍在空间策略处被拒绝；[最新合并验证](reports/evidence/p33_20261105/local_02/verification.json)。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
 

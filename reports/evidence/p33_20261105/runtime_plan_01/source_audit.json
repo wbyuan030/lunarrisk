@@ -1,0 +1,248 @@
+{
+  "status": "STATIC_SOURCE_AUDIT_ONLY_NO_IMPORT_EXECUTION",
+  "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "sources": [
+    {
+      "path": "ni_lfm/data/io_utils.py",
+      "bytes": 3230,
+      "git_blob": "046621aee23d7f1158c53d0292532b5c6aa72582",
+      "sha256": "3191e584b772c69d4157902742cfdf92475f63879b891f74aaa681a3e8e57f9b",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/data/io_utils.py"
+    },
+    {
+      "path": "ni_lfm/data/modality_info.py",
+      "bytes": 7203,
+      "git_blob": "c4c792d83aefff50449ef2be9e5870b2637d46a9",
+      "sha256": "34a76dfd95b05b4ca1ac80c6e9f8e626b2d61ba7308a7916fbe7fa708b546aaa",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/data/modality_info.py"
+    },
+    {
+      "path": "ni_lfm/data/modality_transforms.py",
+      "bytes": 20364,
+      "git_blob": "84068e0244baa3c7902277cc6701651bd743f64e",
+      "sha256": "814685e07d6c26f6eec0796f073d0df4f3bbd2e13605db1f79546563b31bea3a",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/data/modality_transforms.py"
+    },
+    {
+      "path": "ni_lfm/models/codebook_fusion.py",
+      "bytes": 19572,
+      "git_blob": "582e065d631b4fc9f7d76f0ce63a41837caf2f5f",
+      "sha256": "c0bd8f667c2f489391bb44c0c4f64764aa9a0efc30ddd5bec7da5a39d35dea89",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/codebook_fusion.py"
+    },
+    {
+      "path": "ni_lfm/models/decoder_embeddings.py",
+      "bytes": 21002,
+      "git_blob": "881b37883b09da54d3b697560d687bf60e6ca3dd",
+      "sha256": "5c70da557a9b0a1962f2fae593513d60b1d3d55079c894b9d7e4b6e70389cae7",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/decoder_embeddings.py"
+    },
+    {
+      "path": "ni_lfm/models/encoder_embeddings.py",
+      "bytes": 27342,
+      "git_blob": "be84200e37221521dc45be8ac18a378a375b5fc0",
+      "sha256": "7be5ecde0ab618fd27ad3cb9e626b0f552aeafba4362df39eee90fb0feeba692",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/encoder_embeddings.py"
+    },
+    {
+      "path": "ni_lfm/models/flexivit.py",
+      "bytes": 6657,
+      "git_blob": "67d62f91cdff44e1f14982c4f819fc0ec539eecb",
+      "sha256": "8815338cf20856f583c24de0ec20413c338db23ebd8c170460a622f696346eb9",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/flexivit.py"
+    },
+    {
+      "path": "ni_lfm/models/lfm_utils.py",
+      "bytes": 21726,
+      "git_blob": "304aec042b2b436c132b97236369825e827fa284",
+      "sha256": "440fd640ed0936c38c9f3dbae8b4aa386b990a80144a76b5f6c1def6a822090e",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/lfm_utils.py"
+    },
+    {
+      "path": "ni_lfm/models/ni_lfm.py",
+      "bytes": 45863,
+      "git_blob": "ce740879f9edfa279012cf0fcde4b5c74278d112",
+      "sha256": "a1245c03b5b56d296f27ac5c1a3b4cb23d3340fe412ebee7c66092dcdf9e0bd0",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/models/ni_lfm.py"
+    },
+    {
+      "path": "ni_lfm/utils/__init__.py",
+      "bytes": 40,
+      "git_blob": "52611b846fec49e3b2b64437de4e2a856e7734fc",
+      "sha256": "716564b4f1a58003c2c9d3964e9d72afcc82cdc87b11eb0cf8bb8a4cd1cb462f",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/utils/__init__.py"
+    },
+    {
+      "path": "ni_lfm/utils/tokenizer/__init__.py",
+      "bytes": 30,
+      "git_blob": "aeddeb9ffec07fa6f5fbd510d818e07703e4cad2",
+      "sha256": "605b0c6bfe899785bc82d892f6e6311158e48134e51f6ff68fe8b19a65ac83c7",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/utils/tokenizer/__init__.py"
+    },
+    {
+      "path": "ni_lfm/utils/tokenizer/text_tokenizer.py",
+      "bytes": 6676,
+      "git_blob": "7a874e916483b1bf7d3012a514cd57be69f4e82c",
+      "sha256": "61227644e30d26190d0819e424b62c83fbbd8a23ec3823986e9c62e675bcb9b4",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/ni_lfm/utils/tokenizer/text_tokenizer.py"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1175,
+      "git_blob": "bc0ffc590e6174b5e11fce2d817a69130232107d",
+      "sha256": "41a884607aabf6dcf71de7c2036c5e95e58c796ae474adb28de12c4c4010d7f9",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/pyproject.toml"
+    },
+    {
+      "path": "requirements.txt",
+      "bytes": 700,
+      "git_blob": "8880b935e9054260a3b906e643f6d1278bdadc34",
+      "sha256": "f9b4aea5cf5272114e4c8306fece9858aff0e909252a4cfc596b9a16b939d18f",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/requirements.txt"
+    },
+    {
+      "path": "terratorch_integration/__init__.py",
+      "bytes": 1021,
+      "git_blob": "dc618bbc414b5bd6ffa33262a92419256ccda9d6",
+      "sha256": "0dda5baef67bbd060efa18e85d51c56cc8a23ee0bccc5094e9752d4008d60c54",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/__init__.py"
+    },
+    {
+      "path": "terratorch_integration/data_adapter.py",
+      "bytes": 123269,
+      "git_blob": "011c582a51b2b0b4dc3164e4ae865cb6bd7a5ba3",
+      "sha256": "a9d3c87d38fdf4be700b3a62b92bb695f986c3ad3cbb24cf9634dd21244a0789",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/data_adapter.py"
+    },
+    {
+      "path": "terratorch_integration/data_utils.py",
+      "bytes": 9670,
+      "git_blob": "29641d9e7fc71a987449308ee507b60e3591c3de",
+      "sha256": "1f32786bc6d5b8c7d30732fb2376d65eb4f1ebc3dbf180cdf0e1eea7c0aac604",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/data_utils.py"
+    },
+    {
+      "path": "terratorch_integration/decoders.py",
+      "bytes": 2877,
+      "git_blob": "9671c2eb5b35a4aabb308634f14b670c75b91f14",
+      "sha256": "7784f648964cf056995fdf69bbb2abe124bbd8f574cc241c9064d312e81a9a19",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/decoders.py"
+    },
+    {
+      "path": "terratorch_integration/determinism.py",
+      "bytes": 7902,
+      "git_blob": "8e8579d8e3bbd1047fa17ceb6f56b558ce44ee85",
+      "sha256": "6f7b41a329e3d17c6f8d538f17050c13dcec6a4e86dff08bbf64d3a6be4827e6",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/determinism.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_backbone.py",
+      "bytes": 33902,
+      "git_blob": "5e90a62ec2326f6ed5e05d6f9d4609a645a5d3de",
+      "sha256": "8953e97fe2309bf57bb1f10c819b5bee2c34ce793f54016bac6c8f7150261135",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_backbone.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_classification_task.py",
+      "bytes": 2632,
+      "git_blob": "b9e2d4582902a5528a13d77f8aad2dba9a6297d3",
+      "sha256": "008fae85c63823e23edac7df5f34042da7a1b6cf1cb06565be4514a409a05ec4",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_classification_task.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_llrd_mixin.py",
+      "bytes": 15781,
+      "git_blob": "79f9b10ba5dd7d82ff04ab3e97326f8ac6dc45e8",
+      "sha256": "f928139375a3668205a6172ba74d95246eae679e806e946a9e596859fe1bbf07",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_llrd_mixin.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_object_detection_task.py",
+      "bytes": 30124,
+      "git_blob": "a2e946f074e3057f34a28f0527a82779d3ae2efa",
+      "sha256": "4cbba2f9d792677771fe38f919f189397583e1d7b52111cfe131ba6016e61aab",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_object_detection_task.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_register.py",
+      "bytes": 1774,
+      "git_blob": "c0cfb5d841d69065727c7ac98d2c102e8cb9f2e9",
+      "sha256": "c1a2d3aa995ed0f91514731950f7bd2221db6ff053a92747e8fb81ec9f0ddb77",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_register.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_regression_task.py",
+      "bytes": 784,
+      "git_blob": "f1e61629779922910229241b5b779745d3e1bd42",
+      "sha256": "3ebd25b1956537810ce3b273c52854078feb8e701150f938bea13bac832d0dd7",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_regression_task.py"
+    },
+    {
+      "path": "terratorch_integration/lunar_segmentation_task.py",
+      "bytes": 10605,
+      "git_blob": "8172751da7b295f3b724cb2a7f811f034ff1ec1b",
+      "sha256": "ea8904ada1b3e23f3bdd3c2c363bf80df7d90821163c20b2f79868fa160e81c6",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/lunar_segmentation_task.py"
+    },
+    {
+      "path": "terratorch_integration/necks.py",
+      "bytes": 13009,
+      "git_blob": "7757b46ddab98cd2fde52b5b12f86c7a23696e85",
+      "sha256": "58407575134730f9e40b5b5da5fcd5cf2ad04a8dd69cb27ac176734a99b91f9c",
+      "url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/d54c67aad513cb9daca444afa425cfb278e4fbf8/terratorch_integration/necks.py"
+    }
+  ],
+  "python_requirement": ">=3.11,<3.13",
+  "build_requirements": [
+    "setuptools>=68",
+    "wheel"
+  ],
+  "optional_extra_not_selected": {
+    "wandb": [
+      "wandb>=0.17"
+    ]
+  },
+  "declared_requirements": [
+    "terratorch>=1.2.6,<2",
+    "torch>=2.12.0,<3",
+    "torchvision>=0.27.0,<0.28",
+    "torchmetrics>=1.9.0,<2",
+    "lightning>=2.6.5,<3",
+    "timm>=1.0.27,<2",
+    "einops>=0.8.2,<0.9",
+    "numpy>=2.4.4,<3",
+    "omegaconf>=2.3.0,<3",
+    "pillow>=12.2.0,<13",
+    "rasterio>=1.5.0,<2",
+    "torchgeo>=0.9.0,<0.10",
+    "albumentations>=2.0,<3",
+    "segmentation-models-pytorch>=0.4,<0.6",
+    "tensorboard>=2.18,<3",
+    "h5py>=3.16.0,<4",
+    "hdf5plugin>=6.0.0,<7",
+    "pandas>=3.0.3,<4",
+    "pyarrow>=24.0.0,<25",
+    "diffusers>=0.38.0,<0.39",
+    "tokenizers>=0.22.2,<0.23",
+    "vector-quantize-pytorch>=1.29.0,<2",
+    "huggingface-hub>=1.15.0,<2",
+    "peft>=0.19.1,<0.20",
+    "scipy>=1.17.1,<2",
+    "scikit-image>=0.26.0,<0.27",
+    "matplotlib>=3.10.9,<4",
+    "tqdm>=4.67.3,<5"
+  ],
+  "source_files": 27,
+  "python_files_ast_parsed": 25,
+  "git_blob_verifications": 27,
+  "findings": [
+    "Standard submodule import runs terratorch_integration/__init__.py and eager data/training modules.",
+    "Even direct backbone core reaches modality_transforms -> scipy, hdf5plugin, numpy, torch, torchvision and io_utils -> h5py, pandas, OmegaConf.",
+    "Selected raw dtm+slope path does not construct VQ/tokenizer models; backbone still constructs full NILunarFM encoder and decoder blocks.",
+    "External TerraTorch/Lightning/TorchGeo transitive imports and resolver compatibility require separate validation; declared-only does not prove dispensable."
+  ],
+  "upstream_code_executed": false,
+  "external_dependency_closure_verified": false,
+  "resolver_executed": false,
+  "package_or_model_assets_downloaded": false
+}
