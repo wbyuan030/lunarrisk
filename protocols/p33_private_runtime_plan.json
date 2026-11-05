@@ -2,7 +2,7 @@
   "plan_id": "p33_private_nasa_runtime_candidate_v1",
   "created_date": "2026-11-05",
   "base_commit": "c9245665fab0213b598b23031c50e9c68c997cf0",
-  "status": "HOST_IDENTITY_KNOWN_DRIVER_SUPPORT_MAPPING_UNRESOLVED_NO_INSTALL_AUTHORITY",
+  "status": "DRIVER_RELEASE_MAPPED_CANDIDATE_OUTSIDE_PUBLISHED_SUPPORT_NO_PROVISIONING",
   "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
   "preserve_existing_runtime": "Python3.10.12/torch2.5.1+rocm6.2 and existing ROCm host/container remain unchanged",
   "candidate": {
@@ -14,7 +14,7 @@
     "all_other_nasa_requirements": "Honor full fixed-revision requirements.txt; exact transitive pins/hashes pending metadata resolution",
     "isolation": "New private interpreter/environment only after explicit approval; never reuse current site-packages, shared torch, system Python, ROCm or driver",
     "source_import": "Keep pinned NASA source clean. No editable install into that checkout; current wrapper verifies git clean and imports source directly.",
-    "status": "PUBLISHED_WHEEL_CANDIDATE_NOT_INSTALLED_OR_VALIDATED"
+    "status": "PUBLISHED_WHEEL_CANDIDATE_OUTSIDE_INSTALLED_DRIVER_SUPPORT_MATRIX_NOT_VALIDATED"
   },
   "declared_requirements": [
     "terratorch>=1.2.6,<2",
@@ -49,7 +49,7 @@
   "source_audit": "reports/evidence/p33_20261105/runtime_plan_01/source_audit.json",
   "public_sources": "reports/evidence/p33_20261105/runtime_plan_01/public_runtime_sources.json",
   "known_gaps": [
-    "Actual module6.8.5/package1:6.8.5.60204-2070768.22.04 is recorded; mapping to supported ROCm7.2 driver release remains unverified",
+    "Installed package version maps to driver6.2.4/family6.2.x; published support row excludes candidateROCm7.2. No supported GPU runtime established without host changes",
     "Ubuntu22.04.5/kernel6.8.0-138/glibc2.35 recorded; OS/kernel-family match alone does not validate complete host/runtime compatibility",
     "All28 official requirements and external closure unresolved; wheel availability/ABI and total size/hash unverified",
     "Private Python3.12 absent in existing inventory; install is not authorized in this phase",
@@ -67,32 +67,27 @@
     "amdgpu_module": "6.8.5",
     "amdgpu_dkms_package": "1:6.8.5.60204-2070768.22.04",
     "volume_free_bytes_at_observation": 462071136256,
-    "exact_driver_support": "NOT_ESTABLISHED_NO_VERIFIED_RELEASE_MAPPING",
+    "exact_driver_support": "DRIVER6.2.4_FAMILY6.2.X_MAPPED; ROCM7.2_NOT_IN_PUBLISHED_SUPPORT_MATRIX",
     "decision": "STOP_BEFORE_PROVISIONING_NO_HOST_CHANGES",
     "environment_created": false,
-    "tests_repeated": false
+    "tests_repeated": false,
+    "mapping_followup_report": "reports/p3_3_driver_runtime_compatibility.md",
+    "mapping_followup_evidence": "reports/evidence/p33_20261105/driver_support_01/public_evidence.json"
   },
   "next_permitted_action": {
-    "owner": "local Git-collaboration agent",
-    "status": "READ_ONLY_COLLECTION_COMPLETED_STOP_AT_DRIVER_SUPPORT_GAP",
-    "action": "Use recorded host facts; no repeated inventory. Await explicit driver-support evidence and later bounded provisioning decision; no resolver or environment changes now",
-    "collect": [
-      "OS VERSION_ID",
-      "kernel release",
-      "architecture",
-      "glibc version",
-      "amdgpu module/package version or explicit UNKNOWN with reason",
-      "available capacity on intended private environment volume without publishing absolute private path"
-    ],
+    "owner": "Git collaborators",
+    "status": "RESEARCH_COMPLETED_AWAIT_SCOPED_PATH_DECISION",
+    "action": "Use recorded host and official support evidence. No repeated inventory/tests. Report concrete driver support blocker and await a scoped CPU-only feasibility or separately reviewed host-driver decision; neither path is selected or authorized by this plan",
     "forbidden": [
       "No apt/pip/uv install or environment creation",
       "No Docker pull or container/driver changes",
       "No pip dry-run that downloads wheels/sdists",
       "No model/data download or NASA import/constructor",
       "No repeated native256 input preflight or completed701-test suite",
-      "No Test access or old P3.2 runs"
+      "No Test access or old P3.2 runs",
+      "No lowered dependency bounds, bypassed imports/guards, or silent NASA/model revision changes"
     ],
-    "stop": "If amdgpu identity/support remains unknown or requires host changes, report blocker; do not install or relax support/requirements"
+    "stop": "No current verified official GPU combination within unchanged-host boundary. Do not install, change system/driver, or resolve/download artifacts without later explicit scope and budget"
   },
   "later_only_after_permission": [
     "Resolve complete dependency metadata to exact platform-specific lock and sizes/hashes; stop on conflicts or unavailable wheels instead of silently lowering bounds",
@@ -104,5 +99,18 @@
   "model_execution": "NOT_RUN",
   "compatibility": "NOT_ESTABLISHED",
   "scientific_protocol_changed": false,
-  "tests_repeated": false
+  "tests_repeated": false,
+  "latest_evidence_base_commit": "69763c5b8514a2f8a6239311b2555869c0873f4e",
+  "driver_support_followup": {
+    "base_commit": "69763c5b8514a2f8a6239311b2555869c0873f4e",
+    "report": "reports/p3_3_driver_runtime_compatibility.md",
+    "evidence": "reports/evidence/p33_20261105/driver_support_01/public_evidence.json",
+    "driver_release": "6.2.4",
+    "driver_family": "6.2.x",
+    "candidate_rocm_7_2_supported_by_published_row": false,
+    "tested_hardware_failure": false,
+    "checked_older_wheel_floors_satisfy_nasa": false,
+    "older_nasa_ancestor_with_lower_declared_floor_found": false,
+    "decision": "STOP_BEFORE_PROVISIONING; current no-host-change GPU path not established"
+  }
 }

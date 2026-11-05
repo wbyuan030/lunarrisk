@@ -1,0 +1,55 @@
+{
+  "date_utc": "2026-11-05",
+  "base_commit": "69763c5b8514a2f8a6239311b2555869c0873f4e",
+  "scope": "Documentation and public metadata evidence only",
+  "checks": {
+    "json_parse": "PASS",
+    "local_document_links": "PASS",
+    "local_link_count": 37,
+    "fixed_nasa_pin_and_28_requirement_ranges_preserved": "PASS",
+    "plan_and_evidence_consistency": "PASS",
+    "allowlisted_changed_files_only": "PASS",
+    "scientific_code_tests_budgets_and_historical_evidence_unchanged": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "9c6b2da174c4859b4cbdd5e8bbf1b981a3ae9bd20d462e8db4dc7d4d0e05cf4c",
+      "size_bytes": 13922
+    },
+    {
+      "path": "docs/P3_3_PRIVATE_RUNTIME_PLAN.md",
+      "sha256": "15c37b88cf52d6705194390463bec292e8c559add83f2fedf75d7befbcbcfe35",
+      "size_bytes": 7704
+    },
+    {
+      "path": "protocols/p33_private_runtime_plan.json",
+      "sha256": "b71a13cc04047ef56286fb39148d401c136827a41578544b38eaf20a5d749f27",
+      "size_bytes": 6816
+    },
+    {
+      "path": "reports/p3_3_driver_runtime_compatibility.md",
+      "sha256": "e7afceb04900d4393d06c85b3403e2288f2cee3991f9d18e2d76522d2a9c4eda",
+      "size_bytes": 6316
+    },
+    {
+      "path": "reports/evidence/p33_20261105/driver_support_01/public_evidence.json",
+      "sha256": "1dc8400e3bc1000c92b870d13b879eead426f8390d6ae6c8cb4392084774c306",
+      "size_bytes": 5385
+    }
+  ],
+  "independent_review": {
+    "result": "APPROVED_WITH_TWO_SMALL_FIXES_COMPLETED",
+    "scope": "Separate review of package mapping, bounded wheel findings, conditional driver/CPU alternatives, constraints and handoff; NASA ancestry reviewed separately",
+    "fixes": [
+      "Historical AGENTS host paragraph now explicitly marks prior unresolved mapping as superseded",
+      "Validation file exists; JSON, links, scope, preserved requirements and whitespace checks completed before commit"
+    ]
+  },
+  "regression_suite": "NOT_RUN; documentation-only changes, prior75/701 not repeated or extended",
+  "runtime_install_or_execution": "NOT_RUN",
+  "model_or_data_acquisition": "NOT_RUN",
+  "user_computer_access": "NOT_RUN",
+  "claims_limit": "Official public support/index/source evidence only; no proof of empirical failure or hardware compatibility"
+}

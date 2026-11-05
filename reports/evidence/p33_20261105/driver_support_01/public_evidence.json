@@ -1,0 +1,97 @@
+{
+  "evidence_id": "p33_driver_support_01",
+  "observed_date_utc": "2026-11-05",
+  "base_commit": "69763c5b8514a2f8a6239311b2555869c0873f4e",
+  "method": "Read-only official HTML indexes/documentation and GitHub source/ancestry; no package payloads or upstream code executed",
+  "host_facts_source": "reports/evidence/p33_20261105/host_runtime_01/host_audit.json",
+  "package_release_mapping": {
+    "installed_package_version": "1:6.8.5.60204-2070768.22.04",
+    "official_directory": "https://repo.radeon.com/amdgpu/6.2.4/ubuntu/pool/main/a/amdgpu-dkms/",
+    "listed_filename": "amdgpu-dkms_6.8.5.60204-2070768.22.04_all.deb",
+    "listed_size_bytes": 11562852,
+    "listed_date": "2025-01-03",
+    "driver_release_family": "6.2.x",
+    "driver_distribution_release": "6.2.4",
+    "basis": "Exact version after Debian epoch matches filename in AMD amdgpu/6.2.4 directory; loaded/on-disk module match is from prior host audit",
+    "limit": "Version/release-family mapping only; no package payload download, installed binary identity/hash comparison or empirical ROCm7.2 execution",
+    "versioning_source": "https://rocm.docs.amd.com/projects/install-on-linux/en/docs-7.2.0/install/rocm-offline-installer.html",
+    "versioning_note": "AMD says driver version matched ROCm for6.1 through6.4.3; independent30.10 naming starts withROCm7.0. Module6.8.5 is not the driver release or ROCm userspace version"
+  },
+  "driver_userspace_matrix": {
+    "url": "https://instinct.docs.amd.com/projects/amdgpu-docs/en/latest/compatibility/compatibility-matrix.html",
+    "page_title_at_observation": "Compatibility matrix — AMD GPU Driver (amdgpu) 31.60.0",
+    "versioned_reference": "https://rocm.docs.amd.com/projects/install-on-linux/en/docs-7.2.0/reference/user-kernel-space-compat-matrix.html",
+    "driver_6_2_x_supported_rocm": [
+      "6.0.x",
+      "6.1.x",
+      "6.2.x",
+      "6.3.x",
+      "6.4.x",
+      "7.0.x"
+    ],
+    "candidate_rocm_7_2_in_installed_driver_row": false,
+    "classification": "NOT_IN_PUBLISHED_SUPPORT_MATRIX; not a demonstrated execution failure",
+    "future_driver_rows_containing_both_rocm_6_2_and_7_2": [
+      "6.4.x",
+      "30.10.0",
+      "30.10.1",
+      "30.10.2"
+    ],
+    "future_driver_limit": "Not an upgrade selection or permission. Exact RX7900XT/OS/kernel support, rollback and preservation of existing runtime unvalidated. Other newer driver rows need not support existingROCm6.2"
+  },
+  "bounded_wheel_index_check": [
+    {
+      "url": "https://download.pytorch.org/whl/rocm6.4/torch/",
+      "relevant_modern_rocm_versions": [
+        "2.8.0",
+        "2.9.0",
+        "2.9.1"
+      ],
+      "highest_listed": "2.9.1",
+      "satisfies_pinned_torch_floor": false
+    },
+    {
+      "url": "https://download.pytorch.org/whl/rocm7.0/torch/",
+      "relevant_modern_rocm_versions": [
+        "2.10.0"
+      ],
+      "highest_listed": "2.10.0",
+      "satisfies_pinned_torch_floor": false
+    }
+  ],
+  "wheel_check_limit": "Only these official stable indexes and published release recipes checked; not an exhaustive claim about third-party/nightly/source builds. No wheels fetched. Companion torchvision need not be evaluated to reject a failing torch lower bound",
+  "nasa_dependency_ancestry": {
+    "fixed_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+    "root_revision": "4eb8d610bc5cf0e10e8f4ddf2b7705fb00afd9a0",
+    "root_has_parents": false,
+    "root_commit_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/commit/4eb8d610bc5cf0e10e8f4ddf2b7705fb00afd9a0",
+    "requirements_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/4eb8d610bc5cf0e10e8f4ddf2b7705fb00afd9a0/requirements.txt",
+    "pyproject_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/blob/4eb8d610bc5cf0e10e8f4ddf2b7705fb00afd9a0/pyproject.toml",
+    "compare_url": "https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model/compare/4eb8d610bc5cf0e10e8f4ddf2b7705fb00afd9a0...d54c67aad513cb9daca444afa425cfb278e4fbf8",
+    "requirements_history_count": 1,
+    "pyproject_history_count": 1,
+    "root_torch_requirement": "torch>=2.12.0,<3",
+    "root_torchvision_requirement": "torchvision>=0.27.0,<0.28",
+    "root_python_requirement": ">=3.11,<3.13",
+    "root_to_pin_commit_count": 4,
+    "root_to_pin_changed_file_count": 6,
+    "architecture_files_changed": false,
+    "inference_related_changes": [
+      "ni_lfm/utils/generation.py changes static_maps/metadata mapping to METADATA_TILE and skips local_mean_std unscaling",
+      "ni_lfm/data/modality_transforms.py removes domain_unscale, one_hot_encoder and fill_nan_nearest_neighbor helpers"
+    ],
+    "conclusion": "No older lower-floor revision in pinned ancestry; rollback is not a dependency solution and loses later inference changes",
+    "limit": "Pinned ancestry only, not unrelated branches/forks; source diff is not checkpoint or numerical validation"
+  },
+  "decision": "No verified officially supported GPU runtime found within current no-host-change boundary. Stop before provisioning; do not lower bounds or silently switch NASA revision",
+  "unexecuted": [
+    "environment creation",
+    "dependency resolution",
+    "package/model/data downloads",
+    "driver/system changes",
+    "NASA import or constructor",
+    "GPU/CPU model execution",
+    "completed local tests/preflight",
+    "Test access"
+  ]
+}
