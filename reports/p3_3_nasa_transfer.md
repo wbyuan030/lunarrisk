@@ -39,3 +39,7 @@ Use the newly audited local config/source evidence, preserve its remaining origi
 The cloud has no torch/h5py, actual config/checkpoint or raw pixels. Upstream Python/torch constraints remain a real compatibility gate. The retained prefix has authenticated local bytes, not verified full upstream HDF5 integrity. All scores remain exploratory reused northern Val, and a frozen-probe negative result cannot refute transfer learning. Existing 28-channel B0 is not a same-input baseline. P3.2 negative evidence, budgets, Test HOLD and all old assets remain unchanged.
 
 After integrating the local audit, the focused suite again completed with48 passes/16 skips. The repeated full-suite invocation was blocked by tool review because legacy tests may initiate external LROC HTTPS access. It was not retried or routed around. There are no Python-source changes relative to the last completed full-suite run; its original log is preserved. Only documentation and concurrent local audit evidence changed in that merge.
+
+## Explicit Moonstone-native256 update,2026-11-05
+
+The separately declared [native-grid policy](p3_3_native256_policy.md) is implemented before scores and preserves the default strict guard. New focused cloud checks:59PASS/16SKIP; full suite incomplete at a legacy network request, no full pass. Official execution and transfer benefit remain NOT_RUN/NOT_ESTABLISHED. See [local action and physical/tensor limits](../docs/P3_3_MOONSTONE_NATIVE256.md).

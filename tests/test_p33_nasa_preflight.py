@@ -94,6 +94,15 @@ class TestNasaPreflightCLI(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse(self.output.exists())
 
+    def test_native_policy_rejects_self_hashed_noncanonical_config(self):
+        # Even a correct self-hash for this synthetic YAML cannot authorize
+        # the native policy: its actual file bytes must match the audited YAML.
+        result = subprocess.run(self.command + ['--spatial-policy', 'moonstone_native256_v1'],
+                                text=True, capture_output=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('audited fixed-revision NASA config SHA256', result.stderr)
+        self.assertFalse(self.output.exists())
+
     def test_output_is_not_overwritten(self):
         self.output.write_text("preserve original")
         result = self.run_command()

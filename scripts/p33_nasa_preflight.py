@@ -15,7 +15,7 @@ import time
 import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from lunarrisk.nasa_transfer.contracts import (NASA_CODE_REVISION, NASA_MODEL_REVISION,
-    file_sha256, fingerprint, prepare_terrain)
+    file_sha256, fingerprint, prepare_terrain, spatial_policy_receipt, STRICT_SPATIAL_POLICY, SPATIAL_POLICIES)
 
 
 from lunarrisk.nasa_transfer.cohort import (
@@ -56,6 +56,7 @@ def main():
                         help="frozen metadata archive; contents must match pinned SHA256")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--config-sha256", required=True)
+    parser.add_argument("--spatial-policy", choices=SPATIAL_POLICIES, default=STRICT_SPATIAL_POLICY)
     parser.add_argument("--output", type=Path, required=True, help="new JSON path; never overwrite")
     parser.add_argument("--forward-backward", action="store_true")
     parser.add_argument("--upstream", type=Path)
@@ -69,15 +70,17 @@ def main():
         parser.error("--forward-backward requires --upstream and --checkpoint")
     if file_sha256(args.config) != args.config_sha256:
         raise ValueError("NASA config SHA256 mismatch")
+    policy_receipt = spatial_policy_receipt(args.spatial_policy, args.config_sha256)
     # Parsing data-only YAML is separate from importing/running upstream code.
     import yaml
     config = yaml.safe_load(args.config.read_text())
     provenance = json.loads(args.provenance.read_text())
     authoritative_targets, cohort_receipt = load_authoritative_train(args.train_plan, args.train_metadata)
     raw, valid, ids, targets = read_batch(args.batch, provenance, authoritative_targets)
-    prepared = prepare_terrain(raw, valid, config["data"]["domains"], provenance)
+    prepared = prepare_terrain(raw, valid, config["data"]["domains"], provenance,
+                               spatial_policy=args.spatial_policy, config_sha256=args.config_sha256)
     report = {"kind": "ENGINEERING_PREFLIGHT_NOT_TRANSFER_SCORE", "input_contract": "PASS",
-              "authoritative_train_membership": cohort_receipt,
+              "authoritative_train_membership": cohort_receipt, "spatial_policy": policy_receipt,
               "nasa_code_revision": NASA_CODE_REVISION, "nasa_model_revision": NASA_MODEL_REVISION,
               "config_sha256": args.config_sha256, "batch_sha256": file_sha256(args.batch),
               "provenance_sha256": file_sha256(args.provenance), "sample_ids": ids.tolist(),
@@ -90,7 +93,7 @@ def main():
         from lunarrisk.nasa_transfer.torch_adapter import (official_backbone, build_paired_models,
                                                           load_verified_checkpoint)
         start = time.monotonic()
-        factory = lambda: official_backbone(args.config, args.config_sha256, args.upstream)
+        factory = lambda: official_backbone(args.config, args.config_sha256, args.upstream, spatial_policy=args.spatial_policy)
         models, coverage = build_paired_models(factory, lambda backbone: load_verified_checkpoint(backbone, args.checkpoint),
                                                adapt_inputs=args.adapt_inputs)
         report["checkpoint_coverage"] = coverage

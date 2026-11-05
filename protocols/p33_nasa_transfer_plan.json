@@ -2,7 +2,7 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "LOCAL_READINESS_AUDITED_TRAINING_RUNNER_IMPLEMENTED_OFFICIAL_EXECUTION_BLOCKED",
+  "status": "EXPLICIT_NATIVE256_POLICY_IMPLEMENTED_OFFICIAL_EXECUTION_BLOCKED",
   "local_followup": {
     "base_commit": "8eeab47",
     "integrated_upstream_fix": "ce8b1ef",
@@ -34,7 +34,7 @@
   },
   "domain_shift": "MOONSTONE_TERRAIN_NOT_NASA_NATIVE",
   "missingness": "Explicit masks; finite zeros are observed; any invalid pixel blocks first-tier input",
-  "spatial_policy": "No implicit resize/crop/reprojection; canonical config input_size required",
+  "spatial_policy": "Strict default preserved; explicit moonstone_native256_v1 declared before scores, unchanged256/16 geometry with no interpolation/crop and non-NASA physical scale; actual input/model execution not yet verified",
   "normalization": "Only supplied audited config; no guessed NASA statistics; raw physical input only",
   "model_loading": "100 percent selected inference keys and shapes including buffers; strict load after decoder pruning",
   "pretrained_arm": "Official base encoder with verified checkpoint, ordinary Geology head",
@@ -57,7 +57,7 @@
     "No raw Moonstone pixels"
   ],
   "remaining_gates": [
-    "Declare paired spatial policy for actual pre_resize512/input_size256; retain original raster-header/build-lineage audit limits",
+    "Validate new policy tests locally and run new input-only preflight on authenticated real Train crop with original config and explicit native-grid provenance; preserve original strict failure and raster-lineage limits",
     "Resolve compatible isolated Python/ROCm dependencies without replacing shared runtime",
     "Verify local fixed-revision weights by size/hash",
     "Run wrapper tests and one real paired forward/backward with memory record",
@@ -84,5 +84,18 @@
     "real_full_cohort_scan": "NOT_RUN",
     "environment_changed": false
   },
-  "automatic_resume": "NOT_IMPLEMENTED; interrupted outputs preserved"
+  "automatic_resume": "NOT_IMPLEMENTED; interrupted outputs preserved",
+  "spatial_policy_update": {
+    "protocol": "protocols/p33_native256_spatial_policy.json",
+    "guide": "docs/P3_3_MOONSTONE_NATIVE256.md",
+    "report": "reports/p3_3_native256_policy.md",
+    "evidence": "reports/evidence/p33_20261105/native256_policy/verification.json",
+    "focused_pass": 59,
+    "focused_skip": 16,
+    "full_suite": "INCOMPLETE_NETWORK_REQUEST_STOPPED_PARTIAL_LOG_ONLY",
+    "compileall": "PASS",
+    "actual_native_input_preflight": "NOT_RUN",
+    "official_model_execution": "NOT_RUN",
+    "manifest_schema": "P33_NASA_TERRAIN_PAIRED_V2"
+  }
 }

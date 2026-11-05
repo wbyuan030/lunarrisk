@@ -1,10 +1,12 @@
 # P3.3 paired NASA training runner
 
+**New explicit spatial protocol (2026-11-05):** [Moonstone-native256](P3_3_MOONSTONE_NATIVE256.md) now provides a separately declared downstream path for the unchanged audited256/16/pre_resize512 config. It requires an explicit policy flag and physical-scale provenance; strict default remains unchanged. Policy is bound through preflight and manifestV2/run/replay. Actual input/model execution under it is NOT RUN; runtime/checkpoint/full-cohort/budget gates remain. Historical strict-policy failures and local690-test evidence below are preserved, not relabeled as results for this new code.
+
 2026-11-05. **Latest local validation:** [64 P33 tests / full690 tests PASS, zero skips](../reports/p3_3_runner_local_validation.md), including all16 cloud-skipped tests. These use synthetic CPU torch/HDF5 fixtures and mocked locks; no official NASA runtime/model, real cohort scan or actual training/replay was executed. Earlier cloud verification below remains historical.
 
 **Implementation available; no real NASA training, GPU validation or transfer score has run in this cloud workspace.** The earlier preflight-only handoff is extended by `scripts/p33_train_pair.py` and `nasa_transfer/{dataset,experiment,training}.py`.
 
-**Concurrent local findings integrated:** [local readiness report](../reports/p3_3_local_readiness.md) verifies the actual cached config SHA256 `fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619` and an authenticated Train crop. The current guard rejects the real `pre_resize=512` / `input_size=256` config. The new runner retains that guard: an explicit paired spatial policy and compatible private runtime are still required before it can lock or train. The prior local654-test pass does not cover this newly added runner.
+**Concurrent local findings integrated:** [local readiness report](../reports/p3_3_local_readiness.md) verifies the actual cached config SHA256 `fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619` and an authenticated Train crop. The current guard rejects the real `pre_resize=512` / `input_size=256` config. The new runner retains that default guard. The explicit Moonstone-native256 policy is now declared but real input execution remains unverified; a compatible private runtime is still required before it can lock or train. The prior local654-test pass does not cover this newly added runner.
 
 ## Scope and current blockers
 
@@ -38,7 +40,7 @@ Both arms have the same maximum budget and early-stop rule, not necessarily the 
 
 A successful **actual paired forward/backward** receipt from the updated `p33_nasa_preflight.py`, for the same config, adaptation and device, is required. Input-only receipts are rejected. The preflight records device identity; old receipts lacking that field must not be relabeled. No receipt can substitute for actual model/runtime compatibility.
 
-In a compatible local runtime, assemble paths to the already audited assets:
+In a compatible local runtime, after creating a matching real paired preflight and explicit native-grid provenance as described in the [spatial guide](P3_3_MOONSTONE_NATIVE256.md), assemble paths to the audited assets. The example below explicitly selects the new Moonstone-native256 protocol:
 
 ```bash
 COMMON=(
@@ -46,6 +48,7 @@ COMMON=(
   --range-report "$RANGE_REPORT" --stats "$HF_CHANNEL_STATS"
   --class-map "$GEOLOGY_CLASS_MAP" --nasa-config "$NASA_CONFIG"
   --nasa-config-sha256 "$AUDITED_CONFIG_SHA256"
+  --spatial-policy moonstone_native256_v1
   --nasa-checkpoint "$NASA_CHECKPOINT" --upstream "$PINNED_NASA_CHECKOUT"
   --provenance "$TERRAIN_PROVENANCE_JSON" --preflight "$REAL_PREFLIGHT_RECEIPT"
   --manifest outputs/p33/pair_01_manifest.json --device cuda

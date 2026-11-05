@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("p33_pair_test_module", ROOT / "scripts/p33_train_pair.py")
 runner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
-from lunarrisk.nasa_transfer.contracts import file_sha256
+from lunarrisk.nasa_transfer.contracts import file_sha256, spatial_policy_receipt, NATIVE_SPATIAL_POLICY, NASA_CONFIG_SHA256
 
 
 def budget():
@@ -24,7 +24,7 @@ def budget():
 
 def fake_preflight():
     return {"kind": "ENGINEERING_PREFLIGHT_NOT_TRANSFER_SCORE", "official_model_execution": "PASS",
-            "input_contract": "PASS", "config_sha256": "a" * 64, "device": "cpu", "torch_version": "synthetic",
+            "input_contract": "PASS", "config_sha256": "a" * 64, "spatial_policy": spatial_policy_receipt(), "device": "cpu", "torch_version": "synthetic",
             "nasa_code_revision": runner.NASA_CODE_REVISION, "nasa_model_revision": runner.NASA_MODEL_REVISION,
             "adaptation": "frozen_probe", "checkpoint_coverage": {"checkpoint_sha256": runner.NASA_CHECKPOINT_SHA256,
                 "checkpoint_bytes": runner.NASA_CHECKPOINT_BYTES, "loaded_inference_fraction": 1.0},
@@ -58,6 +58,37 @@ class TestNasaPairRunner(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 runner.validate_preflight(report, "a" * 64, "frozen", "cpu")
 
+    def test_preflight_policy_missing_or_different_is_rejected(self):
+        for policy in (None, {}, spatial_policy_receipt(NATIVE_SPATIAL_POLICY, NASA_CONFIG_SHA256)):
+            report = fake_preflight()
+            report["spatial_policy"] = policy
+            with self.assertRaisesRegex(ValueError, "spatial policy"):
+                runner.validate_preflight(report, "a" * 64, "frozen", "cpu")
+        report = fake_preflight()
+        report.update(config_sha256=NASA_CONFIG_SHA256,
+                      spatial_policy=spatial_policy_receipt(NATIVE_SPATIAL_POLICY, NASA_CONFIG_SHA256))
+        runner.validate_preflight(report, NASA_CONFIG_SHA256, "frozen", "cpu", NATIVE_SPATIAL_POLICY)
+
+    def test_explicit_native_policy_is_locked_and_cannot_change_at_run(self):
+        report = fake_preflight()
+        report.update(config_sha256=NASA_CONFIG_SHA256,
+                      spatial_policy=spatial_policy_receipt(NATIVE_SPATIAL_POLICY, NASA_CONFIG_SHA256))
+        self.preflight.write_text(json.dumps(report))
+        common = [NASA_CONFIG_SHA256 if value == "a" * 64 else value for value in self.common]
+        datasets = {key: MagicMock() for key in ("train", "val")}
+        with patch.object(runner, "runtime_identity", return_value={"torch": "synthetic"}), \
+             patch.object(runner, "sources", return_value={"fake": "source"}), \
+             patch.object(runner, "asset_identity", return_value={"synthetic": True}), \
+             patch.object(runner, "load_data", return_value=(datasets, {"synthetic": True})), \
+             patch("lunarrisk.nasa_transfer.dataset.scan_datasets", return_value={"pixel_scan": "PASS"}):
+            runner.main(["--mode", "lock", *common, "--budget", str(self.budget),
+                         "--spatial-policy", NATIVE_SPATIAL_POLICY])
+            plan = json.loads(self.manifest.read_text())
+            self.assertEqual(plan["spatial_policy"], report["spatial_policy"])
+            with self.assertRaisesRegex(ValueError, "locked source, protocol"):
+                runner.main(["--mode", "run", *common, "--outdir", str(self.root / "run"),
+                             "--manifest-sha256", file_sha256(self.manifest)])
+
     def test_lock_scans_before_writing_and_records_all_budget_fields(self):
         datasets = {key: MagicMock() for key in ("train", "val")}
         with patch.object(runner, "runtime_identity", return_value={"torch": "synthetic"}), \
@@ -73,6 +104,7 @@ class TestNasaPairRunner(unittest.TestCase):
             self.assertEqual(plan["budget"], budget())
             self.assertEqual(plan["status"], "LOCKED_BEFORE_PAIR_SCORES")
             self.assertFalse(plan["test_scored"])
+            self.assertEqual(plan["spatial_policy"], spatial_policy_receipt())
             with self.assertRaises(FileExistsError):
                 runner.main(["--mode", "lock", *self.common, "--budget", str(self.budget)])
 
@@ -106,9 +138,11 @@ class TestNasaPairRunner(unittest.TestCase):
     def test_replay_command_handles_equals_options_and_absolute_paths(self):
         args = runner.parser().parse_args(["--mode=run", *self.common, "--outdir=relative-result", "--manifest-sha256", "b" * 64])
         args.data = Path("relative-data")
+        args.spatial_policy = NATIVE_SPATIAL_POLICY
         command = runner.replay_command(args, Path("relative-original"), Path("relative-replay"), 42, "pretrained")
         parsed = runner.parser().parse_args(command[2:])
         self.assertEqual(parsed.mode, "replay")
+        self.assertEqual(parsed.spatial_policy, NATIVE_SPATIAL_POLICY)
         self.assertEqual(parsed.seed, 42)
         self.assertEqual(parsed.arm, "pretrained")
         for name in ("data", "outdir", "run_dir", "metadata", "manifest"):

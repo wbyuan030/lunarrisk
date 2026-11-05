@@ -14,7 +14,7 @@ import torch
 from torch import nn
 
 from .contracts import (NASA_CODE_REVISION, NASA_CHECKPOINT_BYTES, NASA_CHECKPOINT_SHA256,
-                        audit_inference_state, file_sha256, unwrap_state_dict, validate_domain)
+                        audit_inference_state, file_sha256, unwrap_state_dict, validate_domain, spatial_policy_receipt, STRICT_SPATIAL_POLICY)
 
 
 def _verify_import_origins(root):
@@ -25,7 +25,7 @@ def _verify_import_origins(root):
                 raise RuntimeError(f"unpinned NASA module already loaded: {name}; use a fresh process")
 
 
-def official_backbone(config_path, config_sha256, upstream_path):
+def official_backbone(config_path, config_sha256, upstream_path, *, spatial_policy=STRICT_SPATIAL_POLICY):
     """Construct the audited base variant with unchanged canonical patch geometry.
 
     Requires the local agent's compatible, isolated NASA runtime. We intentionally
@@ -40,11 +40,12 @@ def official_backbone(config_path, config_sha256, upstream_path):
         raise ValueError("NASA source must be a clean checkout of the audited commit")
     if file_sha256(config_path) != config_sha256:
         raise ValueError("NASA config SHA256 mismatch")
+    spatial_policy_receipt(spatial_policy, config_sha256)
     from omegaconf import OmegaConf
     config = OmegaConf.load(config_path)
     domains = OmegaConf.to_container(config.data.domains, resolve=True)
     for key in ("dtm", "slope"):
-        validate_domain(domains[key])
+        validate_domain(domains[key], spatial_policy=spatial_policy)
     _verify_import_origins(root)
     sys.path.insert(0, str(root))
     try:

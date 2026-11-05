@@ -1,0 +1,62 @@
+{
+  "policy_id": "moonstone_native256_v1",
+  "status": "DECLARED_BEFORE_TRANSFER_SCORES_NOT_EXECUTED",
+  "created_date": "2026-11-05",
+  "base_commit": "e9d0f615a722f87c9bd195ae68de250c77dba246",
+  "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "nasa_model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "nasa_config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "input": "Unchanged full raw Moonstone256x256 elevation(m) and slope(degree), fixed Train5135/Val1155 cohort",
+  "transform": "No resize, crop, interpolation, reprojection, flips, augmentation or filtering; normalization from unchanged audited NASA YAML only",
+  "nasa_dataset_transform": "Not applied. UntokLunarTransform inherits pre_resize512 then normalization, followed by crop and flip. This downstream protocol preserves Moonstone tiles instead.",
+  "model_geometry": {
+    "input_size": [
+      256,
+      256
+    ],
+    "patch_size": [
+      16,
+      16
+    ],
+    "positions_per_modality": [
+      16,
+      16
+    ],
+    "config_edits": false,
+    "position_interpolation": false,
+    "patch_weight_resize": false
+  },
+  "physical_geometry": {
+    "grid": "equirectangular",
+    "pixels_per_degree": 128,
+    "lunar_radius_m": 1737400,
+    "nominal_north_south_mpp": 236.90117518866782,
+    "east_west_spacing": "nominal_north_south_mpp * cos(latitude)",
+    "tile_extent_degrees": [
+      2,
+      2
+    ],
+    "nasa_stats_gsd_m": 60,
+    "nasa_native_scale_equivalence": false,
+    "executed_raster_lineage_independently_reproduced": false
+  },
+  "pairing": "Same policy, raw inputs, normalization, cohort, head/adapters, order, optimizer, stopping and selection budgets for random and pretrained; only encoder initialization differs.",
+  "selection": "Explicit --spatial-policy moonstone_native256_v1 required for preflight, lock, run and replay; default strict_config_v1 still rejects pre_resize mismatch.",
+  "execution_gates_unchanged": [
+    "Audited real source and finite-sentinel provenance",
+    "Compatible private Python/ROCm/runtime; no shared environment replacement",
+    "Fixed checkpoint size/hash plus complete selected inference keys/shapes before state loading",
+    "Actual paired forward/backward with same device, adaptation and policy",
+    "Full unchanged Train/Val scan and actual budget lock before task scores"
+  ],
+  "scientific_boundary": "Exploratory Moonstone-native-grid transfer, not NASA preprocessing/physical-scale equivalence or established transfer benefit. No new scores exist.",
+  "test_access": "HOLD",
+  "source_evidence": {
+    "embedding": "ni_lfm/models/encoder_embeddings.py: ImageEncoderEmbedding builds256/16 positions and uses them directly at matching geometry; strict audit is necessary before upstream loading, which otherwise supports interpolation.",
+    "factory": "ni_lfm/models/lfm_utils.py: init_enc_dec_embeddings and _instantiate_embedding pass input_size and patch_size, not pre_resize.",
+    "modalities": "ni_lfm/data/modality_info.py: dtm/slope use UntokLunarTransform.",
+    "transforms": "ni_lfm/data/modality_transforms.py: pre_resize is a dataset operation, distinct from model input size.",
+    "local_config": "reports/evidence/p33_20261105/local_01/config_audit.json",
+    "local_source": "reports/evidence/p33_20261105/local_01/source_audit.json"
+  }
+}

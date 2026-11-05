@@ -16,6 +16,37 @@ NASA_MODEL_REVISION = "b657bdfe6fc4c0445d918f77a2d7b919805f3bce"
 NASA_CHECKPOINT_BYTES = 2425755440
 NASA_CHECKPOINT_SHA256 = "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b"
 MAPPING = {"elevation": "dtm", "slope": "slope"}
+STRICT_SPATIAL_POLICY = "strict_config_v1"
+NATIVE_SPATIAL_POLICY = "moonstone_native256_v1"
+SPATIAL_POLICIES = (STRICT_SPATIAL_POLICY, NATIVE_SPATIAL_POLICY)
+NASA_CONFIG_SHA256 = "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619"
+MOONSTONE_NOMINAL_MPP = 1737400.0 * np.pi / (180 * 128)
+
+
+def spatial_policy_receipt(spatial_policy=STRICT_SPATIAL_POLICY, config_sha256=None):
+    """Declare an input protocol, not evidence of model/runtime compatibility.
+
+    Native256 is an explicit downstream transfer protocol. It does not reproduce
+    NASA's pretraining data transforms, correct physical scale, or relax shape,
+    missingness, checkpoint, runtime or full-cohort execution checks.
+    """
+    if spatial_policy not in SPATIAL_POLICIES:
+        raise ValueError("unknown spatial policy")
+    receipt = {"policy_id": spatial_policy, "spatial_transform": "none",
+               "interpolation": "none", "test_access": "FORBIDDEN"}
+    if spatial_policy == NATIVE_SPATIAL_POLICY:
+        if config_sha256 != NASA_CONFIG_SHA256:
+            raise ValueError("native256 requires the audited fixed-revision NASA config SHA256")
+        receipt.update(config_sha256=NASA_CONFIG_SHA256,
+                       raw_shape=[256, 256], model_shape=[256, 256], patch_shape=[16, 16],
+                       upstream_pre_resize=[512, 512],
+                       upstream_dataset_pipeline="NOT_APPLIED_DOWNSTREAM_NATIVE_GRID_PROTOCOL",
+                       normalization="UNCHANGED_PINNED_CONFIG",
+                       nominal_north_south_mpp=MOONSTONE_NOMINAL_MPP,
+                       east_west_spacing="nominal_north_south_mpp * cos(latitude)",
+                       nasa_native_scale_equivalence=False,
+                       positional_embedding_compatibility="REQUIRES_STRICT_CHECKPOINT_AND_REAL_PREFLIGHT")
+    return receipt
 
 
 def file_sha256(path):
@@ -52,8 +83,10 @@ def _one_stat(stats, key):
     return float(values[0])
 
 
-def validate_domain(domain):
+def validate_domain(domain, *, spatial_policy=STRICT_SPATIAL_POLICY):
     """Validate the relevant entry of the *actual* pinned NASA YAML domains."""
+    if spatial_policy not in SPATIAL_POLICIES:
+        raise ValueError("unknown spatial policy")
     if domain.get("num_channels") != 1 or domain.get("pretokenized", False):
         raise ValueError("only one-channel untokenized terrain modalities are allowed")
     size = spatial_pair(domain.get("input_size"), "input_size")
@@ -61,7 +94,11 @@ def validate_domain(domain):
     if any(n % p for n, p in zip(size, patch)):
         raise ValueError("input_size must be divisible by patch_size")
     pre_resize = domain.get("pre_resize")
-    if pre_resize is not None and spatial_pair(pre_resize, "pre_resize") != size:
+    if spatial_policy == NATIVE_SPATIAL_POLICY:
+        if (size != (256, 256) or patch != (16, 16)
+                or spatial_pair(pre_resize, "pre_resize") != (512, 512)):
+            raise ValueError("native256 requires audited input256/patch16/pre_resize512 geometry")
+    elif pre_resize is not None and spatial_pair(pre_resize, "pre_resize") != size:
         raise ValueError("pre_resize differs from input_size; audit spatial preprocessing first")
     if "scaler" not in domain:
         raise ValueError("scaler must be explicit, including null for no normalization")
@@ -79,7 +116,7 @@ def validate_domain(domain):
     return size
 
 
-def validate_provenance(provenance):
+def validate_provenance(provenance, *, spatial_policy=STRICT_SPATIAL_POLICY):
     if provenance.get("input_space") != "raw_physical":
         raise ValueError("provide raw physical values, not Moonstone z-scores")
     if provenance.get("units") != {"elevation": "m", "slope": "degree"}:
@@ -88,15 +125,28 @@ def validate_provenance(provenance):
         raise ValueError("this first interface does not silently resize, crop or reproject")
     if provenance.get("domain_shift") != "MOONSTONE_TERRAIN_NOT_NASA_NATIVE":
         raise ValueError("the Moonstone/NASA physical-scale shift must be declared")
+    if spatial_policy not in SPATIAL_POLICIES:
+        raise ValueError("unknown spatial policy")
+    if provenance.get("spatial_policy", STRICT_SPATIAL_POLICY) != spatial_policy:
+        raise ValueError("provenance must explicitly match the selected spatial policy")
+    if spatial_policy == NATIVE_SPATIAL_POLICY:
+        if provenance.get("ground_sampling") != {
+                "grid": "equirectangular", "pixels_per_degree": 128,
+                "lunar_radius_m": 1737400, "east_west_spacing": "latitude_dependent",
+                "nasa_native_60m_equivalence": False}:
+            raise ValueError("native256 requires explicit audited anisotropic Moonstone ground sampling")
     resolution = provenance.get("meters_per_pixel")
     if isinstance(resolution, bool) or not isinstance(resolution, (float, int)) or not np.isfinite(resolution) or resolution <= 0:
         raise ValueError("a finite positive audited meters_per_pixel is required")
+    if spatial_policy == NATIVE_SPATIAL_POLICY and not np.isclose(resolution, MOONSTONE_NOMINAL_MPP, rtol=0, atol=1e-9):
+        raise ValueError("native256 meters_per_pixel must be audited nominal north-south spacing")
     for key in ("elevation_source", "slope_source", "units_evidence", "nodata_evidence"):
         if not isinstance(provenance.get(key), str) or not provenance[key].strip():
             raise ValueError(f"missing provenance: {key}")
 
 
-def prepare_terrain(raw, valid, domains, provenance):
+def prepare_terrain(raw, valid, domains, provenance, *,
+                    spatial_policy=STRICT_SPATIAL_POLICY, config_sha256=None):
     """Normalize already shape-matched raw terrain, never infer missingness from zero.
 
     This first tier rejects *any* missing pixels instead of passing fabricated
@@ -104,7 +154,8 @@ def prepare_terrain(raw, valid, domains, provenance):
     rows after seeing scores: freeze a common eligible cohort before either arm.
     No labels, geology names, optical bands, or invented geometry are accepted.
     """
-    validate_provenance(provenance)
+    spatial_policy_receipt(spatial_policy, config_sha256)
+    validate_provenance(provenance, spatial_policy=spatial_policy)
     if set(raw) != set(MAPPING) or set(valid) != set(MAPPING):
         raise ValueError("exactly elevation and slope, with explicit validity masks, are required")
     result, batch_size = {}, None
@@ -112,7 +163,7 @@ def prepare_terrain(raw, valid, domains, provenance):
         if destination not in domains:
             raise ValueError(f"NASA config lacks {destination}")
         domain = domains[destination]
-        size = validate_domain(domain)
+        size = validate_domain(domain, spatial_policy=spatial_policy)
         original = np.asarray(raw[source])
         if not np.issubdtype(original.dtype, np.floating):
             raise ValueError("raw terrain must use floating point physical units")

@@ -16,7 +16,7 @@ import numpy as np
 from ..benchmarks.moonstone import CHANNELS
 from ..benchmarks.prefix import PrefixClassifierDataset, _signature
 from .cohort import load_authoritative_cohorts
-from .contracts import file_sha256, fingerprint, prepare_terrain, validate_domain, validate_provenance
+from .contracts import file_sha256, fingerprint, prepare_terrain, validate_domain, validate_provenance, spatial_policy_receipt, STRICT_SPATIAL_POLICY
 
 NODATA_POLICY = "finite_only_no_finite_sentinels"
 
@@ -28,14 +28,18 @@ class TerrainDataset:
     must use open_datasets, which checks historical hashes and exact membership.
     """
 
-    def __init__(self, source, authoritative_targets, domains, provenance):
-        validate_provenance(provenance)
+    def __init__(self, source, authoritative_targets, domains, provenance, *,
+                 spatial_policy=STRICT_SPATIAL_POLICY, config_sha256=None):
+        spatial_policy_receipt(spatial_policy, config_sha256)
+        validate_provenance(provenance, spatial_policy=spatial_policy)
         if provenance.get("nodata_policy") != NODATA_POLICY:
             raise ValueError("audited finite-only NoData policy asserting no finite sentinels required")
         for key in ("dtm", "slope"):
-            validate_domain(domains[key])
+            validate_domain(domains[key], spatial_policy=spatial_policy)
         if source.split not in (0, 1) or isinstance(source.split, bool):
             raise ValueError("Train/Val only; Test is forbidden")
+        self._spatial_policy = spatial_policy
+        self._config_sha256 = config_sha256
         self._source = source
         self._domains = copy.deepcopy(domains)
         self._provenance = copy.deepcopy(provenance)
@@ -63,7 +67,8 @@ class TerrainDataset:
                                        :, :])[None, ...]
                for name in ("elevation", "slope")}
         valid = {name: np.isfinite(values) for name, values in raw.items()}
-        prepared = prepare_terrain(raw, valid, self._domains, self._provenance)
+        prepared = prepare_terrain(raw, valid, self._domains, self._provenance,
+                                   spatial_policy=self._spatial_policy, config_sha256=self._config_sha256)
         return {"dtm": prepared["dtm"][0], "slope": prepared["slope"][0],
                 "target": np.int64(self._targets[index]), "sample_id": self._ids[index]}
 
@@ -72,7 +77,8 @@ class TerrainDataset:
 
 
 def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
-                  range_report_path, plan_path, metadata_archive_path, domains, provenance):
+                  range_report_path, plan_path, metadata_archive_path, domains, provenance,
+                  spatial_policy=STRICT_SPATIAL_POLICY, config_sha256=None):
     """Verify assets once, return ({'train': ds, 'val': ds}, identity_receipt).
 
     `domains` must come from the caller's authenticated actual NASA config, and
@@ -87,11 +93,12 @@ def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
     # replacement between authentication and parsing by checking these bytes.
     from .cohort import TRAIN_PLAN_SHA256, _read_pinned
     plan = json.loads(_read_pinned(plan_path, TRAIN_PLAN_SHA256, "Train plan"))
-    validate_provenance(provenance)
+    policy_receipt = spatial_policy_receipt(spatial_policy, config_sha256)
+    validate_provenance(provenance, spatial_policy=spatial_policy)
     if provenance.get("nodata_policy") != NODATA_POLICY:
         raise ValueError("audited finite-only NoData policy asserting no finite sentinels required")
     for key in ("dtm", "slope"):
-        validate_domain(domains[key])
+        validate_domain(domains[key], spatial_policy=spatial_policy)
     paths = {"sha256": data_path, "stats_sha256": stats_path,
              "class_map_sha256": class_map_path, "metadata_sha256": metadata_path,
              "range_report_sha256": range_report_path}
@@ -116,7 +123,8 @@ def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
             source = PrefixClassifierDataset(data_path, stats, mapping, metadata_path,
                                              range_report_path, plan, task="geology", split=code)
             try:
-                datasets[split] = TerrainDataset(source, cohorts[split], domains, provenance)
+                datasets[split] = TerrainDataset(source, cohorts[split], domains, provenance,
+                                                  spatial_policy=spatial_policy, config_sha256=config_sha256)
             except BaseException:
                 source.close()
                 raise
@@ -130,7 +138,7 @@ def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
     receipt.update(protocol="P33_RAW_TERRAIN_FIXED_P31_COHORT_V1",
                    asset_sha256=hashes, data_bytes=signatures["sha256"][2],
                    domains_sha256=fingerprint(domains), provenance_sha256=fingerprint(provenance),
-                   nodata_policy=NODATA_POLICY, pixel_scan="NOT_RUN",
+                   nodata_policy=NODATA_POLICY, pixel_scan="NOT_RUN", spatial_policy=policy_receipt,
                    upstream_full_integrity_verified=False, test_access="FORBIDDEN")
     return datasets, receipt
 

@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from lunarrisk.nasa_transfer.contracts import (NASA_CODE_REVISION, NASA_MODEL_REVISION,
-    NASA_CHECKPOINT_BYTES, NASA_CHECKPOINT_SHA256, file_sha256, fingerprint)
+    NASA_CHECKPOINT_BYTES, NASA_CHECKPOINT_SHA256, file_sha256, fingerprint, spatial_policy_receipt, STRICT_SPATIAL_POLICY, SPATIAL_POLICIES)
 from lunarrisk.nasa_transfer.cohort import (TRAIN_PLAN_PATH, METADATA_ARCHIVE_PATH,
     TRAIN_PLAN_SHA256, METADATA_ARCHIVE_SHA256)
 from lunarrisk.nasa_transfer.experiment import validate_budget, paired_summary
@@ -29,7 +29,7 @@ SOURCES = (
     "src/lunarrisk/nasa_transfer/experiment.py", "src/lunarrisk/nasa_transfer/dataset.py",
     "src/lunarrisk/nasa_transfer/cohort.py", "src/lunarrisk/nasa_transfer/contracts.py",
     "src/lunarrisk/nasa_transfer/torch_adapter.py", "src/lunarrisk/benchmarks/prefix.py",
-    "src/lunarrisk/benchmarks/moonstone.py",
+    "src/lunarrisk/benchmarks/moonstone.py", "protocols/p33_native256_spatial_policy.json",
 )
 
 
@@ -44,7 +44,7 @@ def write_new(path, payload):
         handle.write(text)
 
 
-def validate_preflight(report, config_sha256, adaptation, device):
+def validate_preflight(report, config_sha256, adaptation, device, spatial_policy=STRICT_SPATIAL_POLICY):
     if (report.get("kind") != "ENGINEERING_PREFLIGHT_NOT_TRANSFER_SCORE"
             or report.get("official_model_execution") != "PASS" or report.get("input_contract") != "PASS"
             or report.get("config_sha256") != config_sha256 or report.get("device") != device
@@ -52,6 +52,8 @@ def validate_preflight(report, config_sha256, adaptation, device):
             or report.get("nasa_model_revision") != NASA_MODEL_REVISION
             or report.get("adaptation") != ("input_affine" if adaptation == "input_affine" else "frozen_probe")):
         raise ValueError("requires successful matching real-model preflight, not an input-only or synthetic check")
+    if report.get("spatial_policy") != spatial_policy_receipt(spatial_policy, config_sha256):
+        raise ValueError("preflight spatial policy missing or different; rerun under the declared protocol")
     coverage = report.get("checkpoint_coverage", {})
     if (coverage.get("checkpoint_sha256") != NASA_CHECKPOINT_SHA256
             or coverage.get("checkpoint_bytes") != NASA_CHECKPOINT_BYTES
@@ -85,6 +87,7 @@ def load_data(args):
         metadata_path=args.metadata, range_report_path=args.range_report,
         plan_path=ROOT / TRAIN_PLAN_PATH, metadata_archive_path=ROOT / METADATA_ARCHIVE_PATH,
         domains=config["data"]["domains"], provenance=provenance,
+        spatial_policy=args.spatial_policy, config_sha256=args.nasa_config_sha256,
     )
     return datasets, receipt
 
@@ -108,6 +111,7 @@ def parser():
     for name in ("data", "metadata", "range-report", "nasa-config", "nasa-checkpoint", "provenance", "preflight", "manifest"):
         result.add_argument("--" + name, type=Path, required=True)
     result.add_argument("--nasa-config-sha256", required=True)
+    result.add_argument("--spatial-policy", choices=SPATIAL_POLICIES, default=STRICT_SPATIAL_POLICY)
     result.add_argument("--upstream", type=Path, required=True)
     result.add_argument("--stats", type=Path, default=ROOT / "reports/evidence/p30_20261103/hf_channel_stats.json")
     result.add_argument("--class-map", type=Path, default=ROOT / "reports/evidence/p30_20261103/geologic_units.json")
@@ -127,7 +131,7 @@ def replay_command(args, directory, output, seed, arm):
                  "preflight", "manifest", "upstream", "stats", "class_map"):
         command += ["--" + name.replace("_", "-"), str(getattr(args, name).resolve())]
     command += ["--nasa-config-sha256", args.nasa_config_sha256, "--manifest-sha256", args.manifest_sha256,
-                "--device", args.device, "--run-dir", str(directory.resolve()), "--outdir", str(output.resolve()),
+                "--device", args.device, "--spatial-policy", args.spatial_policy, "--run-dir", str(directory.resolve()), "--outdir", str(output.resolve()),
                 "--seed", str(seed), "--arm", arm]
     return command
 
@@ -144,7 +148,7 @@ def main(argv=None):
         if args.manifest.exists():
             raise FileExistsError("never overwrite a locked manifest")
         budget = validate_budget(json.loads(args.budget.read_text()))
-        validate_preflight(json.loads(args.preflight.read_text()), args.nasa_config_sha256, budget["adaptation"], args.device)
+        validate_preflight(json.loads(args.preflight.read_text()), args.nasa_config_sha256, budget["adaptation"], args.device, args.spatial_policy)
         runtime = runtime_identity()
         if json.loads(args.preflight.read_text()).get("torch_version") != runtime["torch"]:
             raise ValueError("preflight torch runtime differs from the locking process")
@@ -158,8 +162,8 @@ def main(argv=None):
             close_data(datasets)
         if sources() != before:
             raise ValueError("source changed while scanning inputs")
-        manifest = {"protocol": "P33_NASA_TERRAIN_PAIRED_V1", "status": "LOCKED_BEFORE_PAIR_SCORES",
-                    "budget": budget, "runtime": runtime, "source_sha256": before, "assets": assets, "data_identity": receipt,
+        manifest = {"protocol": "P33_NASA_TERRAIN_PAIRED_V2", "status": "LOCKED_BEFORE_PAIR_SCORES",
+                    "budget": budget, "runtime": runtime, "spatial_policy": spatial_policy_receipt(args.spatial_policy, args.nasa_config_sha256), "source_sha256": before, "assets": assets, "data_identity": receipt,
                     "input_scan": scan, "nasa_code_revision": NASA_CODE_REVISION,
                     "nasa_model_revision": NASA_MODEL_REVISION, "device": args.device,
                     "arms": ["random", "pretrained"], "test_scored": False,
@@ -181,11 +185,12 @@ def main(argv=None):
         raise ValueError("run/replay require the unchanged lock-produced manifest SHA256")
     plan = json.loads(args.manifest.read_text())
     budget = validate_budget(plan["budget"])
-    if (plan["protocol"] != "P33_NASA_TERRAIN_PAIRED_V1" or plan["status"] != "LOCKED_BEFORE_PAIR_SCORES"
+    if (plan["protocol"] != "P33_NASA_TERRAIN_PAIRED_V2"
+            or plan.get("spatial_policy") != spatial_policy_receipt(args.spatial_policy, args.nasa_config_sha256) or plan["status"] != "LOCKED_BEFORE_PAIR_SCORES"
             or plan["source_sha256"] != sources() or plan["test_scored"] is not False
             or plan["arms"] != ["random", "pretrained"] or plan["device"] != args.device):
         raise ValueError("locked source, protocol, device or Test boundary changed")
-    validate_preflight(json.loads(args.preflight.read_text()), args.nasa_config_sha256, budget["adaptation"], args.device)
+    validate_preflight(json.loads(args.preflight.read_text()), args.nasa_config_sha256, budget["adaptation"], args.device, args.spatial_policy)
     if runtime_identity() != plan["runtime"]:
         raise ValueError("locked Python/NumPy/torch runtime changed")
     if asset_identity(args) != plan["assets"]:
@@ -196,7 +201,7 @@ def main(argv=None):
             raise ValueError("locked input identity changed")
         from lunarrisk.nasa_transfer.training import make_arm, train_arm, replay_arm, task_digest, prepare_device, release_device_memory
         from lunarrisk.nasa_transfer.torch_adapter import official_backbone, load_verified_checkpoint
-        factory = lambda: official_backbone(args.nasa_config, args.nasa_config_sha256, args.upstream)
+        factory = lambda: official_backbone(args.nasa_config, args.nasa_config_sha256, args.upstream, spatial_policy=args.spatial_policy)
         loader = lambda backbone: load_verified_checkpoint(backbone, args.nasa_checkpoint)
         manifest_sha256 = file_sha256(args.manifest)
         identity = lambda seed, arm: {"manifest_sha256": manifest_sha256, "seed": seed, "arm": arm}
