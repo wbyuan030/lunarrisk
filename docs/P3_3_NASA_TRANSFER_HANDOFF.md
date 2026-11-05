@@ -7,6 +7,7 @@ Updated 2026-11-05. **Input/weight guardrails implemented; official NASA executi
 - `src/lunarrisk/nasa_transfer/contracts.py`: raw elevation→`dtm` and slope→`slope`; audited units, provenance and resolution; explicit validity masks; normalization from the supplied NASA config. Valid zeros remain observations. Missing/nonfinite pixels fail closed. No optical-band padding, invented geometry or per-sample geology text.
 - `torch_adapter.py`: official pinned NASA base constructor; strict selected encoder checkpoint coverage, including positional buffers/register tokens; no permissive missing-key success. Unused generative decoder state is removed before loading/transfer. A frozen encoder plus ordinary 49-way head supports a **small input-affine adapter**, with gradients retained through the frozen encoder. This is not LoRA or full fine-tuning.
 - Paired random/pretrained construction uses the same architecture, canonical geometry, head initialization and adapter initialization. Task inputs, IDs, ordering, labels, optimizer and selection budgets must additionally be paired by the future training runner.
+- `cohort.py`: authoritative Train membership from the already frozen P31 plan and metadata archive, both verified against fixed repository-pinned SHA256 values. Declaring `split=train` alone is insufficient; unknown, Val/Test and wrong-target rows fail before model execution.
 - `scripts/p33_nasa_preflight.py`: executable input audit and optional one-batch paired forward/backward. No training loop, optimizer step, weight acquisition or Test scoring. Outputs are new files, never overwrite existing evidence.
 
 ## Verified source and unresolved assets
@@ -30,6 +31,8 @@ The cloud runtime is Python 3.12.14 with NumPy 2.3.5/PyYAML 6.0.3, but **no torc
 7. Only after compatibility passes, write a **separate actual training manifest/runner**: same-input random versus pretrained ordinary 49-class head, fixed Train/Val selection and paired seeds/budgets. The handoff includes no training runner or frozen training budget. Use old 28-channel B0 as context only, not as the modality-matched baseline. A conditional, separately declared input-affine or LoRA comparison can test adaptation; a negative frozen probe does not refute transfer learning.
 
 ## Batch and provenance contract
+
+The CLI automatically authenticates `protocols/p31_local_prefix_eval_plan.json` and `reports/evidence/p30_20261103/metadata_rows.csv.gz`. Optional `--train-plan`/`--train-metadata` paths may relocate identical files but cannot replace the pinned hashes. A changed training cohort needs a separately reviewed protocol update, not a user-supplied override hash. The receipt records the authority hashes and 5,135-row ordered-ID digest. This validates membership and labels, **not raw-pixel identity**; the local data extractor must still bind pixels to the authenticated HDF5 rows.
 
 Local NPZ fields, exactly:
 
@@ -71,7 +74,7 @@ After actual runtime and asset verification, add `--forward-backward --upstream 
 
 ## Verification boundary
 
-The cloud passed **17 runnable new tests**, including CLI subprocess checks. **9 torch wrapper tests are skipped** here and need the compatible private runtime. They use a tiny synthetic stand-in even when run, and do not establish official NASA compatibility. `compileall` passes. The full cloud suite is dependency-blocked, with the same 29 missing-dependency errors as the baseline-only suite; this does not supersede P3.2's earlier 626-test local pass.
+The cloud passed **19 runnable new tests**, including CLI subprocess checks. **9 torch wrapper tests are skipped** here and need the compatible private runtime. They use a tiny synthetic stand-in even when run, and do not establish official NASA compatibility. `compileall` passes. The full cloud suite is dependency-blocked, with the same 29 missing-dependency errors as the baseline-only suite; this does not supersede P3.2's earlier 626-test local pass.
 
 Actual NASA config semantics, artifact loading, real terrain I/O, ROCm finite gradients, runtime memory and task scores remain **NOT VERIFIED / NOT RUN**. See `reports/p3_3_nasa_transfer.md` and the machine-readable plan.
 

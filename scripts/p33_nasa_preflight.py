@@ -18,7 +18,12 @@ from lunarrisk.nasa_transfer.contracts import (NASA_CODE_REVISION, NASA_MODEL_RE
     file_sha256, fingerprint, prepare_terrain)
 
 
-def read_batch(path, provenance):
+from lunarrisk.nasa_transfer.cohort import (
+    TRAIN_PLAN_PATH, METADATA_ARCHIVE_PATH, load_authoritative_train, validate_train_batch,
+)
+
+
+def read_batch(path, provenance, authoritative_targets):
     if provenance.get("split") != "train":
         raise ValueError("finite-gradient preflight is Train only; Test remains HOLD")
     if provenance.get("batch_sha256") != file_sha256(path):
@@ -36,6 +41,7 @@ def read_batch(path, provenance):
         raise ValueError("targets must be paired Geology IDs 0..48")
     if any(value.shape[0] != len(ids) for value in raw.values()):
         raise ValueError("sample IDs/targets and arrays differ in length")
+    validate_train_batch(ids.tolist(), targets, authoritative_targets)
     return raw, valid, ids, targets
 
 
@@ -43,6 +49,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--batch", type=Path, required=True, help="raw Train NPZ, <=2 rows, no pickle")
     parser.add_argument("--provenance", type=Path, required=True)
+    root = Path(__file__).resolve().parents[1]
+    parser.add_argument("--train-plan", type=Path, default=root / TRAIN_PLAN_PATH,
+                        help="frozen repository Train plan; contents must match pinned SHA256")
+    parser.add_argument("--train-metadata", type=Path, default=root / METADATA_ARCHIVE_PATH,
+                        help="frozen metadata archive; contents must match pinned SHA256")
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--config-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True, help="new JSON path; never overwrite")
@@ -62,9 +73,11 @@ def main():
     import yaml
     config = yaml.safe_load(args.config.read_text())
     provenance = json.loads(args.provenance.read_text())
-    raw, valid, ids, targets = read_batch(args.batch, provenance)
+    authoritative_targets, cohort_receipt = load_authoritative_train(args.train_plan, args.train_metadata)
+    raw, valid, ids, targets = read_batch(args.batch, provenance, authoritative_targets)
     prepared = prepare_terrain(raw, valid, config["data"]["domains"], provenance)
     report = {"kind": "ENGINEERING_PREFLIGHT_NOT_TRANSFER_SCORE", "input_contract": "PASS",
+              "authoritative_train_membership": cohort_receipt,
               "nasa_code_revision": NASA_CODE_REVISION, "nasa_model_revision": NASA_MODEL_REVISION,
               "config_sha256": args.config_sha256, "batch_sha256": file_sha256(args.batch),
               "provenance_sha256": file_sha256(args.provenance), "sample_ids": ids.tolist(),

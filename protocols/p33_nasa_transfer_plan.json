@@ -6,7 +6,10 @@
   "entrypoint": "docs/P3_3_NASA_TRANSFER_HANDOFF.md",
   "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
   "nasa_model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
-  "mapping": {"elevation_m": "dtm", "slope_degrees": "slope"},
+  "mapping": {
+    "elevation_m": "dtm",
+    "slope_degrees": "slope"
+  },
   "domain_shift": "MOONSTONE_TERRAIN_NOT_NASA_NATIVE",
   "missingness": "Explicit masks; finite zeros are observed; any invalid pixel blocks first-tier input",
   "spatial_policy": "No implicit resize/crop/reprojection; canonical config input_size required",
@@ -18,10 +21,19 @@
   "optional_adapter": "Input-affine only, not LoRA; implemented wrapper but not executed",
   "training_runner": "NOT_IMPLEMENTED",
   "actual_training_manifest": "NOT_FROZEN",
-  "initial_ids": {"train": 5135, "validation": 1155, "final_terrain_eligible_ids": "NOT_AUDITED"},
+  "initial_ids": {
+    "train": 5135,
+    "validation": 1155,
+    "final_terrain_eligible_ids": "NOT_AUDITED"
+  },
   "public_test": "HOLD",
   "existing_p32_evidence": "PRESERVE_NO_REPEATED_18_RUN_MATRIX",
-  "cloud_limits": ["No torch", "No h5py", "No actual NASA config or checkpoint", "No raw Moonstone pixels"],
+  "cloud_limits": [
+    "No torch",
+    "No h5py",
+    "No actual NASA config or checkpoint",
+    "No raw Moonstone pixels"
+  ],
   "remaining_gates": [
     "Audit pinned config and true raw terrain units/source/NoData/geometry",
     "Resolve compatible isolated Python/ROCm dependencies without replacing shared runtime",
@@ -32,5 +44,6 @@
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,
   "no_four_gpu": true,
-  "raw_assets_in_git": false
+  "raw_assets_in_git": false,
+  "train_membership": "Fixed historical P31 plan and metadata archive hashes; validate Train IDs and Geology targets before any model execution"
 }
