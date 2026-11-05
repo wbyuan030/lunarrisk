@@ -69,5 +69,20 @@
   "raw_assets_in_git": false,
   "train_membership": "Fixed historical P31 plan and metadata archive hashes; validate Train IDs and Geology targets before any model execution",
   "runner_guide": "docs/P3_3_NASA_PAIRED_RUNNER.md",
+  "runner_local_validation": {
+    "base_commit": "423005e",
+    "report": "reports/p3_3_runner_local_validation.md",
+    "evidence": "reports/evidence/p33_20261105/runner_local_01/verification.json",
+    "focused_tests_pass": 64,
+    "full_tests_pass": 690,
+    "tests_skipped": 0,
+    "compileall": "PASS",
+    "cloud_skipped_tests_now_executed": 16,
+    "scope": "Synthetic CPU torch/HDF5 fixtures and mocked orchestration; not official NASA validation",
+    "official_model_execution": "NOT_RUN",
+    "actual_training_manifest": "NOT_FROZEN",
+    "real_full_cohort_scan": "NOT_RUN",
+    "environment_changed": false
+  },
   "automatic_resume": "NOT_IMPLEMENTED; interrupted outputs preserved"
 }

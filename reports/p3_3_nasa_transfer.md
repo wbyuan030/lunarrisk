@@ -4,6 +4,8 @@ Updated 2026-11-05. Latest implementation integrates concurrent local main `3932
 
 **Local follow-up 2026-11-05:** [local readiness audit](p3_3_local_readiness.md) resolves the missing-config/source-text gaps and passes28 new/654 full tests with zero skips after integrating the Train-membership correction. One authenticated raw Train batch was exercised against the actual config; the CLI exits1 at the unchanged spatial guard. Existing runtime compatibility and explicit paired preprocessing remain BLOCKED; official model and transfer scores NOT RUN. This section preserves the original cloud verification below rather than replacing its results. These654 local passes cover the pre-runner revision, not the new training engine.
 
+**Latest runner-local validation:** [64 focused / 690 full tests PASS, zero skips](p3_3_runner_local_validation.md), covering the new runner and all16 tests skipped in the cloud. Torch/HDF5 fixtures are synthetic and the successful lock fixture is mocked; official NASA model execution, full real cohort scan, budget lock, training and fresh-process replay remain NOT RUN. Prior local654 and cloud logs below are preserved for their own revisions.
+
 [Execution guide](../docs/P3_3_NASA_PAIRED_RUNNER.md) · [Input/source handoff](../docs/P3_3_NASA_TRANSFER_HANDOFF.md) · [Plan](../protocols/p33_nasa_transfer_plan.json).
 
 ## Implemented

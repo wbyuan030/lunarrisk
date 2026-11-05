@@ -1,6 +1,8 @@
 # P3.3 paired NASA training runner
 
-2026-11-05. **Implementation available; no real NASA training, GPU validation or transfer score has run in this cloud workspace.** The earlier preflight-only handoff is extended by `scripts/p33_train_pair.py` and `nasa_transfer/{dataset,experiment,training}.py`.
+2026-11-05. **Latest local validation:** [64 P33 tests / full690 tests PASS, zero skips](../reports/p3_3_runner_local_validation.md), including all16 cloud-skipped tests. These use synthetic CPU torch/HDF5 fixtures and mocked locks; no official NASA runtime/model, real cohort scan or actual training/replay was executed. Earlier cloud verification below remains historical.
+
+**Implementation available; no real NASA training, GPU validation or transfer score has run in this cloud workspace.** The earlier preflight-only handoff is extended by `scripts/p33_train_pair.py` and `nasa_transfer/{dataset,experiment,training}.py`.
 
 **Concurrent local findings integrated:** [local readiness report](../reports/p3_3_local_readiness.md) verifies the actual cached config SHA256 `fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619` and an authenticated Train crop. The current guard rejects the real `pre_resize=512` / `input_size=256` config. The new runner retains that guard: an explicit paired spatial policy and compatible private runtime are still required before it can lock or train. The prior local654-test pass does not cover this newly added runner.
 

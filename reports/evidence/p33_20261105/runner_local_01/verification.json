@@ -1,0 +1,73 @@
+{
+  "status": "LOCAL_RUNNER_TESTS_PASS_OFFICIAL_EXECUTION_STILL_BLOCKED",
+  "base_commit": "423005e7c67d96cc00fbc0509d75f89f1aab085b",
+  "focused_tests": {
+    "tests_pass": 64,
+    "tests_skipped": 0,
+    "seconds": 3.413,
+    "sha256": "76bf8661f2f49187caba450cdb4f6670484a690b1aa8c9b0b8d824ac30ec146d"
+  },
+  "full_tests": {
+    "tests_pass": 690,
+    "tests_skipped": 0,
+    "seconds": 20.699,
+    "sha256": "ec21435295f904fb70eb2eebe1b2f06761a3be49fb68f81c37fd02dfffbc53ec"
+  },
+  "compileall": "PASS",
+  "runtime": {
+    "python": "3.10.12",
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "numpy": "2.2.6",
+    "h5py": "3.16.0"
+  },
+  "source_sha256": {
+    "scripts/p33_nasa_preflight.py": "1bb753e44e790408ea6dee532b4e8aba1de765ef38ae8f298a9e019445d5c76c",
+    "scripts/p33_train_pair.py": "4a5a56f16f6b06cfaa8c9291ef85ea9fc688f91eec6bf9ca7a68a56eee4bde68",
+    "src/lunarrisk/nasa_transfer/experiment.py": "dcb193eaf771aeddc40d8f2fd32200820f4c8d2d0026efa9cad6667cfd043b51",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/dataset.py": "b8d19e7d82cb5901cf38d7391b2731cfd3f88fee19ff80fe596774edc3a19050",
+    "src/lunarrisk/nasa_transfer/__init__.py": "132473f6a56c9c20b1e4de2119e91f77f810164d394f8e848f403fe7a1953c5f",
+    "src/lunarrisk/nasa_transfer/training.py": "a1f451a77e2124d2f4eed238d3a6fd48a827e10eee95787646dca8334c9470f2",
+    "src/lunarrisk/nasa_transfer/torch_adapter.py": "c8a3e2f0212bf617519d539a6ef7ac417b13e6c334ed897bc3e7932d9ed7f7ff",
+    "src/lunarrisk/nasa_transfer/contracts.py": "3e1f06830ed43f6dc3b869ffa2992a8636682b7c22313d0b8e050f963d59bbbc",
+    "tests/test_p33_nasa_experiment.py": "ad9970756d2e5d939d89e3f3d996fc3421dcd452e37c171ef3bfad3f70a30203",
+    "tests/test_p33_nasa_training.py": "84a8120118935a3330b9aa7e6a67afc4678dcd449e4950a278d5a1e8c5dd15df",
+    "tests/test_p33_nasa_runner.py": "b07b7d190d356acf9dc9d162bc757e725ac9e124bcd5389be95ec7082f2350ba",
+    "tests/test_p33_nasa_torch.py": "877514dbf0860cb20e76fd234c034ed76a81e39a1cb623844093566caf152cec",
+    "tests/test_p33_nasa_contracts.py": "a6a1663b615ebd1fde36cdd284432577d58eeef516223622c19fbbae58e2e706",
+    "tests/test_p33_nasa_preflight.py": "240e5d2266558da74fbb7624243074b1a195833c0e065c8fc6fd93f40af7f14d",
+    "tests/test_p33_nasa_dataset.py": "d006200f36d0f9628e05af142b241fff4cc46a8b7be3aa43d6000c25bfd4244f",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078"
+  },
+  "previous_cloud_focused": {
+    "tests": 64,
+    "pass": 48,
+    "skip": 16
+  },
+  "previous_cloud_skips_now_executed": 16,
+  "fixture_scope": [
+    "Tiny synthetic torch backbones on CPU; not official NASA.",
+    "Synthetic temporary HDF5, not the retained Moonstone prefix.",
+    "State reconstruction/replay in training unit tests; actual launcher fresh-process NASA replay not executed.",
+    "Mock lock prints LOCKED in the log; no real NASA budget/manifest was frozen."
+  ],
+  "official_model_execution": "NOT_RUN",
+  "official_gpu_validation": "NOT_RUN",
+  "real_full_cohort_scan": "NOT_RUN",
+  "actual_training_manifest": "NOT_FROZEN",
+  "actual_training": "NOT_RUN",
+  "actual_fresh_process_nasa_replay": "NOT_RUN",
+  "remaining_gates": [
+    "Explicit paired spatial policy for authentic pre_resize512/input_size256.",
+    "Compatible private Python/ROCm runtime preserving current torch and shared environment.",
+    "Raw finite-sentinel/original-raster provenance and final cohort constraints remain explicit.",
+    "Fixed checkpoint verification and actual paired preflight before lock/run."
+  ],
+  "new_downloads": 0,
+  "packages_installed": false,
+  "environment_replaced": false,
+  "test_scored": false,
+  "old_experiments_repeated": false
+}
