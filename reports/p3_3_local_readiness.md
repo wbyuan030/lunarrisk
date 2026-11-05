@@ -1,13 +1,13 @@
 # P3.3 local configuration, terrain and runtime audit
 
-2026-11-05. Pulled `8eeab47` fast-forward from `origin/main` after checking a clean local main and no active experiments. **Local wrapper verification passes; official NASA model execution and transfer training remain BLOCKED / NOT RUN.** This report supplements the original [cloud handoff](p3_3_nasa_transfer.md), preserving its actual test results and all P3.2 evidence.
+2026-11-05. Pulled `8eeab47` fast-forward from `origin/main` after checking a clean local main and no active experiments, then merged concurrent `ce8b1ef` Train-membership authentication before publication. **Latest integrated local checks: 28 new tests and 654 full tests PASS, zero skips; official NASA model execution and transfer training remain BLOCKED / NOT RUN.** This report supplements the original [cloud handoff](p3_3_nasa_transfer.md), preserving its actual test results and all P3.2 evidence.
 
 ## Actual local results
 
 | Check | Result |
 |---|---|
-| New NASA tests in existing private ROCm runtime | **26 PASS, zero skips**, including all nine torch wrapper tests skipped in the cloud; 1.089 s |
-| Complete local regression suite | **652 PASS, zero skips**, 18.716 s |
+| New NASA tests in existing private ROCm runtime | **28 PASS, zero skips**, including all nine torch wrapper tests skipped in the cloud; 2.297 s |
+| Complete local regression suite | **654 PASS, zero skips**, 19.721 s |
 | `python3 -m compileall -q scripts src tests` | PASS |
 | Cached fixed-revision NASA config | Actual byte count, SHA256 and Git blob PASS |
 | Fixed source acquisition | Direct SSH, no proxy; ten selected public source files hash/blob verified; no upstream Python executed |
@@ -16,7 +16,7 @@
 | Official model construction/checkpoint loading/real forward-backward | **NOT RUN**; incompatible existing runtime and unresolved spatial policy |
 | Transfer task scores / actual training runner and manifest | NOT RUN / NOT IMPLEMENTED / NOT FROZEN |
 
-[Verification and source hashes](evidence/p33_20261105/local_01/verification.json), [readiness status](evidence/p33_20261105/local_01/readiness.json), [full log](evidence/p33_20261105/local_01/full_tests.log). The nine torch tests use tiny synthetic backbones, not the official model. Their passing status does not establish NASA/ROCm compatibility or transfer benefit.
+[Latest integrated verification and source hashes](evidence/p33_20261105/local_02/verification.json), [readiness blockers](evidence/p33_20261105/local_01/readiness.json), [latest full log](evidence/p33_20261105/local_02/full_tests.log). The initial 26/652-test checks at `8eeab47` remain preserved in [local_01](evidence/p33_20261105/local_01/verification.json), followed by a justified revalidation after upstream code changed; those historical receipts were not rewritten. The fixed-root cohort validator authenticates the real ID2705/target43 against the 5,135 original Train rows; the unchanged batch then still fails at the spatial guard. [Integrated real-input receipt](evidence/p33_20261105/local_02/real_input_preflight.json) and [stderr](evidence/p33_20261105/local_02/real_input_preflight.log) record this sequence. Raw-pixel identity is bound separately to the original crop SHA256, not inferred from membership alone. [All local evidence hashes](evidence/p33_20261105/local_02/evidence_manifest.json). The nine torch tests use tiny synthetic backbones, not the official model. Their passing status does not establish NASA/ROCm compatibility or transfer benefit.
 
 ## Authentic NASA config recovered locally
 
@@ -51,7 +51,7 @@ Host and running `rocm-lab` container both use Python **3.10.12**. No existing P
 
 Pinned NASA `pyproject.toml` declares Python `>=3.11,<3.13`; `requirements.txt` declares torch `>=2.12,<3`, NumPy `>=2.4.4,<3` and additional dependencies. The existing environment does not meet these declarations. The unchanged constructor's Python guard was actually exercised and rejected it before any upstream import or construction. This does not prove every declared package is an inference minimum, or justify ignoring version checks. No compatible reduced dependency path was validated. No packages were installed, no torch/ROCm/shared runtime was replaced, and no alternative runtime was created.
 
-Initial bounded direct HTTPS attempts timed out; the outstanding request was stopped after discovering cached config/card and the successful direct Git route. [Attempt receipt](evidence/p33_20261105/local_01/direct_https_attempt.json) preserves completed failures. Direct SSH with proxy environment removed successfully fetched shallow filtered objects at the two exact source commits, then selected ten text files totaling143,980 extracted bytes. This sum is **not measured network transfer**, which includes Git objects/protocol overhead and was not byte-metered. No proxy fallback, credentials change, model weights, tokenizers, full snapshot, or additional raw data acquisition occurred. The 2,425,755,440-byte checkpoint was not downloaded while earlier execution gates remained blocked.
+Direct HTTPS produced three timeouts and one verified 33,902-byte backbone-source file; remaining requests were stopped after locating the cached config/card. [Attempt receipt](evidence/p33_20261105/local_01/direct_https_attempt.json) preserves the completed outcomes. Subsequent direct SSH with proxy environment removed successfully fetched shallow filtered objects at the two exact source commits, then selected ten text files totaling143,980 extracted bytes. This sum is **not measured network transfer**, which includes Git objects/protocol overhead and was not byte-metered. No proxy fallback, credentials change, model weights, tokenizers, full snapshot, or additional raw data acquisition occurred. The 2,425,755,440-byte checkpoint was not downloaded while earlier execution gates remained blocked.
 
 ## Commands and next gate
 

@@ -34,7 +34,7 @@
     }
   ],
   "overall_status": "STOPPED_AFTER_DIRECT_HTTPS_TIMEOUTS",
-  "reason": "Pinned config/model card found in existing cache; direct SSH source acquisition succeeded; stopped pending fourth HTTPS request.",
+  "reason": "Stopped remaining text requests after three timeouts and one verified source-file success. Pinned config/model card were found in cache; subsequent direct SSH acquisition obtained the required source text.",
   "successful_files": 1,
   "checkpoint_requests": 0
 }

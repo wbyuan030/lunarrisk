@@ -1,0 +1,36 @@
+{
+  "status": "INTEGRATED_UPSTREAM_COHORT_FIX_VERIFIED_OFFICIAL_MODEL_BLOCKED",
+  "verified_commit": "c70b3ea8e80da3ab9d88381047d0eb932e5f328c",
+  "upstream_fix_commit": "ce8b1ef15c0d03eec6afa9dc6380336ff95c3621",
+  "focused_tests": {
+    "pass": 28,
+    "skip": 0,
+    "seconds": 2.297
+  },
+  "full_tests": {
+    "pass": 654,
+    "skip": 0,
+    "seconds": 19.721
+  },
+  "compileall": "PASS",
+  "logs_sha256": {
+    "focused_tests.log": "2c4ce31c58dcffa25b053e1037479b4d1ab6c5e6b6dc6cfd7c2bf7ac95d29b4a",
+    "full_tests.log": "70dda7b47146126377788bdb1be4ace11460798ad4ccfbcb506b5cddeb30ff5a"
+  },
+  "source_sha256": {
+    "scripts/p33_nasa_preflight.py": "efa9e5d35f3d80cad1f0c58df78c00f553f86faa33e84463ae6a6140fc399876",
+    "src/lunarrisk/nasa_transfer/cohort.py": "c268d6167f1673efdd04d2d85e5d4368f8be009f76e25fe038cb40bab4fe1886",
+    "src/lunarrisk/nasa_transfer/__init__.py": "132473f6a56c9c20b1e4de2119e91f77f810164d394f8e848f403fe7a1953c5f",
+    "src/lunarrisk/nasa_transfer/torch_adapter.py": "c8a3e2f0212bf617519d539a6ef7ac417b13e6c334ed897bc3e7932d9ed7f7ff",
+    "src/lunarrisk/nasa_transfer/contracts.py": "3e1f06830ed43f6dc3b869ffa2992a8636682b7c22313d0b8e050f963d59bbbc",
+    "tests/test_p33_nasa_torch.py": "877514dbf0860cb20e76fd234c034ed76a81e39a1cb623844093566caf152cec",
+    "tests/test_p33_nasa_contracts.py": "a6a1663b615ebd1fde36cdd284432577d58eeef516223622c19fbbae58e2e706",
+    "tests/test_p33_nasa_preflight.py": "240e5d2266558da74fbb7624243074b1a195833c0e065c8fc6fd93f40af7f14d"
+  },
+  "prior_source_config_runtime_evidence": "reports/evidence/p33_20261105/local_01/",
+  "real_input": "real_input_preflight.json",
+  "official_model_execution": "NOT_RUN",
+  "test_scored": false,
+  "packages_installed": false,
+  "raw_assets_in_git": false
+}

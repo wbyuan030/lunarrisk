@@ -1,0 +1,25 @@
+{
+  "upstream_fix_commit": "ce8b1ef",
+  "status": "AUTHORITATIVE_TRAIN_AUTHENTICATION_PASS_SPATIAL_GUARD_EXPECTED_REJECTION",
+  "authority": {
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "train_rows": 5135,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17"
+  },
+  "sample_ids": [
+    "2705"
+  ],
+  "targets": [
+    43
+  ],
+  "batch_sha256": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+  "provenance_sha256": "89ad20d5ef736b13f03a19facff5bd0219ee54dbf0f12820e441e8b9ed104f03",
+  "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "exit_code": 1,
+  "failure": "pre_resize differs from input_size; audit spatial preprocessing first",
+  "success_receipt_created": false,
+  "official_model_execution": "NOT_RUN",
+  "test_scored": false,
+  "log_sha256": "d0ad699f150108190bf6ecdf2bb9b302c0bba98e8ab4ef6386ceec32d5bb196f"
+}

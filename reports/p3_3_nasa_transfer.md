@@ -2,7 +2,7 @@
 
 2026-11-05, based on main `aea52f28444598df7692f76ac67bbd0466b65ff7`.
 
-**Local follow-up 2026-11-05:** [local readiness audit](p3_3_local_readiness.md) resolves the missing-config/source-text gaps and passes26 new/652 full tests with zero skips. One authenticated raw Train batch was exercised against the actual config; the CLI exits1 at the unchanged spatial guard. Existing runtime compatibility and explicit paired preprocessing remain BLOCKED; official model and transfer scores NOT RUN. This section preserves the original cloud verification below rather than replacing its results.
+**Local follow-up 2026-11-05:** [local readiness audit](p3_3_local_readiness.md) resolves the missing-config/source-text gaps and passes28 new/654 full tests with zero skips after integrating the Train-membership correction. One authenticated raw Train batch was exercised against the actual config; the CLI exits1 at the unchanged spatial guard. Existing runtime compatibility and explicit paired preprocessing remain BLOCKED; official model and transfer scores NOT RUN. This section preserves the original cloud verification below rather than replacing its results.
 
 **Implemented a fail-closed local NASA terrain preflight, not a completed transfer experiment.** See the [execution handoff](../docs/P3_3_NASA_TRANSFER_HANDOFF.md) and [plan](../protocols/p33_nasa_transfer_plan.json).
 

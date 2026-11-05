@@ -1,0 +1,69 @@
+{
+  "artifacts": {
+    "reports/evidence/p33_20261105/local_01/config_audit.json": {
+      "bytes": 2319,
+      "sha256": "4ae0a70cea59b500f39fec499693c2cc7808d4d7eaf7df6876550b50a53a6fa0"
+    },
+    "reports/evidence/p33_20261105/local_01/direct_https_attempt.json": {
+      "bytes": 1842,
+      "sha256": "79c4e024fb0236dd51016f67dabe8093852dd06d281b3d8b26f06bf82a776fdb"
+    },
+    "reports/evidence/p33_20261105/local_01/focused_tests.log": {
+      "bytes": 2814,
+      "sha256": "c7cc33ff56f1cde8014311f8092a95a82bd16baf4e4e0410879df30ba55a6ef1"
+    },
+    "reports/evidence/p33_20261105/local_01/full_tests.log": {
+      "bytes": 74434,
+      "sha256": "5c402a07750718f5698b5040ee122c9f2eaf9926a8b72fc7478b7f385434089c"
+    },
+    "reports/evidence/p33_20261105/local_01/raw_terrain_audit.json": {
+      "bytes": 1947,
+      "sha256": "7015eca910906e88530a36eeca6d81e687da475812cda932336d094d4071fdf6"
+    },
+    "reports/evidence/p33_20261105/local_01/readiness.json": {
+      "bytes": 1357,
+      "sha256": "53542d92e1fb31e70e6181e03dc5875e30e6402a22e24c0cd7ef2c7dfd5fdbf1"
+    },
+    "reports/evidence/p33_20261105/local_01/real_input_preflight.json": {
+      "bytes": 1283,
+      "sha256": "b5d033bd1e7444fa0e88bbe857929563e94cf7d752d927381ca0fa09622e63ac"
+    },
+    "reports/evidence/p33_20261105/local_01/real_input_preflight.log": {
+      "bytes": 1065,
+      "sha256": "ca9df3158ecc9f1bc740747d46d17af348d7235f306f90721d143fa757df2663"
+    },
+    "reports/evidence/p33_20261105/local_01/runtime.json": {
+      "bytes": 1186,
+      "sha256": "397036531e5addbec348cd275a4c7ff669f0d56ccafc1397e4d14df796027458"
+    },
+    "reports/evidence/p33_20261105/local_01/source_audit.json": {
+      "bytes": 7034,
+      "sha256": "8b08c1f6c0cdc2745b65854671f20b1d1f827fccadc8afb19ecf8da2c8d85873"
+    },
+    "reports/evidence/p33_20261105/local_01/verification.json": {
+      "bytes": 1797,
+      "sha256": "7244bafd12461178d3397c7bcd6e57ed94cc9cc0b9a397c1d0fd508d281fd125"
+    },
+    "reports/evidence/p33_20261105/local_02/focused_tests.log": {
+      "bytes": 3042,
+      "sha256": "2c4ce31c58dcffa25b053e1037479b4d1ab6c5e6b6dc6cfd7c2bf7ac95d29b4a"
+    },
+    "reports/evidence/p33_20261105/local_02/full_tests.log": {
+      "bytes": 74662,
+      "sha256": "70dda7b47146126377788bdb1be4ace11460798ad4ccfbcb506b5cddeb30ff5a"
+    },
+    "reports/evidence/p33_20261105/local_02/real_input_preflight.json": {
+      "bytes": 1078,
+      "sha256": "954cbe135a21194d1cd31a2f4c0278f5d670731cccbfbb5ebe1e2a91d4a8115a"
+    },
+    "reports/evidence/p33_20261105/local_02/real_input_preflight.log": {
+      "bytes": 1065,
+      "sha256": "d0ad699f150108190bf6ecdf2bb9b302c0bba98e8ab4ef6386ceec32d5bb196f"
+    },
+    "reports/evidence/p33_20261105/local_02/verification.json": {
+      "bytes": 1770,
+      "sha256": "44c95625f5e84101bbac3a12c592964df459932c37bc8a2fee639def3d720f7f"
+    }
+  },
+  "scope": "Both local audit stages; excludes this manifest itself, raw arrays, weights and private paths."
+}

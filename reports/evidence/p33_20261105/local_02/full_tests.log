@@ -1,0 +1,1014 @@
+test_different_tile_order_fails (test_aggregate_seeds.TestCohortChecks) ... ok
+test_identical_cohorts_pass (test_aggregate_seeds.TestCohortChecks) ... ok
+test_split_independence_detects_group_leak (test_aggregate_seeds.TestCohortChecks) ... ok
+test_event_label_drift_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_fixed_capacity_accepts_equal_counts (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_fixed_capacity_rejects_different_mask_schemes (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_fixed_capacity_rejects_mixed_modes (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_fixed_capacity_rejects_unequal_counts (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_group_drift_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_identical_seeds_pass (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_legacy_mode_skips_capacity_comparison (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_missing_hyperparameters_are_reported_not_guessed (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_nll_clips_extreme_probabilities (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_nll_matches_manual_computation (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_probability_quality_accepts_valid_frames (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_probability_quality_rejects_claimed_calibration_without_metrics (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_probability_quality_rejects_nan (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_seed_batch_drift_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_seed_protocol_consistency_passes (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_seed_provenance_drift_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_truth_drift_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_wrong_seed_label_is_fatal (test_aggregate_seeds.TestNewConsistencyGuards) ... ok
+test_raw_event_head_audit_detects_identical_predictions (test_aggregate_seeds.TestP17AuditGuards) ... ok
+test_raw_event_head_audit_passes_distinct_outputs (test_aggregate_seeds.TestP17AuditGuards) ... ok
+test_raw_event_head_audit_rejects_missing_exports (test_aggregate_seeds.TestP17AuditGuards) ... ok
+test_split_audit_refuses_leaked_groups_and_products (test_aggregate_seeds.TestP17AuditGuards) ... ok
+test_brier_statistic_uses_probabilities (test_aggregate_seeds.TestPairedBootstrap) ... ok
+test_clear_winner_excludes_zero (test_aggregate_seeds.TestPairedBootstrap) ... ok
+test_differences_are_averaged_over_seeds (test_aggregate_seeds.TestPairedBootstrap) ... ok
+test_identical_models_have_zero_difference (test_aggregate_seeds.TestPairedBootstrap) ... ok
+test_chain_collapses_into_one_group (test_audit_groups_p20.TestCluster) ... ok
+test_edges_to_filtered_scenes_do_not_merge (test_audit_groups_p20.TestCluster) ... ok
+test_missing_distance_is_not_an_edge (test_audit_groups_p20.TestCluster) ... ok
+test_threshold_is_exclusive (test_audit_groups_p20.TestCluster) ... ok
+test_unlisted_scene_still_reported (test_audit_groups_p20.TestCluster) ... ok
+test_singletons_are_kept (test_audit_groups_p20.TestUnionFind) ... ok
+test_transitive_merge (test_audit_groups_p20.TestUnionFind) ... ok
+test_antimeridian_pair_is_close (test_audit_groups_pairwise.TestDistance) ... ok
+test_identical_polygons_are_zero_apart (test_audit_groups_pairwise.TestDistance) ... ok
+test_multipart_takes_the_nearest_part (test_audit_groups_pairwise.TestDistance) ... ok
+test_offset_polygons_report_the_gap_not_the_centre_distance (test_audit_groups_pairwise.TestDistance) ... ok
+test_polar_pair_is_close (test_audit_groups_pairwise.TestDistance) ... ok
+test_shift_lon_wraps_into_the_local_frame (test_audit_groups_pairwise.TestDistance) ... ok
+test_bridging_scene_merges_even_when_nobody_points_at_it (test_audit_groups_pairwise.TestGrouping) ... ok
+test_overlapping_pair_has_area_while_touching_pair_does_not (test_audit_groups_pairwise.TestGrouping) ... ok
+test_scenes_beyond_the_threshold_stay_separate (test_audit_groups_pairwise.TestGrouping) ... ok
+test_sparim_like_zero_distance_pair_is_one_group (test_audit_groups_pairwise.TestGrouping) ... ok
+test_min_intergroup_is_the_smallest_cross_group_distance (test_audit_groups_pairwise.TestIntergroup) ... ok
+test_metadata_screen_never_claims_strict_ood (test_audit_lroc_dtm.TestEndToEndVerdict) ... ok
+test_longitude_wraparound_uses_moon_centered_vectors (test_audit_lroc_dtm.TestPolygonScreen) ... ok
+test_missing_or_invalid_polygon_never_passes (test_audit_lroc_dtm.TestPolygonScreen) ... ok
+test_thin_footprint_is_not_approximated_by_equal_area_radius (test_audit_lroc_dtm.TestPolygonScreen) ... ok
+test_dbf_truncation_is_detected (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_duplicate_ids_are_deduplicated (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_empty_and_malformed_tokens_are_classified (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_empty_ids_are_not_auditable (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_legitimate_sources_with_camera_suffix (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_nine_digit_legacy_ids_are_valid (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_short_or_long_numeric_ids_are_rejected (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_two_letter_camera_level_suffixes_are_valid (test_audit_lroc_dtm.TestSourceIDs) ... ok
+test_candidate_groups_merge_only_close_candidates (test_audit_lroc_footprints.TestCandidateSpacing) ... ok
+test_nearest_neighbour_is_a_polygon_distance (test_audit_lroc_footprints.TestCandidateSpacing) ... ok
+test_pair_distance_across_the_antimeridian (test_audit_lroc_footprints.TestCandidateSpacing) ... ok
+test_distance_across_the_antimeridian_is_short (test_audit_lroc_footprints.TestDistances) ... ok
+test_no_tiles_gives_infinite_distance (test_audit_lroc_footprints.TestDistances) ... ok
+test_overlapping_polygons_have_zero_distance (test_audit_lroc_footprints.TestDistances) ... ok
+test_polar_separation_is_not_inflated (test_audit_lroc_footprints.TestDistances) ... ok
+test_separated_squares_distance_matches_arc_length (test_audit_lroc_footprints.TestDistances) ... ok
+test_tile_footprints_use_geographic_corners_and_split_antimeridian (test_audit_lroc_footprints.TestDistances) ... ok
+test_audit_selects_only_independent_sources (test_audit_lroc_footprints.TestEndToEnd) ... ok
+test_normalisation_of_both_conventions (test_audit_lroc_footprints.TestLongitudes) ... ok
+test_unwrap_keeps_vertices_contiguous (test_audit_lroc_footprints.TestLongitudes) ... ok
+test_antimeridian_polygon_stays_local (test_audit_lroc_footprints.TestPolygons) ... ok
+test_impossible_latitude_is_rejected (test_audit_lroc_footprints.TestPolygons) ... ok
+test_inner_rings_are_filled_conservatively (test_audit_lroc_footprints.TestPolygons) ... ok
+test_moon_2000_prj_is_accepted_and_other_bodies_are_not (test_audit_lroc_footprints.TestPolygons) ... ok
+test_self_intersecting_shell_is_reported (test_audit_lroc_footprints.TestPolygons) ... ok
+test_short_and_degenerate_rings_are_rejected (test_audit_lroc_footprints.TestPolygons) ... ok
+test_valid_square (test_audit_lroc_footprints.TestPolygons) ... ok
+test_camera_suffixes_are_ignored_but_malformed_ids_are_not (test_audit_lroc_footprints.TestReadmeParsing) ... ok
+test_missing_and_empty_sections_are_fail_closed (test_audit_lroc_footprints.TestReadmeParsing) ... ok
+test_source_block_is_parsed_and_deduplicated (test_audit_lroc_footprints.TestReadmeParsing) ... ok
+test_pass_requires_every_check (test_audit_lroc_footprints.TestVerdict) ... ok
+test_dtm_only_scene_has_no_optical (test_audit_lroc_optical.TestClassification) ... ok
+test_orthomosaic_scene_is_detected (test_audit_lroc_optical.TestClassification) ... ok
+test_links_are_extracted_deduplicated_and_sorted (test_audit_lroc_optical.TestLinkHandling) ... ok
+test_summary_counts_from_cached_pages (test_audit_lroc_optical.TestMainWithCache) ... ok
+test_sibling_classification (test_audit_lroc_optical.TestSiblingDiscovery) ... ok
+test_sibling_products_exclude_the_base_id (test_audit_lroc_optical.TestSiblingDiscovery) ... ok
+test_missing_targets_are_counted_per_split (test_audit_targets_p21.TestAvailability) ... ok
+test_declared_target_in_inputs_is_flagged (test_audit_targets_p21.TestLeakage) ... ok
+test_markdown_lists_violations_and_leakage (test_audit_targets_p21.TestLeakage) ... ok
+test_project_inputs_are_clean (test_audit_targets_p21.TestLeakage) ... ok
+test_garbage_is_treated_as_missing (test_audit_targets_p21.TestParsing) ... ok
+test_missing_is_none_not_zero (test_audit_targets_p21.TestParsing) ... ok
+test_clean_split_has_no_spans (test_audit_targets_p21.TestSplitIntegrity) ... ok
+test_duplicate_ids_are_reported (test_audit_targets_p21.TestSplitIntegrity) ... ok
+test_group_spanning_splits_is_reported (test_audit_targets_p21.TestSplitIntegrity) ... ok
+test_clean_rows_have_no_violations (test_audit_targets_p21.TestViolations) ... ok
+test_g15_above_g10_is_flagged (test_audit_targets_p21.TestViolations) ... ok
+test_negative_roughness_is_flagged (test_audit_targets_p21.TestViolations) ... ok
+test_probability_out_of_range_is_flagged (test_audit_targets_p21.TestViolations) ... ok
+test_blocks_are_zone_aware (test_build_manifest.TestGrouping) ... ok
+test_clean_split_has_no_group_overlap (test_build_manifest.TestGrouping) ... ok
+test_clean_split_keeps_group_whole (test_build_manifest.TestGrouping) ... ok
+test_footprint_wkt (test_build_manifest.TestGrouping) ... ok
+test_product_spanning_blocks_connects_them (test_build_manifest.TestGrouping) ... ok
+test_products_sharing_a_block_share_a_group (test_build_manifest.TestGrouping) ... ok
+test_manifest_columns_and_flags (test_build_manifest.TestManifest) ... ok
+test_bad_threshold_rejected (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_dateline_short_path (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_far_centers_still_not_a_proof_of_polygon_clearance (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_one_selected_one_other_nearby_is_not_ignored (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_reject_bad_pool_geometry (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_reject_missing_or_duplicate_selection_groups (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_spa_style_duplicate_centers_fail_pending_freeze (test_check_group_pool_collision.TestCollisionTripwire) ... ok
+test_pool_filter_and_camera_completeness (test_check_p20_availability.TestAvailability) ... ok
+test_scene_with_both_cameras_counts_as_complete (test_check_p20_availability.TestAvailability) ... ok
+test_headline_metrics_from_exported_columns (test_compare_ablations.TestCohortTable) ... ok
+test_increment_change_is_detected (test_compare_ablations.TestDifferenceOfDifferences) ... ok
+test_reference_is_skipped (test_compare_ablations.TestDifferenceOfDifferences) ... ok
+test_brier_uses_probability_columns (test_compare_ablations.TestPairedDifference) ... ok
+test_clear_win_excludes_zero (test_compare_ablations.TestPairedDifference) ... ok
+test_identical_models_are_zero (test_compare_ablations.TestPairedDifference) ... ok
+test_seeds_are_averaged (test_compare_ablations.TestPairedDifference) ... ok
+test_missing_raw_event_head_is_fatal (test_compare_ablations.TestProbabilityQuality) ... ok
+test_nan_probability_is_fatal (test_compare_ablations.TestProbabilityQuality) ... ok
+test_out_of_range_probability_is_fatal (test_compare_ablations.TestProbabilityQuality) ... ok
+test_valid_frame_passes (test_compare_ablations.TestProbabilityQuality) ... ok
+test_channel_list_must_match_ablation_flags (test_compare_ablations.TestProtocolConsistency) ... ok
+test_fixed_mask_capacity_must_match_across_configs (test_compare_ablations.TestProtocolConsistency) ... ok
+test_hyperparameter_drift_is_fatal (test_compare_ablations.TestProtocolConsistency) ... ok
+test_identical_configs_pass (test_compare_ablations.TestProtocolConsistency) ... ok
+test_mixed_ablation_flags_within_a_config_are_fatal (test_compare_ablations.TestProtocolConsistency) ... ok
+test_mixing_legacy_and_fixed_mask_is_fatal (test_compare_ablations.TestProtocolConsistency) ... ok
+test_provenance_drift_is_fatal (test_compare_ablations.TestProtocolConsistency) ... ok
+test_direct_event_replay_uses_saved_scaler_and_original_weights (test_compare_p22.TestBaselineCheckpoints) ... ok
+test_ridge_and_original_coarse_heads_replay_weights_scaler_and_calibration (test_compare_p22.TestBaselineCheckpoints) ... ok
+test_hand_value (test_compare_p22.TestBrierAndNll) ... ok
+test_probabilities_are_clipped_away_from_zero (test_compare_p22.TestBrierAndNll) ... ok
+test_identical_ids_hash_identically_regardless_of_order (test_compare_p22.TestCanonicalSet) ... ok
+test_intersection_drops_low_nac_tiles_and_reports_them (test_compare_p22.TestCanonicalSet) ... ok
+test_missing_invalid_metadata_and_missing_assets_fail_closed (test_compare_p22.TestCanonicalSet) ... ok
+test_prediction_rows_match_canonical_labels_and_probability_schema (test_compare_p22.TestCanonicalSet) ... ok
+test_saved_run_checks_every_model_checksum (test_compare_p22.TestCanonicalSet) ... ok
+test_stale_model_files_and_changed_sources_are_rejected (test_compare_p22.TestCanonicalSet) ... ok
+test_calibrate_threshold_uses_only_the_passed_frame (test_compare_p22.TestCoverage) ... ok
+test_deployable_threshold_comes_from_the_given_cutoff (test_compare_p22.TestCoverage) ... ok
+test_oracle_accepts_the_lowest_probabilities (test_compare_p22.TestCoverage) ... ok
+test_oracle_ties_use_exact_floor_count_and_sample_id_order (test_compare_p22.TestCoverage) ... ok
+test_alignment_rejects_different_sample_sets (test_compare_p22.TestPairedBootstrap) ... ok
+test_delta_sign_and_ci (test_compare_p22.TestPairedBootstrap) ... ok
+test_deployable_bootstrap_has_fixed_cutoffs_and_paired_counts (test_compare_p22.TestPairedBootstrap) ... ok
+test_undefined_ratios_are_null_and_never_imputed_zero (test_compare_p22.TestPairedBootstrap) ... ok
+test_l_and_r_of_one_acquisition_are_merged (test_coverage_qa_p20.TestAcquisitionGrouping) ... ok
+test_names_without_a_product_id_are_ignored (test_coverage_qa_p20.TestAcquisitionGrouping) ... ok
+test_fill_detected_as_most_frequent_value (test_coverage_qa_p20.TestLoad) ... ok
+test_wrong_size_is_rejected (test_coverage_qa_p20.TestLoad) ... ok
+test_dem_bowls_are_detected_without_any_illumination_model (test_crater_gcp_p20.TestBowlDetection) ... ok
+test_finds_synthetic_craters (test_crater_gcp_p20.TestDetect) ... ok
+test_flat_image_yields_no_strong_blobs (test_crater_gcp_p20.TestDetect) ... ok
+test_flat_dem_is_constant (test_crater_gcp_p20.TestHillshade) ... ok
+test_far_apart_points_do_not_match (test_crater_gcp_p20.TestMatch) ... ok
+test_identical_input_gives_zero_offset (test_crater_gcp_p20.TestMatch) ... ok
+test_recovers_a_known_shift (test_crater_gcp_p20.TestMatch) ... ok
+test_heldout_values_do_not_change_rules (test_diagnose_p22_rules.TestTrainRules) ... ok
+test_missing_train_is_refused (test_diagnose_p22_rules.TestTrainRules) ... ok
+test_group_disjoint_final_split (test_finalize_split.TestAudit) ... ok
+test_buffer_contract_property (test_finalize_split.TestBuffer) ... ok
+test_cal_near_val_is_dropped_but_val_survives (test_finalize_split.TestBuffer) ... ok
+test_cal_near_val_is_dropped_even_when_train_is_closest (test_finalize_split.TestBuffer) ... ok
+test_shadowing_regression_val_is_dropped_even_when_train_is_closer (test_finalize_split.TestBuffer) ... ok
+test_sphere_distance (test_finalize_split.TestBuffer) ... ok
+test_test_tiles_are_never_dropped (test_finalize_split.TestBuffer) ... ok
+test_train_far_from_everything_survives (test_finalize_split.TestBuffer) ... ok
+test_train_near_test_is_dropped_test_is_kept (test_finalize_split.TestBuffer) ... ok
+test_deterministic_and_group_level (test_finalize_split.TestCalibration) ... ok
+test_different_seed_can_change_selection (test_finalize_split.TestCalibration) ... ok
+test_insufficient_candidates_reports_blocked (test_freeze_heldout.TestFreezeArtifacts) ... ok
+test_main_writes_frozen_manifest_and_protocol (test_freeze_heldout.TestFreezeArtifacts) ... ok
+test_product_only_freeze_metadata_does_not_claim_group_exclusion (test_freeze_heldout.TestFreezeArtifacts) ... ok
+test_all_candidates_inside_buffer_raises (test_freeze_heldout.TestSelection) ... ok
+test_empty_used_set_is_refused (test_freeze_heldout.TestSelection) ... ok
+test_excludes_used_products_groups_and_near_tiles (test_freeze_heldout.TestSelection) ... ok
+test_no_candidates_raises (test_freeze_heldout.TestSelection) ... ok
+test_product_cap_is_respected (test_freeze_heldout.TestSelection) ... ok
+test_respects_requested_count (test_freeze_heldout.TestSelection) ... ok
+test_seed_is_deterministic (test_freeze_heldout.TestSelection) ... ok
+test_corners_map_to_raster_corners (test_grid_solar_p20.TestGridArithmetic) ... ok
+test_inverse_round_trip_at_pixel_centres (test_grid_solar_p20.TestGridArithmetic) ... ok
+test_pixel_size_is_two_metres_in_millidegrees (test_grid_solar_p20.TestGridArithmetic) ... ok
+test_azimuth_is_always_normalised (test_grid_solar_p20.TestSolarAzimuth) ... ok
+test_ranger_scene_matches_the_spice_solution (test_grid_solar_p20.TestSolarAzimuth) ... ok
+test_sun_to_the_east_is_90 (test_grid_solar_p20.TestSolarAzimuth) ... ok
+test_sun_to_the_north_and_south (test_grid_solar_p20.TestSolarAzimuth) ... ok
+test_sun_to_the_west_is_270 (test_grid_solar_p20.TestSolarAzimuth) ... ok
+test_every_cross_group_pair_is_beyond_the_threshold (test_heldout_v2_protocol.TestIndependence) ... $REPO/tests/test_heldout_v2_protocol.py:80: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pool_v2.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.DictReader(POOL.open(newline="", encoding="utf-8")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_pair_table_is_complete_for_the_pool (test_heldout_v2_protocol.TestIndependence) ... $REPO/tests/test_heldout_v2_protocol.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pool_v2.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.DictReader(POOL.open(newline="", encoding="utf-8")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_sparim_products_share_one_group (test_heldout_v2_protocol.TestIndependence) ... $REPO/tests/test_heldout_v2_protocol.py:101: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pool_v2.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.DictReader(POOL.open(newline="", encoding="utf-8")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_no_two_selected_scenes_in_one_group_overlap (test_heldout_v2_protocol.TestReproducibility) ... $REPO/tests/test_heldout_v2_protocol.py:43: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pool_v2.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.DictReader(POOL.open(newline="", encoding="utf-8")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+$REPO/tests/test_heldout_v2_protocol.py:50: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pairs_v2.csv' mode='r' encoding='utf-8'>
+  for row in csv.DictReader(PAIRS.open(newline="", encoding="utf-8")):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_selection_matches_the_rule (test_heldout_v2_protocol.TestReproducibility) ... ok
+test_not_frozen_and_not_approved (test_heldout_v2_protocol.TestStatus) ... ok
+test_v1_is_still_present_and_untouched (test_heldout_v2_protocol.TestStatus) ... ok
+test_all_pending_failures_exit_nonzero_without_writing (test_hydrate_tiles.TestAppendOnlyMerge) ... {
+  "shapefile": {
+    "path": "$TEST_TMP/nac_dtms.shp",
+    "fields": [
+      "images",
+      "DTM_NAME",
+      "center_lon",
+      "center_lat",
+      "cov_sqkm"
+    ],
+    "dtms": 2
+  },
+  "sombench_products": 1,
+  "dtm_coverage": {
+    "all_products_unseen": 1,
+    "empty_or_malformed_source_records": 1,
+    "source_status_counts": {
+      "OK": 1,
+      "EMPTY": 1
+    },
+    "images_field_size": 100,
+    "missing_or_invalid_vertex_geometry": 0,
+    "any_product_unseen": 1,
+    "all_products_seen": 1
+  },
+  "spatial_isolation": {
+    "checked": true,
+    "footprint_verified": false,
+    "buffer_km": 10.0,
+    "used_tiles": 1,
+    "candidates_with_vertices": 1,
+    "provisional_vertex_screen_clear": 1,
+    "min_center_chord_km": 899.344417922239,
+    "rule": "center-to-used chord >= maximum listed vertex chord radius + buffer",
+    "caveat": "Metadata screen only: verify shape CRS, true polygon-to-polygon distances (including used tile footprints), and PDS source README."
+  },
+  "strict_candidates_after_spatial": null,
+  "verdict": "CANDIDATES_REQUIRE_POLYGON_AND_SOURCE_QA"
+}
+wrote $TEST_TMP/out.json
+{
+  "inputs": {
+    "shapefile": "$TEST_TMP/dtms.shp",
+    "manifest": "$TEST_TMP/manifest.parquet",
+    "labels": "$TEST_TMP/labels.csv",
+    "protected_tiles": 2
+  },
+  "crs_check": {
+    "has_prj": true,
+    "wkt": "GEOGCS[\"GCS_Moon_2000\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400.0,0.0]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]]",
+    "valid": true,
+    "reason": "",
+    "name": "GCS_Moon_2000",
+    "radius_m": 1737400.0,
+    "is_geographic": true
+  },
+  "buffer_km": 10.0,
+  "candidates_screened": 2,
+  "source_audit": {
+    "SKIPPED": 2
+  },
+  "pass_both": 0,
+  "pass_names": [],
+  "geometry_failures": 0,
+  "geometry_failure_detail": [],
+  "footprint_failures": 1,
+  "candidate_spacing": {
+    "checked": 2,
+    "group_count": 2,
+    "largest_group": 1,
+    "pairs_closer_than_10km": 0,
+    "min_km": null
+  },
+  "passed_group_count": 0,
+  "min_distance_km": 0.0,
+  "verdict": "BLOCKED_OR_UNVERIFIED",
+  "notes": [
+    "Distances use a local azimuthal-equidistant projection on R=1737400 m.",
+    "Used tile footprints are geographic UL/LR bboxes (conservative outer bound).",
+    "Source lists come from the PDS README; DBF images are preliminary and truncated for mosaics.",
+    "This is still an index/label audit: no DEM/NAC payload was downloaded."
+  ]
+}
+wrote $TEST_TMP/audit.csv and $TEST_TMP/audit.json
+{
+  "scope": "passing",
+  "audited_scenes": 3,
+  "pages_found": 3,
+  "with_dtm_product": 2,
+  "with_optical_product": 1,
+  "with_optical_sibling_id": 1,
+  "optical_verified_published": 0,
+  "scenes_with_siblings": 2,
+  "optical_examples": [
+    [
+      "BETA",
+      "NAC_DTM_BETA_MOSAIC_200CM.IMG"
+    ]
+  ],
+  "notes": [
+    "Product pages are the authoritative list of downloadable files on this mirror.",
+    "Raw NAC EDR volumes returned 404 on every mirror path tried; the published optical product is a NAC-derived site orthomosaic (*_MOSAIC_200CM.IMG).",
+    "_SHADE/_SLOPE products are DTM-derived and are not independent optical input.",
+    "Only scenes with an optical product can serve as frozen external samples."
+  ]
+}
+wrote $TEST_TMP/out.csv and $TEST_TMP/out.json
+{
+  "scope": "all",
+  "audited_scenes": 4,
+  "pages_found": 3,
+  "with_dtm_product": 2,
+  "with_optical_product": 1,
+  "with_optical_sibling_id": 1,
+  "optical_verified_published": 0,
+  "scenes_with_siblings": 3,
+  "optical_examples": [
+    [
+      "BETA",
+      "NAC_DTM_BETA_MOSAIC_200CM.IMG"
+    ]
+  ],
+  "notes": [
+    "Product pages are the authoritative list of downloadable files on this mirror.",
+    "Raw NAC EDR volumes returned 404 on every mirror path tried; the published optical product is a NAC-derived site orthomosaic (*_MOSAIC_200CM.IMG).",
+    "_SHADE/_SLOPE products are DTM-derived and are not independent optical input.",
+    "Only scenes with an optical product can serve as frozen external samples."
+  ]
+}
+wrote $TEST_TMP/all.csv and $TEST_TMP/all.json
+{
+  "pool_scenes": 2,
+  "scenes_with_all_acquisitions_both_cameras": 0,
+  "scenes_complete": [],
+  "acquisitions": {
+    "total": 3,
+    "both": 1,
+    "partial": 2,
+    "missing": 0
+  }
+}
+wrote $TEST_TMP/avail.json
+{
+  "pool_scenes": 2,
+  "scenes_with_all_acquisitions_both_cameras": 1,
+  "scenes_complete": [
+    "AAA"
+  ],
+  "acquisitions": {
+    "total": 3,
+    "both": 2,
+    "partial": 0,
+    "missing": 1
+  }
+}
+wrote $TEST_TMP/avail.json
+{
+  "status": "BLOCKED_NEW_HELDOUT",
+  "selected": 2,
+  "minimum": 30,
+  "max_per_product": 5,
+  "coverage": {
+    "manifest_groups": 2,
+    "used_groups": 1,
+    "unused_groups": 2,
+    "manifest_products": 2,
+    "used_products": 1,
+    "unused_products": 2
+  },
+  "audit": {
+    "exclusion": "group",
+    "max_per_product": 5,
+    "candidates_after_exclusion": 2,
+    "groups_after_selection": 2,
+    "selected_groups_already_used": [],
+    "buffer_km": 10.0,
+    "min_buffer_km_selected": 30.32296554974975,
+    "used_products": 1,
+    "used_groups": 1,
+    "used_tiles": 1
+  }
+}
+wrote $TEST_TMP/protocols/heldout_v2_protocol.json
+{
+  "status": "FROZEN",
+  "tiles": 10,
+  "products": 10,
+  "groups": 10,
+  "zones": 3,
+  "min_buffer_km": 42.451634502316864,
+  "manifest_sha256": "69ad4ff39d35eaf1b8d4a484d481d970ca90116a1a2bcbf83ffe733585280de7"
+}
+wrote $TEST_TMP/protocols/heldout_v2_manifest.csv and $TEST_TMP/protocols/heldout_v2_protocol.json
+{
+  "status": "FROZEN",
+  "tiles": 6,
+  "products": 6,
+  "groups": 1,
+  "zones": 2,
+  "min_buffer_km": 75.80236251809299,
+  "manifest_sha256": "7161f984e860445c18e154a1dac064fd3418321760d2a56409bc8f396b0b1b96"
+}
+wrote $TEST_TMP/protocols/heldout_v2_manifest.csv and $TEST_TMP/protocols/heldout_v2_protocol.json
+selected 15 tiles; 2 to hydrate; groups per split: {'cal': 3, 'test': 3, 'train': 3, 'val': 3}
+  hydrated 2/2 (failures=2)
+FAILURES:
+  {'sample_id': 'train_004', 'error': 'RuntimeError: simulated S3 failure'}
+  {'sample_id': 'train_003', 'error': 'RuntimeError: simulated S3 failure'}
+ok
+test_only_the_missing_tile_is_requested (test_hydrate_tiles.TestAppendOnlyMerge) ... {
+  "tiles": 13,
+  "by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 4,
+    "val": 3
+  },
+  "groups_by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 3,
+    "val": 3
+  },
+  "selected_count": 15,
+  "existing_count": 13,
+  "todo_count": 2,
+  "download_attempted": 2,
+  "new_records": 0
+}
+selected 15 tiles; 1 to hydrate; groups per split: {'cal': 3, 'test': 3, 'train': 3, 'val': 3}
+  hydrated 1/1 (failures=0)
+ok
+test_partial_failure_keeps_successes_and_reports_nonzero (test_hydrate_tiles.TestAppendOnlyMerge) ... {
+  "tiles": 15,
+  "by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 6,
+    "val": 3
+  },
+  "groups_by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 3,
+    "val": 3
+  },
+  "selected_count": 15,
+  "existing_count": 14,
+  "todo_count": 1,
+  "download_attempted": 1,
+  "new_records": 1
+}
+labels: $TEST_TMP/labels.csv (15 rows); summary: $TEST_TMP/labels.summary.json
+selected 15 tiles; 3 to hydrate; groups per split: {'cal': 3, 'test': 3, 'train': 3, 'val': 3}
+  hydrated 3/3 (failures=1)
+FAILURES:
+  {'sample_id': 'train_002', 'error': 'RuntimeError: simulated S3 failure'}
+ok
+test_record_outside_selection_is_refused (test_hydrate_tiles.TestAppendOnlyMerge) ... {
+  "tiles": 14,
+  "by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 5,
+    "val": 3
+  },
+  "groups_by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 3,
+    "val": 3
+  },
+  "selected_count": 15,
+  "existing_count": 12,
+  "todo_count": 3,
+  "download_attempted": 3,
+  "new_records": 2
+}
+selected 15 tiles; 2 to hydrate; groups per split: {'cal': 3, 'test': 3, 'train': 3, 'val': 3}
+  hydrated 2/2 (failures=0)
+ok
+test_atomic_write_leaves_no_temp_file (test_hydrate_tiles.TestAtomicWriteAndEnrich) ... ok
+test_enrich_failure_leaves_labels_untouched (test_hydrate_tiles.TestAtomicWriteAndEnrich) ... ok
+test_enrich_is_one_to_one_and_keeps_rows (test_hydrate_tiles.TestAtomicWriteAndEnrich) ... ok
+test_enrich_rejects_duplicate_manifest_ids (test_hydrate_tiles.TestAtomicWriteAndEnrich) ... ok
+test_duplicate_sample_id_in_labels_is_refused (test_hydrate_tiles.TestConsistencyGuards) ... ok
+test_existing_row_outside_selection_is_refused (test_hydrate_tiles.TestConsistencyGuards) ... ok
+test_missing_local_source_is_refused (test_hydrate_tiles.TestConsistencyGuards) ... ok
+test_product_drift_is_refused (test_hydrate_tiles.TestConsistencyGuards) ... ok
+test_split_drift_is_refused (test_hydrate_tiles.TestConsistencyGuards) ... ok
+test_duplicate_ids_are_refused (test_hydrate_tiles.TestMergeSchema) ... ok
+test_empty_records_returns_existing_unchanged (test_hydrate_tiles.TestMergeSchema) ... ok
+test_new_columns_are_appended_without_shifting_old_values (test_hydrate_tiles.TestMergeSchema) ... ok
+test_records_without_sample_id_are_refused (test_hydrate_tiles.TestMergeSchema) ... ok
+test_nothing_to_do_exits_zero_and_never_touches_labels (test_hydrate_tiles.TestNoOpResume) ... ok
+test_manifest_without_coarse_slope_path_is_refused (test_hydrate_tiles.TestSelectionStability) ... ok
+test_train_quota_growth_is_prefix_stable (test_hydrate_tiles.TestSelectionStability) ... ok
+test_idempotent_unless_forced (test_make_dtm_template.TestBuild) ... ok
+test_label_uses_dtm_values_verbatim (test_make_dtm_template.TestBuild) ... ok
+test_missing_grid_is_an_error (test_make_dtm_template.TestBuild) ... ok
+test_groups_match_the_rule (test_make_heldout_pool_p20.TestCommittedProtocol) ... $REPO/tests/test_make_heldout_pool_p20.py:118: ResourceWarning: unclosed file <_io.TextIOWrapper name='$REPO/protocols/heldout_v2_group_pool.csv' mode='r' encoding='utf-8'>
+  rows = list(csv.DictReader((root / "protocols" / "heldout_v2_group_pool.csv")
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_hashes_match (test_make_heldout_pool_p20.TestCommittedProtocol) ... ok
+test_scenes_match_the_rule (test_make_heldout_pool_p20.TestCommittedProtocol) ... ok
+test_still_pending_signoff (test_make_heldout_pool_p20.TestCommittedProtocol) ... ok
+test_close_scenes_share_one_group (test_make_heldout_pool_p20.TestGrouping) ... ok
+test_empty_distance_is_tolerated (test_make_heldout_pool_p20.TestGrouping) ... ok
+test_group_id_changes_when_membership_changes (test_make_heldout_pool_p20.TestGrouping) ... ok
+test_group_id_is_order_independent (test_make_heldout_pool_p20.TestGrouping) ... ok
+test_caps_scenes_per_group_and_keeps_order (test_make_heldout_pool_p20.TestSelect) ... ok
+test_ineligible_groups_are_skipped (test_make_heldout_pool_p20.TestSelect) ... ok
+test_selection_is_independent_of_input_order (test_make_heldout_pool_p20.TestSelect) ... ok
+test_clean_group_is_eligible (test_make_heldout_pool_p20.TestSelectionRules) ... ok
+test_footprint_conflict_is_ineligible (test_make_heldout_pool_p20.TestSelectionRules) ... ok
+test_probe_groups_are_marked_and_ineligible (test_make_heldout_pool_p20.TestSelectionRules) ... ok
+test_rank_order_does_not_depend_on_input_order (test_make_heldout_pool_p20.TestSelectionRules) ... ok
+test_rank_order_is_deterministic_and_unique (test_make_heldout_pool_p20.TestSelectionRules) ... ok
+test_disjoint_flag_is_required (test_make_heldout_pool_v2.TestBuildPool) ... ok
+test_probe_membership_makes_a_group_ineligible (test_make_heldout_pool_v2.TestBuildPool) ... ok
+test_rank_is_hash_order_not_input_order (test_make_heldout_pool_v2.TestBuildPool) ... ok
+test_records_carry_overlap_and_stereo_sources (test_make_heldout_pool_v2.TestBuildPool) ... ok
+test_cap_limits_scenes_per_group (test_make_heldout_pool_v2.TestOverlapAwareSelect) ... ok
+test_eligibility_filters_before_the_cap (test_make_heldout_pool_v2.TestOverlapAwareSelect) ... ok
+test_non_overlapping_scenes_are_both_taken (test_make_heldout_pool_v2.TestOverlapAwareSelect) ... ok
+test_overlapping_scene_is_skipped (test_make_heldout_pool_v2.TestOverlapAwareSelect) ... ok
+test_selection_is_order_independent (test_make_heldout_pool_v2.TestOverlapAwareSelect) ... ok
+test_georeferencing_is_copied_verbatim (test_mosaic_geotiff_p20.TestExport) ... ok
+test_grid_mismatch_is_refused (test_mosaic_geotiff_p20.TestExport) ... ok
+test_missing_georeferencing_is_refused (test_mosaic_geotiff_p20.TestExport) ... ok
+test_nodata_string_is_terminated (test_mosaic_geotiff_p20.TestExport) ... ok
+test_prefix_selects_one_acquisition (test_ortho_mosaic_p19.TestAcquisitionFilter) ... ok
+test_within_acquisition_pair_keeps_a_small_step (test_ortho_mosaic_p19.TestAcquisitionFilter) ... ok
+test_equalization_removes_the_seam_step (test_ortho_mosaic_p19.TestGains) ... ok
+test_gain_is_fitted_to_the_reference (test_ortho_mosaic_p19.TestGains) ... ok
+test_offset_is_recovered_too (test_ortho_mosaic_p19.TestGains) ... ok
+test_different_sun_is_flagged (test_ortho_mosaic_p19.TestIlluminationGuard) ... ok
+test_no_illumination_reports_no_images (test_ortho_mosaic_p19.TestIlluminationGuard) ... ok
+test_same_sun_is_accepted (test_ortho_mosaic_p19.TestIlluminationGuard) ... ok
+test_wrapped_azimuth_is_not_340_degrees (test_ortho_mosaic_p19.TestIlluminationGuard) ... ok
+test_fill_value_becomes_nan (test_ortho_mosaic_p19.TestLoadRaw) ... ok
+test_complementary_footprints_union_without_seam_error (test_ortho_mosaic_p19.TestMosaicSelection) ... ok
+test_overlap_goes_to_the_higher_weight_not_the_average (test_ortho_mosaic_p19.TestMosaicSelection) ... ok
+test_seam_length_counts_one_boundary (test_ortho_mosaic_p19.TestMosaicSelection) ... ok
+test_single_valid_image_fills_exactly_its_footprint (test_ortho_mosaic_p19.TestMosaicSelection) ... ok
+test_ties_keep_the_first_input (test_ortho_mosaic_p19.TestMosaicSelection) ... ok
+test_saturated_image_loses_regardless_of_sharpness (test_ortho_mosaic_p19.TestSaturation) ... ok
+test_saturation_share_counts_only_valid_pixels (test_ortho_mosaic_p19.TestSaturation) ... ok
+test_a_smooth_ramp_across_the_boundary_is_not_a_jump (test_ortho_mosaic_p19.TestSeamJump) ... ok
+test_flat_field_with_a_real_step_shows_a_jump (test_ortho_mosaic_p19.TestSeamJump) ... ok
+test_steep_terrain_does_not_inflate_the_jump (test_ortho_mosaic_p19.TestSeamJump) ... ok
+test_matching_images_show_no_step (test_ortho_mosaic_p19.TestSeamStep) ... ok
+test_no_boundary_reports_zero_pairs (test_ortho_mosaic_p19.TestSeamStep) ... ok
+test_offset_stands_out_against_texture (test_ortho_mosaic_p19.TestSeamStep) ... ok
+test_radiometric_offset_is_detected (test_ortho_mosaic_p19.TestSeamStep) ... ok
+test_flat_dem_is_uniform (test_ortho_registration_p20.TestHillshade) ... ok
+test_west_facing_slope_is_dark_under_eastern_sun (test_ortho_registration_p20.TestHillshade) ... ok
+test_null_sentinel_becomes_nan (test_ortho_registration_p20.TestLoadRaw) ... ok
+test_flat_patch_is_reported_without_crashing (test_ortho_registration_p20.TestNccShift) ... ok
+test_identical_patches_give_zero (test_ortho_registration_p20.TestNccShift) ... ok
+test_recovers_integer_shift_direction (test_ortho_registration_p20.TestNccShift) ... ok
+test_hole_rejects_at_strict_threshold_only (test_ortho_registration_p20.TestWindows) ... ok
+test_validity_threshold_is_enforced (test_ortho_registration_p20.TestWindows) ... ok
+test_invalid_or_duplicate_candidate_ids_fail (test_p30_candidate_heads.TestCandidateHeads) ... ok
+test_masked_softmax_matches_subset_normalization_and_rejects_empty_rows (test_p30_candidate_heads.TestCandidateHeads) ... ok
+test_parameter_budget_and_full_output_dimension_are_explicit (test_p30_candidate_heads.TestCandidateHeads) ... ok
+test_permutation_and_subset_follow_public_candidate_ids (test_p30_candidate_heads.TestCandidateHeads) ... ok
+test_hdf5_reads_real_file_object_with_strict_ranges (test_p30_http_range.TestRangeBudget) ... ok
+test_ignored_range_never_reads_body (test_p30_http_range.TestRangeBudget) ... ok
+test_mismatched_range_or_total_never_reads_body (test_p30_http_range.TestRangeBudget) ... ok
+test_seek_block_crossing_and_cache_reuse (test_p30_http_range.TestRangeBudget) ... ok
+test_short_response_counts_received_bytes_and_fails (test_p30_http_range.TestRangeBudget) ... ok
+test_size_and_encoding_checked_before_body (test_p30_http_range.TestRangeBudget) ... ok
+test_small_metadata_limit_counts_rejected_body (test_p30_http_range.TestRangeBudget) ... ok
+test_transfer_exhaustion_precedes_network (test_p30_http_range.TestRangeBudget) ... ok
+test_exact_selected_rows_merge_adjacency_without_gap_overfetch (test_p30_mmap_pair.TestMmapProbePlan) ... ok
+test_test_split_changed_ids_duplicate_tiles_and_wrong_sizes_are_rejected (test_p30_mmap_pair.TestMmapProbePlan) ... ok
+test_unpinned_or_wrong_source_is_rejected (test_p30_mmap_pair.TestMmapProbePlan) ... ok
+test_nonfinite_derived_and_unpaired_shapes_fail (test_p30_mmap_pair.TestMmapRowComparison) ... ok
+test_upstream_nonfinite_zero_mask_and_reference_tolerance (test_p30_mmap_pair.TestMmapRowComparison) ... ok
+test_age_prefix_priority_case_and_unknowns (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_channel_order_no_target_channels (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_geographic_boundaries_and_exclusions (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_geology_id_map_is_bijective_and_not_silently_filtered (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_normalization_preserves_raw_zero_and_restores_nonfinite (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_stored_membership_and_order_are_never_regenerated (test_p30_moonstone.TestMoonstoneContract) ... ok
+test_age_unknown_filter_split_and_no_target_leakage (test_p30_moonstone.TestMoonstoneHDF5) ... ok
+test_duplicate_ids_and_channel_permutation_are_refused (test_p30_moonstone.TestMoonstoneHDF5) ... ok
+test_geology_refuses_upstream_invalid_id_instead_of_relabeling (test_p30_moonstone.TestMoonstoneHDF5) ... ok
+test_worker_pickle_has_no_live_handle_and_reads_same_sample (test_p30_moonstone.TestMoonstoneHDF5) ... ok
+test_exact_allowlist_is_dry_run_and_never_authorizes_large_download (test_p30_plans.TestAssetPlan) ... ok
+test_initial_cap_cannot_be_silently_raised (test_p30_plans.TestAssetPlan) ... ok
+test_small_file_size_cannot_grow_into_a_bulk_download (test_p30_plans.TestAssetPlan) ... ok
+test_unpinned_or_wrong_repository_is_rejected (test_p30_plans.TestAssetPlan) ... ok
+test_duplicate_ids_and_changed_centers_fail_closed (test_p30_plans.TestMetadataAudit) ... ok
+test_histograms_ids_and_footprint_follow_stored_metadata (test_p30_plans.TestMetadataAudit) ... ok
+test_does_not_fill_missing_train_samples_from_other_splits (test_p30_plans.TestSamplePlan) ... ok
+test_failed_metadata_or_unbounded_sample_count_is_rejected (test_p30_plans.TestSamplePlan) ... ok
+test_first_per_age_class_is_deterministic_split_specific_and_keeps_original_ids (test_p30_plans.TestSamplePlan) ... ok
+test_missing_class_and_wrong_stratified_budget_cannot_borrow_test (test_p30_plans.TestSamplePlan) ... ok
+test_selects_first_valid_original_indices_without_test_pixels (test_p30_plans.TestSamplePlan) ... ok
+test_existing_verified_asset_needs_no_network_and_tampering_fails (test_p31_acquisition.TestAcquisition) ... ok
+test_finite_windows_and_last_short_range_append_exactly_once (test_p31_acquisition.TestAcquisition) ... ok
+test_hash_mismatch_never_becomes_final_asset (test_p31_acquisition.TestAcquisition) ... ok
+test_initial_bounded_window_requires_http206_before_body (test_p31_acquisition.TestAcquisition) ... ok
+test_resume_rejects_http200_before_reading_or_appending (test_p31_acquisition.TestAcquisition) ... ok
+test_resume_rejects_wrong_range_and_encoding_before_body (test_p31_acquisition.TestAcquisition) ... ok
+test_streaming_size_hash_and_atomic_rename (test_p31_acquisition.TestAcquisition) ... ok
+test_truncated_response_resumes_only_remaining_range (test_p31_acquisition.TestAcquisition) ... ok
+test_unowned_partial_and_insufficient_disk_fail_before_network (test_p31_acquisition.TestAcquisition) ... ok
+test_windowed_process_restart_preserves_existing_prefix (test_p31_acquisition.TestAcquisition) ... ok
+test_subset_softmax_equals_own_full_softmax_mask (test_p31_candidate_control.TestCandidateControl) ... ok
+test_checkpoint_replay_and_rng_restoration (test_p31_classifier.TestClassifier) ... ok
+test_feature_export_is_chunked_and_handles_final_partial_batch (test_p31_classifier.TestClassifier) ... ok
+test_invalid_ids_split_target_and_metadata_lengths_fail (test_p31_classifier.TestClassifier) ... ok
+test_macro_full_matches_upstream_zero_division_supported_is_secondary (test_p31_classifier.TestClassifier) ... ok
+test_more_than_smoke_limit_last_batch_and_no_test_pixel_access (test_p31_classifier.TestClassifier) ... ok
+test_stream_hash_uses_bounded_reads_not_path_read_bytes (test_p31_classifier.TestClassifier) ... ok
+test_two_workers_keep_selected_ids_and_parent_handle (test_p31_classifier.TestClassifier) ... enriched $TEST_TMP/labels.csv: geometry_rows=2, roughness_rows=2, relief_rows=2
+nothing to hydrate: all 15 selected tiles are already in $TEST_TMP/labels.csv (15 rows)
+{
+  "tiles": 15,
+  "by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 6,
+    "val": 3
+  },
+  "groups_by_split": {
+    "cal": 3,
+    "test": 3,
+    "train": 3,
+    "val": 3
+  },
+  "selected_count": 15,
+  "existing_count": 15,
+  "todo_count": 0,
+  "download_attempted": 0,
+  "new_records": 0
+}
+labels: $TEST_TMP/labels.csv (15 rows); summary: $TEST_TMP/labels.summary.json
+$TEST_TMP/dtm_map.cub written (527 B) for PLANCKFLOOR
+$TEST_TMP/dtm_map.cub exists (527 B), keep
+$TEST_TMP/dtm_map.cub written (527 B) for PLANCKFLOOR
+ok
+test_worker_pickle_drops_handle_and_prior_never_reads_pixels (test_p31_classifier.TestClassifier) ... ok
+test_206_and_headers_validated_before_any_body (test_p31_loader_pair.TestBoundedIO) ... ok
+test_failed_truncated_body_charged_no_retry (test_p31_loader_pair.TestBoundedIO) ... ok
+test_hdf_exact_reads_and_request_ceiling_no_aligned_neighbor_body (test_p31_loader_pair.TestBoundedIO) ... ok
+test_redirect_bodies_not_consumed_and_streamed_response (test_p31_loader_pair.TestBoundedIO) ... ok
+test_reservation_concurrency_every_byte_reserved_before_start (test_p31_loader_pair.TestBoundedIO) ... ok
+test_streaming_digest (test_p31_loader_pair.TestBoundedIO) ... ok
+test_full_counts_zero_partial_radar_and_presence (test_p31_loader_pair.TestFullCropComparison) ... ok
+test_mismatch_outside_old_three_rows_caught (test_p31_loader_pair.TestFullCropComparison) ... ok
+test_nonfinite_mmap_masks_and_wrong_shape (test_p31_loader_pair.TestFullCropComparison) ... ok
+test_numeric_close_does_not_hide_exact_mask_disagreement (test_p31_loader_pair.TestFullCropComparison) ... ok
+test_real_h5py_selected_chunks_never_overread_test_pixel_chunk (test_p31_loader_pair.TestHDF5AdapterIntegration) ... ok
+test_checked_in_plan_lock_expands_to_exact_full_crop_requests (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_exact_offsets_full_rows_no_gap_overfetch_and_last_grid_tile (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_locked_plan_exact_requests_and_budget_no_reset (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_minimum_both_splits_all_available_channels_and_partial_nonpolar (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_missing_group_or_split_cannot_silently_borrow_test (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_offset_bounds_test_duplicate_id_and_duplicate_tile_rejected (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_source_revision_size_and_stats_fail_before_network (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_test_only_channel_never_used_to_claim_train_val_coverage (test_p31_loader_pair.TestSelectionAndPlan) ... ok
+test_every_row_descriptor_only_original_indices_boundary_and_test_exclusion (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_invalid_schema_and_ranges_do_not_silently_fill (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_metadata_validation_rejects_misalignment_duplicates_split_and_label_drift (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_no_usable_validation_rows_is_rejected (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_original_scientific_settings_copied_and_upstream_claim_explicit (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_unknown_age_refuses_ambiguous_shared_task_rows (test_p31_plan_prefix.TestPrefixInventory) ... ok
+test_atomic_exclusive_write_and_serialization_failure (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_cli_hashes_prefix_once_and_publishes_deterministic_offline_lock (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_cli_refuses_existing_or_dangling_symlink_before_hashing (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_cli_rejects_audited_hash_or_report_mismatch_without_prefix_pass (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_cli_wrong_size_and_concurrent_mutation_never_publish (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_real_h5py_descriptor_scan_reads_no_pixel_chunks (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_streamed_hash_is_bounded_and_rejects_mutation (test_p31_plan_prefix.TestPrefixPlannerIO) ... ok
+test_checksums_and_report_mutation (test_p31_prefix.TestCachedBlocks) ... ok
+test_contradictory_overlaps_even_with_valid_individual_checksums (test_p31_prefix.TestCachedBlocks) ... ok
+test_relative_absolute_and_symlink_path_escape (test_p31_prefix.TestCachedBlocks) ... ok
+test_final_short_batches_train_val_order_no_test_pixels_and_raw_labels_outside_pixels (test_p31_prefix.TestPrefixDataset) ... ok
+test_frozen_subset_does_not_silently_filter_unknown_age (test_p31_prefix.TestPrefixDataset) ... ok
+test_hdf5_open_failure_closes_adapter (test_p31_prefix.TestPrefixDataset) ... ok
+test_invalid_frozen_indices_rows_hashes_and_wrong_other_split (test_p31_prefix.TestPrefixDataset) ... ok
+test_invalid_incomplete_missing_duplicate_and_mismatched_chunk_records (test_p31_prefix.TestPrefixDataset) ... ok
+test_invalid_metadata_shape_ids_channel_split_and_mapping (test_p31_prefix.TestPrefixDataset) ... ok
+test_non_scalar_out_of_range_indices_do_not_open_file (test_p31_prefix.TestPrefixDataset) ... ok
+test_physical_chunk_descriptors_checked_before_any_pixels_and_failure_closes (test_p31_prefix.TestPrefixDataset) ... ok
+test_pickle_drops_handles_and_pid_change_reopens (test_p31_prefix.TestPrefixDataset) ... ok
+test_prefix_and_range_report_mutation_between_init_and_open (test_p31_prefix.TestPrefixDataset) ... ok
+test_prefix_mutation_even_when_hdf5_pixel_chunk_is_cached (test_p31_prefix.TestPrefixDataset) ... ok
+test_prefix_never_hashed_or_read_whole_and_constructor_never_opens_hdf5 (test_p31_prefix.TestPrefixDataset) ... ok
+test_reject_pixel_shape_chunks_dtype_and_external_link_before_read (test_p31_prefix.TestPrefixDataset) ... ok
+test_two_workers_and_spawn_keep_parent_handle_and_final_batch (test_p31_prefix.TestPrefixDataset) ... ok
+test_bounds_invalid_sizes_and_readonly_buffer (test_p31_prefix.TestPrefixFile) ... ok
+test_consistent_overlaps_accepted_and_contradictions_rejected (test_p31_prefix.TestPrefixFile) ... ok
+test_constructor_closes_source_on_post_open_validation_failure (test_p31_prefix.TestPrefixFile) ... ok
+test_missing_hole_never_returns_zeros_or_skips_to_cached_bytes (test_p31_prefix.TestPrefixFile) ... ok
+test_mutation_growth_truncation_and_same_size_write_rejected (test_p31_prefix.TestPrefixFile) ... ok
+test_prefix_cached_ranges_readinto_seek_and_logical_eof (test_p31_prefix.TestPrefixFile) ... ok
+test_real_checkpoint_reader_rejects_nonfinite_last_or_best_weights (test_p31_run_baselines.TestCheckpointWeights) ... ok
+test_aggregate_keeps_full_and_supported_macro_separate_and_missing_null (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_child_failure_preserves_partial_results_and_does_not_proceed (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_default_preview_does_not_create_outputs_or_read_data (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_first_seed_validation_blocks_every_later_run (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_geology_first_seed_must_pass_before_additional_age_seeds (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_one_new_run_per_invocation_reuses_prefix_and_preserves_budgets (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_plan_budget_change_is_rejected_before_any_execution (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_rejects_unreceipted_run_even_if_report_exists (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_restart_rejects_changed_artifacts_and_never_overwrites (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_restart_rejects_source_plan_prediction_and_data_hash_mismatch (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_restart_reuses_verified_runs_without_launching_models (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_serial_order_locked_budgets_and_child_isolation (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_source_change_between_runs_stops_sequence (test_p31_run_baselines.TestSerialBaselines) ... ok
+test_failed_replay_blocks_next_seed_and_receipt (test_p31_run_prefix_baselines.TestPrefixBaselines) ... ok
+test_false_full_integrity_claim_blocks_before_replay (test_p31_run_prefix_baselines.TestPrefixBaselines) ... ok
+test_first_seed_replay_then_restart_to_geology (test_p31_run_prefix_baselines.TestPrefixBaselines) ... ok
+test_preview_no_data_hash_or_outputs (test_p31_run_prefix_baselines.TestPrefixBaselines) ... ok
+test_budget_changes_and_test_permission_are_rejected (test_p31_subset_runner.TestSubsetRunner) ... ok
+test_every_data_or_metadata_hash_and_size_must_match (test_p31_subset_runner.TestSubsetRunner) ... ok
+test_fixed_partial_plan_passes_without_claiming_complete_integrity (test_p31_subset_runner.TestSubsetRunner) ... ok
+test_full_protocol_or_false_complete_integrity_claim_is_rejected (test_p31_subset_runner.TestSubsetRunner) ... ok
+test_prefix_options_cannot_reach_complete_data_or_pilot_loader (test_p31_subset_runner.TestSubsetRunner) ... ok
+test_assets_and_scientific_claims_are_explicit (test_p32_catalog.TestP32Catalog) ... ok
+test_case_sensitive_prefix_priority_and_unknown_handling (test_p32_catalog.TestP32Catalog) ... ok
+test_catalog_validation_rejects_reordered_missing_or_relabelled_rows (test_p32_catalog.TestP32Catalog) ... ok
+test_finite_reproducible_normalized_shared_dimension (test_p32_catalog.TestP32Catalog) ... ok
+test_idf_counts_only_public_documents (test_p32_catalog.TestP32Catalog) ... ok
+test_literal_symbol_case_survives_lowercase_word_tokenization (test_p32_catalog.TestP32Catalog) ... ok
+test_load_checks_audited_source_hash (test_p32_catalog.TestP32Catalog) ... ok
+test_no_sample_labels_or_validation_inputs (test_p32_catalog.TestP32Catalog) ... ok
+test_official_source_order_and_all_54_candidates (test_p32_catalog.TestP32Catalog) ... ok
+test_permutation_is_deterministic_does_not_touch_global_rng_or_input (test_p32_catalog.TestP32Catalog) ... ok
+test_permutation_moves_all_descriptor_information_together (test_p32_catalog.TestP32Catalog) ... ok
+test_source_bytes_and_per_candidate_provenance (test_p32_catalog.TestP32Catalog) ... ok
+test_different_pooled_control_rejected (test_p32_context.ContextTests) ... ok
+test_finite_arrays_and_ids (test_p32_context.ContextTests) ... ok
+test_frozen_spatial_shape_pool_and_bn (test_p32_context.ContextTests) ... ok
+test_invalid_spatial_input_rejected (test_p32_context.ContextTests) ... ok
+test_nonfinite_rejected (test_p32_context.ContextTests) ... ok
+test_test_split_rejected (test_p32_context.ContextTests) ... ok
+test_wrong_ids_rejected (test_p32_context.ContextTests) ... ok
+test_wrong_support_rejected (test_p32_context.ContextTests) ... ok
+test_candidate_integer_sequences_preserve_order (test_p32_heads.TestP32Heads) ... ok
+test_custom_visual_token_width (test_p32_heads.TestP32Heads) ... ok
+test_different_task_widths_can_share_a_padded_masked_batch (test_p32_heads.TestP32Heads) ... ok
+test_finite_training_gradients_for_both_tasks (test_p32_heads.TestP32Heads) ... ok
+test_invalid_candidate_ids (test_p32_heads.TestP32Heads) ... ok
+test_invalid_tokens_tasks_methods_and_feature_tables (test_p32_heads.TestP32Heads) ... ok
+test_j_alone_uses_fixed_2d_spatial_positions (test_p32_heads.TestP32Heads) ... ok
+test_masked_probabilities_broadcast_exact_zeros_and_gradients (test_p32_heads.TestP32Heads) ... ok
+test_masked_probabilities_rejects_empty_rows_and_invalid_masks (test_p32_heads.TestP32Heads) ... ok
+test_ordinary_and_id_controls_ignore_descriptor_values (test_p32_heads.TestP32Heads) ... ok
+test_permutation_and_subset_mask_identity (test_p32_heads.TestP32Heads) ... ok
+test_pooled_and_spatial_semantic_heads_match_for_constant_unpositioned_context (test_p32_heads.TestP32Heads) ... ok
+test_pooled_controls_ignore_spatial_token_order (test_p32_heads.TestP32Heads) ... ok
+test_public_features_are_owned_frozen_persistent_buffers (test_p32_heads.TestP32Heads) ... ok
+test_query_architecture_and_one_context_preparation_for_both_tasks (test_p32_heads.TestP32Heads) ... ok
+test_semantic_heads_have_no_learned_class_id_shortcut (test_p32_heads.TestP32Heads) ... ok
+test_semantic_logits_follow_descriptor_rows_and_task_text (test_p32_heads.TestP32Heads) ... ok
+test_state_dict_restores_logits_and_descriptor_tables (test_p32_heads.TestP32Heads) ... ok
+test_task_output_widths_and_forward_all (test_p32_heads.TestP32Heads) ... ok
+test_age_aggregation_preserves_probability_mass (test_p32_runner.RunnerTests) ... ok
+test_all_primary_seeds_before_descriptor_control (test_p32_runner.RunnerTests) ... ok
+test_gpu_initialized_before_peak_counter_reset (test_p32_runner.RunnerTests) ... ok
+test_nonfinite_or_unnormalized_probabilities_rejected (test_p32_runner.RunnerTests) ... ok
+test_probability_metrics_match_known_confusion (test_p32_runner.RunnerTests) ... ok
+test_sample_std_is_explicit_and_incomplete_not_complete (test_p32_runner.RunnerTests) ... ok
+test_text_identity_changes_for_fixed_permutation (test_p32_runner.RunnerTests) ... ok
+test_unavailable_gpu_fails_before_counter_reset (test_p32_runner.RunnerTests) ... ok
+test_ambiguous_envelope_and_prefix_collision_are_fatal (test_p33_nasa_contracts.TestNasaCheckpointAudit) ... ok
+test_complete_selected_inference_coverage (test_p33_nasa_contracts.TestNasaCheckpointAudit) ... ok
+test_incomplete_target_is_not_valid_coverage (test_p33_nasa_contracts.TestNasaCheckpointAudit) ... ok
+test_missing_shape_mismatch_and_unexpected_encoder_are_fatal (test_p33_nasa_contracts.TestNasaCheckpointAudit) ... ok
+test_extra_channels_labels_or_geometry_rejected (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_invalid_domain_never_uses_guessed_defaults (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_nonfinite_or_nondegree_slope_rejected (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_partial_and_whole_missingness_fail_closed (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_provenance_cannot_be_omitted_or_zscored (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_scalers_and_per_sample_local_center (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_shape_resize_and_mask_dtype_rejected (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_zero_is_observed_and_inputs_are_not_mutated (test_p33_nasa_contracts.TestNasaTerrainContract) ... ok
+test_bytes_or_empty_ids_rejected_before_output_creation (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_config_mutation_and_model_run_without_assets_fail (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_forged_val_test_ids_and_wrong_target_are_rejected (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_input_audit_is_not_reported_as_model_execution (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_output_is_not_overwritten (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_tampered_authority_files_are_rejected_without_override_hash (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_test_split_and_unverified_batch_fail_closed (test_p33_nasa_preflight.TestNasaPreflightCLI) ... ok
+test_adapter_gradients_flow_through_frozen_encoder (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_checkpoint_integrity_and_exact_inference_loading (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_frozen_encoder_stays_eval_and_no_encoder_gradients (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_identity_adapter_matches_unadapted_backbone (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_masked_zero_merge_or_register_double_strip_rejected (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_missing_or_nonfinite_checkpoint_tensor_is_not_success (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_noncanonical_patch_divisible_shape_is_rejected (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_pair_has_same_heads_and_adapters_but_different_backbone_weights (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_preloaded_upstream_module_outside_pin_is_rejected (test_p33_nasa_torch.TestNasaTorchWrapper) ... ok
+test_covariance_is_symmetric_positive_definite (test_posterior.TestCovariance) ... ok
+test_point_variant_has_no_covariance (test_posterior.TestCovariance) ... ok
+test_sigma_is_clamped_away_from_zero (test_posterior.TestCovariance) ... ok
+test_state_round_trip_preserves_outputs (test_posterior.TestExport) ... ok
+test_unknown_variant_is_rejected (test_posterior.TestExport) ... ok
+test_cpu_training_step_reduces_nll (test_posterior.TestSmoke) ... ok
+test_joint_variant_backpropagates_through_cholesky (test_posterior.TestSmoke) ... ok
+test_physical_nll_differs_by_the_jacobian (test_posterior.TestSmoke) ... ok
+test_physical_nll_equals_internal_plus_observed_target_jacobian (test_posterior.TestSmoke) ... ok
+test_g15_equals_g10_when_ratio_saturates (test_posterior.TestTransforms) ... ok
+test_jacobian_matches_finite_differences (test_posterior.TestTransforms) ... ok
+test_non_positive_lengths_are_refused (test_posterior.TestTransforms) ... ok
+test_round_trip (test_posterior.TestTransforms) ... ok
+test_support_holds_for_any_z (test_posterior.TestTransforms) ... ok
+test_encoder_is_identical_across_variants (test_posterior.TestVariants) ... ok
+test_heads_have_the_expected_output_counts (test_posterior.TestVariants) ... ok
+test_joint_with_zero_u_equals_diagonal (test_posterior.TestVariants) ... ok
+test_point_variant_matches_the_p18_parameter_count (test_posterior.TestVariants) ... ok
+test_complementary_events_are_complementary (test_posterior_rules_integration.TestIntegration) ... ok
+test_draws_respect_physical_support (test_posterior_rules_integration.TestIntegration) ... ok
+test_monotone_threshold_probabilities (test_posterior_rules_integration.TestIntegration) ... $REPO/tests/test_posterior_rules_integration.py:57: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  self.assertGreaterEqual(float(loose), float(strict))
+ok
+test_or_event_exceeds_each_part (test_posterior_rules_integration.TestIntegration) ... $REPO/tests/test_posterior_rules_integration.py:63: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  prob_a = float(prob_event(attributes, a, axis=0))
+$REPO/tests/test_posterior_rules_integration.py:64: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  prob_b = float(prob_event(attributes, b, axis=0))
+$REPO/tests/test_posterior_rules_integration.py:65: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  prob_or = float(prob_event(attributes, Or((a, b)), axis=0))
+ok
+test_rule_probabilities_are_fractions (test_posterior_rules_integration.TestIntegration) ... ok
+test_sampling_is_reproducible_with_a_seed (test_posterior_rules_integration.TestIntegration) ... ok
+test_doy_to_date_and_isis_format (test_prepare_lroc_cdr_cube.TestKernelDbTimestamps) ... ok
+test_filename_bounds_add_a_margin (test_prepare_lroc_cdr_cube.TestKernelDbTimestamps) ... ok
+test_absent_keys_are_simply_omitted (test_prepare_lroc_cdr_cube.TestLabelValues) ... ok
+test_frame_codes_match_the_camera_models (test_prepare_lroc_cdr_cube.TestLabelValues) ... ok
+test_isis_named_values_are_extracted (test_prepare_lroc_cdr_cube.TestLabelValues) ... ok
+test_label_pointer_and_scaling (test_probe_nac_cdr_io.TestLabelParsing) ... ok
+test_missing_pointer_fails_closed (test_probe_nac_cdr_io.TestLabelParsing) ... ok
+test_truncated_image_is_rejected (test_probe_nac_cdr_io.TestLabelParsing) ... ok
+test_main_writes_report (test_probe_nac_cdr_io.TestStatistics) ... ok
+test_null_and_i_f_statistics (test_probe_nac_cdr_io.TestStatistics) ... ok
+test_geotiff_nodata_is_the_fallback (test_probe_p19_io.TestGeoTiffProbe) ... <tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+<tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+ok
+test_main_writes_json_report (test_probe_p19_io.TestGeoTiffProbe) ... <tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+<tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+ok
+test_metadata_and_probe_record (test_probe_p19_io.TestGeoTiffProbe) ... <tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+<tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+<tifffile.TiffPage 0 @8> parsing GDAL_NODATA tag raised ValueError('-3.40282266e+38 is not castable to float32')
+ok
+test_explicit_nodata_keyword_wins (test_probe_p19_io.TestLabelNoDataKeyword) ... ok
+test_keywords_and_objects (test_probe_p19_io.TestLabelParsing) ... ok
+test_block_mean_aggregates_and_keeps_nodata (test_probe_p19_io.TestLabelStatistics) ... ok
+test_fraction_and_proxy_rule (test_probe_p19_io.TestLabelStatistics) ... ok
+test_holes_reduce_valid_fraction (test_probe_p19_io.TestLabelStatistics) ... ok
+test_mismatched_layout_reports_without_guessing (test_probe_p19_io.TestLayoutCheck) ... ok
+test_one_based_pointer_arithmetic (test_probe_p19_io.TestLayoutCheck) ... ok
+test_interior_mask_excludes_edges_and_holes (test_probe_p19_io.TestMasksAndSlope) ... ok
+test_nodata_and_sentinels_are_invalid (test_probe_p19_io.TestMasksAndSlope) ... ok
+test_slope_of_a_known_plane (test_probe_p19_io.TestMasksAndSlope) ... ok
+test_evidence_matches_the_reports (test_protocol_proposal_p20.TestProposalInvariants) ... ok
+test_original_policy_is_not_rewritten (test_protocol_proposal_p20.TestProposalInvariants) ... ok
+test_pending_decisions_are_listed_for_the_researcher (test_protocol_proposal_p20.TestProposalInvariants) ... ok
+test_status_stays_unapproved (test_protocol_proposal_p20.TestProposalInvariants) ... ok
+test_9_and_10_digits (test_resolve_lroc_edr_urls.TestIDs) ... ok
+test_accepts_edr_and_cdr_camera_suffixes (test_resolve_lroc_edr_urls.TestIDs) ... ok
+test_csv_conflicting_duplicate_fails_closed (test_resolve_lroc_edr_urls.TestIndexes) ... ok
+test_head_refuses_non_url (test_resolve_lroc_edr_urls.TestIndexes) ... ok
+test_zip_dbf_extract_and_match (test_resolve_lroc_edr_urls.TestIndexes) ... ok
+test_missing_attribute_is_rejected_at_evaluation (test_rules_ast.TestCompare) ... ok
+test_non_finite_threshold_is_rejected (test_rules_ast.TestCompare) ... ok
+test_threshold_operators (test_rules_ast.TestCompare) ... ok
+test_unknown_attribute_is_rejected (test_rules_ast.TestCompare) ... ok
+test_and_or_not (test_rules_ast.TestComposite) ... ok
+test_de_morgan (test_rules_ast.TestComposite) ... ok
+test_single_child_composite_is_rejected (test_rules_ast.TestComposite) ... ok
+test_constant_rules (test_rules_ast.TestProbEvent) ... ok
+test_deterministic_across_calls (test_rules_ast.TestProbEvent) ... ok
+test_mutually_exclusive_events_sum_to_one (test_rules_ast.TestProbEvent) ... ok
+test_probability_is_a_fraction_not_a_classification (test_rules_ast.TestProbEvent) ... ok
+test_extra_keys_rejected (test_rules_ast.TestSerialisation) ... ok
+test_round_trip (test_rules_ast.TestSerialisation) ... ok
+test_unknown_node_type_rejected (test_rules_ast.TestSerialisation) ... ok
+test_validate_returns_canonical_spec (test_rules_ast.TestSerialisation) ... ok
+test_preregistered_rules_round_trip (test_rules_ast.TestStandardRules) ... ok
+test_standard_rules_evaluate_on_a_bundle (test_rules_ast.TestStandardRules) ... ok
+test_all_nan (test_slope_labels.TestComputeLabels) ... ok
+test_all_ten_bin_vs_strict (test_slope_labels.TestComputeLabels) ... ok
+test_bins_partition_valid_pixels (test_slope_labels.TestComputeLabels) ... ok
+test_exact_threshold_is_not_above (test_slope_labels.TestComputeLabels) ... ok
+test_out_of_range_values_are_invalid (test_slope_labels.TestComputeLabels) ... ok
+test_unsafe_proxy_uses_strict_rule (test_slope_labels.TestComputeLabels) ... ok
+test_valid_fraction_exactly_095 (test_slope_labels.TestComputeLabels) ... ok
+test_empty_file_fails_clearly (test_slope_labels.TestUnitsAndFiles) ... ok
+test_label_one_file_roundtrip (test_slope_labels.TestUnitsAndFiles) ... ok
+test_units (test_slope_labels.TestUnitsAndFiles) ... ok
+test_unverified_units_refused_by_default (test_slope_labels.TestUnitsAndFiles) ... ok
+test_ambiguous_without_slope_name_fails (test_slope_labels.TestVariableSelection) ... ok
+test_multiple_slope_names_fail (test_slope_labels.TestVariableSelection) ... ok
+test_no_variable_fails (test_slope_labels.TestVariableSelection) ... ok
+test_requested_variable (test_slope_labels.TestVariableSelection) ... ok
+test_single_2d_variable_fallback (test_slope_labels.TestVariableSelection) ... ok
+test_unique_slope_name (test_slope_labels.TestVariableSelection) ... ok
+test_fit_logistic_single_class_returns_none (test_train_baseline.TestAlignmentMath) ... ok
+test_map_coordinates_uses_coordinates_not_indices (test_train_baseline.TestAlignmentMath)
+A half-pixel origin shift must move values, not be ignored. ... ok
+test_platt_scale_recovers_monotone_mapping (test_train_baseline.TestAlignmentMath) ... ok
+test_platt_scale_single_class_is_identity (test_train_baseline.TestAlignmentMath) ... ok
+test_composite_truth_is_an_or (test_train_baseline.TestBalancedRules) ... ok
+test_evaluate_all_rules_covers_every_rule (test_train_baseline.TestBalancedRules) ... ok
+test_rule_score_normalises_margins (test_train_baseline.TestBalancedRules) ... ok
+test_rules_registered_with_expected_thresholds (test_train_baseline.TestBalancedRules) ... ok
+test_grouped_bootstrap_resamples_groups (test_train_baseline.TestBootstrap) ... ok
+test_single_group_has_zero_width (test_train_baseline.TestBootstrap) ... ok
+test_batch_tensor_selects_channels (test_train_baseline.TestChannelsAndCache) ... ok
+test_model_order_does_not_define_seed (test_train_baseline.TestChannelsAndCache) ... ok
+test_rule_heads_are_independent_and_match_label_order (test_train_baseline.TestChannelsAndCache) ... ok
+test_variant_scalars_give_geometry_to_every_variant (test_train_baseline.TestChannelsAndCache) ... ok
+test_variants_map_to_channel_sets (test_train_baseline.TestChannelsAndCache) ... ok
+test_feature_list_present_in_hydrated_labels (test_train_baseline.TestCoarseFeatures) ... ok
+test_each_rule_uses_its_own_regression_column (test_train_baseline.TestEvaluateModel) ... ok
+test_rule_column_index_matches_rules (test_train_baseline.TestEvaluateModel) ... ok
+test_all_variants_and_ablations_share_parameter_counts (test_train_baseline.TestFixedMaskAblation) ... ok
+test_masked_channel_has_no_influence (test_train_baseline.TestFixedMaskAblation) ... ok
+test_masked_scalars_have_no_influence (test_train_baseline.TestFixedMaskAblation) ... ok
+test_masks_survive_serialization (test_train_baseline.TestFixedMaskAblation) ... $REPO/tests/test_train_baseline.py:560: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  clone.load_state_dict(torch.load(buffer, map_location="cpu"))
+ok
+test_no_photometry_keeps_texture_and_no_geometry_hides_geometry (test_train_baseline.TestFixedMaskAblation) ... ok
+test_one_epoch_synthetic_smoke_applies_masks (test_train_baseline.TestFixedMaskAblation) ... ok
+test_visible_channel_does_influence_output (test_train_baseline.TestFixedMaskAblation) ... ok
+test_brier_and_constant_baseline (test_train_baseline.TestMetrics) ... ok
+test_logit_is_stable_at_extremes (test_train_baseline.TestMetrics) ... ok
+test_perfect_predictions (test_train_baseline.TestMetrics) ... ok
+test_threshold_is_strict (test_train_baseline.TestMetrics) ... ok
+test_all_nan_array_returns_zeros (test_train_baseline.TestNormalize) ... ok
+test_constant_array_returns_zeros (test_train_baseline.TestNormalize) ... ok
+test_nan_pixels_become_zero_and_keep_scale (test_train_baseline.TestNormalize) ... ok
+test_robust_normalize_range (test_train_baseline.TestNormalize) ... ok
+test_ablation_feature_mapping (test_train_baseline.TestP17RankingAndAblation) ... ok
+test_tied_risks_have_order_invariant_expected_uar (test_train_baseline.TestP17RankingAndAblation) ... ok
+test_unequal_risk_scores_keep_exact_counts (test_train_baseline.TestP17RankingAndAblation) ... ok
+test_unsafe_spatial_augmentation_is_rejected (test_train_baseline.TestP17RankingAndAblation) ... usage: python3 -m unittest [-h] [--labels LABELS] [--manifest MANIFEST]
+                           [--cache CACHE] [--out OUT] [--size SIZE]
+                           [--epochs EPOCHS] [--patience PATIENCE]
+                           [--batch BATCH] [--lr LR] [--seed SEED]
+                           [--bootstrap BOOTSTRAP] [--augment] [--no-augment]
+                           [--no-geometry] [--no-nac-photometry]
+                           [--force-cache] [--min-nac-valid MIN_NAC_VALID]
+                           [--variants VARIANTS]
+                           [--ablation-mode {legacy,fixed-mask}] [--verbose]
+python3 -m unittest: error: --augment with solar azimuth geometry is invalid: spatial flips/rot90 do not rotate the geometry scalar. Use --no-augment (default), or explicitly --no-geometry --augment for a geometry-free control.
+ok
+test_contrast_channel_handles_nan (test_train_baseline.TestPhotometryAndGeometry) ... ok
+test_contrast_channel_keeps_absolute_scale (test_train_baseline.TestPhotometryAndGeometry)
+Per-tile stretching erases the shading magnitude; the contrast channel must not. ... ok
+test_grid_offsets_detects_disagreement (test_train_baseline.TestPhotometryAndGeometry) ... ok
+test_sample_grid_on_coordinates_uses_real_geometry (test_train_baseline.TestPhotometryAndGeometry) ... ok
+test_scalar_table_has_geometry_and_contrast (test_train_baseline.TestPhotometryAndGeometry) ... ok
+test_calibrated_risk_coverage_uses_unsafe_probability (test_train_baseline.TestRiskCoverage) ... ok
+test_evaluate_model_accepts_lowest_unsafe_probability (test_train_baseline.TestRiskCoverage) ... ok
+test_invalid_risk_probability_is_rejected (test_train_baseline.TestRiskCoverage) ... ok
+test_ordering_accepts_lowest_risk (test_train_baseline.TestRiskCoverage) ... ok
+test_uar_uses_actual_accepted_count (test_train_baseline.TestRiskCoverage) ... ok
+test_event_scores_have_two_columns (test_train_baseline.TestTrainVariantFixture) ... ok
+test_fixture_scores_drive_both_rules_independently (test_train_baseline.TestTrainVariantFixture) ... ok
+test_high_auc_ranking_lowers_uar (test_train_baseline.TestTrainVariantFixture) ... ok
+test_mae_and_rmse (test_train_posterior_p21.TestAttributeMetrics) ... ok
+test_original_inference_matches_fresh_process_for_all_variants_and_branches (test_train_posterior_p21.TestCheckpointRoundTrip) ... ok
+test_latent_matched_marginals_can_change_physical_g15_distribution (test_train_posterior_p21.TestCovarianceAblations) ... ok
+test_matched_marginals_changes_draws_but_keeps_the_mean (test_train_posterior_p21.TestCovarianceAblations) ... ok
+test_matched_marginals_preserves_variances_and_zeroes_covariance (test_train_posterior_p21.TestCovarianceAblations) ... ok
+test_unknown_covariance_mode_is_rejected (test_train_posterior_p21.TestCovarianceAblations) ... ok
+test_delta_posterior_is_handled_without_draws (test_train_posterior_p21.TestEventMetrics) ... ok
+test_perfect_prediction_has_zero_brier (test_train_posterior_p21.TestEventMetrics) ... ok
+test_probabilities_are_bounded_and_accept_counts_add_up (test_train_posterior_p21.TestEventMetrics) ... ok
+test_ci_brackets_the_point_estimate (test_train_posterior_p21.TestGroupBootstrap) ... ok
+test_zeroing_removes_only_the_u_columns_and_restores_exactly (test_train_posterior_p21.TestLowRankAblation) ... ok
+test_closed_form_temperature_on_known_covariance (test_train_posterior_p21.TestRefitTemperature) ... ok
+test_refit_uses_the_ablated_covariance (test_train_posterior_p21.TestRefitTemperature) ... ok
+test_report_csv_and_checkpoint_replay_use_identical_split_draws (test_train_posterior_p21.TestRunnerExport) ... ok
+test_same_checkpoint_u_zero_ablation_preserves_shared_temperature (test_train_posterior_p21.TestTemperatureCalibration) ... ok
+test_temperature_scales_point_diagonal_and_joint_noise_not_mean (test_train_posterior_p21.TestTemperatureCalibration) ... ok
+test_unity_temperature_is_noop_and_zero_is_rejected (test_train_posterior_p21.TestTemperatureCalibration) ... ok
+
+----------------------------------------------------------------------
+Ran 654 tests in 19.721s
+
+OK
+b.IMG: shape=[64, 48] valid=0.99870 If p50=0.07648 sat=0.00000 pixel_offset=512 scale=3.052e-05 null=32768
+c.IMG: shape=[64, 48] valid=0.99870 If p50=0.07648 sat=0.00000 pixel_offset=512 scale=3.052e-05 null=32768
+wrote $TEST_TMP/probe.json
+NAC_DTM_TEST01: shape=[64, 64] dtype=float32 proj=POLARSTEREOGRAPHIC scale=2.0m valid=0.9844 g10=0.0000 unsafe=False raw_identical=None
+wrote $TEST_TMP/probe.json

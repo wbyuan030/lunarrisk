@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "$JOB_TMP/p31_python.py", line 14, in <module>
+    runpy.run_path(script,run_name='__main__')
+  File "/usr/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/usr/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "$REPO/scripts/p33_nasa_preflight.py", line 136, in <module>
+    main()
+  File "$REPO/scripts/p33_nasa_preflight.py", line 78, in main
+    prepared = prepare_terrain(raw, valid, config["data"]["domains"], provenance)
+  File "$REPO/src/lunarrisk/nasa_transfer/contracts.py", line 115, in prepare_terrain
+    size = validate_domain(domain)
+  File "$REPO/src/lunarrisk/nasa_transfer/contracts.py", line 65, in validate_domain
+    raise ValueError("pre_resize differs from input_size; audit spatial preprocessing first")
+ValueError: pre_resize differs from input_size; audit spatial preprocessing first
