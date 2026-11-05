@@ -121,10 +121,12 @@
     "path": "protocols/p33_private_runtime_plan.json",
     "guide": "docs/P3_3_PRIVATE_RUNTIME_PLAN.md",
     "report": "reports/p3_3_private_runtime_plan.md",
-    "status": "CANDIDATE_ONLY_HOST_DRIVER_AND_FULL_RESOLUTION_PENDING",
+    "status": "HOST_IDENTITY_KNOWN_DRIVER_SUPPORT_MAPPING_AND_FULL_RESOLUTION_PENDING",
+    "host_report": "reports/p3_3_host_runtime_audit.md",
+    "host_evidence": "reports/evidence/p33_20261105/host_runtime_01/verification.json",
     "candidate": "Python3.12 / torch2.12.1+rocm7.2 / torchvision0.27.1+rocm7.2",
     "install_performed": false,
     "official_execution": "NOT_RUN",
-    "next_action": "Read-only missing host amdgpu/OS/capacity evidence; no repeated checks, installations or big downloads"
+    "next_action": "Read-only host collection complete; stop at exact driver support mapping gap. No repeated inventories/tests, resolver, installations, driver changes or big downloads"
   }
 }

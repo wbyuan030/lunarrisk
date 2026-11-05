@@ -2,7 +2,7 @@
   "plan_id": "p33_private_nasa_runtime_candidate_v1",
   "created_date": "2026-11-05",
   "base_commit": "c9245665fab0213b598b23031c50e9c68c997cf0",
-  "status": "CANDIDATE_ONLY_HOST_DRIVER_AND_RESOLUTION_PENDING_NO_INSTALL_AUTHORITY",
+  "status": "HOST_IDENTITY_KNOWN_DRIVER_SUPPORT_MAPPING_UNRESOLVED_NO_INSTALL_AUTHORITY",
   "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
   "preserve_existing_runtime": "Python3.10.12/torch2.5.1+rocm6.2 and existing ROCm host/container remain unchanged",
   "candidate": {
@@ -49,16 +49,33 @@
   "source_audit": "reports/evidence/p33_20261105/runtime_plan_01/source_audit.json",
   "public_sources": "reports/evidence/p33_20261105/runtime_plan_01/public_runtime_sources.json",
   "known_gaps": [
-    "Actual amdgpu module/package identity not recorded; torch.version.hip is user-space build identity, not host driver",
-    "Exact OS release not established by kernel/glibc record alone",
+    "Actual module6.8.5/package1:6.8.5.60204-2070768.22.04 is recorded; mapping to supported ROCm7.2 driver release remains unverified",
+    "Ubuntu22.04.5/kernel6.8.0-138/glibc2.35 recorded; OS/kernel-family match alone does not validate complete host/runtime compatibility",
     "All28 official requirements and external closure unresolved; wheel availability/ABI and total size/hash unverified",
     "Private Python3.12 absent in existing inventory; install is not authorized in this phase",
     "PyTorch-distributed2.12.1 wheels are not AMD Radeon matrix-certified2.9.1 and must not be labeled AMD-validated for this host",
     "Current wrapper checks Python and source/config, not every distribution bound; passing guard is not full runtime approval"
   ],
+  "host_local_followup": {
+    "base_commit": "7784886",
+    "report": "reports/p3_3_host_runtime_audit.md",
+    "host_evidence": "reports/evidence/p33_20261105/host_runtime_01/host_audit.json",
+    "support_comparison": "reports/evidence/p33_20261105/host_runtime_01/support_comparison.json",
+    "verification": "reports/evidence/p33_20261105/host_runtime_01/verification.json",
+    "identity_collection": "COMPLETE",
+    "os": "Ubuntu22.04.5/kernel6.8.0-138-generic/x86_64/glibc2.35",
+    "amdgpu_module": "6.8.5",
+    "amdgpu_dkms_package": "1:6.8.5.60204-2070768.22.04",
+    "volume_free_bytes_at_observation": 462071136256,
+    "exact_driver_support": "NOT_ESTABLISHED_NO_VERIFIED_RELEASE_MAPPING",
+    "decision": "STOP_BEFORE_PROVISIONING_NO_HOST_CHANGES",
+    "environment_created": false,
+    "tests_repeated": false
+  },
   "next_permitted_action": {
     "owner": "local Git-collaboration agent",
-    "action": "Read-only host driver/OS and intended storage capacity audit; use already recorded Python/package inventory rather than repeating it",
+    "status": "READ_ONLY_COLLECTION_COMPLETED_STOP_AT_DRIVER_SUPPORT_GAP",
+    "action": "Use recorded host facts; no repeated inventory. Await explicit driver-support evidence and later bounded provisioning decision; no resolver or environment changes now",
     "collect": [
       "OS VERSION_ID",
       "kernel release",

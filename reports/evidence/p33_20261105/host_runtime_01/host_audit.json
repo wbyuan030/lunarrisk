@@ -1,0 +1,62 @@
+{
+  "status": "IDENTITY_COLLECTED_DRIVER_SUPPORT_NOT_ESTABLISHED",
+  "observed_date": "2026-11-05",
+  "scope": "Read-only local host identity and available capacity; no runtime provisioning or model execution",
+  "os": {
+    "source": "/etc/os-release",
+    "id": "ubuntu",
+    "version_id": "22.04",
+    "version": "22.04.5 LTS (Jammy Jellyfish)",
+    "pretty_name": "Ubuntu 22.04.5 LTS",
+    "kernel_release": "6.8.0-138-generic",
+    "architecture": "x86_64",
+    "libc": "glibc",
+    "libc_version": "2.35"
+  },
+  "amdgpu": {
+    "loaded_sysfs_module": true,
+    "sysfs_version": "6.8.5",
+    "sysfs_srcversion": "48F9726EF994ECFE76EC464",
+    "sysfs_taint": "OE",
+    "modinfo_version": "6.8.5",
+    "modinfo_srcversion": "48F9726EF994ECFE76EC464",
+    "modinfo_vermagic": "6.8.0-138-generic SMP preempt mod_unload modversions",
+    "loaded_and_on_disk_module_version_match": true,
+    "loaded_and_on_disk_module_srcversion_match": true,
+    "package_name": "amdgpu-dkms",
+    "package_version": "1:6.8.5.60204-2070768.22.04",
+    "package_status": "install ok installed",
+    "package_version_to_rocm72_driver_matrix_mapping": "UNKNOWN_NOT_VERIFIED",
+    "interpretation": "Module6.8.5 is not a ROCm release or proof of support for ROCm7.2; package suffix is recorded without deriving an unsupported release mapping."
+  },
+  "storage": {
+    "intended_location": "Private workspace/runtime volume; absolute private paths and device identifiers omitted",
+    "repository_and_existing_private_runtime_same_filesystem": true,
+    "total_bytes": 982806224896,
+    "used_bytes": 470735839232,
+    "free_bytes": 462071136256,
+    "meaning": "Point-in-time free filesystem capacity, not a reservation, quota guarantee, resolved dependency footprint or memory-fit result",
+    "new_environment_created": false,
+    "caches_cleared": false
+  },
+  "commands": [
+    {"operation": "Read /etc/os-release", "status": "PASS"},
+    {"operation": "platform.release(), platform.machine(), platform.libc_ver()", "status": "PASS"},
+    {"operation": "Read /sys/module/amdgpu/{version,srcversion,taint}", "status": "PASS"},
+    {"operation": "modinfo -F version amdgpu", "exit_code": 0, "stdout": "6.8.5", "stderr": ""},
+    {"operation": "modinfo -F vermagic amdgpu", "exit_code": 0, "stdout": "6.8.0-138-generic SMP preempt mod_unload modversions", "stderr": ""},
+    {"operation": "modinfo -F srcversion amdgpu", "exit_code": 0, "stdout": "48F9726EF994ECFE76EC464", "stderr": ""},
+    {"operation": "dpkg-query -W -f='${Package}\\t${Version}\\t${Status}\\n' amdgpu-dkms", "exit_code": 0, "stdout": "amdgpu-dkms\t1:6.8.5.60204-2070768.22.04\tinstall ok installed", "stderr": ""},
+    {"operation": "shutil.disk_usage(existing private locations); compare os.stat st_dev locally", "status": "PASS", "private_paths_and_device_ids_published": false}
+  ],
+  "python_search_repeated": false,
+  "package_inventory_repeated": false,
+  "native256_preflight_repeated": false,
+  "regression_tests_repeated": false,
+  "driver_modified": false,
+  "packages_installed": false,
+  "container_pulled": false,
+  "model_or_data_downloaded": false,
+  "official_nasa_execution": "NOT_RUN",
+  "test_access": "HOLD"
+}

@@ -1,0 +1,41 @@
+{
+  "status": "HOST_DRIVER_SUPPORT_NOT_ESTABLISHED_STOP_BEFORE_PROVISIONING",
+  "observed_date": "2026-11-05",
+  "method": "Read official public AMD compatibility pages using WebFetch; no wheel, sdist, installer or model fetched",
+  "sources": [
+    {
+      "url": "https://rocm.docs.amd.com/projects/radeon-ryzen/en/docs-7.2/docs/compatibility/compatibilityrad/native_linux/native_linux_compatibility.html",
+      "observations": [
+        "RX7900XT is listed.",
+        "Ubuntu22.04.5 Desktop with HWE/kernel6.8 is listed.",
+        "PyTorch2.9.1 is the production entry; proposed2.12.1 is not listed.",
+        "Neither module6.8.5 nor exact amdgpu-dkms 1:6.8.5.60204-2070768.22.04 is explicitly mapped to supported ROCm7.2 driver identity."
+      ]
+    },
+    {
+      "url": "https://rocm.docs.amd.com/en/docs-7.2.0/compatibility/compatibility-matrix.html",
+      "rocm72_amd_gpu_driver_row": ["30.30.0", "30.20.1", "30.20.0", "30.10.2", "30.10.1", "30.10", "6.4.x"],
+      "observations": [
+        "Ubuntu22.04.5 is listed.",
+        "The page does not provide a mapping from observed amdgpu kernel module6.8.5 or exact installed DKMS package to its driver release row.",
+        "Do not interpret module6.8.5 as ROCm6.8 or compare module and release strings numerically."
+      ]
+    }
+  ],
+  "comparison": {
+    "observed_os_release_and_kernel_family": "MATCH_LISTED_OS_KERNEL_FAMILY",
+    "gpu_product": "RX7900XT_PREVIOUSLY_RECORDED_LISTED_PRODUCT_NO_NEW_GPU_PROBE",
+    "architecture": "x86_64",
+    "glibc": "2.35; newer than manylinux_2_28 floor, not proof of complete ABI compatibility",
+    "observed_driver_identity": "KNOWN_MODULE6.8.5_PACKAGE1:6.8.5.60204-2070768.22.04",
+    "observed_driver_support_for_candidate_rocm72": "UNKNOWN_NO_VERIFIED_MAPPING",
+    "candidate_torch2121_amd_production_validation": "NOT_ESTABLISHED_NOT_THE_LISTED_291_ENTRY",
+    "dependency_closure_and_footprint": "UNRESOLVED",
+    "runtime_execution_compatibility": "NOT_ESTABLISHED"
+  },
+  "conclusion": "Host identity gap is resolved; support mapping is not. The pages do not establish this exact driver/candidate combination, which is not a demonstrated incompatibility. Stop before resolution/provisioning or host changes; obtain explicit support evidence and a separate bounded provisioning decision for any later phase.",
+  "driver_upgrade_proposed_or_performed": false,
+  "installer_or_package_downloaded": false,
+  "official_model_execution": "NOT_RUN",
+  "scientific_protocol_changed": false
+}

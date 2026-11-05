@@ -12,7 +12,11 @@
 
 The normal package import eagerly loads training/data components. Even the backbone's core import graph reaches scipy, hdf5plugin, torchvision, h5py and pandas. A torch/einops-only workaround is not equivalent. Full external dependency closure remains unverified. The official constructor allocates decoder blocks transiently before pruning; memory fit has not been measured.
 
-## Exact remaining blocker
+## Local host follow-up
+
+The [read-only local audit](p3_3_host_runtime_audit.md) at `7784886` completed the missing OS/module/package/capacity facts: Ubuntu22.04.5/kernel6.8.0-138, amdgpu module6.8.5 and DKMS `1:6.8.5.60204-2070768.22.04`, with462,071,136,256 free bytes on the intended volume. The inspected official matrices do not map that exact installed package to their supported driver release row. Exact driver/runtime support remains NOT_ESTABLISHED; the local phase stops before provisioning. [Evidence](evidence/p33_20261105/host_runtime_01/verification.json). No completed tests/preflight or Python/package inventory were repeated.
+
+## Original remaining blocker (host identity now recorded)
 
 The existing host's amdgpu module/package identity and exact OS release were not captured by the prior Python/HIP inventory. The candidate's full dependency resolution and size/hash budget are also unfinished. New interpreter/environment installation is outside this phase. The local Git collaborator can next collect only the missing driver/OS/capacity facts; no repeated native256 checks, installations, host modifications or asset downloads are instructed.
 

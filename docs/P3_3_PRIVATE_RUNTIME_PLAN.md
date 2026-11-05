@@ -24,7 +24,13 @@ AMD's ROCm 7.2 Radeon matrix lists RX 7900 XT and Ubuntu 22.04.5 HWE/kernel 6.8.
 
 The existing report records kernel 6.8/glibc 2.35 and torch's HIP 6.2 build. That does not identify the host amdgpu driver or exact OS release. AMD's pinned ROCm 7.2 driver column lists 30.30.0,30.20.1/30.20.0,30.10.2/30.10.1/30.10 and 6.4.x; it does not establish that an unknown host or a 6.2.x driver supports 7.2. A venv or container does not replace the kernel driver. **Do not upgrade it or infer compatibility from old torch.cuda.is_available().** [ROCm 7.2 matrix](https://rocm.docs.amd.com/en/docs-7.2.0/compatibility/compatibility-matrix.html).
 
-## Next local Git handoff: read-only only
+## Local host follow-up completed
+
+At `7784886`, the read-only local check recorded Ubuntu22.04.5/kernel6.8.0-138/glibc2.35, matching loaded/on-disk amdgpu module6.8.5 and installed DKMS package `1:6.8.5.60204-2070768.22.04`. The intended private volume had462,071,136,256 bytes free. [Actual host audit](../reports/p3_3_host_runtime_audit.md), [facts](../reports/evidence/p33_20261105/host_runtime_01/host_audit.json), [support comparison](../reports/evidence/p33_20261105/host_runtime_01/support_comparison.json).
+
+Host identity collection is complete. Neither official matrix provides a verified mapping from this exact module/package to its ROCm7.2 driver-release row; that support remains NOT_ESTABLISHED, not demonstrated incompatibility. Module6.8.5 must not be read as a ROCm version. The phase stops before provisioning or host changes. Do not repeat the host inventory, input check or tests without changed host/source evidence. Capacity does not resolve dependency sizes or authorize installation.
+
+## Original local Git handoff: read-only collection completed
 
 Do not repeat the Python search, package inventory, native256 preflight or701 tests already completed. Collect the facts missing from those reports:
 
