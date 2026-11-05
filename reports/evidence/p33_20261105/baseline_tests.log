@@ -1,0 +1,571 @@
+E.......EE...........E...................................EEE.......E...........EEE......................E............................E........................Esssss..................ssss.....................sssssssss..........s...................E....ssssssssssssss......s..................................Esssssssssssssssssss..EEE..EEE..........EEE..............E.................EEE
+======================================================================
+ERROR: test_aggregate_seeds (unittest.loader._FailedTest.test_aggregate_seeds)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_aggregate_seeds
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_aggregate_seeds.py", line 17, in <module>
+    SPEC.loader.exec_module(agg)
+  File "<checkout>/scripts/aggregate_seeds.py", line 29, in <module>
+    import train_baseline as tb  # noqa: E402  (single source of truth for rules/variants)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/train_baseline.py", line 63, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_audit_groups_pairwise (unittest.loader._FailedTest.test_audit_groups_pairwise)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_groups_pairwise
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_audit_groups_pairwise.py", line 15, in <module>
+    spec.loader.exec_module(pw)
+  File "<checkout>/scripts/audit_groups_pairwise.py", line 27, in <module>
+    import shapefile
+ModuleNotFoundError: No module named 'shapefile'
+
+
+======================================================================
+ERROR: test_metadata_screen_never_claims_strict_ood (test_audit_lroc_dtm.TestEndToEndVerdict.test_metadata_screen_never_claims_strict_ood)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_audit_lroc_dtm.py", line 101, in test_metadata_screen_never_claims_strict_ood
+    import shapefile  # pyshp, present in requirements-extra.txt
+    ^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'shapefile'
+
+======================================================================
+ERROR: test_audit_lroc_footprints (unittest.loader._FailedTest.test_audit_lroc_footprints)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_lroc_footprints
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_audit_lroc_footprints.py", line 13, in <module>
+    from pyproj import CRS
+ModuleNotFoundError: No module named 'pyproj'
+
+
+======================================================================
+ERROR: test_compare_ablations (unittest.loader._FailedTest.test_compare_ablations)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_compare_ablations
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_compare_ablations.py", line 17, in <module>
+    SPEC.loader.exec_module(ca)
+  File "<checkout>/scripts/compare_ablations.py", line 28, in <module>
+    import train_baseline as tb  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/train_baseline.py", line 63, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_compare_p22 (unittest.loader._FailedTest.test_compare_p22)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_compare_p22
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_compare_p22.py", line 27, in <module>
+    runner = _load("train_posterior_p21", ROOT / "scripts" / "train_posterior_p21.py")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/tests/test_compare_p22.py", line 23, in _load
+    spec.loader.exec_module(module)
+  File "<checkout>/scripts/train_posterior_p21.py", line 30, in <module>
+    from lunarrisk.probabilistic import (condition_posterior, export_state, from_internal,  # noqa: E402
+  File "<checkout>/src/lunarrisk/probabilistic/__init__.py", line 3, in <module>
+    from .posterior import (COVARIANCE_MODES, PARAM_COUNT_ENCODER, PARAM_COUNT_FIXED_MASK,
+  File "<checkout>/src/lunarrisk/probabilistic/posterior.py", line 19, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_coverage_qa_p20 (unittest.loader._FailedTest.test_coverage_qa_p20)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_coverage_qa_p20
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_coverage_qa_p20.py", line 18, in <module>
+    spec.loader.exec_module(cov)
+  File "<checkout>/scripts/coverage_qa_p20.py", line 15, in <module>
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+
+======================================================================
+ERROR: test_diagnose_p22_rules (unittest.loader._FailedTest.test_diagnose_p22_rules)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_diagnose_p22_rules
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_diagnose_p22_rules.py", line 13, in <module>
+    spec.loader.exec_module(diagnostic)
+  File "<checkout>/scripts/diagnose_p22_rules.py", line 15, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_insufficient_candidates_reports_blocked (test_freeze_heldout.TestFreezeArtifacts.test_insufficient_candidates_reports_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_freeze_heldout.py", line 176, in test_insufficient_candidates_reports_blocked
+    manifest.to_parquet(manifest_path, index=False)
+  File "<runtime>", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 3113, in to_parquet
+    return to_parquet(
+           ^^^^^^^^^^^
+  File "<runtime>", line 476, in to_parquet
+    impl = get_engine(engine)
+           ^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+
+======================================================================
+ERROR: test_main_writes_frozen_manifest_and_protocol (test_freeze_heldout.TestFreezeArtifacts.test_main_writes_frozen_manifest_and_protocol)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_freeze_heldout.py", line 123, in test_main_writes_frozen_manifest_and_protocol
+    manifest.to_parquet(manifest_path, index=False)
+  File "<runtime>", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 3113, in to_parquet
+    return to_parquet(
+           ^^^^^^^^^^^
+  File "<runtime>", line 476, in to_parquet
+    impl = get_engine(engine)
+           ^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+
+======================================================================
+ERROR: test_product_only_freeze_metadata_does_not_claim_group_exclusion (test_freeze_heldout.TestFreezeArtifacts.test_product_only_freeze_metadata_does_not_claim_group_exclusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_freeze_heldout.py", line 151, in test_product_only_freeze_metadata_does_not_claim_group_exclusion
+    candidates.to_parquet(manifest_path, index=False)
+  File "<runtime>", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 3113, in to_parquet
+    return to_parquet(
+           ^^^^^^^^^^^
+  File "<runtime>", line 476, in to_parquet
+    impl = get_engine(engine)
+           ^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 67, in get_engine
+    raise ImportError(
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+
+======================================================================
+ERROR: test_hydrate_tiles (unittest.loader._FailedTest.test_hydrate_tiles)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_hydrate_tiles
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_hydrate_tiles.py", line 23, in <module>
+    SPEC.loader.exec_module(ht)
+  File "<checkout>/scripts/hydrate_tiles.py", line 32, in <module>
+    import make_slope_labels as msl  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/make_slope_labels.py", line 28, in <module>
+    import xarray as xr
+ModuleNotFoundError: No module named 'xarray'
+
+
+======================================================================
+ERROR: test_mosaic_geotiff_p20 (unittest.loader._FailedTest.test_mosaic_geotiff_p20)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mosaic_geotiff_p20
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_mosaic_geotiff_p20.py", line 12, in <module>
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+
+======================================================================
+ERROR: test_ortho_registration_p20 (unittest.loader._FailedTest.test_ortho_registration_p20)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_ortho_registration_p20
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_ortho_registration_p20.py", line 18, in <module>
+    spec.loader.exec_module(reg)
+  File "<checkout>/scripts/ortho_registration_p20.py", line 28, in <module>
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+
+======================================================================
+ERROR: test_real_h5py_descriptor_scan_reads_no_pixel_chunks (test_p31_plan_prefix.TestPrefixPlannerIO.test_real_h5py_descriptor_scan_reads_no_pixel_chunks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_p31_plan_prefix.py", line 294, in test_real_h5py_descriptor_scan_reads_no_pixel_chunks
+    import h5py
+ModuleNotFoundError: No module named 'h5py'
+
+======================================================================
+ERROR: test_p32_context (unittest.loader._FailedTest.test_p32_context)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_p32_context
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_p32_context.py", line 6, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_gpu_initialized_before_peak_counter_reset (test_p32_runner.RunnerTests.test_gpu_initialized_before_peak_counter_reset)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_p32_runner.py", line 16, in test_gpu_initialized_before_peak_counter_reset
+    with patch('torch.cuda.is_available',return_value=True), \
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 1451, in __enter__
+    self.target = self.getter()
+                  ^^^^^^^^^^^^^
+  File "<runtime>", line 513, in resolve_name
+    mod = importlib.import_module(modname)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'torch'
+
+======================================================================
+ERROR: test_nonfinite_or_unnormalized_probabilities_rejected (test_p32_runner.RunnerTests.test_nonfinite_or_unnormalized_probabilities_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_p32_runner.py", line 39, in test_nonfinite_or_unnormalized_probabilities_rejected
+    with self.assertRaises(ValueError): train.probability_metrics(p,[0])
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/p32_train_heads.py", line 112, in probability_metrics
+    from lunarrisk.benchmarks.classifier import classification_metrics
+  File "<checkout>/src/lunarrisk/benchmarks/classifier.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+======================================================================
+ERROR: test_probability_metrics_match_known_confusion (test_p32_runner.RunnerTests.test_probability_metrics_match_known_confusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_p32_runner.py", line 30, in test_probability_metrics_match_known_confusion
+    m=train.probability_metrics(p,[0,1,0])
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/p32_train_heads.py", line 112, in probability_metrics
+    from lunarrisk.benchmarks.classifier import classification_metrics
+  File "<checkout>/src/lunarrisk/benchmarks/classifier.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+======================================================================
+ERROR: test_unavailable_gpu_fails_before_counter_reset (test_p32_runner.RunnerTests.test_unavailable_gpu_fails_before_counter_reset)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_p32_runner.py", line 24, in test_unavailable_gpu_fails_before_counter_reset
+    with patch('torch.cuda.is_available',return_value=False), patch('torch.cuda.reset_peak_memory_stats') as reset:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 1451, in __enter__
+    self.target = self.getter()
+                  ^^^^^^^^^^^^^
+  File "<runtime>", line 513, in resolve_name
+    mod = importlib.import_module(modname)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'torch'
+
+======================================================================
+ERROR: test_posterior (unittest.loader._FailedTest.test_posterior)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_posterior
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_posterior.py", line 11, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_posterior_rules_integration (unittest.loader._FailedTest.test_posterior_rules_integration)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_posterior_rules_integration
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_posterior_rules_integration.py", line 10, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_geotiff_nodata_is_the_fallback (test_probe_p19_io.TestGeoTiffProbe.test_geotiff_nodata_is_the_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_probe_p19_io.py", line 227, in test_geotiff_nodata_is_the_fallback
+    tif, base = self._scene(tmp)
+                ^^^^^^^^^^^^^^^^
+  File "<checkout>/tests/test_probe_p19_io.py", line 197, in _scene
+    write_geotiff(tif, array)
+  File "<checkout>/tests/test_probe_p19_io.py", line 55, in write_geotiff
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+======================================================================
+ERROR: test_main_writes_json_report (test_probe_p19_io.TestGeoTiffProbe.test_main_writes_json_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_probe_p19_io.py", line 236, in test_main_writes_json_report
+    _, base = self._scene(tmp)
+              ^^^^^^^^^^^^^^^^
+  File "<checkout>/tests/test_probe_p19_io.py", line 197, in _scene
+    write_geotiff(tif, array)
+  File "<checkout>/tests/test_probe_p19_io.py", line 55, in write_geotiff
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+======================================================================
+ERROR: test_metadata_and_probe_record (test_probe_p19_io.TestGeoTiffProbe.test_metadata_and_probe_record)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/tests/test_probe_p19_io.py", line 203, in test_metadata_and_probe_record
+    tif, base = self._scene(tmp)
+                ^^^^^^^^^^^^^^^^
+  File "<checkout>/tests/test_probe_p19_io.py", line 197, in _scene
+    write_geotiff(tif, array)
+  File "<checkout>/tests/test_probe_p19_io.py", line 55, in write_geotiff
+    import tifffile
+ModuleNotFoundError: No module named 'tifffile'
+
+======================================================================
+ERROR: test_resolve_lroc_edr_urls (unittest.loader._FailedTest.test_resolve_lroc_edr_urls)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolve_lroc_edr_urls
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_resolve_lroc_edr_urls.py", line 12, in <module>
+    import shapefile
+ModuleNotFoundError: No module named 'shapefile'
+
+
+======================================================================
+ERROR: test_slope_labels (unittest.loader._FailedTest.test_slope_labels)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_slope_labels
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_slope_labels.py", line 12, in <module>
+    import xarray as xr
+ModuleNotFoundError: No module named 'xarray'
+
+
+======================================================================
+ERROR: test_train_baseline (unittest.loader._FailedTest.test_train_baseline)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_train_baseline
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_train_baseline.py", line 18, in <module>
+    SPEC.loader.exec_module(tb)
+  File "<checkout>/scripts/train_baseline.py", line 63, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+======================================================================
+ERROR: test_train_posterior_p21 (unittest.loader._FailedTest.test_train_posterior_p21)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_train_posterior_p21
+Traceback (most recent call last):
+  File "<runtime>", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<runtime>", line 339, in _get_module_from_name
+    __import__(name)
+  File "<checkout>/tests/test_train_posterior_p21.py", line 18, in <module>
+    spec.loader.exec_module(runner)
+  File "<checkout>/scripts/train_posterior_p21.py", line 30, in <module>
+    from lunarrisk.probabilistic import (condition_posterior, export_state, from_internal,  # noqa: E402
+  File "<checkout>/src/lunarrisk/probabilistic/__init__.py", line 3, in <module>
+    from .posterior import (COVARIANCE_MODES, PARAM_COUNT_ENCODER, PARAM_COUNT_FIXED_MASK,
+  File "<checkout>/src/lunarrisk/probabilistic/posterior.py", line 19, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'
+
+
+----------------------------------------------------------------------
+Ran 384 tests in 5.584s
+
+FAILED (errors=29, skipped=53)
+{
+  "scope": "passing",
+  "audited_scenes": 3,
+  "pages_found": 3,
+  "with_dtm_product": 2,
+  "with_optical_product": 1,
+  "with_optical_sibling_id": 1,
+  "optical_verified_published": 0,
+  "scenes_with_siblings": 2,
+  "optical_examples": [
+    [
+      "BETA",
+      "NAC_DTM_BETA_MOSAIC_200CM.IMG"
+    ]
+  ],
+  "notes": [
+    "Product pages are the authoritative list of downloadable files on this mirror.",
+    "Raw NAC EDR volumes returned 404 on every mirror path tried; the published optical product is a NAC-derived site orthomosaic (*_MOSAIC_200CM.IMG).",
+    "_SHADE/_SLOPE products are DTM-derived and are not independent optical input.",
+    "Only scenes with an optical product can serve as frozen external samples."
+  ]
+}
+wrote <temp>/out.csv and <temp>/out.json
+{
+  "scope": "all",
+  "audited_scenes": 4,
+  "pages_found": 3,
+  "with_dtm_product": 2,
+  "with_optical_product": 1,
+  "with_optical_sibling_id": 1,
+  "optical_verified_published": 0,
+  "scenes_with_siblings": 3,
+  "optical_examples": [
+    [
+      "BETA",
+      "NAC_DTM_BETA_MOSAIC_200CM.IMG"
+    ]
+  ],
+  "notes": [
+    "Product pages are the authoritative list of downloadable files on this mirror.",
+    "Raw NAC EDR volumes returned 404 on every mirror path tried; the published optical product is a NAC-derived site orthomosaic (*_MOSAIC_200CM.IMG).",
+    "_SHADE/_SLOPE products are DTM-derived and are not independent optical input.",
+    "Only scenes with an optical product can serve as frozen external samples."
+  ]
+}
+wrote <temp>/all.csv and <temp>/all.json
+{
+  "pool_scenes": 2,
+  "scenes_with_all_acquisitions_both_cameras": 0,
+  "scenes_complete": [],
+  "acquisitions": {
+    "total": 3,
+    "both": 1,
+    "partial": 2,
+    "missing": 0
+  }
+}
+wrote <temp>/avail.json
+{
+  "pool_scenes": 2,
+  "scenes_with_all_acquisitions_both_cameras": 1,
+  "scenes_complete": [
+    "AAA"
+  ],
+  "acquisitions": {
+    "total": 3,
+    "both": 2,
+    "partial": 0,
+    "missing": 1
+  }
+}
+wrote <temp>/avail.json
+<temp>/dtm_map.cub written (527 B) for PLANCKFLOOR
+<temp>/dtm_map.cub exists (527 B), keep
+<temp>/dtm_map.cub written (527 B) for PLANCKFLOOR
+b.IMG: shape=[64, 48] valid=0.99870 If p50=0.07648 sat=0.00000 pixel_offset=512 scale=3.052e-05 null=32768
+c.IMG: shape=[64, 48] valid=0.99870 If p50=0.07648 sat=0.00000 pixel_offset=512 scale=3.052e-05 null=32768
+wrote <temp>/probe.json

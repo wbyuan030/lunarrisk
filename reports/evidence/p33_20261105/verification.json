@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-05",
+  "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
+  "python": "3.12.14",
+  "new_tests": {
+    "total": 26,
+    "passed": 17,
+    "skipped": 9,
+    "failures": 0,
+    "errors": 0,
+    "skip_reason": "No torch installed; wrapper checks use synthetic stand-in, not official NASA"
+  },
+  "full_suite": {
+    "status": "BLOCKED_MISSING_DEPENDENCIES",
+    "total": 410,
+    "passed": 319,
+    "skipped": 62,
+    "errors": 29,
+    "failures": 0
+  },
+  "baseline_only": {
+    "total": 384,
+    "passed": 302,
+    "skipped": 53,
+    "errors": 29,
+    "failures": 0
+  },
+  "error_test_ids_match_baseline_exactly": true,
+  "compileall": "PASS",
+  "git_diff_check": "PASS",
+  "official_nasa_execution": "NOT_RUN",
+  "actual_pretrained_checkpoint_load": "NOT_RUN",
+  "real_terrain_batch": "NOT_AVAILABLE",
+  "packages_installed": false,
+  "logs": {
+    "baseline_tests.log": "c0afc47290c1fe6b2b55ff1683be3ed7c26c2f7e1a4c8e9b79b52377e5041699",
+    "cloud_tests.log": "d5928ec8170a77f1f2a93953d2e60787d96bc87ebe4b1e734b51d8d8af834ae4",
+    "focused_tests.log": "b9355a5dbc65f790b61b5f84d2b4dd649bca35107a8d9c7fd50a987c303e61c9"
+  }
+}

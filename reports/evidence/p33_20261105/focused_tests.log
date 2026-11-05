@@ -1,0 +1,31 @@
+test_ambiguous_envelope_and_prefix_collision_are_fatal (test_p33_nasa_contracts.TestNasaCheckpointAudit.test_ambiguous_envelope_and_prefix_collision_are_fatal) ... ok
+test_complete_selected_inference_coverage (test_p33_nasa_contracts.TestNasaCheckpointAudit.test_complete_selected_inference_coverage) ... ok
+test_incomplete_target_is_not_valid_coverage (test_p33_nasa_contracts.TestNasaCheckpointAudit.test_incomplete_target_is_not_valid_coverage) ... ok
+test_missing_shape_mismatch_and_unexpected_encoder_are_fatal (test_p33_nasa_contracts.TestNasaCheckpointAudit.test_missing_shape_mismatch_and_unexpected_encoder_are_fatal) ... ok
+test_extra_channels_labels_or_geometry_rejected (test_p33_nasa_contracts.TestNasaTerrainContract.test_extra_channels_labels_or_geometry_rejected) ... ok
+test_invalid_domain_never_uses_guessed_defaults (test_p33_nasa_contracts.TestNasaTerrainContract.test_invalid_domain_never_uses_guessed_defaults) ... ok
+test_nonfinite_or_nondegree_slope_rejected (test_p33_nasa_contracts.TestNasaTerrainContract.test_nonfinite_or_nondegree_slope_rejected) ... ok
+test_partial_and_whole_missingness_fail_closed (test_p33_nasa_contracts.TestNasaTerrainContract.test_partial_and_whole_missingness_fail_closed) ... ok
+test_provenance_cannot_be_omitted_or_zscored (test_p33_nasa_contracts.TestNasaTerrainContract.test_provenance_cannot_be_omitted_or_zscored) ... ok
+test_scalers_and_per_sample_local_center (test_p33_nasa_contracts.TestNasaTerrainContract.test_scalers_and_per_sample_local_center) ... ok
+test_shape_resize_and_mask_dtype_rejected (test_p33_nasa_contracts.TestNasaTerrainContract.test_shape_resize_and_mask_dtype_rejected) ... ok
+test_zero_is_observed_and_inputs_are_not_mutated (test_p33_nasa_contracts.TestNasaTerrainContract.test_zero_is_observed_and_inputs_are_not_mutated) ... ok
+test_bytes_or_empty_ids_rejected_before_output_creation (test_p33_nasa_preflight.TestNasaPreflightCLI.test_bytes_or_empty_ids_rejected_before_output_creation) ... ok
+test_config_mutation_and_model_run_without_assets_fail (test_p33_nasa_preflight.TestNasaPreflightCLI.test_config_mutation_and_model_run_without_assets_fail) ... ok
+test_input_audit_is_not_reported_as_model_execution (test_p33_nasa_preflight.TestNasaPreflightCLI.test_input_audit_is_not_reported_as_model_execution) ... ok
+test_output_is_not_overwritten (test_p33_nasa_preflight.TestNasaPreflightCLI.test_output_is_not_overwritten) ... ok
+test_test_split_and_unverified_batch_fail_closed (test_p33_nasa_preflight.TestNasaPreflightCLI.test_test_split_and_unverified_batch_fail_closed) ... ok
+test_adapter_gradients_flow_through_frozen_encoder (test_p33_nasa_torch.TestNasaTorchWrapper.test_adapter_gradients_flow_through_frozen_encoder) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_checkpoint_integrity_and_exact_inference_loading (test_p33_nasa_torch.TestNasaTorchWrapper.test_checkpoint_integrity_and_exact_inference_loading) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_frozen_encoder_stays_eval_and_no_encoder_gradients (test_p33_nasa_torch.TestNasaTorchWrapper.test_frozen_encoder_stays_eval_and_no_encoder_gradients) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_identity_adapter_matches_unadapted_backbone (test_p33_nasa_torch.TestNasaTorchWrapper.test_identity_adapter_matches_unadapted_backbone) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_masked_zero_merge_or_register_double_strip_rejected (test_p33_nasa_torch.TestNasaTorchWrapper.test_masked_zero_merge_or_register_double_strip_rejected) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_missing_or_nonfinite_checkpoint_tensor_is_not_success (test_p33_nasa_torch.TestNasaTorchWrapper.test_missing_or_nonfinite_checkpoint_tensor_is_not_success) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_noncanonical_patch_divisible_shape_is_rejected (test_p33_nasa_torch.TestNasaTorchWrapper.test_noncanonical_patch_divisible_shape_is_rejected) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_pair_has_same_heads_and_adapters_but_different_backbone_weights (test_p33_nasa_torch.TestNasaTorchWrapper.test_pair_has_same_heads_and_adapters_but_different_backbone_weights) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+test_preloaded_upstream_module_outside_pin_is_rejected (test_p33_nasa_torch.TestNasaTorchWrapper.test_preloaded_upstream_module_outside_pin_is_rejected) ... skipped 'requires compatible private torch runtime; NASA itself is not exercised'
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.758s
+
+OK (skipped=9)
