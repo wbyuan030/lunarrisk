@@ -1,0 +1,41 @@
+{
+  "observed_date_utc": "2026-11-05",
+  "scope": "Independent read-only package-script review, followed by main-session generated-GRUB and policy inspection",
+  "effective_grub_kernel_entries": [
+    "Ubuntu, with Linux 6.8.0-138-generic",
+    "Ubuntu, with Linux 6.8.0-138-generic (recovery mode)",
+    "Ubuntu, with Linux 6.8.0-124-generic",
+    "Ubuntu, with Linux 6.8.0-124-generic (recovery mode)"
+  ],
+  "boot_images_readable": true,
+  "initramfs_backup_policy": "backup_initramfs=no",
+  "dkms_autoinstall_all_kernels": "commented; automatic coverage of fallback124 is not established",
+  "static_review": [
+    {
+      "finding": "Old postrm runs on upgrade and targets stale48 from /var/tmp/amdgpu-dkms-kernels before new postinst can refresh the file",
+      "consequence": "May generate an unintended initrd or interrupt dpkg, depending on remaining48 files/hooks; neither an observed failure nor harmless skipping is established",
+      "gate": "Back up and deliberately reconcile maintenance targets before transaction"
+    },
+    {
+      "finding": "Both postinst scripts write blacklist-amdgpu.conf before invoking DKMS under set -e",
+      "consequence": "A failed helper can exit before blacklist cleanup; package simulation does not exercise this",
+      "gate": "Record pre-existing blacklist state, inspect actual DKMS results and residual blacklist before reboot"
+    },
+    {
+      "finding": "New prerm removes new DKMS version from all kernels on upgrade, including downgrade rollback",
+      "consequence": "Rollback rebuilds old modules and can also fail; --no-remove protects package removals only",
+      "gate": "Independent known-good recovery backup and explicit restoration coverage for138 and124"
+    },
+    {
+      "finding": "Generated GRUB contains138 and124 normal/recovery entries, but hidden menu/default0 and disabled persistent initrd backup do not guarantee recovery",
+      "consequence": "An old kernel filename is not an independent preserved old-driver environment",
+      "gate": "Back up matching initrd/modules/firmware and establish local or out-of-band console access"
+    }
+  ],
+  "mixed_stack_limit": "APT leaves old graphics and ROCm6.2 package versions unchanged, but replaces shared kernel driver and firmware. Functional preservation remains untested.",
+  "recovery_access_confirmed_by_user": false,
+  "upgrade_window_confirmed_by_user": false,
+  "system_files_modified": false,
+  "scripts_or_builds_executed": false,
+  "independent_review_decision": "ATTENDED_MAINTENANCE_CANDIDATE_ONLY; UNATTENDED_UPGRADE_NOT_READY"
+}

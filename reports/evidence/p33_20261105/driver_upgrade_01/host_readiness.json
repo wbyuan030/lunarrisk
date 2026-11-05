@@ -1,0 +1,92 @@
+{
+  "observed_date_utc": "2026-11-05",
+  "scope": "New user-authorized host-driver upgrade feasibility; read-only host checks and local package simulation",
+  "kernel": "6.8.0-138-generic",
+  "os": "Ubuntu22.04.5",
+  "glibc": "2.35",
+  "secure_boot": "disabled; platform Setup Mode",
+  "dkms_installed_kernels": [
+    "6.8.0-124-generic",
+    "6.8.0-138-generic"
+  ],
+  "current_dkms": "6.8.5-2070768.22.04",
+  "fallback_boot_images_present": [
+    "vmlinuz-6.8.0-124-generic",
+    "initrd.img-6.8.0-124-generic",
+    "vmlinuz-6.8.0-138-generic",
+    "initrd.img-6.8.0-138-generic"
+  ],
+  "headers_and_modules_extra_installed_for_both_kernels": true,
+  "required_build_helpers_present": [
+    "dkms",
+    "libc6-dev",
+    "autoconf",
+    "automake",
+    "initramfs-tools",
+    "dpkg-architecture",
+    "gcc"
+  ],
+  "optional_dwarves_and_pahole": "NOT_INSTALLED; not selected by no-install-recommends simulation",
+  "dpkg_audit": "empty output",
+  "apt_holds": "none",
+  "existing_apt_amdgpu_repository": "6.2.3; installed6.2.4 present only in local dpkg status within current apt-cache policy",
+  "initial_cached_amdgpu_debs": 0,
+  "boot_policy": {
+    "GRUB_DEFAULT": "0",
+    "GRUB_TIMEOUT_STYLE": "hidden",
+    "GRUB_TIMEOUT": "10"
+  },
+  "display_devices": [
+    {
+      "vendor": "0x1002",
+      "device": "0x744c",
+      "driver": "amdgpu",
+      "boot_vga": "0"
+    },
+    {
+      "vendor": "0x1002",
+      "device": "0x15bf",
+      "driver": "amdgpu",
+      "boot_vga": "1"
+    }
+  ],
+  "reboot_required_before_this_work": true,
+  "reboot_required_packages": [
+    "libc6",
+    "libc6",
+    "gnome-shell"
+  ],
+  "root_and_boot_available_bytes_at_check": 462145191936,
+  "efi_available_bytes_at_check": 530477056,
+  "stale_maintenance_record": {
+    "file": "/var/tmp/amdgpu-dkms-kernels",
+    "recorded": [
+      "6.8.0-48-generic"
+    ],
+    "installed_kernel_package": false,
+    "initrd_present": false,
+    "residual_module_directory_present": true,
+    "status": "RECONCILE_BEFORE_TRANSACTION; no maintenance-script execution or reproduced failure"
+  },
+  "initial_read_query_errors": [
+    "Optional dwarves/pahole and absent amdgpu metapackage queries returned nonzero; no package changes or DKMS execution"
+  ],
+  "source_commands": [
+    "mokutil --sb-state",
+    "dkms status",
+    "dpkg-query -W (targeted AMD/kernel/build packages)",
+    "apt-mark showhold",
+    "apt-cache policy (targeted AMD packages)",
+    "apt-cache rdepends --installed amdgpu-dkms amdgpu-dkms-firmware",
+    "dpkg --audit",
+    "df -B1 /boot /boot/efi",
+    "read /etc/default/grub",
+    "read /var/tmp/amdgpu-dkms-kernels",
+    "read installed amdgpu-dkms control scripts",
+    "read /run/reboot-required.pkgs",
+    "read boot/module filenames and public PCI vendor/device/boot_vga fields"
+  ],
+  "system_changed": false,
+  "kernel_build": "NOT_RUN",
+  "reboot": "NOT_RUN"
+}

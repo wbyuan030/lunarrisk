@@ -1,0 +1,51 @@
+{
+  "upgrade": {
+    "command": [
+      "apt-get",
+      "--simulate",
+      "--no-download",
+      "--no-install-recommends",
+      "--no-remove",
+      "--allow-downgrades",
+      "-o",
+      "Debug::NoLocking=1",
+      "install",
+      "<repo>/outputs/p33/driver_upgrade_01/packages/30.10.2_amdgpu-dkms/amdgpu-dkms_6.14.14.30100200-2226257.22.04_all.deb",
+      "<repo>/outputs/p33/driver_upgrade_01/packages/30.10.2_amdgpu-dkms-firmware/amdgpu-dkms-firmware_30.10.2.0.30100200-2226257.22.04_all.deb"
+    ],
+    "returncode": 0,
+    "transaction_lines": [
+      "Inst amdgpu-dkms [1:6.8.5.60204-2070768.22.04] (1:6.14.14.30100200-2226257.22.04 local-deb [all])",
+      "Inst amdgpu-dkms-firmware [1:6.8.5.60204-2070768.22.04] (30.10.2.0.30100200-2226257.22.04 local-deb [all])",
+      "Conf amdgpu-dkms (1:6.14.14.30100200-2226257.22.04 local-deb [all])",
+      "Conf amdgpu-dkms-firmware (30.10.2.0.30100200-2226257.22.04 local-deb [all])"
+    ]
+  },
+  "rollback_hypothetical": {
+    "command": [
+      "apt-get",
+      "--simulate",
+      "--no-download",
+      "--no-install-recommends",
+      "--no-remove",
+      "--allow-downgrades",
+      "-o",
+      "Debug::NoLocking=1",
+      "-o",
+      "Dir::State::status=<repo>/outputs/p33/driver_upgrade_01/hypothetical_status",
+      "install",
+      "<repo>/outputs/p33/driver_upgrade_01/packages/6.2.4_amdgpu-dkms/amdgpu-dkms_6.8.5.60204-2070768.22.04_all.deb",
+      "<repo>/outputs/p33/driver_upgrade_01/packages/6.2.4_amdgpu-dkms-firmware/amdgpu-dkms-firmware_6.8.5.60204-2070768.22.04_all.deb"
+    ],
+    "returncode": 0,
+    "transaction_lines": [
+      "Inst amdgpu-dkms-firmware [30.10.2.0.30100200-2226257.22.04] (1:6.8.5.60204-2070768.22.04 local-deb [all])",
+      "Inst amdgpu-dkms [1:6.14.14.30100200-2226257.22.04] (1:6.8.5.60204-2070768.22.04 local-deb [all])",
+      "Conf amdgpu-dkms-firmware (1:6.8.5.60204-2070768.22.04 local-deb [all])",
+      "Conf amdgpu-dkms (1:6.8.5.60204-2070768.22.04 local-deb [all])"
+    ]
+  },
+  "rollback_limit": "Copied status changes only target versions/Depends; not a measured post-upgrade system or script execution.",
+  "system_packages_modified": false,
+  "package_scripts_executed": false
+}

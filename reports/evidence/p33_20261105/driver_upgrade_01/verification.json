@@ -1,0 +1,44 @@
+{
+  "observed_utc": "2026-11-05T13:22:32.878903+00:00",
+  "base_commit": "6bb0108264c5453f4e1da65ecade546bb0d5e5e1",
+  "authorization": "User requested upgrade feasibility and conditional upgrade if no problems; unresolved boot/recovery and execution checks prevent classifying as ready for unattended installation",
+  "signature_chains": [
+    {
+      "repository": "repo30102",
+      "gpgv_returncode": 0,
+      "gpgv_output": "gpgv: Signature made 2025\u5e7410\u670807\u65e5 \u661f\u671f\u4e8c 01\u65f606\u520642\u79d2 CST\ngpgv:                using RSA key CA8BB4727A47B4D09B4EE8969386B48A1A693C5C\ngpgv: Good signature from \"AMD MLSE DevOps <dl.MLSE.DevOps@amd.com>\"\n",
+      "packages_index_sha256": "cd8f194bc751a40c2fb8a0d67c1cac0ef0cba736013cba575934af4bbb3be17a",
+      "packages_index_bytes": 3592,
+      "release_hash_chain": "PASS"
+    },
+    {
+      "repository": "repo624",
+      "gpgv_returncode": 0,
+      "gpgv_output": "gpgv: Signature made 2025\u5e7401\u670803\u65e5 \u661f\u671f\u4e94 11\u65f627\u520622\u79d2 CST\ngpgv:                using RSA key CA8BB4727A47B4D09B4EE8969386B48A1A693C5C\ngpgv: Good signature from \"AMD MLSE DevOps <dl.MLSE.DevOps@amd.com>\"\n",
+      "packages_index_sha256": "afa0925592e05c2702ea1cf778b70fb4de5cfd0da6c400aa648a80fe86a2ca63",
+      "packages_index_bytes": 65042,
+      "release_hash_chain": "PASS"
+    }
+  ],
+  "payloads_verified": 4,
+  "payload_bytes": 54553752,
+  "proxy_disabled_for_all_acquisition": true,
+  "upgrade_simulation": "PASS_TWO_TARGET_PACKAGES_ONLY",
+  "rollback_simulation": "PASS_BOUNDED_HYPOTHETICAL_STATUS_ONLY",
+  "dynamic_dkms_and_maintainer_scripts": "NOT_RUN",
+  "driver_loaded": "UNCHANGED_6.2.4",
+  "installed_runtime": "UNCHANGED",
+  "old_model_tests_and_experiments": "NOT_RERUN",
+  "NASA_execution": "NOT_RUN",
+  "Test": "HOLD",
+  "decision": "CANDIDATE_VERIFIED_PREPARATION_REQUIRED_NO_SYSTEM_UPGRADE",
+  "evidence_sha256": {
+    "apt_simulations.json": "200304313b45fae2c94c7d74127b4b26b47e6fc4c89af505fe4524b506aad37c",
+    "host_readiness.json": "aa13d9cfc09d863b884310bbc99e1e87394b4f0a841a305a81e25c87d266bef2",
+    "package_inspection.json": "e88a62c633534a49f0265cf19eb5b2740533d4da9ae0960122a1cfc7a05f7c70",
+    "public_fetches.json": "2a990e34963c9298469d71b4b6dde68c2e70aa560ec57b103f8bf87f3133d915",
+    "rollback_simulation.log": "29391d41d5dcc8465ee5225b5fb2a7f5e4ff4b528a1bf52e6d58ecffbd4545d5",
+    "upgrade_simulation.log": "4e935944e62bb3a332671ee3becdd6f1c5d729a425616c754c9d9d5d920d86ab"
+  },
+  "self_excluded": true
+}

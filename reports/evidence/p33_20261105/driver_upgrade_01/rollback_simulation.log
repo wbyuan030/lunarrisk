@@ -1,0 +1,16 @@
+NOTE: This is only a simulation!
+      apt-get needs root privileges for real execution.
+      Keep also in mind that locking is deactivated,
+      so don't depend on the relevance to the real current situation!
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages will be upgraded:
+  amdgpu-dkms-firmware
+The following packages will be DOWNGRADED:
+  amdgpu-dkms
+1 upgraded, 0 newly installed, 1 downgraded, 0 to remove and 96 not upgraded.
+Inst amdgpu-dkms-firmware [30.10.2.0.30100200-2226257.22.04] (1:6.8.5.60204-2070768.22.04 local-deb [all])
+Inst amdgpu-dkms [1:6.14.14.30100200-2226257.22.04] (1:6.8.5.60204-2070768.22.04 local-deb [all])
+Conf amdgpu-dkms-firmware (1:6.8.5.60204-2070768.22.04 local-deb [all])
+Conf amdgpu-dkms (1:6.8.5.60204-2070768.22.04 local-deb [all])

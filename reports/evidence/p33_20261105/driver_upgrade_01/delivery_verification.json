@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "delivery_files": 11,
+  "local_links": 43,
+  "historical_source_hashes_preserved": 22,
+  "actual_installation": "NOT_RUN",
+  "old_tests": "NOT_RERUN",
+  "files": {
+    "AGENTS.md": "e7f5e72ee5fd249ce258747dbfe53189a7dbc0f50e6a243e171a1ffdc781cda9",
+    "reports/p3_3_driver_upgrade_readiness.md": "8e43d28e1177583713026a620155c003e5e3e008297f1355ee6f66cbb69c440c",
+    "protocols/p33_driver_upgrade_candidate.json": "8bf2a05c67eba7af2706e744ebc035fe3fb547aed106123e9bd2967af0559943",
+    "reports/evidence/p33_20261105/driver_upgrade_01/apt_simulations.json": "200304313b45fae2c94c7d74127b4b26b47e6fc4c89af505fe4524b506aad37c",
+    "reports/evidence/p33_20261105/driver_upgrade_01/host_readiness.json": "aa13d9cfc09d863b884310bbc99e1e87394b4f0a841a305a81e25c87d266bef2",
+    "reports/evidence/p33_20261105/driver_upgrade_01/package_inspection.json": "e88a62c633534a49f0265cf19eb5b2740533d4da9ae0960122a1cfc7a05f7c70",
+    "reports/evidence/p33_20261105/driver_upgrade_01/public_fetches.json": "2a990e34963c9298469d71b4b6dde68c2e70aa560ec57b103f8bf87f3133d915",
+    "reports/evidence/p33_20261105/driver_upgrade_01/recovery_review.json": "f5b9b6c03f6f30988858987c006162805f3ac827779b5b42811e8077efccc596",
+    "reports/evidence/p33_20261105/driver_upgrade_01/rollback_simulation.log": "29391d41d5dcc8465ee5225b5fb2a7f5e4ff4b528a1bf52e6d58ecffbd4545d5",
+    "reports/evidence/p33_20261105/driver_upgrade_01/upgrade_simulation.log": "4e935944e62bb3a332671ee3becdd6f1c5d729a425616c754c9d9d5d920d86ab",
+    "reports/evidence/p33_20261105/driver_upgrade_01/verification.json": "5ce395126eccba90eb8bc942293ea52290c7c4c80cd84e18c9a930c75d74ffd2"
+  },
+  "self_excluded": true
+}

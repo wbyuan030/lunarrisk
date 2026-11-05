@@ -1,0 +1,55 @@
+{
+  "plan_id": "p33_rx7900xt_driver_upgrade_candidate_v1",
+  "date_utc": "2026-11-05",
+  "base_commit": "6bb0108264c5453f4e1da65ecade546bb0d5e5e1",
+  "status": "SUPPORTED_CANDIDATE_AUTHENTICATED_PACKAGES_SIMULATED_TRANSACTION_RECOVERY_PREPARATION_REQUIRED",
+  "user_scope": "Verify host driver upgrade; conditional upgrade if no problems. Git loop cancelled. No unattended reboot window or console recovery availability established.",
+  "report": "reports/p3_3_driver_upgrade_readiness.md",
+  "evidence": "reports/evidence/p33_20261105/driver_upgrade_01/verification.json",
+  "recovery_review": "reports/evidence/p33_20261105/driver_upgrade_01/recovery_review.json",
+  "target": {
+    "gpu": "RX7900XT; integrated boot-VGA GPU shares amdgpu",
+    "os": "Ubuntu22.04.5",
+    "kernel": "6.8.0-138-generic; fallback6.8.0-124-generic",
+    "driver_distribution": "30.10.2",
+    "amdgpu_dkms": "1:6.14.14.30100200-2226257.22.04",
+    "amdgpu_dkms_firmware": "30.10.2.0.30100200-2226257.22.04",
+    "new_packages_bytes": 28325660,
+    "old_rollback_packages_bytes": 26228092,
+    "all_four_verified_payload_bytes": 54553752
+  },
+  "trust_chain": "Existing trusted AMD signing key -> Release signature -> Packages SHA256 -> actual four package payload SHA256",
+  "proxy_disabled": true,
+  "payload_storage": "outputs/p33/driver_upgrade_01/packages/ (ignored; never commit)",
+  "transaction": {
+    "upgrade_simulation": "PASS: exactly2 packages,0 removals",
+    "rollback_simulation": "PASS: bounded hypothetical status/version/Depends only; not demonstrated recovery",
+    "simulation_options": ["--simulate", "--no-download", "--no-install-recommends", "--no-remove", "--allow-downgrades"],
+    "firmware_epoch_change": "old1: -> new0:, explicitly selected local firmware is numerically a downgrade",
+    "other_graphics_rocm_packages": "No solver-level changes; functional mixed-stack preservation remains untested"
+  },
+  "before_system_transaction": [
+    "Confirm attended maintenance window and local/out-of-band console recovery",
+    "Verified independent backup of known-good modules/firmware/initrd and boot state for138/124",
+    "Back up/reconcile stale /var/tmp/amdgpu-dkms-kernels which lists removed48 before old postrm runs",
+    "Repeat exact bounded APT simulation against then-current status; no expanded package changes"
+  ],
+  "before_reboot": [
+    "Actual package configuration and DKMS build success; explicit module/vermagic/initrd coverage for138/124",
+    "No residual unexpected amdgpu blacklist; firmware/initramfs hook state checked",
+    "Old pair and independent recovery backup ready; no unconditional reboot after apt"
+  ],
+  "not_in_driver_maintenance_scope": [
+    "Upgrade/remove shared Python, torch, ROCm userspace or graphics libraries",
+    "Global apt upgrade/autoremove or broad graphics,rocm installer",
+    "NASA environment provisioning, dependency changes, checkpoint/model/data acquisition or training",
+    "Scientific cohort/budget/pin changes, old experiment reruns or Test access"
+  ],
+  "system_upgrade": "NOT_RUN",
+  "kernel_build": "NOT_RUN",
+  "reboot": "NOT_RUN",
+  "old_runtime_functional_preservation": "NOT_TESTED_AFTER_CHANGE_NO_CHANGE_OCCURRED",
+  "NASA_execution": "NOT_RUN",
+  "transfer_benefit": "NOT_ESTABLISHED",
+  "Test": "HOLD"
+}
