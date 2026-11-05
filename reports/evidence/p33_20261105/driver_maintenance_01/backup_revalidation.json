@@ -1,0 +1,29 @@
+{
+  "observed_utc": "2026-11-05T15:30:01.726704+00:00",
+  "status": "BACKUP_ARCHIVE_CONTENT_HASHES_VERIFIED",
+  "verification_basis": "Existing archive independently compared against every current old-driver source: exact entry coverage, types, permission bits, uid/gid, mtime, file sizes, SHA256 contents, symbolic and hard links",
+  "archive": "outputs/p33/driver_maintenance_02/backup/old_driver_boot_state.tar.gz",
+  "archive_bytes": 664326134,
+  "archive_sha256": "0901f4def8ddd02cdbca1e012e785ff945caf9302d28270a5cd791af81c93f1c",
+  "entries": 16088,
+  "regular_files_verified": 13628,
+  "member_manifest_sha256": "393df7df77d9f37f947f34e5c8930586962cc775ea14738523831cf1dc0bc881",
+  "package_inventory_sha256": "890bf31256b75aed4a81462635ebd9a11715e663ba41ee63efef8bbeca9b49b0",
+  "original_kernel_targets_sha256": "94c034882696aa467a073fb9ba07a14ac917f9f46ad6da9fe6269435a3cd974e",
+  "original_kernel_targets": [
+    "6.8.0-48-generic"
+  ],
+  "expected_repair_targets": [
+    "6.8.0-124-generic",
+    "6.8.0-138-generic"
+  ],
+  "blacklist_preexisting": false,
+  "prior_failed_receipt_sha256": "ef90b1b2da7c319efa20f86c71e62882a42392a774f131175a3abffe29db5d70",
+  "prior_failed_receipt_preserved": true,
+  "archive_repacked": false,
+  "source_system_files_modified": false,
+  "driver_install": "NOT_RUN",
+  "kernel_build": "NOT_RUN",
+  "reboot": "NOT_RUN",
+  "archive_restore": "NOT_TESTED; byte verification does not prove boot recovery"
+}

@@ -1,0 +1,18 @@
+{
+  "observed_utc": "2026-11-05T15:34:54.686010+00:00",
+  "status": "REPAIRED_AND_VERIFIED",
+  "target": "/var/tmp/amdgpu-dkms-kernels",
+  "old_sha256": "94c034882696aa467a073fb9ba07a14ac917f9f46ad6da9fe6269435a3cd974e",
+  "new_sha256": "a8068ab0b856a34a1ac2facb5dae6bb454081debba833dd270e98e17ca530aff",
+  "backup_sha256": "0901f4def8ddd02cdbca1e012e785ff945caf9302d28270a5cd791af81c93f1c",
+  "old_targets": [
+    "6.8.0-48-generic"
+  ],
+  "new_targets": [
+    "6.8.0-124-generic",
+    "6.8.0-138-generic"
+  ],
+  "driver_install": "NOT_RUN",
+  "kernel_build": "NOT_RUN",
+  "reboot": "NOT_RUN"
+}

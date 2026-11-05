@@ -1,0 +1,19 @@
+{
+  "observed_utc": "2026-11-05T16:26:45.152390+00:00",
+  "status": "BOUNDED_GPU_CHECK_PASS",
+  "torch": "2.5.1+rocm6.2",
+  "hip": "6.2.41133-dd7f95766",
+  "python": "3.10.12",
+  "cuda_available": true,
+  "device_count": 2,
+  "primary_device": "Radeon RX 7900 XT",
+  "total_memory_bytes": 21458059264,
+  "free_memory_bytes": 21195882496,
+  "operation": "64x64 FP32 matmul by identity, synchronized",
+  "matmul_exact": true,
+  "matmul_elapsed_seconds": 0.4967,
+  "loaded_driver": "6.14.14",
+  "kernel": "6.8.0-138-generic",
+  "warning": "hipBLASLt reported unsupported architecture and fell back to hipblas; operation still exact",
+  "scope": "bounded existing-runtime check only; no training, model construction, cohort scan, replay or NASA execution"
+}

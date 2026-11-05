@@ -1,0 +1,46 @@
+{
+  "observed_utc": "2026-11-05T16:12:55.306134+00:00",
+  "status": "STATIC_WARNING_APPLICABILITY_REVIEW_NOT_NEW_DRIVER_EXECUTION",
+  "devices": {
+    "card1": {
+      "pci_device": "0x744c",
+      "gc_ip": "11.0.0",
+      "sriov_vf": false
+    },
+    "card2": {
+      "pci_device": "0x15bf",
+      "gc_ip": "11.0.1",
+      "sriov_vf": false
+    }
+  },
+  "missing_declared_firmware": [
+    "amdgpu/aldebaran_cap.bin",
+    "amdgpu/gc_11_0_0_toc.bin",
+    "amdgpu/gc_11_0_3_mes.bin",
+    "amdgpu/gc_12_0_0_toc.bin",
+    "amdgpu/gc_12_0_1_toc.bin",
+    "amdgpu/ip_discovery.bin",
+    "amdgpu/navi12_cap.bin",
+    "amdgpu/vega10_cap.bin"
+  ],
+  "conditions": {
+    "ip_discovery.bin": "Requested if discovery=2; current/default discovery=-1 selects memory for these ASICs",
+    "vega10/navi12/aldebaran_cap.bin": "Source declares capability microcode optional and restricted to SRIOV; these two devices are not VFs",
+    "gc_11_0_0_toc.bin": "Requested only for RLC_BACKDOOR_AUTO load_type3; current/default -1 selects PSP for these ASICs",
+    "gc_12_0_0_toc.bin and gc_12_0_1_toc.bin": "GFX12 devices; actual two devices have GC11.0.0/11.0.1",
+    "gc_11_0_3_mes.bin": "GC11.0.3, not either observed GC version; GC11 code first requests *_mes_2.bin before legacy-name fallback"
+  },
+  "boot_overrides": "No effective modprobe options amdgpu and no amdgpu.* kernel command-line options",
+  "source_sha256": {
+    "amdgpu_drv.c": "bbe8d09d027fb557be5c00218080a94b5867f5d5f974da5293dcda9e5827c622",
+    "amdgpu_ucode.c": "4757922ec58d239f2d298bfbaf8b3f5e248f8492063013518a55b334a6fc0698",
+    "amdgpu_discovery.c": "c040937c5bc833ed8bb9e6fe373b5633c63b65df374e3963226c3d48462778fc",
+    "amdgpu_psp.c": "231ba35f3e521b8401c0de2533e7f8dc9d41dd151d8e443a6924f0cbcd45528a",
+    "gfx_v11_0.c": "61bb7a23b018a1782c9c332db7bbbb2c7ef0201ab342d1cbd26017691a9effc2",
+    "gfx_v12_0.c": "25348834ca01cbe48bb0f42214290633b60b1cb0f7bc5523dc82f0540ca30e72",
+    "amdgpu_mes.c": "576ece13cd38f4e60f0316ec0314d9b8ba1df54312dd4666ca8d882af53e8f27"
+  },
+  "new_driver_loaded": "NOT_RUN; currently loaded6.8.5",
+  "reboot": "NOT_RUN",
+  "limit": "Static conditional review only. Final initrd contents and post-reboot actual device/firmware initialization remain required."
+}

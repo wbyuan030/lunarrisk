@@ -1,0 +1,62 @@
+{
+  "observed_utc": "2026-11-05T16:26:08.791894+00:00",
+  "status": "POST_REBOOT_DRIVER_AND_RUNTIME_FUNCTIONAL_PASS",
+  "boot": {
+    "kernel": "6.8.0-138-generic",
+    "boot_id": "66abd75d-f2e9-40af-b02c-c64d81c9734f",
+    "uptime_seconds": 315.78
+  },
+  "loaded_driver_version": "6.14.14",
+  "packages": [
+    "amdgpu-dkms\t1:6.14.14.30100200-2226257.22.04\tii ",
+    "amdgpu-dkms-firmware\t30.10.2.0.30100200-2226257.22.04\tii "
+  ],
+  "dkms": {
+    "returncode": 0,
+    "stdout": "amdgpu/6.14.14-2226257.22.04, 6.8.0-124-generic, x86_64: installed\namdgpu/6.14.14-2226257.22.04, 6.8.0-138-generic, x86_64: installed\n",
+    "stderr": ""
+  },
+  "dpkg_audit": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "blacklist_present": false,
+  "maintenance_targets": [
+    "6.8.0-124-generic",
+    "6.8.0-138-generic"
+  ],
+  "gpu_binding": {
+    "03:00.0": {
+      "description": "Advanced Micro Devices, Inc. [AMD/ATI] Navi 31 [Radeon RX 7900 XT/7900 XTX/7900 GRE/7900M] [1002:744c] (rev cc)",
+      "driver": "amdgpu"
+    },
+    "c9:00.0": {
+      "description": "Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 [1002:15bf] (rev c2)",
+      "driver": "amdgpu"
+    }
+  },
+  "drm_nodes": {},
+  "boot_log_severe_patterns": [],
+  "observed_warnings": [
+    "amdgpu 0000:03:00.0: amdgpu: RAP: optional rap ta ucode is not available",
+    "amdgpu 0000:03:00.0: amdgpu: SECUREDISPLAY: optional securedisplay ta ucode is not available",
+    "amdgpu 0000:03:00.0: amdgpu: SMU driver if version not matched",
+    "amdgpu 0000:c9:00.0: amdgpu: RAP: optional rap ta ucode is not available",
+    "amdgpu 0000:c9:00.0: amdgpu: RAS: optional ras ta ucode is not available",
+    "amdgpu 0000:c9:00.0: amdgpu: SECUREDISPLAY: optional securedisplay ta ucode is not available",
+    "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:251",
+    "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:259",
+    "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:267",
+    "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:275",
+    "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 100000 tries - optc314_disable_crtc line:145"
+  ],
+  "pre_reboot_evidence_status": "PRE_REBOOT_STATIC_VALIDATION_PASS",
+  "reboot": "EXECUTED_AND_BOOTED",
+  "new_driver_loaded": "PASS",
+  "display_served_by_igpu": true,
+  "runtime_check": "see runtime_check.json",
+  "NASA_execution": "NOT_RUN",
+  "Test": "HOLD",
+  "known_nonfatal_boot_warnings": "SMU interface-version notice coexists with successful SMU init; DCN314 register-wait timeouts occurred during iGPU display init, which completed and is serving the session; RAP/RAS/SECUREDISPLAY optional ucode absence matches pre-existing behavior class"
+}

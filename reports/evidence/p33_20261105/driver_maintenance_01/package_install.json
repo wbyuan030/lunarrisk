@@ -1,0 +1,33 @@
+{
+  "started_utc": "2026-11-05T15:52:04.019055+00:00",
+  "status": "LOCAL_PACKAGE_TRANSACTION_SUCCEEDED_REBOOT_HELD",
+  "command": [
+    "dpkg",
+    "--install",
+    "<repo>/outputs/p33/driver_upgrade_01/packages/30.10.2_amdgpu-dkms-firmware/amdgpu-dkms-firmware_30.10.2.0.30100200-2226257.22.04_all.deb",
+    "<repo>/outputs/p33/driver_upgrade_01/packages/30.10.2_amdgpu-dkms/amdgpu-dkms_6.14.14.30100200-2226257.22.04_all.deb"
+  ],
+  "backup_sha256": "0901f4def8ddd02cdbca1e012e785ff945caf9302d28270a5cd791af81c93f1c",
+  "package_targets": {
+    "amdgpu-dkms": "1:6.14.14.30100200-2226257.22.04",
+    "amdgpu-dkms-firmware": "30.10.2.0.30100200-2226257.22.04"
+  },
+  "prior_apt_failure_preserved": true,
+  "reboot": "NOT_RUN",
+  "pre_reboot_validation": "PENDING",
+  "loaded_driver_validation": "NOT_RUN",
+  "NASA_execution": "NOT_RUN",
+  "dpkg_returncode": 0,
+  "unexpected_package_changes": [],
+  "target_packages_configured": true,
+  "dpkg_audit": {
+    "returncode": 0,
+    "output": ""
+  },
+  "dkms_status": {
+    "returncode": 0,
+    "output": "amdgpu/6.14.14-2226257.22.04, 6.8.0-138-generic, x86_64: installedError! Could not locate dkms.conf file.\nFile: /var/lib/dkms/amdgpu/6.8.5-2070768.22.04/source/dkms.conf does not exist.\n\n"
+  },
+  "blacklist_present": false,
+  "finished_utc": "2026-11-05T15:54:37.092992+00:00"
+}

@@ -1,0 +1,122 @@
+{
+  "observed_utc": "2026-11-05T16:26:45.194072+00:00",
+  "experiment": "P3.3 RX7900XT driver maintenance",
+  "status": "DRIVER_INSTALLED_BOOTED_RUNTIME_FUNCTIONAL_PASS_NASA_NOT_RUN",
+  "stages": {
+    "backup": "BACKUP_ARCHIVE_CONTENT_HASHES_VERIFIED",
+    "maintenance_record_repair": "REPAIRED_AND_VERIFIED",
+    "package_install": "LOCAL_PACKAGE_TRANSACTION_SUCCEEDED_REBOOT_HELD",
+    "boot_file_repair": "BOOT_FILES_REBUILT_REBOOT_HELD",
+    "pre_reboot_validation": "PRE_REBOOT_STATIC_VALIDATION_PASS",
+    "reboot": "EXECUTED_BOOTED",
+    "post_reboot": "PASS",
+    "bounded_old_runtime_gpu_check": "PASS"
+  },
+  "key_identities": {
+    "old_driver_backup_archive_sha256": "0901f4def8ddd02cdbca1e012e785ff945caf9302d28270a5cd791af81c93f1c",
+    "old_driver_backup_archive_bytes": 664326134,
+    "old_driver_backup_members": 16088,
+    "old_driver_backup_regular_files_verified": 13628,
+    "new_amdgpu_dkms_version": "1:6.14.14.30100200-2226257.22.04",
+    "new_firmware_version": "30.10.2.0.30100200-2226257.22.04",
+    "loaded_amdgpu_version": "6.14.14",
+    "initrd_sha256": {
+      "6.8.0-124-generic": "c6f8335af3d65b436b4820b58759a7de1c0d8b6c8be06ff14084ef6408985fe7",
+      "6.8.0-138-generic": "14990ba0e3ab6d295c782cc02d51c1d49b9e813d4781eb764766a78e425aaea7"
+    }
+  },
+  "post_reboot": {
+    "kernel": "6.8.0-138-generic",
+    "gpu_binding": {
+      "03:00.0": "amdgpu",
+      "c9:00.0": "amdgpu"
+    },
+    "dkms_status": [
+      "amdgpu/6.14.14-2226257.22.04, 6.8.0-124-generic, x86_64: installed",
+      "amdgpu/6.14.14-2226257.22.04, 6.8.0-138-generic, x86_64: installed"
+    ],
+    "dpkg_audit_clean": true,
+    "blacklist_present": false,
+    "maintenance_targets": [
+      "6.8.0-124-generic",
+      "6.8.0-138-generic"
+    ],
+    "severe_log_patterns": 0,
+    "warnings": [
+      "amdgpu 0000:03:00.0: amdgpu: RAP: optional rap ta ucode is not available",
+      "amdgpu 0000:03:00.0: amdgpu: SECUREDISPLAY: optional securedisplay ta ucode is not available",
+      "amdgpu 0000:03:00.0: amdgpu: SMU driver if version not matched",
+      "amdgpu 0000:c9:00.0: amdgpu: RAP: optional rap ta ucode is not available",
+      "amdgpu 0000:c9:00.0: amdgpu: RAS: optional ras ta ucode is not available",
+      "amdgpu 0000:c9:00.0: amdgpu: SECUREDISPLAY: optional securedisplay ta ucode is not available",
+      "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:251",
+      "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:259",
+      "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:267",
+      "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 1000 tries - dcn314_dsc_pg_control line:275",
+      "amdgpu 0000:c9:00.0: amdgpu: [drm] REG_WAIT timeout 1us * 100000 tries - optc314_disable_crtc line:145"
+    ]
+  },
+  "pre_reboot": {
+    "modules_verified_per_kernel": {
+      "6.8.0-124-generic": 8,
+      "6.8.0-138-generic": 8
+    },
+    "firmware_files_verified_per_kernel": {
+      "6.8.0-124-generic": 660,
+      "6.8.0-138-generic": 660
+    },
+    "reviewed_missing_firmware": [
+      "amdgpu/aldebaran_cap.bin",
+      "amdgpu/gc_11_0_0_toc.bin",
+      "amdgpu/gc_11_0_3_mes.bin",
+      "amdgpu/gc_12_0_0_toc.bin",
+      "amdgpu/gc_12_0_1_toc.bin",
+      "amdgpu/ip_discovery.bin",
+      "amdgpu/navi12_cap.bin",
+      "amdgpu/vega10_cap.bin"
+    ]
+  },
+  "runtime_check": {
+    "observed_utc": "2026-11-05T16:26:45.152390+00:00",
+    "status": "BOUNDED_GPU_CHECK_PASS",
+    "torch": "2.5.1+rocm6.2",
+    "hip": "6.2.41133-dd7f95766",
+    "python": "3.10.12",
+    "cuda_available": true,
+    "device_count": 2,
+    "primary_device": "Radeon RX 7900 XT",
+    "total_memory_bytes": 21458059264,
+    "free_memory_bytes": 21195882496,
+    "operation": "64x64 FP32 matmul by identity, synchronized",
+    "matmul_exact": true,
+    "matmul_elapsed_seconds": 0.4967,
+    "loaded_driver": "6.14.14",
+    "kernel": "6.8.0-138-generic",
+    "warning": "hipBLASLt reported unsupported architecture and fell back to hipblas; operation still exact",
+    "scope": "bounded existing-runtime check only; no training, model construction, cohort scan, replay or NASA execution"
+  },
+  "archive_present_after_reboot": true,
+  "evidence_sha256": {
+    "backup_revalidation.json": "504bce00c323697ed28aeee9a8af16a3d69c301530e353fd6595d10c841b44be",
+    "boot_file_repair.json": "ce8d30152d3b5e3d4bdcd7546f9c10c27e4cc64eb7da5e9311a6f0782ecf539f",
+    "firmware_warning_review.json": "9755bc56741a4feba69f734a0044c44057db51992206c78cd3be146b688b3325",
+    "maintenance_record_repair.json": "b0eea7cd472ddb524ae321aecbfc8ff0cfe0112d21a2d1f58a9a1410758bb63d",
+    "package_install.json": "0efc2fb71441c9887b803bac03777f6a57d911275463726f7b51d94b2d91a923",
+    "post_reboot_state.json": "e9202810cc465eef61ad241f187f34d179292d95227d81137a8d003116dd1120",
+    "pre_reboot_verification.json": "f068fa186fb4edd3914cf648c1481d01274bd74b2350392c442b0c3f158de40f",
+    "runtime_check.json": "c809a0747cedd736e3f88ecbbc5fce4836486d8ae9015b19c201ced3dfc4a5aa"
+  },
+  "not_established": [
+    "recovery boot/restore from backup",
+    "official NASA runtime compatibility",
+    "NASA model construction/loading",
+    "real paired forward/backward",
+    "full fixed cohort scan",
+    "actual budget lock",
+    "transfer benefit",
+    "any Test evaluation"
+  ],
+  "NASA_execution": "NOT_RUN",
+  "Test": "HOLD",
+  "historical_results_unchanged": "P3.2 and earlier P3.3 results not rerun or rewritten"
+}

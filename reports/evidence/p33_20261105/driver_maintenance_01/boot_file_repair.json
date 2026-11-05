@@ -1,0 +1,43 @@
+{
+  "started_utc": "2026-11-05T16:14:37.457651+00:00",
+  "status": "BOOT_FILES_REBUILT_REBOOT_HELD",
+  "commands": [
+    [
+      "depmod",
+      "-a",
+      "6.8.0-124-generic"
+    ],
+    [
+      "update-initramfs",
+      "-u",
+      "-k",
+      "6.8.0-124-generic"
+    ],
+    [
+      "depmod",
+      "-a",
+      "6.8.0-138-generic"
+    ],
+    [
+      "update-initramfs",
+      "-u",
+      "-k",
+      "6.8.0-138-generic"
+    ]
+  ],
+  "reboot": "NOT_RUN",
+  "hot_module_reload": "NOT_RUN",
+  "pre_reboot_validation": "PENDING",
+  "old_registration_destination": "/var/lib/p33-driver-recovery/amdgpu-6.8.5-2070768.22.04",
+  "old_registration_preserved": true,
+  "dkms_status": "amdgpu/6.14.14-2226257.22.04, 6.8.0-124-generic, x86_64: installed\namdgpu/6.14.14-2226257.22.04, 6.8.0-138-generic, x86_64: installed\n",
+  "initrd_sha256": {
+    "6.8.0-124-generic": "c6f8335af3d65b436b4820b58759a7de1c0d8b6c8be06ff14084ef6408985fe7",
+    "6.8.0-138-generic": "14990ba0e3ab6d295c782cc02d51c1d49b9e813d4781eb764766a78e425aaea7"
+  },
+  "maintenance_targets": [
+    "6.8.0-124-generic",
+    "6.8.0-138-generic"
+  ],
+  "finished_utc": "2026-11-05T16:15:03.070747+00:00"
+}
