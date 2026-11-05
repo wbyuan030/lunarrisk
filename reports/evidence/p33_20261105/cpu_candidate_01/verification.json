@@ -1,0 +1,115 @@
+{
+  "date_utc": "2026-11-05",
+  "base_commit": "d0b4c1f4bf131afc364246b27b70f9f057efc6ca",
+  "scope": "CPU candidate metadata research and standalone offline direct-distribution auditor only",
+  "checks": {
+    "json_and_local_links": "PASS",
+    "local_link_count": 43,
+    "28_direct_bounds": "PASS",
+    "72_direct_to_direct_constraints": "PASS",
+    "26_non_torch_wheel_python_tags_yanked_status": "PASS",
+    "recorded_host_glibc_floor": "PASS_METADATA_ONLY",
+    "advertised_subtotal": "PASS",
+    "allowlisted_changed_files": "PASS",
+    "historical_science_wrappers_requirements_evidence_unchanged": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "focused_tests": {
+    "command": "python3 -m unittest discover -s tests -p 'test_p33_runtime_metadata.py' -v",
+    "result": "PASS",
+    "tests": 18,
+    "skipped": 0,
+    "log": "reports/evidence/p33_20261105/cpu_candidate_01/focused_tests.log",
+    "scope": "Synthetic metadata fixtures and offline CLI only, not NASA execution"
+  },
+  "compile": {
+    "command": "python3 -m py_compile src/lunarrisk/nasa_transfer/runtime_metadata.py scripts/p33_runtime_metadata.py tests/test_p33_runtime_metadata.py",
+    "result": "PASS"
+  },
+  "cloud_cli_negative_check": {
+    "command": "python3 scripts/p33_runtime_metadata.py --cpu-candidate",
+    "exit_code": 1,
+    "status": "DIRECT_METADATA_BLOCKED",
+    "missing_count": 23,
+    "version_conflict_count": 5,
+    "model_execution": "NOT_RUN",
+    "hardware": "NOT_INSPECTED",
+    "meaning": "Expected fail-closed result in cloud environment, not a local host inventory"
+  },
+  "independent_review": {
+    "result": "APPROVED_AFTER_COUNT_CLARIFICATION",
+    "scope": "Code, guards, metadata semantics, wheel tags/Python, bounds, byte subtotal and future gates; reviewer did not re-fetch PEP658 metadata",
+    "correction": "69 non-torch direct cross-checks plus3 CPUvision checks now recorded as72"
+  },
+  "development_note": "Initial unit test revealed packaging26 prerelease containment behavior; explicit prereleases=False fixed it before final18-test pass",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "size_bytes": 14623,
+      "sha256": "47868731261aafeda45916b3cef831c3d7daa4354f7f55a2baa3b8a6f0c38a0f"
+    },
+    {
+      "path": "docs/P3_3_PRIVATE_RUNTIME_PLAN.md",
+      "size_bytes": 8439,
+      "sha256": "cfc5e6d8896d2adce9889136cf3b73522d85437aed9d6a7dc86ba5d184800833"
+    },
+    {
+      "path": "protocols/p33_cpu_feasibility_plan.json",
+      "size_bytes": 3862,
+      "sha256": "1cac8476d84ff982dbfc85c8576fded76096d899528032921de28950f7593c83"
+    },
+    {
+      "path": "reports/p3_3_cpu_feasibility.md",
+      "size_bytes": 5956,
+      "sha256": "77157c8f8854bd5139cab4c05dc535ea7e4c9e9af426e9d08049f81ed1522b3f"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_candidate_01/direct_candidates.json",
+      "size_bytes": 51663,
+      "sha256": "080b22f91b8a83c779ebc0374165b8d47e052d3e9549149f6a0c1143f7a6a54c"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_candidate_01/cpu_pair.json",
+      "size_bytes": 2114,
+      "sha256": "df4f2d44f2f6aa27b669484131b03acc4b759908dbb1ed89b03ea6690e038903"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_candidate_01/transitive_samples.json",
+      "size_bytes": 3845,
+      "sha256": "1f8f4b8beeedac29f19981d3428d9b8c0eaf766066434d74404c262b9cc30435"
+    },
+    {
+      "path": "reports/evidence/p33_20261105/cpu_candidate_01/focused_tests.log",
+      "size_bytes": 2421,
+      "sha256": "d3125406d278ff3962c0695cdfd3c9cb0b802eb4adf4c912c7df08a2446eedb8"
+    },
+    {
+      "path": "src/lunarrisk/nasa_transfer/runtime_metadata.py",
+      "size_bytes": 7423,
+      "sha256": "b213b82e49ce5869ae038f11cd5ace8a774e19dc2ca082480d9035e9351df9f5"
+    },
+    {
+      "path": "scripts/p33_runtime_metadata.py",
+      "size_bytes": 1593,
+      "sha256": "237cc2daf4d859521096a3aba7d76dc12c04c951bb180636eb97cbcea9d19672"
+    },
+    {
+      "path": "tests/test_p33_runtime_metadata.py",
+      "size_bytes": 8918,
+      "sha256": "92fde6c174ddbc5d88bbe32dd9b5ff4ebc840482c8881f3a06f063bb76e75927"
+    }
+  ],
+  "not_performed": [
+    "old75/701 suite or realnative256 preflight rerun",
+    "installation/environment creation",
+    "resolver/buildbackend execution",
+    "wheel/sdist/model/data payload acquisition",
+    "NASA import/construction or training",
+    "GPU inspection",
+    "user desktop access",
+    "Test access"
+  ],
+  "full_dependency_lock": false,
+  "runtime_compatibility": "NOT_ESTABLISHED",
+  "model_execution": "NOT_RUN"
+}

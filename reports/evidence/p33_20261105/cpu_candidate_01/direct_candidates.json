@@ -1,0 +1,1502 @@
+{
+  "target": "CPython3.12 Linux x86_64",
+  "candidate_direct_pins": {
+    "terratorch": "1.2.6",
+    "torch": "2.12.1+cpu",
+    "torchvision": "0.27.1+cpu",
+    "torchmetrics": "1.9.0",
+    "lightning": "2.6.5",
+    "timm": "1.0.27",
+    "einops": "0.8.2",
+    "numpy": "2.4.4",
+    "omegaconf": "2.3.0",
+    "pillow": "12.2.0",
+    "rasterio": "1.5.0",
+    "torchgeo": "0.9.0",
+    "albumentations": "2.0.0",
+    "segmentation-models-pytorch": "0.5.0",
+    "tensorboard": "2.18.0",
+    "h5py": "3.16.0",
+    "hdf5plugin": "6.0.0",
+    "pandas": "3.0.3",
+    "pyarrow": "24.0.0",
+    "diffusers": "0.38.0",
+    "tokenizers": "0.22.2",
+    "vector-quantize-pytorch": "1.29.0",
+    "huggingface-hub": "1.15.0",
+    "peft": "0.19.1",
+    "scipy": "1.17.1",
+    "scikit-image": "0.26.0",
+    "matplotlib": "3.10.9",
+    "tqdm": "4.67.3"
+  },
+  "is_complete_lock": false,
+  "artifacts_downloaded": false,
+  "nasa_bound_checks": [
+    {
+      "requirement": "terratorch>=1.2.6,<2",
+      "pin": "1.2.6",
+      "satisfied": true
+    },
+    {
+      "requirement": "torch>=2.12.0,<3",
+      "pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "requirement": "torchvision>=0.27.0,<0.28",
+      "pin": "0.27.1+cpu",
+      "satisfied": true
+    },
+    {
+      "requirement": "torchmetrics>=1.9.0,<2",
+      "pin": "1.9.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "lightning>=2.6.5,<3",
+      "pin": "2.6.5",
+      "satisfied": true
+    },
+    {
+      "requirement": "timm>=1.0.27,<2",
+      "pin": "1.0.27",
+      "satisfied": true
+    },
+    {
+      "requirement": "einops>=0.8.2,<0.9",
+      "pin": "0.8.2",
+      "satisfied": true
+    },
+    {
+      "requirement": "numpy>=2.4.4,<3",
+      "pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "requirement": "omegaconf>=2.3.0,<3",
+      "pin": "2.3.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "pillow>=12.2.0,<13",
+      "pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "rasterio>=1.5.0,<2",
+      "pin": "1.5.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "torchgeo>=0.9.0,<0.10",
+      "pin": "0.9.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "albumentations>=2.0,<3",
+      "pin": "2.0.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "segmentation-models-pytorch>=0.4,<0.6",
+      "pin": "0.5.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "tensorboard>=2.18,<3",
+      "pin": "2.18.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "h5py>=3.16.0,<4",
+      "pin": "3.16.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "hdf5plugin>=6.0.0,<7",
+      "pin": "6.0.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "pandas>=3.0.3,<4",
+      "pin": "3.0.3",
+      "satisfied": true
+    },
+    {
+      "requirement": "pyarrow>=24.0.0,<25",
+      "pin": "24.0.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "diffusers>=0.38.0,<0.39",
+      "pin": "0.38.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "tokenizers>=0.22.2,<0.23",
+      "pin": "0.22.2",
+      "satisfied": true
+    },
+    {
+      "requirement": "vector-quantize-pytorch>=1.29.0,<2",
+      "pin": "1.29.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "huggingface-hub>=1.15.0,<2",
+      "pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "peft>=0.19.1,<0.20",
+      "pin": "0.19.1",
+      "satisfied": true
+    },
+    {
+      "requirement": "scipy>=1.17.1,<2",
+      "pin": "1.17.1",
+      "satisfied": true
+    },
+    {
+      "requirement": "scikit-image>=0.26.0,<0.27",
+      "pin": "0.26.0",
+      "satisfied": true
+    },
+    {
+      "requirement": "matplotlib>=3.10.9,<4",
+      "pin": "3.10.9",
+      "satisfied": true
+    },
+    {
+      "requirement": "tqdm>=4.67.3,<5",
+      "pin": "4.67.3",
+      "satisfied": true
+    }
+  ],
+  "direct_to_direct_constraint_checks": [
+    {
+      "source": "terratorch",
+      "requirement": "torch>2.0",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "numpy>=2.2",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "torchvision",
+      "candidate_pin": "0.27.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "albumentations",
+      "candidate_pin": "2.0.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "rasterio",
+      "candidate_pin": "1.5.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "torchmetrics",
+      "candidate_pin": "1.9.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "h5py",
+      "candidate_pin": "3.16.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "lightning>=2.6.0",
+      "candidate_pin": "2.6.5",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "segmentation-models-pytorch>=0.5.0",
+      "candidate_pin": "0.5.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "torchgeo",
+      "candidate_pin": "0.9.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "einops",
+      "candidate_pin": "0.8.2",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "timm>=1.0.15",
+      "candidate_pin": "1.0.27",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "huggingface_hub",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "tqdm",
+      "candidate_pin": "4.67.3",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "tensorboard",
+      "candidate_pin": "2.18.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "diffusers",
+      "candidate_pin": "0.38.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "scikit-image",
+      "candidate_pin": "0.26.0",
+      "satisfied": true
+    },
+    {
+      "source": "terratorch",
+      "requirement": "pyarrow",
+      "candidate_pin": "24.0.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchmetrics",
+      "requirement": "numpy>1.20.0",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "torchmetrics",
+      "requirement": "torch>=2.0.0",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "lightning",
+      "requirement": "torch<4.0,>=2.1.0",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "lightning",
+      "requirement": "torchmetrics<3.0,>0.7.0",
+      "candidate_pin": "1.9.0",
+      "satisfied": true
+    },
+    {
+      "source": "lightning",
+      "requirement": "tqdm<6.0,>=4.57.0",
+      "candidate_pin": "4.67.3",
+      "satisfied": true
+    },
+    {
+      "source": "timm",
+      "requirement": "torch",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "timm",
+      "requirement": "torchvision",
+      "candidate_pin": "0.27.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "timm",
+      "requirement": "huggingface_hub",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "rasterio",
+      "requirement": "numpy>=2",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "einops>=0.3",
+      "candidate_pin": "0.8.2",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "lightning!=2.3.*,!=2.5.0,!=2.5.5,!=2.5.6,>=2",
+      "candidate_pin": "2.6.5",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "matplotlib>=3.7.3",
+      "candidate_pin": "3.10.9",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "numpy>=1.26",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "pandas>=2.1.1",
+      "candidate_pin": "3.0.3",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "pillow>=10",
+      "candidate_pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "rasterio>=1.4.3",
+      "candidate_pin": "1.5.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "segmentation-models-pytorch>=0.5",
+      "candidate_pin": "0.5.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "timm>=1.0.3",
+      "candidate_pin": "1.0.27",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "torch>=2.2",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "torchmetrics>=1.2",
+      "candidate_pin": "1.9.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchgeo",
+      "requirement": "torchvision>=0.17",
+      "candidate_pin": "0.27.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "albumentations",
+      "requirement": "numpy>=1.24.4",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "albumentations",
+      "requirement": "scipy>=1.10.0",
+      "candidate_pin": "1.17.1",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "huggingface-hub>=0.24",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "numpy>=1.19.3",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "pillow>=8",
+      "candidate_pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "timm>=0.9",
+      "candidate_pin": "1.0.27",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "torch>=1.8",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "torchvision>=0.9",
+      "candidate_pin": "0.27.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "segmentation-models-pytorch",
+      "requirement": "tqdm>=4.42.1",
+      "candidate_pin": "4.67.3",
+      "satisfied": true
+    },
+    {
+      "source": "tensorboard",
+      "requirement": "numpy>=1.12.0",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "h5py",
+      "requirement": "numpy>=1.21.2",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "hdf5plugin",
+      "requirement": "h5py>=3.0.0",
+      "candidate_pin": "3.16.0",
+      "satisfied": true
+    },
+    {
+      "source": "pandas",
+      "requirement": "numpy>=1.26.0; python_version < \"3.14\"",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "diffusers",
+      "requirement": "huggingface-hub<2.0,>=0.34.0",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "diffusers",
+      "requirement": "numpy",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "diffusers",
+      "requirement": "Pillow",
+      "candidate_pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "source": "tokenizers",
+      "requirement": "huggingface-hub<2.0,>=0.16.4",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "vector-quantize-pytorch",
+      "requirement": "einops>=0.8.0",
+      "candidate_pin": "0.8.2",
+      "satisfied": true
+    },
+    {
+      "source": "vector-quantize-pytorch",
+      "requirement": "torch>=2.4",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "huggingface-hub",
+      "requirement": "tqdm>=4.42.1",
+      "candidate_pin": "4.67.3",
+      "satisfied": true
+    },
+    {
+      "source": "peft",
+      "requirement": "numpy>=1.17",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "peft",
+      "requirement": "torch>=1.13.0",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true
+    },
+    {
+      "source": "peft",
+      "requirement": "tqdm",
+      "candidate_pin": "4.67.3",
+      "satisfied": true
+    },
+    {
+      "source": "peft",
+      "requirement": "huggingface_hub>=0.25.0",
+      "candidate_pin": "1.15.0",
+      "satisfied": true
+    },
+    {
+      "source": "scipy",
+      "requirement": "numpy<2.7,>=1.26.4",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "scikit-image",
+      "requirement": "numpy>=1.24",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "scikit-image",
+      "requirement": "scipy>=1.11.4",
+      "candidate_pin": "1.17.1",
+      "satisfied": true
+    },
+    {
+      "source": "scikit-image",
+      "requirement": "pillow>=10.1",
+      "candidate_pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "source": "matplotlib",
+      "requirement": "numpy>=1.23",
+      "candidate_pin": "2.4.4",
+      "satisfied": true
+    },
+    {
+      "source": "matplotlib",
+      "requirement": "pillow>=8",
+      "candidate_pin": "12.2.0",
+      "satisfied": true
+    },
+    {
+      "source": "torchvision",
+      "requirement": "numpy",
+      "candidate_pin": "2.4.4",
+      "satisfied": true,
+      "evidence": "cpu_pair.json"
+    },
+    {
+      "source": "torchvision",
+      "requirement": "torch (==2.12.1)",
+      "candidate_pin": "2.12.1+cpu",
+      "satisfied": true,
+      "evidence": "cpu_pair.json"
+    },
+    {
+      "source": "torchvision",
+      "requirement": "pillow (!=8.3.*,>=5.3.0)",
+      "candidate_pin": "12.2.0",
+      "satisfied": true,
+      "evidence": "cpu_pair.json"
+    }
+  ],
+  "selected_non_torch_direct_wheels_total_bytes": 250752565,
+  "compatibility_limits": [
+    "Candidate pins only; not selected or installed environment, no complete transitive lock or resolver execution.",
+    "Target CPython 3.12 on Linux x86_64, glibc>=2.28 is sufficient for advertised selected platform tags, not proof of runtime/ABI compatibility.",
+    "All package-level and selected artifact Requires-Python evaluated at 3.12.0; exact interpreter patch remains unselected.",
+    "Torch/torchvision CPU wheel evidence supplied separately by parent; PyPI GPU distributions are not substitutes.",
+    "No extras requested by NASA. Extras requested transitively (e.g. jsonargparse[signatures], fsspec[http]) are not fully resolved.",
+    "Direct candidate sizes exclude transitive packages, interpreter, unpacking, caches, models and data; not a download or storage budget.",
+    "No imports, builds, tests, package artifacts, model downloads or repository modifications occurred."
+  ],
+  "limited_transitive_findings": [
+    {
+      "package": "antlr4-python3-runtime",
+      "version": "4.9.3",
+      "reason": "Required OmegaConf branch ==4.9.*; no compatible wheel advertised for this examined release. Source-build handling remains an explicit blocker to an all-wheel candidate, not proof every permitted release lacks wheels."
+    },
+    {
+      "package": "transformers",
+      "version": "5.3.0",
+      "reason": "Inspected example satisfies hub1.15.0 and tokenizers0.22.2 declared constraints; not a selected transitive pin or tested API combination."
+    },
+    {
+      "package": "opencv-python-headless",
+      "version": "4.13.0.92",
+      "reason": "Inspected example allows numpy>=2 on Python>=3.9, so no concrete NumPy2.4.4 conflict on this branch. Not a complete lock."
+    },
+    {
+      "package": "albucore",
+      "version": "0.0.23",
+      "reason": "Required exactly by albumentations2.0.0; direct bounds consistent, but simsimd/stringzilla closure unresolved."
+    },
+    {
+      "package": "tacoreader",
+      "version": "0.5.6",
+      "reason": "Required exactly by TerraTorch1.2.6; direct pandas/pyarrow/tqdm constraints satisfied."
+    }
+  ],
+  "observed_date_utc": "2026-11-05",
+  "base_commit": "d0b4c1f4bf131afc364246b27b70f9f057efc6ca",
+  "marker_environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.0",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_system": "Linux",
+    "python_full_version": "3.12.0",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.12",
+    "sys_platform": "linux",
+    "extra": ""
+  },
+  "packages": [
+    {
+      "package": "terratorch",
+      "version": "1.2.6",
+      "metadata_url": "https://pypi.org/pypi/terratorch/1.2.6/json",
+      "metadata_bytes": 14600,
+      "metadata_sha256": "8ea58463fe2cdae34832c9aa2cd89d4a562ad8e520af4cccd97781616bc17f14",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "terratorch-1.2.6-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f3/0d/a482c3d174d00dfee440004e2ff80855eccb7b7085e07abac6a6bc5d1308/terratorch-1.2.6-py3-none-any.whl",
+        "size": 592698,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "6203d892222da3105bacd38c7a27f04c885d1a4d39aefb66c0f505b9220a21c7"
+      },
+      "target_active_requirements": [
+        "torch>2.0",
+        "numpy>=2.2",
+        "torchvision",
+        "rioxarray",
+        "albumentations",
+        "albucore",
+        "rasterio",
+        "torchmetrics",
+        "geopandas",
+        "lightly==1.5.22",
+        "h5py",
+        "lightning>=2.6.0",
+        "segmentation-models-pytorch>=0.5.0",
+        "jsonargparse>=4.40.0",
+        "torchgeo",
+        "einops",
+        "timm>=1.0.15",
+        "pycocotools",
+        "huggingface_hub",
+        "tifffile",
+        "python-box",
+        "tqdm",
+        "tacoreader==0.5.6",
+        "tensorboard",
+        "diffusers",
+        "scikit-learn>=1.3.2",
+        "scikit-image",
+        "pyarrow",
+        "rich",
+        "termcolor"
+      ],
+      "raw_requires_dist_count": 69,
+      "inactive_requirements_omitted": 39,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "torchmetrics",
+      "version": "1.9.0",
+      "metadata_url": "https://pypi.org/pypi/torchmetrics/1.9.0/json",
+      "metadata_bytes": 23845,
+      "metadata_sha256": "7a2e189520940957c4e04a8d447cbe3f8f89abb9cb0d1392e1b3280cba14ba2d",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "torchmetrics-1.9.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/c3/a2/c7f6ebf546f8f644edf0f999aa98ece106986a77a7b922316bf6414ff825/torchmetrics-1.9.0-py3-none-any.whl",
+        "size": 983384,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "bfdcbff3dd1d96b3374bb2496eb39f23c4b28b8a845b6a18c313688e0d2d9ca1"
+      },
+      "target_active_requirements": [
+        "numpy>1.20.0",
+        "packaging>17.1",
+        "torch>=2.0.0",
+        "lightning-utilities>=0.15.3"
+      ],
+      "raw_requires_dist_count": 145,
+      "inactive_requirements_omitted": 141,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "lightning",
+      "version": "2.6.5",
+      "metadata_url": "https://pypi.org/pypi/lightning/2.6.5/json",
+      "metadata_bytes": 46220,
+      "metadata_sha256": "6c0c51173895030611f1ad038675b4267a2f661ab5c2efb97e054bfa90bf0c0b",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "lightning-2.6.5-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e7/c5/fca7144236b6fa3279d0fb3172b32576c5ad8b84a63b9432ad6592d24847/lightning-2.6.5-py3-none-any.whl",
+        "size": 848611,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "3702fb7ef4ab51a8c3d4a140f4674514fe72973a9673dfa05e07a078e2767389"
+      },
+      "target_active_requirements": [
+        "PyYAML<8.0,>5.4",
+        "fsspec[http]<2028.0,>=2022.5.0",
+        "lightning-utilities<2.0,>=0.10.0",
+        "packaging<27.0,>=23.0",
+        "torch<4.0,>=2.1.0",
+        "torchmetrics<3.0,>0.7.0",
+        "tqdm<6.0,>=4.57.0",
+        "typing-extensions<6.0,>4.5.0",
+        "pytorch-lightning"
+      ],
+      "raw_requires_dist_count": 222,
+      "inactive_requirements_omitted": 213,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "timm",
+      "version": "1.0.27",
+      "metadata_url": "https://pypi.org/pypi/timm/1.0.27/json",
+      "metadata_bytes": 42720,
+      "metadata_sha256": "1fc81ef1ed2707c8575608f9cae4f6979dc4b3c2969438b27242a147c08a61e5",
+      "requires_python": ">=3.8",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "timm-1.0.27-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/1f/2e/26bab7686ff4aed48f8f5f6c23e2aa37b7a37ddd9effe3aa61e908fd518f/timm-1.0.27-py3-none-any.whl",
+        "size": 2589280,
+        "requires_python": ">=3.8",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "5ff07c9ddf53cbada88eab1c93ff175c64cab683b5a2fddf863bcee985926f89"
+      },
+      "target_active_requirements": [
+        "torch",
+        "torchvision",
+        "pyyaml",
+        "huggingface_hub",
+        "safetensors"
+      ],
+      "raw_requires_dist_count": 5,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "einops",
+      "version": "0.8.2",
+      "metadata_url": "https://pypi.org/pypi/einops/0.8.2/json",
+      "metadata_bytes": 16316,
+      "metadata_sha256": "3b2b9bc8b566fbba8d96f1a5d75a5abe4aaadf144fe00d472edc83d90c6a5f4e",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "einops-0.8.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/2a/09/f8d8f8f31e4483c10a906437b4ce31bdf3d6d417b73fe33f1a8b59e34228/einops-0.8.2-py3-none-any.whl",
+        "size": 65638,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "54058201ac7087911181bfec4af6091bb59380360f069276601256a76af08193"
+      },
+      "target_active_requirements": [],
+      "raw_requires_dist_count": 0,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "numpy",
+      "version": "2.4.4",
+      "metadata_url": "https://pypi.org/pypi/numpy/2.4.4/json",
+      "metadata_bytes": 68419,
+      "metadata_sha256": "1f644b5a3db5ea9fee6806e66f93fd3750b23d80640a9897101d5fef9d5e0a8a",
+      "requires_python": ">=3.11",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "numpy-2.4.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/0a/0d/0e3ecece05b7a7e87ab9fb587855548da437a061326fff64a223b6dcb78a/numpy-2.4.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 16645480,
+        "requires_python": ">=3.11",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64",
+          "cp312-cp312-manylinux_2_27_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "81f4a14bee47aec54f883e0cad2d73986640c1590eb9bfaaba7ad17394481e6e"
+      },
+      "target_active_requirements": [],
+      "raw_requires_dist_count": 0,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "omegaconf",
+      "version": "2.3.0",
+      "metadata_url": "https://pypi.org/pypi/omegaconf/2.3.0/json",
+      "metadata_bytes": 6095,
+      "metadata_sha256": "e58407f13e7ae3696e258110fa4b1fb283cb545fda3d4fca1abeaaf45fc1e471",
+      "requires_python": ">=3.6",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "omegaconf-2.3.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e3/94/1843518e420fa3ed6919835845df698c7e27e183cb997394e4a670973a65/omegaconf-2.3.0-py3-none-any.whl",
+        "size": 79500,
+        "requires_python": ">=3.6",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "7b4df175cdb08ba400f45cae3bdcae7ba8365db4d165fc65fd04b050ab63b46b"
+      },
+      "target_active_requirements": [
+        "antlr4-python3-runtime (==4.9.*)",
+        "PyYAML (>=5.1.0)"
+      ],
+      "raw_requires_dist_count": 3,
+      "inactive_requirements_omitted": 1,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "pillow",
+      "version": "12.2.0",
+      "metadata_url": "https://pypi.org/pypi/pillow/12.2.0/json",
+      "metadata_bytes": 606227,
+      "metadata_sha256": "c79bcfb615394b8180fb33fa15fbc228d7e7eb6cff4f585edf25db08f776617a",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/43/e3/fdc657359e919462369869f1c9f0e973f353f9a9ee295a39b1fea8ee1a77/pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 7087215,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64",
+          "cp312-cp312-manylinux_2_27_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780"
+      },
+      "target_active_requirements": [],
+      "raw_requires_dist_count": 26,
+      "inactive_requirements_omitted": 26,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "rasterio",
+      "version": "1.5.0",
+      "metadata_url": "https://pypi.org/pypi/rasterio/1.5.0/json",
+      "metadata_bytes": 35190,
+      "metadata_sha256": "ffc89a7f73d548db1725c77b6da44c16d3b4491709cfeb30727ccd346b83cc83",
+      "requires_python": ">=3.12",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "rasterio-1.5.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/85/23/5a52319a98451ff910f42e5f7f4804bfb39f9327933a89daab685d1ce2dd/rasterio-1.5.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "size": 37634010,
+        "requires_python": ">=3.12",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "26dbcffcf0d01fc121cbb92186bc1cb78e16efe62b17be45ad7494446b325cf8"
+      },
+      "target_active_requirements": [
+        "affine",
+        "attrs",
+        "certifi",
+        "click!=8.2.*,>=4.0",
+        "cligj>=0.5",
+        "numpy>=2",
+        "pyparsing"
+      ],
+      "raw_requires_dist_count": 26,
+      "inactive_requirements_omitted": 19,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "torchgeo",
+      "version": "0.9.0",
+      "metadata_url": "https://pypi.org/pypi/torchgeo/0.9.0/json",
+      "metadata_bytes": 21059,
+      "metadata_sha256": "50bb0739d53ba51025501f9dd6fc2e0006f0c60faeb5bea68556ef99e937fe6c",
+      "requires_python": ">=3.12",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "torchgeo-0.9.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/1b/9f/bf115a4153cf0006e4120045477d0366b5a7a3f311a74b160ad06a431ba3/torchgeo-0.9.0-py3-none-any.whl",
+        "size": 688086,
+        "requires_python": ">=3.12",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "3e05cd85352a2b357c611c6eb44540680f21017d5da4af9d8c9d18bfca791a05"
+      },
+      "target_active_requirements": [
+        "einops>=0.3",
+        "geopandas>=0.13",
+        "jsonargparse[signatures]>=4.35",
+        "kornia>=0.8.2",
+        "lightly!=1.4.26,>=1.4.5",
+        "lightning!=2.3.*,!=2.5.0,!=2.5.5,!=2.5.6,>=2",
+        "matplotlib>=3.7.3",
+        "numpy>=1.26",
+        "pandas>=2.1.1",
+        "pillow>=10",
+        "pyproj>=3.6.1",
+        "rasterio>=1.4.3",
+        "segmentation-models-pytorch>=0.5",
+        "shapely>=2.0.2",
+        "timm>=1.0.3",
+        "torch>=2.2",
+        "torchmetrics>=1.2",
+        "torchvision>=0.17",
+        "typing-extensions>=4.8"
+      ],
+      "raw_requires_dist_count": 47,
+      "inactive_requirements_omitted": 28,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "albumentations",
+      "version": "2.0.0",
+      "metadata_url": "https://pypi.org/pypi/albumentations/2.0.0/json",
+      "metadata_bytes": 40242,
+      "metadata_sha256": "9f3ada6b408fdd5faa59f81b9d05f246caef3ef999ed7595b32f9b3cc0f48a6a",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "albumentations-2.0.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b6/ed/f1fc017e0b63eecb1d343d5f3ef8dda8fe17ae61c1406c0b4e1869bd12f3/albumentations-2.0.0-py3-none-any.whl",
+        "size": 273916,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "b7b12600bdb2e71ad8ab545336fa45538d9d2b37622de4a08bebc9bd772d43e7"
+      },
+      "target_active_requirements": [
+        "numpy>=1.24.4",
+        "scipy>=1.10.0",
+        "PyYAML",
+        "pydantic>=2.9.2",
+        "albucore==0.0.23",
+        "opencv-python-headless>=4.9.0.80"
+      ],
+      "raw_requires_dist_count": 11,
+      "inactive_requirements_omitted": 5,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "segmentation-models-pytorch",
+      "version": "0.5.0",
+      "metadata_url": "https://pypi.org/pypi/segmentation-models-pytorch/0.5.0/json",
+      "metadata_bytes": 20246,
+      "metadata_sha256": "19041929c6d3f59824e4d8bd21d40cb123bed10f3f45dc7b287dcd161a4be0c9",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "segmentation_models_pytorch-0.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/ef/62/a50e5ac6191a498ad631e54df13d7e2d7eeb1325b15ee9ea1ee3ec065aaa/segmentation_models_pytorch-0.5.0-py3-none-any.whl",
+        "size": 154789,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "c34e09047771aa4dd8878b4f899e8125700cd1f8f7db16e58c37204154151a05"
+      },
+      "target_active_requirements": [
+        "huggingface-hub>=0.24",
+        "numpy>=1.19.3",
+        "pillow>=8",
+        "safetensors>=0.3.1",
+        "timm>=0.9",
+        "torch>=1.8",
+        "torchvision>=0.9",
+        "tqdm>=4.42.1"
+      ],
+      "raw_requires_dist_count": 20,
+      "inactive_requirements_omitted": 12,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "tensorboard",
+      "version": "2.18.0",
+      "metadata_url": "https://pypi.org/pypi/tensorboard/2.18.0/json",
+      "metadata_bytes": 2935,
+      "metadata_sha256": "5b004dc5b4cc52b70a93c190746d77911f14376ef6035eb92322ab099e77a5d8",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "tensorboard-2.18.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b1/de/021c1d407befb505791764ad2cbd56ceaaa53a746baed01d2e2143f05f18/tensorboard-2.18.0-py3-none-any.whl",
+        "size": 5503036,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "107ca4821745f73e2aefa02c50ff70a9b694f39f790b11e6f682f7d326745eab"
+      },
+      "target_active_requirements": [
+        "absl-py>=0.4",
+        "grpcio>=1.48.2",
+        "markdown>=2.6.8",
+        "numpy>=1.12.0",
+        "packaging",
+        "protobuf!=4.24.0,>=3.19.6",
+        "setuptools>=41.0.0",
+        "six>1.9",
+        "tensorboard-data-server<0.8.0,>=0.7.0",
+        "werkzeug>=1.0.1"
+      ],
+      "raw_requires_dist_count": 10,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "h5py",
+      "version": "3.16.0",
+      "metadata_url": "https://pypi.org/pypi/h5py/3.16.0/json",
+      "metadata_bytes": 43906,
+      "metadata_sha256": "acf09e71f9b25db02081a260399e4e9020da7bec56d291d1f597d01b52f4b760",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "h5py-3.16.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/9e/e9/1a19e42cd43cc1365e127db6aae85e1c671da1d9a5d746f4d34a50edb577/h5py-3.16.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "size": 5405250,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "dfc21898ff025f1e8e67e194965a95a8d4754f452f83454538f98f8a3fcb207e"
+      },
+      "target_active_requirements": [
+        "numpy>=1.21.2"
+      ],
+      "raw_requires_dist_count": 1,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "hdf5plugin",
+      "version": "6.0.0",
+      "metadata_url": "https://pypi.org/pypi/hdf5plugin/6.0.0/json",
+      "metadata_bytes": 8781,
+      "metadata_sha256": "e32fd553c63b8923fef0b41987815d908eeb5198803b167b1240f836a93c4ae3",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "hdf5plugin-6.0.0-py3-none-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/ed/2f/1046d464ad1db29a4f6c70ba4e19b39baa8a6542c719eaa4e765108f07f1/hdf5plugin-6.0.0-py3-none-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 44857273,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-manylinux_2_28_x86_64",
+          "py3-none-manylinux_2_24_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "79e0524d18ddc41c0cf2e1bb2e529d4e154c286f6a1bd85f3d44019d2a17574a"
+      },
+      "target_active_requirements": [
+        "h5py>=3.0.0"
+      ],
+      "raw_requires_dist_count": 14,
+      "inactive_requirements_omitted": 13,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "pandas",
+      "version": "3.0.3",
+      "metadata_url": "https://pypi.org/pypi/pandas/3.0.3/json",
+      "metadata_bytes": 121370,
+      "metadata_sha256": "185d9010de12aa1814e8ee8ebcd1ff609831668fc1ac52228902067f776b2657",
+      "requires_python": ">=3.11",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "pandas-3.0.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/65/b6/09b01cdbc15224e2850365192d17b7bdebb8bdbd8780ed221fcdf0d9a515/pandas-3.0.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 10894600,
+        "requires_python": ">=3.11",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64",
+          "cp312-cp312-manylinux_2_24_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "6dc0b3fd2169c9157deed50b4d519553a3655c8c6a96027136d654592be973a9"
+      },
+      "target_active_requirements": [
+        "numpy>=1.26.0; python_version < \"3.14\"",
+        "python-dateutil>=2.8.2"
+      ],
+      "raw_requires_dist_count": 84,
+      "inactive_requirements_omitted": 82,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "pyarrow",
+      "version": "24.0.0",
+      "metadata_url": "https://pypi.org/pypi/pyarrow/24.0.0/json",
+      "metadata_bytes": 46586,
+      "metadata_sha256": "2951446101e348cab856fbbaceaf3a91686cbd559541989684e4aef59706de55",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "pyarrow-24.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/b3/7a/829f7d9dfd37c207206081d6dad474d81dde29952401f07f2ba507814818/pyarrow-24.0.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "size": 48863122,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "6165461f55ef6314f026de6638d661188e3455d3ec49834556a0ebbdbace18bb"
+      },
+      "target_active_requirements": [],
+      "raw_requires_dist_count": 0,
+      "inactive_requirements_omitted": 0,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "diffusers",
+      "version": "0.38.0",
+      "metadata_url": "https://pypi.org/pypi/diffusers/0.38.0/json",
+      "metadata_bytes": 21731,
+      "metadata_sha256": "65028786d198dd55647e89fefc23a18251f6fd27edb74b7dc7d954bb24fd30e8",
+      "requires_python": ">=3.10.0",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "diffusers-0.38.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/42/c0/3237566ea6e3a542f3c0669a253d62fe75f27b84b3d7bd4fb3b5ee89d73c/diffusers-0.38.0-py3-none-any.whl",
+        "size": 5245919,
+        "requires_python": ">=3.10.0",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "18e53f9e539096320470f62c6360a6fd5727ff28cffda566265316e13fcdb612"
+      },
+      "target_active_requirements": [
+        "importlib_metadata",
+        "filelock",
+        "httpx<1.0.0",
+        "huggingface-hub<2.0,>=0.34.0",
+        "numpy",
+        "regex!=2019.12.17",
+        "requests",
+        "safetensors>=0.8.0-rc.0",
+        "Pillow"
+      ],
+      "raw_requires_dist_count": 95,
+      "inactive_requirements_omitted": 86,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "tokenizers",
+      "version": "0.22.2",
+      "metadata_url": "https://pypi.org/pypi/tokenizers/0.22.2/json",
+      "metadata_bytes": 29063,
+      "metadata_sha256": "8ae49a98d1383e64acce0c8ee5e856bcfffda54d77b5e44e4f2313db9a4c2f9d",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/2e/76/932be4b50ef6ccedf9d3c6639b056a967a86258c6d9200643f01269211ca/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "size": 3274982,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "cp39-abi3-manylinux_2_17_x86_64",
+          "cp39-abi3-manylinux2014_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "369cc9fc8cc10cb24143873a0d95438bb8ee257bb80c71989e3ee290e8d72c67"
+      },
+      "target_active_requirements": [
+        "huggingface-hub<2.0,>=0.16.4"
+      ],
+      "raw_requires_dist_count": 12,
+      "inactive_requirements_omitted": 11,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "vector-quantize-pytorch",
+      "version": "1.29.0",
+      "metadata_url": "https://pypi.org/pypi/vector-quantize-pytorch/1.29.0/json",
+      "metadata_bytes": 35931,
+      "metadata_sha256": "6c50cf50fd312fc514662159f164ddf420d8ea85d55de0b7f4eb39172522e9d7",
+      "requires_python": ">=3.9",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "vector_quantize_pytorch-1.29.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/37/50/44b6d16ea5fb50cca19629ff09e6731d0f8cb85a7a8ace1d99334ed672e7/vector_quantize_pytorch-1.29.0-py3-none-any.whl",
+        "size": 56199,
+        "requires_python": ">=3.9",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "7943a3a8be8011ba857d899d5cbe807822a176529292c48e19d4fef3a1b5e1c0"
+      },
+      "target_active_requirements": [
+        "einops>=0.8.0",
+        "einx>=0.3.0",
+        "torch>=2.4"
+      ],
+      "raw_requires_dist_count": 5,
+      "inactive_requirements_omitted": 2,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "huggingface-hub",
+      "version": "1.15.0",
+      "metadata_url": "https://pypi.org/pypi/huggingface-hub/1.15.0/json",
+      "metadata_bytes": 15102,
+      "metadata_sha256": "bd04b4f0ed4d9f179c6acdf7ff54786505ada92780d004a5f9369a7b1ef197cf",
+      "requires_python": ">=3.10.0",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "huggingface_hub-1.15.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/6e/11/0b64cc9024329b76d7547c19a67604a61d21d3ba678a69d1b220c29d5112/huggingface_hub-1.15.0-py3-none-any.whl",
+        "size": 663602,
+        "requires_python": ">=3.10.0",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "a4a59af04cbc41a3fe3fec429b171ef994ef8c971eda10136746f408dd4e3744"
+      },
+      "target_active_requirements": [
+        "filelock>=3.10.0",
+        "fsspec>=2023.5.0",
+        "hf-xet<2.0.0,>=1.4.3; platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"arm64\" or platform_machine == \"aarch64\"",
+        "httpx<1,>=0.23.0",
+        "packaging>=20.9",
+        "pyyaml>=5.1",
+        "tqdm>=4.42.1",
+        "typer>=0.20.0",
+        "typing-extensions>=4.1.0"
+      ],
+      "raw_requires_dist_count": 112,
+      "inactive_requirements_omitted": 103,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "peft",
+      "version": "0.19.1",
+      "metadata_url": "https://pypi.org/pypi/peft/0.19.1/json",
+      "metadata_bytes": 16949,
+      "metadata_sha256": "f4503757157f91c0829b1d4ae574322f4af61d046b1e6e4250dfe18c1966666e",
+      "requires_python": ">=3.10.0",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "peft-0.19.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/e8/b6/f54d676ed93cc2dd2234c3b172ea9c8c3d7d29361e66b1b23dec57a67465/peft-0.19.1-py3-none-any.whl",
+        "size": 680692,
+        "requires_python": ">=3.10.0",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "2113f72a81621b5913ef28f9022204c742df111890c5f49d812716a4a301e356"
+      },
+      "target_active_requirements": [
+        "numpy>=1.17",
+        "packaging>=20.0",
+        "psutil",
+        "pyyaml",
+        "torch>=1.13.0",
+        "transformers",
+        "tqdm",
+        "accelerate>=0.21.0",
+        "safetensors",
+        "huggingface_hub>=0.25.0"
+      ],
+      "raw_requires_dist_count": 39,
+      "inactive_requirements_omitted": 29,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "scipy",
+      "version": "1.17.1",
+      "metadata_url": "https://pypi.org/pypi/scipy/1.17.1/json",
+      "metadata_bytes": 115626,
+      "metadata_sha256": "5a0dc75a7c2399082d11c0af1ec97d39212a971cc5e73efac6d935a5359ff648",
+      "requires_python": ">=3.11",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "scipy-1.17.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/01/8e/1e35281b8ab6d5d72ebe9911edcdffa3f36b04ed9d51dec6dd140396e220/scipy-1.17.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 35235890,
+        "requires_python": ">=3.11",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64",
+          "cp312-cp312-manylinux_2_27_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "02ae3b274fde71c5e92ac4d54bc06c42d80e399fec704383dcd99b301df37458"
+      },
+      "target_active_requirements": [
+        "numpy<2.7,>=1.26.4"
+      ],
+      "raw_requires_dist_count": 38,
+      "inactive_requirements_omitted": 37,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "scikit-image",
+      "version": "0.26.0",
+      "metadata_url": "https://pypi.org/pypi/scikit-image/0.26.0/json",
+      "metadata_bytes": 57877,
+      "metadata_sha256": "406c1d6755a181e2ed4f40bcb2e1a63b692ca9ac67aa0670f1aa7e19ca756504",
+      "requires_python": ">=3.11",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "scikit_image-0.26.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/f4/a2/70401a107d6d7466d64b466927e6b96fcefa99d57494b972608e2f8be50f/scikit_image-0.26.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "size": 13561683,
+        "requires_python": ">=3.11",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_28_x86_64",
+          "cp312-cp312-manylinux_2_24_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "7df650e79031634ac90b11e64a9eedaf5a5e06fcd09bcd03a34be01745744466"
+      },
+      "target_active_requirements": [
+        "numpy>=1.24",
+        "scipy>=1.11.4",
+        "networkx>=3.0",
+        "pillow>=10.1",
+        "imageio!=2.35.0,>=2.33",
+        "tifffile>=2022.8.12",
+        "packaging>=21",
+        "lazy-loader>=0.4"
+      ],
+      "raw_requires_dist_count": 59,
+      "inactive_requirements_omitted": 51,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "matplotlib",
+      "version": "3.10.9",
+      "metadata_url": "https://pypi.org/pypi/matplotlib/3.10.9/json",
+      "metadata_bytes": 102284,
+      "metadata_sha256": "5854d133ab9a22fdf05c80101d3491d75154514e4c6d312ab52f8acc99b6eb9d",
+      "requires_python": ">=3.10",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "matplotlib-3.10.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "url": "https://files.pythonhosted.org/packages/32/91/d024616abdba99e83120e07a20658976f6a343646710760c4a51df126029/matplotlib-3.10.9-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "size": 8789336,
+        "requires_python": ">=3.10",
+        "yanked": false,
+        "matching_tags": [
+          "cp312-cp312-manylinux_2_17_x86_64",
+          "cp312-cp312-manylinux2014_x86_64"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "ae20801130378b82d647ff5047c07316295b68dc054ca6b3c13519d0ea624285"
+      },
+      "target_active_requirements": [
+        "contourpy>=1.0.1",
+        "cycler>=0.10",
+        "fonttools>=4.22.0",
+        "kiwisolver>=1.3.1",
+        "numpy>=1.23",
+        "packaging>=20.0",
+        "pillow>=8",
+        "pyparsing>=3",
+        "python-dateutil>=2.7"
+      ],
+      "raw_requires_dist_count": 13,
+      "inactive_requirements_omitted": 4,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    },
+    {
+      "package": "tqdm",
+      "version": "4.67.3",
+      "metadata_url": "https://pypi.org/pypi/tqdm/4.67.3/json",
+      "metadata_bytes": 60955,
+      "metadata_sha256": "d3d6be0717e8cbb4dec97bb892cb9d84bd9bb9f428fd5185910048ebb83aaa32",
+      "requires_python": ">=3.7",
+      "python312_allowed": true,
+      "selected_candidate_wheel": {
+        "filename": "tqdm-4.67.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/16/e1/3079a9ff9b8e11b846c6ac5c8b5bfb7ff225eee721825310c91b3b50304f/tqdm-4.67.3-py3-none-any.whl",
+        "size": 78374,
+        "requires_python": ">=3.7",
+        "yanked": false,
+        "matching_tags": [
+          "py3-none-any"
+        ],
+        "python312_allowed": true,
+        "sha256_advertised": "ee1e4c0e59148062281c49d80b25b67771a127c85fc9676d3be5f243206826bf"
+      },
+      "target_active_requirements": [],
+      "raw_requires_dist_count": 11,
+      "inactive_requirements_omitted": 11,
+      "omission_scope": "No optional extras selected; Python3.12/Linux markers only. Transitive extras are not resolved."
+    }
+  ],
+  "all_28_direct_wheels_advertised_bytes": 444858870,
+  "wheel_payload_hashes_verified": false
+}

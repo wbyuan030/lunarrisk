@@ -1,0 +1,51 @@
+{
+  "scope": "Official CPU wheel index, small PEP658 metadata and HTTP HEAD only",
+  "observed_date_utc": "2026-11-05",
+  "cpu_pair_advertised_bytes": 194106305,
+  "wheel_payload_hashes_verified": false,
+  "entries": [
+    {
+      "index": "https://download.pytorch.org/whl/cpu/torch/",
+      "wheel_filename": "torch-2.12.1+cpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "wheel_url": "https://download-r2.pytorch.org/whl/cpu/torch-2.12.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "wheel_sha256_advertised": "sha256=ae4bb28409f5370852bd71af221066236c38d647f780d9b0a7240c330a9c12df",
+      "wheel_bytes_advertised_head": 192268841,
+      "metadata_bytes": 31354,
+      "metadata_sha256": "2dd7308d91027a8d24fe97f0982dca9a304814248869fb289c1d54e8e6c388ff",
+      "metadata_hash_verified": true,
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "filelock",
+        "typing-extensions>=4.10.0",
+        "setuptools<82",
+        "sympy>=1.13.3",
+        "networkx>=2.5.1",
+        "jinja2",
+        "fsspec>=0.8.5",
+        "optree>=0.13.0; extra == \"optree\"",
+        "opt-einsum>=3.3; extra == \"opt-einsum\"",
+        "pyyaml; extra == \"pyyaml\""
+      ],
+      "wheel_downloaded": false
+    },
+    {
+      "index": "https://download.pytorch.org/whl/cpu/torchvision/",
+      "wheel_filename": "torchvision-0.27.1+cpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "wheel_url": "https://download-r2.pytorch.org/whl/cpu/torchvision-0.27.1%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "wheel_sha256_advertised": "sha256=8428615cca9065fa64f01f804c57d890e3aec240292ecfd22a25de6fb50e0ee9",
+      "wheel_bytes_advertised_head": 1837464,
+      "metadata_bytes": 5480,
+      "metadata_sha256": "da2ac3d0a9a82150e5035d1f8b1b3ab95d02c214f58d2ea3c31ea45d0c8987dd",
+      "metadata_hash_verified": true,
+      "requires_python": ">=3.10,!=3.14.1",
+      "requires_dist": [
+        "numpy",
+        "torch (==2.12.1)",
+        "pillow (!=8.3.*,>=5.3.0)",
+        "gdown (>=4.7.3) ; extra == 'gdown'",
+        "scipy ; extra == 'scipy'"
+      ],
+      "wheel_downloaded": false
+    }
+  ]
+}

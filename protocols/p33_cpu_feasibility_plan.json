@@ -1,0 +1,81 @@
+{
+  "plan_id": "p33_cpu_metadata_candidate_v1",
+  "date_utc": "2026-11-05",
+  "base_commit": "d0b4c1f4bf131afc364246b27b70f9f057efc6ca",
+  "status": "DIRECT_METADATA_FEASIBLE_FULL_CLOSURE_AND_PROVISIONING_NOT_APPROVED",
+  "purpose": "CPU-only faithful-declaration import/construction feasibility; not GPU compatibility or training",
+  "python": "CPython3.12.x; exact patch, source, hash and acquisition not selected",
+  "platform": "Linux x86_64; recorded hostglibc2.35 is above all selected wheel manylinux floors (maximum2.28)",
+  "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "candidate_direct_pins": {
+    "terratorch": "1.2.6",
+    "torch": "2.12.1+cpu",
+    "torchvision": "0.27.1+cpu",
+    "torchmetrics": "1.9.0",
+    "lightning": "2.6.5",
+    "timm": "1.0.27",
+    "einops": "0.8.2",
+    "numpy": "2.4.4",
+    "omegaconf": "2.3.0",
+    "pillow": "12.2.0",
+    "rasterio": "1.5.0",
+    "torchgeo": "0.9.0",
+    "albumentations": "2.0.0",
+    "segmentation-models-pytorch": "0.5.0",
+    "tensorboard": "2.18.0",
+    "h5py": "3.16.0",
+    "hdf5plugin": "6.0.0",
+    "pandas": "3.0.3",
+    "pyarrow": "24.0.0",
+    "diffusers": "0.38.0",
+    "tokenizers": "0.22.2",
+    "vector-quantize-pytorch": "1.29.0",
+    "huggingface-hub": "1.15.0",
+    "peft": "0.19.1",
+    "scipy": "1.17.1",
+    "scikit-image": "0.26.0",
+    "matplotlib": "3.10.9",
+    "tqdm": "4.67.3"
+  },
+  "is_complete_lock": false,
+  "full_closure_verified": false,
+  "is_install_instruction": false,
+  "provisioning_authorized_by_this_plan": false,
+  "evidence": {
+    "direct_candidates": "reports/evidence/p33_20261105/cpu_candidate_01/direct_candidates.json",
+    "cpu_pair": "reports/evidence/p33_20261105/cpu_candidate_01/cpu_pair.json",
+    "transitive_samples": "reports/evidence/p33_20261105/cpu_candidate_01/transitive_samples.json"
+  },
+  "bytes": {
+    "cpu_pair_advertised": 194106305,
+    "other_26_direct_wheels_advertised": 250752565,
+    "direct_subtotal_advertised": 444858870,
+    "complete_download_budget": null,
+    "installed_footprint": null
+  },
+  "gaps": [
+    "Full transitive closure and transitively requested extras are unresolved",
+    "Examined antlr4-python3-runtime4.9.3 in OmegaConf-required4.9.* branch advertises no compatible wheel; other permitted versions and source-build path not fully reviewed",
+    "Exact interpreter patch and artifacts not selected; no complete hash/download/storage budget",
+    "Advertised wheel hashes are not verified payload hashes; binary/native dependency behavior unknown",
+    "Normal official imports and full base constructor with transient decoder allocation have not run"
+  ],
+  "permitted_now": [
+    "Read metadata/source and review the standalone auditor; no local inventory or old-environment audit repeat is needed",
+    "The auditor is available for an already authorized candidate environment later; it does not create one or import torch/NASA"
+  ],
+  "later_stages_not_authorized": [
+    "Complete bounded transitive/build review and artifact budget without implicit downloads",
+    "After explicit provisioning approval, create a separate CPU-only environment preserving oldPython3.10/torch2.5.1+rocm6.2, then inspect installed metadata",
+    "After execution approval, normal pinned-source imports and checkpoint=None CPU base constructor under agreed time/memory limits; no GPU device queries",
+    "Only later consider verified checkpoint and paired CPU forward/backward; no transfer score, cohort change or Test"
+  ],
+  "preserved": [
+    "Existing driver/system/environment unchanged",
+    "Fixed NASA source/model pins, spatial policy, physics statements, budgets and historical evidence unchanged",
+    "No repeated75/701 or native256 input-only checks"
+  ],
+  "runtime_execution": "NOT_RUN",
+  "gpu_compatibility": "NOT_ESTABLISHED",
+  "transfer_benefit": "NOT_ESTABLISHED"
+}
