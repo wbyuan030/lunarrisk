@@ -22,7 +22,7 @@ class TestNasaPreflightCLI(unittest.TestCase):
         self.batch, self.config, self.provenance, self.output = [self.root / name for name in
             ("synthetic.npz", "synthetic.yaml", "provenance.json", "result.json")]
         np.savez(self.batch, **raw, **{"valid_" + key: value for key, value in valid.items()},
-                 sample_ids=np.array(["synthetic-1", "synthetic-2"]), targets=np.array([0, 48]))
+                 sample_ids=np.array(["0", "1"]), targets=np.array([43, 43]))
         self.config.write_text(json.dumps({"data": {"domains": domains}}))
         provenance.update(split="train", batch_sha256=file_sha256(self.batch))
         self.provenance.write_text(json.dumps(provenance))
@@ -41,6 +41,45 @@ class TestNasaPreflightCLI(unittest.TestCase):
         self.assertEqual(report["official_model_execution"], "NOT_RUN")
         self.assertEqual(report["science_claim"], "NOT_ESTABLISHED")
         self.assertNotIn("arms", report)
+        self.assertEqual(report["authoritative_train_membership"]["train_rows"], 5135)
+        self.assertEqual(report["sample_ids"], ["0", "1"])
+
+    def test_forged_val_test_ids_and_wrong_target_are_rejected(self):
+        # These are synthetic pixels; real historical IDs only exercise the
+        # membership gate and do not claim the pixels belong to those samples.
+        import gzip
+        import csv
+        with gzip.open(ROOT / "reports/evidence/p30_20261103/metadata_rows.csv.gz", "rt") as handle:
+            records = list(csv.DictReader(handle))
+        excluded = [next(row["sample_id"] for row in records if row["stored_split"] == split)
+                    for split in ("1", "2")]
+        for ids, targets in ((["forged-001", "1"], [43, 43]),
+                             ([excluded[0], "1"], [43, 43]),
+                             ([excluded[1], "1"], [43, 43]),
+                             (["0", "1"], [0, 43])):
+            with self.subTest(ids=ids, targets=targets):
+                with np.load(self.batch) as original:
+                    batch = {key: np.array(original[key]) for key in original.files}
+                batch.update(sample_ids=np.array(ids), targets=np.array(targets))
+                np.savez(self.batch, **batch)
+                provenance = json.loads(self.provenance.read_text())
+                provenance["batch_sha256"] = file_sha256(self.batch)
+                self.provenance.write_text(json.dumps(provenance))
+                result = self.run_command()
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("authoritative Train manifest", result.stderr)
+                self.assertFalse(self.output.exists())
+
+    def test_tampered_authority_files_are_rejected_without_override_hash(self):
+        for flag, source in (("--train-plan", ROOT / "protocols/p31_local_prefix_eval_plan.json"),
+                             ("--train-metadata", ROOT / "reports/evidence/p30_20261103/metadata_rows.csv.gz")):
+            with self.subTest(flag=flag):
+                altered = self.root / "tampered_authority"
+                altered.write_bytes(source.read_bytes() + b" ")
+                result = subprocess.run(self.command + [flag, str(altered)], text=True, capture_output=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("SHA256 mismatch", result.stderr)
+                self.assertFalse(self.output.exists())
 
     def test_bytes_or_empty_ids_rejected_before_output_creation(self):
         for ids in (np.array([b"train-1", b"train-2"]), np.array(["", "train-2"])):

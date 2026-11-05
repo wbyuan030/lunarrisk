@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-05",
+  "base_commit": "8eeab47bcdc36e790a96ad7da4592c8d9ddd8b4f",
+  "fix": "Authenticate preflight Train IDs and Geology targets against pinned historical plan/metadata",
+  "new_tests": {
+    "total": 28,
+    "passed": 19,
+    "skipped": 9,
+    "errors": 0,
+    "failures": 0,
+    "skip_reason": "No torch; synthetic wrapper tests, not official NASA"
+  },
+  "full_suite": {
+    "total": 412,
+    "passed": 321,
+    "skipped": 62,
+    "errors": 29,
+    "failures": 0,
+    "status": "BLOCKED_MISSING_DEPENDENCIES"
+  },
+  "error_test_ids_match_original_baseline_exactly": true,
+  "compileall": "PASS",
+  "git_diff_check": "PASS",
+  "official_nasa_execution": "NOT_RUN",
+  "training_runner": "NOT_IMPLEMENTED",
+  "logs": {
+    "cloud_tests.log": "8f146d5fda41e9e4fdd5a17220543fed21125cb57648a1c023f864f1a7c76715",
+    "focused_tests.log": "df6c7fbc074c8e275e6bdb9124cf3f0b5dbeec7604de435754284a299c17db41"
+  }
+}

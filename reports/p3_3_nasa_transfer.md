@@ -15,8 +15,8 @@
 
 | Check | Outcome |
 |---|---|
-| `python3 -m unittest discover -s tests -p 'test_p33_nasa*.py' -v` | 26 discovered: **17 PASS, 9 SKIP**, no failures/errors |
-| `python3 -m unittest discover -s tests -v` | 410 discovered: 319 PASS, 62 SKIP, **29 ERROR** due missing dependencies |
+| `python3 -m unittest discover -s tests -p 'test_p33_nasa*.py' -v` | 28 discovered: **19 PASS, 9 SKIP**, no failures/errors |
+| `python3 -m unittest discover -s tests -v` | 412 discovered: 321 PASS, 62 SKIP, **29 ERROR** due missing dependencies |
 | Baseline-only suite, excluding new P33 tests | 384 discovered: 302 PASS, 53 SKIP, **same 29 ERROR test IDs** |
 | `python3 -m compileall -q scripts src tests` | PASS |
 | `git diff --check` | PASS |
@@ -24,10 +24,14 @@
 
 Torch, h5py and older optional geo dependencies are absent in this cloud executor. No package installation, torch replacement, paid compute, GPU training or weight download occurred. Full-suite dependency failure is not a pass; the previous P3.2 local 626-test pass remains historical evidence for its own code/runtime. New torch tests use a tiny synthetic wrapper fixture and will still not prove official NASA compatibility when they pass.
 
-[Verification and log hashes](evidence/p33_20261105/verification.json). Logs contain only tests with paths sanitized; no raw data, checkpoints, cache or credentials are committed.
+[Latest verification and log hashes](evidence/p33_20261105/train_membership_fix/verification.json). [Original pre-fix verification](evidence/p33_20261105/verification.json) is preserved. Logs contain only tests with paths sanitized; no raw data, checkpoints, cache or credentials are committed.
 
 ## Remaining work
 
 Local Git collaborator: audit the actual pinned config and raw terrain; resolve private compatible runtime without replacing shared ROCm; verify the declared checkpoint bytes/hash; run one real paired preflight. If input geometry differs, add an explicit audited paired spatial policy rather than bypassing validation. Then freeze eligible Train/Val IDs, actual training manifest and runner before comparing pretrained versus random. Neither the training runner nor the budget is claimed implemented/frozen here.
 
 The frozen probe alone cannot refute NASA transfer. A separately predeclared adaptation comparison is appropriate if required. Existing 28-channel B0 is not a same-input baseline. P3.2 negative evidence, Test HOLD and all earlier experiment assets remain unchanged.
+
+## Train-membership correction
+
+Independent review identified that the original preflight trusted the batch's `split=train` declaration. The correction authenticates the historical P31 plan and metadata archive with fixed SHA256 roots, reconstructs the 5,135-row Train ID→Geology mapping, verifies stored split/chunk membership/ordered IDs/class counts, and rejects unknown, Val/Test or wrong-target batch rows before any model execution. It records authority hashes in the receipt. New subprocess regressions cover those cases and mutated authority files. This does not prove raw pixels came from the named HDF5 row; the local extractor still owes that provenance check. No real model or data experiment was run. The actual training runner remains **NOT IMPLEMENTED** and its budget **NOT FROZEN**.
