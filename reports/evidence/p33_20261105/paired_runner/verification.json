@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-05",
+  "base_commit": "ce8b1ef15c0d03eec6afa9dc6380336ff95c3621",
+  "implementation": "Authenticated raw terrain dataset, explicit budget/source/asset/runtime lock, paired training and fresh-process replay launcher",
+  "p33_tests": {
+    "total": 64,
+    "passed": 48,
+    "skipped": 16,
+    "errors": 0,
+    "failures": 0,
+    "skip_reason": "No torch or h5py; no official model executed"
+  },
+  "full_suite": {
+    "total": 448,
+    "passed": 350,
+    "skipped": 69,
+    "errors": 29,
+    "failures": 0,
+    "status": "BLOCKED_MISSING_DEPENDENCIES"
+  },
+  "error_test_ids_match_original_baseline_exactly": true,
+  "compileall": "PASS",
+  "git_diff_check": "PASS",
+  "official_nasa_execution": "NOT_RUN",
+  "actual_training": "NOT_RUN",
+  "actual_gpu": "NOT_AVAILABLE",
+  "actual_training_manifest": "NOT_FROZEN",
+  "fresh_process_replay": "IMPLEMENTED_NOT_EXECUTED_ON_OFFICIAL_MODEL",
+  "automatic_resume": "NOT_IMPLEMENTED",
+  "new_downloads": 0,
+  "packages_installed": false,
+  "logs": {
+    "cloud_tests.log": "e06119ababc043ac9d22fbd9b2c9812bf158bb49343e9d02cde410ca15dac720",
+    "focused_tests.log": "2cfef2cf39674bbbd4248295cce0854b5bf7111cd3d5966052a854a1d21bf4c2"
+  },
+  "integrated_concurrent_main": "39323a42b665fa367d39b1ae8d4f5311d0276a34",
+  "concurrent_local_evidence_preserved": true,
+  "postmerge_validation": {
+    "focused_tests": "48 PASS / 16 SKIP",
+    "full_suite": "BLOCKED_NOT_RERUN",
+    "reason": "Tool review rejected the repeated whole-suite command because legacy tests may initiate external LROC HTTPS access; no alternate download path or retry used.",
+    "python_source_diff_from_last_completed_full_suite": [],
+    "last_completed_full_suite_local_commit": "d900eb4",
+    "remaining_merge_changes": "documentation and local audit evidence only"
+  }
+}

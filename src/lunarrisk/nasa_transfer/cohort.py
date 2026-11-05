@@ -27,38 +27,51 @@ def _read_pinned(path, expected_sha256, name):
     return body
 
 
-def load_authoritative_train(plan_path, metadata_path):
-    """Return the fixed Train ID→Geology target mapping and provenance receipt."""
+def load_authoritative_cohorts(plan_path, metadata_path):
+    """Return fixed Train/Val mappings and receipt; Test is never selectable."""
     plan = json.loads(_read_pinned(plan_path, TRAIN_PLAN_SHA256, "Train plan"))
     body = _read_pinned(metadata_path, METADATA_ARCHIVE_SHA256, "metadata archive")
     with gzip.GzipFile(fileobj=io.BytesIO(body)) as compressed:
         records = list(csv.DictReader(io.TextIOWrapper(compressed, encoding="utf-8")))
     if plan["protocol"] != "P31_LOCAL_PREFIX_STORED_DERIVED_V1" or plan["status"] != "LOCKED_BEFORE_MODEL_SCORING":
         raise ValueError("unexpected frozen Train protocol")
-    train = plan["splits"]["train"]
-    indices = train["indices"]
-    if len(indices) != 5135 or train["rows"] != len(indices) or len(set(indices)) != len(indices):
-        raise ValueError("frozen Train cardinality mismatch")
     complete = {entry["index"]: entry["sample_id"] for entry in plan["complete_chunks"]}
-    targets = {}
-    for index in indices:
-        if isinstance(index, bool) or not isinstance(index, int) or not 0 <= index < len(records):
-            raise ValueError("invalid Train metadata index")
-        row = records[index]
-        sample_id = row["sample_id"]
-        target = int(row["unit_id"]) - 1
-        if (row["stored_split"] != "0" or sample_id in targets or not sample_id
-                or not 0 <= target < 49 or complete.get(index) != sample_id):
-            raise ValueError("wrong split, duplicate ID, invalid target or absent chunk in Train manifest")
-        targets[sample_id] = target
-    ordered_hash = hashlib.sha256("\n".join(targets).encode()).hexdigest()
-    if ordered_hash != train["ordered_ids_sha256"]:
-        raise ValueError("Train ordered IDs differ from frozen plan")
-    if np.bincount(list(targets.values()), minlength=49).tolist() != train["geology_class_counts"]:
-        raise ValueError("Train targets differ from frozen Geology counts")
-    return targets, {"train_plan_sha256": TRAIN_PLAN_SHA256,
-                     "metadata_archive_sha256": METADATA_ARCHIVE_SHA256,
-                     "train_rows": len(targets), "train_ordered_ids_sha256": ordered_hash}
+    receipt = {"train_plan_sha256": TRAIN_PLAN_SHA256,
+               "metadata_archive_sha256": METADATA_ARCHIVE_SHA256}
+    cohorts = {}
+    for split, stored, count in (("train", "0", 5135), ("val", "1", 1155)):
+        frozen = plan["splits"][split]
+        indices = frozen["indices"]
+        if len(indices) != count or frozen["rows"] != count or len(set(indices)) != count:
+            raise ValueError(f"frozen {split} cardinality mismatch")
+        targets = {}
+        for index in indices:
+            if isinstance(index, bool) or not isinstance(index, int) or not 0 <= index < len(records):
+                raise ValueError(f"invalid {split} metadata index")
+            row = records[index]
+            sample_id = row["sample_id"]
+            target = int(row["unit_id"]) - 1
+            if (row["stored_split"] != stored or sample_id in targets or not sample_id
+                    or not 0 <= target < 49 or complete.get(index) != sample_id):
+                raise ValueError(f"wrong split, duplicate ID, invalid target or absent chunk in {split} manifest")
+            targets[sample_id] = target
+        ordered_hash = hashlib.sha256("\n".join(targets).encode()).hexdigest()
+        if ordered_hash != frozen["ordered_ids_sha256"]:
+            raise ValueError(f"{split} ordered IDs differ from frozen plan")
+        if np.bincount(list(targets.values()), minlength=49).tolist() != frozen["geology_class_counts"]:
+            raise ValueError(f"{split} targets differ from frozen Geology counts")
+        cohorts[split] = targets
+        receipt.update({split + "_rows": count, split + "_ordered_ids_sha256": ordered_hash})
+    if set(cohorts["train"]) & set(cohorts["val"]):
+        raise ValueError("authoritative Train/Val overlap")
+    return cohorts, receipt
+
+
+def load_authoritative_train(plan_path, metadata_path):
+    """Preserved API: fixed Train mapping and its historical receipt fields."""
+    cohorts, receipt = load_authoritative_cohorts(plan_path, metadata_path)
+    return cohorts["train"], {key: value for key, value in receipt.items()
+                              if not key.startswith("val_")}
 
 
 def validate_train_batch(sample_ids, targets, authoritative_targets):

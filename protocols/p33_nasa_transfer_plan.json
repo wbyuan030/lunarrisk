@@ -2,7 +2,7 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "LOCAL_SOURCE_CONFIG_RAW_CROP_AUDIT_COMPLETE_OFFICIAL_EXECUTION_BLOCKED",
+  "status": "LOCAL_READINESS_AUDITED_TRAINING_RUNNER_IMPLEMENTED_OFFICIAL_EXECUTION_BLOCKED",
   "local_followup": {
     "base_commit": "8eeab47",
     "integrated_upstream_fix": "ce8b1ef",
@@ -41,8 +41,8 @@
   "control_arm": "Same official architecture randomly initialized, identical input/cohort/head/adapter initialization",
   "frozen_probe": "NOT_RUN",
   "optional_adapter": "Input-affine only, not LoRA; implemented wrapper but not executed",
-  "training_runner": "NOT_IMPLEMENTED",
-  "actual_training_manifest": "NOT_FROZEN",
+  "training_runner": "IMPLEMENTED_NOT_EXECUTED: scripts/p33_train_pair.py lock/run/replay",
+  "actual_training_manifest": "NOT_FROZEN; explicit example budget must be locked after compatibility and input checks",
   "initial_ids": {
     "train": 5135,
     "validation": 1155,
@@ -61,11 +61,13 @@
     "Resolve compatible isolated Python/ROCm dependencies without replacing shared runtime",
     "Verify local fixed-revision weights by size/hash",
     "Run wrapper tests and one real paired forward/backward with memory record",
-    "Freeze same-input cohort, training runner and actual paired budget before task scores"
+    "After spatial/runtime/preflight gates, use implemented runner to scan fixed cohort and lock explicit paired budget before scores"
   ],
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,
   "no_four_gpu": true,
   "raw_assets_in_git": false,
-  "train_membership": "Fixed historical P31 plan and metadata archive hashes; validate Train IDs and Geology targets before any model execution"
+  "train_membership": "Fixed historical P31 plan and metadata archive hashes; validate Train IDs and Geology targets before any model execution",
+  "runner_guide": "docs/P3_3_NASA_PAIRED_RUNNER.md",
+  "automatic_resume": "NOT_IMPLEMENTED; interrupted outputs preserved"
 }

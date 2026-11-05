@@ -1,0 +1,15 @@
+{
+  "epochs": 20,
+  "patience": 5,
+  "batch_size": 2,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "seeds": [42],
+  "adaptation": "frozen",
+  "precision": "fp32",
+  "optimizer": "AdamW",
+  "schedule": "constant",
+  "selection": "val_macro_f1_full_earliest_tie",
+  "test_scored": false
+}

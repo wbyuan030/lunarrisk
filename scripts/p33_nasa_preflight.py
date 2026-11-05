@@ -123,7 +123,7 @@ def main():
             model.zero_grad(set_to_none=True)
             model.to("cpu")
             del logits, loss
-        report.update(official_model_execution="PASS", seconds=time.monotonic() - start,
+        report.update(official_model_execution="PASS", seconds=time.monotonic() - start, device=str(device),
                       adaptation="input_affine" if args.adapt_inputs else "frozen_probe", torch_version=torch.__version__)
     serialized = json.dumps(report, indent=2, allow_nan=False) + "\n"
     args.output.parent.mkdir(parents=True, exist_ok=True)

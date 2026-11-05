@@ -2,12 +2,14 @@
 
 **首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取，并合并并发`ce8b1ef`的固定根Train身份核验；最新本地新增28项及完整654项测试零跳过PASS，compileall PASS。身份/标签认证通过后，真实裁片仍在空间策略处被拒绝；[最新合并验证](reports/evidence/p33_20261105/local_02/verification.json)。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
 
+**并行云端更新：已实现 [`scripts/p33_train_pair.py`](scripts/p33_train_pair.py) 的 lock/run/replay 配对训练入口，见 [`docs/P3_3_NASA_PAIRED_RUNNER.md`](docs/P3_3_NASA_PAIRED_RUNNER.md)。** 原始地形直接经认证prefix读取，固定Train/Val，显式预算/源码/资产/runtime锁定，双臂选模和独立进程回放。云端48项P33测试通过、16项因torch/h5py缺失跳过；这不延伸上述本地654项证据到新runner。未执行官方训练或冻结实际预算。保留本地所有审计、pre_resize512/input_size256和runtime阻碍，不静默放宽守卫；自动resume尚未实现。
+
 ## P3.3下一项与真实边界
 
 - 现有主机/ROCm容器均为Python3.10.12、torch2.5.1；官方声明Python>=3.11,<3.13、torch>=2.12，且缺少OmegaConf/timm/einops/TerraTorch/Lightning等依赖。未找到现成兼容runtime，未安装包、创建新环境或替换共享ROCm。不能称官方模型已兼容。
 - 先明确配对空间策略和兼容私有运行时方案。官方数据transform先resize512、再归一化及crop/resize；backbone接收张量。当前守卫拒绝不代表模型不能接受256张量，但不得修改YAML或静默跳过策略检查。
 - 已核实源码声明的高程米/坡度度、58–62°SLDEM/LOLA混合、NaN处理与HDF5原通道传递。原始栅格header、完整执行谱系、逐样本fallback未独立复现。236.901m是名义南北/赤道间距，东西地面间距随纬度变化；presence不是像素mask，finite zero保留。
-- 两个先决门通过后再核实必要固定checkpoint、真实配对forward/backward，然后在任何task分数前另立完整有效Train/Val cohort、训练runner和预算。checkpoint未下载/完整核验，官方模型构造/梯度/训练/迁移收益均NOT_RUN/NOT_ESTABLISHED；不把合成wrapper测试当模型执行。
+- 两个先决门通过后再核实必要固定checkpoint、真实配对forward/backward，然后使用新runner在任何task分数前扫描固定Train/Val cohort并锁定预算；若需改变cohort或空间策略，另立明确协议后再执行。checkpoint未下载/完整核验，官方模型构造/梯度/训练/迁移收益均NOT_RUN/NOT_ESTABLISHED；不把合成wrapper测试当模型执行。
 - 保留P3.2负结果与18run，不重跑。完整地质语义来源核实仍是独立后续项，不与NASA预训练迁移混写。只用Train/Val，Test HOLD；必要数据/权重直连授权及下文其他资源边界不变。
 
 ## P3.2已完成阶段与独立语义后续项
