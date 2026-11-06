@@ -1,0 +1,39 @@
+{
+  "status": "PRIVATE_ROCM72_GPU_FORWARD_BACKWARD_PASS",
+  "kind": "ISOLATED_GPU_RUNTIME_CHECK_NOT_NASA_MODEL",
+  "network": "disabled via network namespace",
+  "NASA_execution": "NOT_RUN",
+  "Test": "HOLD",
+  "python": "3.12.9",
+  "torch": "2.12.1+rocm7.2",
+  "torchvision": "0.27.1+rocm7.2",
+  "hip": "7.2.53211",
+  "torch_path": "<private-venv>/lib/python3.12/site-packages/torch/__init__.py",
+  "torchvision_path": "<private-venv>/lib/python3.12/site-packages/torchvision/__init__.py",
+  "deterministic_algorithms": true,
+  "device_index": 0,
+  "all_device_names": [
+    "Radeon RX 7900 XT",
+    "AMD Radeon 780M Graphics"
+  ],
+  "device_name": "Radeon RX 7900 XT",
+  "device_arch": "gfx1100",
+  "total_device_bytes": 21458059264,
+  "free_device_bytes": 21097349120,
+  "peak_device_bytes": 67191808,
+  "matmul_exact": true,
+  "gradient_exact": true,
+  "loss": 1364.833251953125,
+  "elapsed_seconds": 1.2407487070013303,
+  "loaded_gpu_library_paths": [
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libamd_comgr.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libamdhip64.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libhipblas.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libhipblaslt.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libhsa-runtime64.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/librocblas.so",
+    "<private-venv>/lib/python3.12/site-packages/torch/lib/libtorch_hip.so"
+  ],
+  "old_host_rocm_libraries": [],
+  "loaded_driver": "6.14.14"
+}

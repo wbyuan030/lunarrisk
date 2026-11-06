@@ -1,0 +1,44 @@
+{
+  "observed_utc": "2026-11-06T05:24:48.235680+00:00",
+  "status": "PRIVATE_ROCM72_RUNTIME_INSTALLED_AND_BOUNDED_GPU_CHECK_PASS_NASA_IMPORT_BLOCKED",
+  "authorization": "User explicitly authorized 125 verified PyPI-hosted wheels, three official PyTorch ROCm wheels and one locally built ANTLR wheel for private offline install",
+  "installation": {
+    "packages": 129,
+    "network": "unshare network namespace; uv --offline --no-index --no-build --require-hashes --strict",
+    "returncode": 0,
+    "dependency_check": "uv pip check: All installed packages are compatible",
+    "installed_distribution_versions_match_lock": true,
+    "lock_sha256": "c654ffced798a277b3388fa9ffadb1322005cf7e432cb1ee231793404ecc44d5",
+    "private_venv_disk_bytes": 16857640960,
+    "private_venv_apparent_bytes": 16744573235,
+    "available_bytes_after": 435139547136
+  },
+  "gpu": {
+    "device": "Radeon RX 7900 XT",
+    "architecture": "gfx1100",
+    "python": "3.12.9",
+    "torch": "2.12.1+rocm7.2",
+    "torchvision": "0.27.1+rocm7.2",
+    "hip": "7.2.53211",
+    "driver": "6.14.14",
+    "deterministic_algorithms": true,
+    "matmul_exact": true,
+    "gradient_exact": true,
+    "peak_device_bytes": 67191808,
+    "old_host_rocm_libraries": [],
+    "all_observed_gpu_libraries_in_private_venv": true,
+    "post_probe_kernel_selected_gpu_errors": 0
+  },
+  "NASA_source": "fixed clean revision d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "NASA_checkpoint": "2,425,755,440 bytes and official fixed SHA256 verified, not deserialized",
+  "NASA_import": "BLOCKED_AUTOMATIC_REVIEW_BEFORE_SCRIPT_CREATION",
+  "automatic_review_reason": "The script imports code from the externally cloned NASA repository; explicit authorization to run code from https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model is required.",
+  "NASA_model_construction": "NOT_RUN",
+  "NASA_forward_backward": "NOT_RUN",
+  "Test": "HOLD",
+  "files": {
+    "gpu_runtime_probe.json": "3b825e60a47c8be820889b8048ae694c53c327e988c977117857e9916f460314",
+    "installed_distribution_audit.json": "e3b6c2665912a366d01b7ac33a8f83b62a491f97f03d6701a2e4721facd79e7a",
+    "offline_install.log": "e5b3839c0f3ddff12021a6c9adbc822f2894733878fef83b083c816896da946b"
+  }
+}

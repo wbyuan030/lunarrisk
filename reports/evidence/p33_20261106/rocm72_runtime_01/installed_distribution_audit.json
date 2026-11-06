@@ -1,0 +1,8 @@
+{
+  "status": "INSTALLED_DISTRIBUTION_IDENTITIES_MATCH_LOCK",
+  "expected": 129,
+  "installed": 129,
+  "issues": [],
+  "package_files_installed_from_verified_wheels": "uv --require-hashes; no network namespace",
+  "source_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8"
+}
