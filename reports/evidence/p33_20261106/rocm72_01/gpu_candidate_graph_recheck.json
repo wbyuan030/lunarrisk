@@ -1,0 +1,9 @@
+{
+  "status": "ALL_PREVIOUSLY_ACTIVE_GRAPH_EDGE_VERSION_CONSTRAINTS_PASS",
+  "previous_active_edges_checked": 307,
+  "selected_packages_including_rocm_triton": 129,
+  "rocm_torch_metadata": "PROVISIONAL_HTTP_RANGE; full wheel identity pending",
+  "rocm_triton_metadata": "official sidecar SHA256 and full wheel hash verified; no active runtime dependencies at Python3.12",
+  "failed": [],
+  "scope": "Rechecks version compatibility for previously active CPU-candidate graph edges after substituting ROCm torch/vision; torch direct Linux Triton edge separately checked. Does not certify build, complete resolver lock or imports."
+}

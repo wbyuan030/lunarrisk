@@ -1,0 +1,116 @@
+{
+  "status": "FIXED_REVISION_CLEAN_AND_PRIOR_AUDITED_FILES_MATCH",
+  "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "files_verified": 27,
+  "files": [
+    {
+      "file": "ni_lfm/data/io_utils.py",
+      "sha256": "3191e584b772c69d4157902742cfdf92475f63879b891f74aaa681a3e8e57f9b"
+    },
+    {
+      "file": "ni_lfm/data/modality_info.py",
+      "sha256": "34a76dfd95b05b4ca1ac80c6e9f8e626b2d61ba7308a7916fbe7fa708b546aaa"
+    },
+    {
+      "file": "ni_lfm/data/modality_transforms.py",
+      "sha256": "814685e07d6c26f6eec0796f073d0df4f3bbd2e13605db1f79546563b31bea3a"
+    },
+    {
+      "file": "ni_lfm/models/codebook_fusion.py",
+      "sha256": "c0bd8f667c2f489391bb44c0c4f64764aa9a0efc30ddd5bec7da5a39d35dea89"
+    },
+    {
+      "file": "ni_lfm/models/decoder_embeddings.py",
+      "sha256": "5c70da557a9b0a1962f2fae593513d60b1d3d55079c894b9d7e4b6e70389cae7"
+    },
+    {
+      "file": "ni_lfm/models/encoder_embeddings.py",
+      "sha256": "7be5ecde0ab618fd27ad3cb9e626b0f552aeafba4362df39eee90fb0feeba692"
+    },
+    {
+      "file": "ni_lfm/models/flexivit.py",
+      "sha256": "8815338cf20856f583c24de0ec20413c338db23ebd8c170460a622f696346eb9"
+    },
+    {
+      "file": "ni_lfm/models/lfm_utils.py",
+      "sha256": "440fd640ed0936c38c9f3dbae8b4aa386b990a80144a76b5f6c1def6a822090e"
+    },
+    {
+      "file": "ni_lfm/models/ni_lfm.py",
+      "sha256": "a1245c03b5b56d296f27ac5c1a3b4cb23d3340fe412ebee7c66092dcdf9e0bd0"
+    },
+    {
+      "file": "ni_lfm/utils/__init__.py",
+      "sha256": "716564b4f1a58003c2c9d3964e9d72afcc82cdc87b11eb0cf8bb8a4cd1cb462f"
+    },
+    {
+      "file": "ni_lfm/utils/tokenizer/__init__.py",
+      "sha256": "605b0c6bfe899785bc82d892f6e6311158e48134e51f6ff68fe8b19a65ac83c7"
+    },
+    {
+      "file": "ni_lfm/utils/tokenizer/text_tokenizer.py",
+      "sha256": "61227644e30d26190d0819e424b62c83fbbd8a23ec3823986e9c62e675bcb9b4"
+    },
+    {
+      "file": "pyproject.toml",
+      "sha256": "41a884607aabf6dcf71de7c2036c5e95e58c796ae474adb28de12c4c4010d7f9"
+    },
+    {
+      "file": "requirements.txt",
+      "sha256": "f9b4aea5cf5272114e4c8306fece9858aff0e909252a4cfc596b9a16b939d18f"
+    },
+    {
+      "file": "terratorch_integration/__init__.py",
+      "sha256": "0dda5baef67bbd060efa18e85d51c56cc8a23ee0bccc5094e9752d4008d60c54"
+    },
+    {
+      "file": "terratorch_integration/data_adapter.py",
+      "sha256": "a9d3c87d38fdf4be700b3a62b92bb695f986c3ad3cbb24cf9634dd21244a0789"
+    },
+    {
+      "file": "terratorch_integration/data_utils.py",
+      "sha256": "1f32786bc6d5b8c7d30732fb2376d65eb4f1ebc3dbf180cdf0e1eea7c0aac604"
+    },
+    {
+      "file": "terratorch_integration/decoders.py",
+      "sha256": "7784f648964cf056995fdf69bbb2abe124bbd8f574cc241c9064d312e81a9a19"
+    },
+    {
+      "file": "terratorch_integration/determinism.py",
+      "sha256": "6f7b41a329e3d17c6f8d538f17050c13dcec6a4e86dff08bbf64d3a6be4827e6"
+    },
+    {
+      "file": "terratorch_integration/lunar_backbone.py",
+      "sha256": "8953e97fe2309bf57bb1f10c819b5bee2c34ce793f54016bac6c8f7150261135"
+    },
+    {
+      "file": "terratorch_integration/lunar_classification_task.py",
+      "sha256": "008fae85c63823e23edac7df5f34042da7a1b6cf1cb06565be4514a409a05ec4"
+    },
+    {
+      "file": "terratorch_integration/lunar_llrd_mixin.py",
+      "sha256": "f928139375a3668205a6172ba74d95246eae679e806e946a9e596859fe1bbf07"
+    },
+    {
+      "file": "terratorch_integration/lunar_object_detection_task.py",
+      "sha256": "4cbba2f9d792677771fe38f919f189397583e1d7b52111cfe131ba6016e61aab"
+    },
+    {
+      "file": "terratorch_integration/lunar_register.py",
+      "sha256": "c1a2d3aa995ed0f91514731950f7bd2221db6ff053a92747e8fb81ec9f0ddb77"
+    },
+    {
+      "file": "terratorch_integration/lunar_regression_task.py",
+      "sha256": "3ebd25b1956537810ce3b273c52854078feb8e701150f938bea13bac832d0dd7"
+    },
+    {
+      "file": "terratorch_integration/lunar_segmentation_task.py",
+      "sha256": "ea8904ada1b3e23f3bdd3c2c363bf80df7d90821163c20b2f79868fa160e81c6"
+    },
+    {
+      "file": "terratorch_integration/necks.py",
+      "sha256": "58407575134730f9e40b5b5da5fcd5cf2ad04a8dd69cb27ac176734a99b91f9c"
+    }
+  ],
+  "checkout_executed": false
+}

@@ -1,0 +1,97 @@
+{
+  "observed_utc": "2026-11-06T02:39:28.583863+00:00",
+  "status": "ISOLATED_PREPARATION_PARTIAL_BUILD_BLOCKED_CHECKPOINT_CONNECTIVITY_BLOCKED",
+  "user_authorization": "User approved the listed PyPI build-tool and private runtime work and NASA model acquisition; automatic reviewer nevertheless rejected build-tool install again",
+  "python": {
+    "version": "3.12.9",
+    "interpreter_binary_sha256": "8a652c48c5e74e4d635e9d8d37bb075dab25c336c6b14223b7eb2e3be52171e9",
+    "private_runtime_and_build_venvs_created": true,
+    "system_site_packages": false
+  },
+  "nasa_source": {
+    "revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+    "clean": true,
+    "previously_audited_files_verified": 27,
+    "full_checkout_prepared": true
+  },
+  "build_inputs": {
+    "bytes_verified": 3030171,
+    "artifacts": [
+      {
+        "name": "antlr-source",
+        "bytes": 117034,
+        "sha256": "f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b"
+      },
+      {
+        "name": "pip",
+        "bytes": 1778622,
+        "sha256": "9655943313a94722b7774661c21049070f6bbb0a1516bf02f7c8d5d9201514cd"
+      },
+      {
+        "name": "setuptools",
+        "bytes": 1062021,
+        "sha256": "fdd925d5c5d9f62e4b74b30d6dd7828ce236fd6ed998a08d81de62ce5a6310d6"
+      },
+      {
+        "name": "wheel",
+        "bytes": 72494,
+        "sha256": "708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248"
+      }
+    ],
+    "network_namespace_external_connect_errno": 101,
+    "installation": "BLOCKED_BY_AUTOMATIC_REVIEW",
+    "build": "NOT_RUN"
+  },
+  "vision": {
+    "url": "https://download-r2.pytorch.org/whl/rocm7.2/torchvision-0.27.1%2Brocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "actual_bytes": 3816468,
+    "actual_sha256": "81b15c4b8fa669d5e53d7997a08d32cf804d93e9d1e2d75e03d7aa234411ddab",
+    "status": "SIZE_AND_SHA256_VERIFIED"
+  },
+  "triton": {
+    "url": "https://download-r2.pytorch.org/whl/triton_rocm-3.7.1-cp312-cp312-linux_x86_64.whl",
+    "actual_bytes": 311741985,
+    "actual_sha256": "b200ade2418b8450e4e3e69c33c804e2cc07d1e36dc9678ac8ac1dd65f9e10e1",
+    "status": "SIZE_AND_SHA256_VERIFIED"
+  },
+  "nonframework_wheels": {
+    "previous_graph": "reports/evidence/p33_20261105/cpu_closure_01/runtime_candidate_graph.json",
+    "count": 125,
+    "bytes": 453494002,
+    "status": "ALL_WHEEL_HASHES_VERIFIED"
+  },
+  "torch": {
+    "url": "https://download-r2.pytorch.org/whl/rocm7.2/torch-2.12.1%2Brocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "expected_bytes": 6177014207,
+    "expected_sha256": "7a349a5475607ae64d284db6733a2a0255cad9f3e40f31f6bbf02b69946928a2",
+    "metadata_sha256_partial": "1811e9792890542ca20659921d31aa5021c3640cb91c6028eb437faf2bf4e4ec",
+    "range_bytes": 4092831,
+    "wheel_full_hash": "PENDING_AS_OF_OBSERVATION"
+  },
+  "candidate_graph": {
+    "previous_active_edges_checked": 307,
+    "selected_packages": 129,
+    "status": "ALL_PREVIOUSLY_ACTIVE_GRAPH_EDGE_VERSION_CONSTRAINTS_PASS",
+    "final_install_lock": false
+  },
+  "checkpoint": {
+    "url": "https://huggingface.co/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/checkpoint.pt",
+    "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+    "expected_bytes": 2425755440,
+    "expected_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+    "status": "DOWNLOAD_FAILED",
+    "curl_exit": 28,
+    "direct_connection": "three timeouts; no proxy",
+    "explicit_ip_diagnostic": "NOT_RUN; denied by automatic review as potential egress-control evasion"
+  },
+  "model_execution": "NOT_RUN",
+  "scientific_transfer": "NOT_ESTABLISHED",
+  "Test": "HOLD",
+  "limits": [
+    "PyTorch ROCm wheel metadata is provisional until the entire wheel and its metadata are verified",
+    "No packages have been installed into the target runtime",
+    "Prior CPU metadata candidate is not a complete solved or executable GPU environment",
+    "No checkpoint payload verified",
+    "No formal runtime/model or post-boot long-duration GPU stability claim"
+  ]
+}
