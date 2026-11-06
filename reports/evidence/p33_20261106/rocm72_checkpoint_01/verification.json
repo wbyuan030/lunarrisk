@@ -1,0 +1,27 @@
+{
+  "observed_utc": "2026-11-06T03:07:11.657553+00:00",
+  "status": "FIXED_NASA_BACKBONE_CHECKPOINT_SIZE_AND_SHA256_VERIFIED",
+  "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "source_kind": "third-party AI FastHub mirror suggested by user",
+  "mirror_url": "https://aifasthub.com/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/checkpoint.pt",
+  "official_record": "reports/evidence/p30_20261103/asset_probe.json",
+  "expected_bytes": 2425755440,
+  "actual_bytes": 2425755440,
+  "expected_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "actual_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "proxy_disabled": true,
+  "official_direct_attempt": "FAILED_TIMEOUT; preserved under ignored outputs/p33/runtime_rocm72_01/nasa_checkpoint_01/",
+  "archive_directory": {
+    "entries": 395,
+    "duplicate_names": 0,
+    "unsafe_paths": 0,
+    "deserialized": false
+  },
+  "model_construction": "NOT_RUN",
+  "model_loading": "NOT_RUN",
+  "Test": "HOLD",
+  "files": {
+    "checkpoint_receipt.json": "621d6969b0278aeab46591b895c092e880afa12359710cb869e0e123767d8fd9",
+    "static_archive_audit.json": "62ee67ff1ba194ef56776d0d9a8042b81281d4e76d27e4d5fdf29e5351581a81"
+  }
+}

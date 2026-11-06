@@ -22,7 +22,9 @@
 
 **最新离线构建：** 用户随后明确授权从`https://files.pythonhosted.org`安装pip25.3、setuptools81.0.0、wheel0.45.1并隔离构建ANTLR4.9.3；先前自动审批拦截已解决。三个验哈希工具已安装到独立build_venv，ANTLR使用`unshare --user --map-root-user --net`无网络构建成功；生成wheel 144,590字节，SHA256`ed1325d05a227d3a21d12795e9faa737ddc4da022d19ea76caf9173a33e883a1`，元数据及ZIP完整性PASS。125个非框架轮子的内部metadata与已审官方哈希、Python3.12/Linux标签均核验通过。候选清单共129轮子、总6,946,211,252字节；128轮子已验证，torch完整轮子仍待下载完成/核验，尚非最终锁或目标运行时PASS。见[构建证据](reports/evidence/p33_20261106/rocm72_build_01/verification.json)。
 
-**本地下一步：** 等待正在下载的torch轮子完成，不启动重复下载；核对官方整轮SHA256/大小及完整轮metadata与此前范围读取一致，再对候选进行独立离线解析并完成私有运行时安装和GPU导入验证。固定NASA checkpoint官方直连曾三次超时，显式IP诊断仍被自动审批拦截，用户尚未明确授权该诊断；不得绕过。随后才能验证官方NASA导入/构造及真实checkpoint，不改原Python/torch/ROCm或科学pin。物理尺度差异和原strict守卫不变；完整cohort、实际预算、真实模型结果仍是独立门槛。旧18/75/701与native256不重跑，Test HOLD。
+**NASA checkpoint最新进展：** 用户建议`hf-fast`类方案后，从第三方AI FastHub镜像无本地代理仅获取固定revision的backbone checkpoint。实际大小2,425,755,440字节和SHA256`5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b`与已有官方LFS记录完全一致；仅静态读取ZIP目录395成员、无重复或不安全路径，未反序列化。见[checkpoint证据](reports/evidence/p33_20261106/rocm72_checkpoint_01/verification.json)。官方Hugging Face直接超时及显式IP诊断被拦截为历史事实，镜像获取未使用该诊断；模型加载/执行仍NOT_RUN。
+
+**本地下一步：** 等待正在下载的torch轮子完成，不启动重复下载；核对官方整轮SHA256/大小及完整轮metadata与此前范围读取一致，再对候选进行独立离线解析并完成私有运行时安装和GPU导入验证。checkpoint已核验，接着验证官方NASA导入/构造及真实checkpoint，不改原Python/torch/ROCm或科学pin。物理尺度差异和原strict守卫不变；完整cohort、实际预算、真实模型结果仍是独立门槛。旧18/75/701与native256不重跑，Test HOLD。
 
 **首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取，并合并并发`ce8b1ef`的固定根Train身份核验；此前pre-runner本地新增28项及完整654项测试零跳过PASS，compileall PASS。身份/标签认证通过后，真实裁片仍在空间策略处被拒绝；[最新合并验证](reports/evidence/p33_20261105/local_02/verification.json)。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
 

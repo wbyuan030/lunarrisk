@@ -1,0 +1,21 @@
+{
+  "status": "CHECKPOINT_ZIP_DIRECTORY_INSPECTED_NO_DESERIALIZATION",
+  "checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "checkpoint_bytes": 2425755440,
+  "entries": 395,
+  "duplicate_names": 0,
+  "unsafe_paths_count": 0,
+  "compression_methods": {
+    "0": 395
+  },
+  "uncompressed_member_bytes": 2425673637,
+  "pickle_members": [
+    {
+      "name": "checkpoint_weights_final/data.pkl",
+      "uncompressed_bytes": 71538,
+      "compressed_bytes": 71538
+    }
+  ],
+  "deserialized": false,
+  "model_execution": "NOT_RUN"
+}

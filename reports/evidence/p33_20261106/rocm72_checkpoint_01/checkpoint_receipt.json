@@ -1,0 +1,14 @@
+{
+  "repository": "nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model",
+  "revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "url": "https://aifasthub.com/nasa-ibm-ai4science/NASA-IBM-Lunar-Foundation-Model/resolve/b657bdfe6fc4c0445d918f77a2d7b919805f3bce/backbone/checkpoint.pt",
+  "source_kind": "third-party AI FastHub mirror suggested by user; official fixed-revision LFS SHA/size used for integrity",
+  "expected_bytes": 2425755440,
+  "expected_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "proxy_disabled": true,
+  "curl_exit": 0,
+  "elapsed_seconds": 244.43,
+  "status": "SIZE_AND_SHA256_VERIFIED",
+  "actual_bytes": 2425755440,
+  "actual_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b"
+}
