@@ -1,0 +1,28 @@
+{
+  "observed_utc": "2026-11-06T04:01:58.494617+00:00",
+  "status": "OFFLINE_RESOLUTION_PASS_INSTALLATION_BLOCKED_AUTOMATIC_REVIEW",
+  "python": "3.12.9",
+  "packages": 129,
+  "origins": {
+    "files.pythonhosted.org": 125,
+    "local-built-from-pypi-source": 1,
+    "download-r2.pytorch.org": 3
+  },
+  "wheel_bytes": 6946211252,
+  "zip_directory_uncompressed_member_bytes": 16727655660,
+  "size_limit": "ZIP directory declared subtotal; installation peak and filesystem overhead not measured",
+  "source_requirement_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "original_uv_lock_sha256": "c654ffced798a277b3388fa9ffadb1322005cf7e432cb1ee231793404ecc44d5",
+  "published_lock_sha256": "793a371d1029549c309799fc217661157dc92f785fb4c0f8c2287b10d4d0e40d",
+  "artifact_manifest_sha256": "a6e0c8a094549aaff80bc81aedf44cc6c965a63e700de78e43d74730c43d001e",
+  "full_torch_metadata_matches_range": true,
+  "all_129_wheel_hashes_verified": true,
+  "offline_resolver": "PASS under no-network namespace; no-index/no-build/hashed",
+  "offline_dry_run": "129 packages, local wheelhouse, no network; target environment empty",
+  "installation": "BLOCKED_BY_AUTOMATIC_REVIEW",
+  "review_denial": "offline install would execute a dependency set from external sources beyond the three build tools the user explicitly named; authorization must name the sources of the additional packages",
+  "network": "No local proxy; actual torch transfer bytes not metered, first attempt timed out after receiving 4762733516 bytes and retry succeeded",
+  "NASA_checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "official_model_execution": "NOT_RUN",
+  "Test": "HOLD"
+}

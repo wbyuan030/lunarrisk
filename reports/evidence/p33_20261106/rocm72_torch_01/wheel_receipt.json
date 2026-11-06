@@ -1,0 +1,12 @@
+{
+  "url": "https://download-r2.pytorch.org/whl/rocm7.2/torch-2.12.1%2Brocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl",
+  "filename": "torch-2.12.1+rocm7.2-cp312-cp312-manylinux_2_28_x86_64.whl",
+  "expected_bytes": 6177014207,
+  "expected_sha256": "7a349a5475607ae64d284db6733a2a0255cad9f3e40f31f6bbf02b69946928a2",
+  "proxy_disabled": true,
+  "curl_exit": 0,
+  "elapsed_seconds": 6023.85,
+  "status": "SIZE_AND_SHA256_VERIFIED",
+  "actual_bytes": 6177014207,
+  "actual_sha256": "7a349a5475607ae64d284db6733a2a0255cad9f3e40f31f6bbf02b69946928a2"
+}

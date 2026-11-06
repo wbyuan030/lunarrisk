@@ -1,0 +1,16 @@
+{
+  "observed_utc": "2026-11-06T03:56:53.269835+00:00",
+  "status": "OFFICIAL_ROCM72_TORCH_WHEEL_SIZE_AND_SHA256_VERIFIED",
+  "expected_size": 6177014207,
+  "actual_size": 6177014207,
+  "official_index_sha256": "7a349a5475607ae64d284db6733a2a0255cad9f3e40f31f6bbf02b69946928a2",
+  "actual_sha256": "7a349a5475607ae64d284db6733a2a0255cad9f3e40f31f6bbf02b69946928a2",
+  "proxy_disabled": true,
+  "download_elapsed_seconds_including_retries_excluding_hash": 6023.85,
+  "retry_evidence": "curl initially timed out after 3600000ms with 4762733516 bytes reported, then automatic retry completed; total network bytes not independently metered",
+  "wheel_receipt_sha256": "858a50bd475be8d91515ca4f350b0c26e1697274e88fa51d313a161218343053",
+  "offline_resolution": "IN_PROGRESS",
+  "installation": "NOT_RUN",
+  "NASA_model": "NOT_RUN",
+  "Test": "HOLD"
+}
