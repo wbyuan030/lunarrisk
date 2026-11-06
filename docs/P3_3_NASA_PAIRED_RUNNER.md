@@ -1,5 +1,13 @@
 # P3.3 paired NASA training runner
 
+**Current status (2026-11-06):** [One real Train 2705 native256 paired forward/backward passed](../reports/p3_3_real_nasa_preflight.md), including normal pinned NASA import, strict selected-encoder checkpoint loading and the existing runner receipt gate for `frozen` adaptation. This is an engineering preflight, not a trained frozen/linear probe. No optimizer step, training, full-cohort scan, actual budget lock, task score or training replay has run; Test remains HOLD.
+
+**Current next gates:** Valid provenance for all 5,135 Train / 1,155 Val samples, then the no-score scan and an explicit actual paired budget lock. A finite scan alone cannot establish the absence of unknown finite NoData sentinels. The existing guards and full fixed cohort remain unchanged; training requires separate authorization. Reuse the completed matching preflight and tests, rather than repeating them for this status refresh. The examples below are reference procedures, not new execution permission. [Current plan](../protocols/p33_nasa_transfer_plan.json).
+
+## Historical implementation and validation notes (2026-11-05)
+
+The dated notes below describe earlier stages; their NOT_RUN and blocked states do not override the current result above.
+
 **New explicit spatial protocol (2026-11-05):** [Moonstone-native256](P3_3_MOONSTONE_NATIVE256.md) now provides a separately declared downstream path for the unchanged audited256/16/pre_resize512 config. It requires an explicit policy flag and physical-scale provenance; strict default remains unchanged. Policy is bound through preflight and manifestV2/run/replay. Actual input/model execution under it is NOT RUN; runtime/checkpoint/full-cohort/budget gates remain. Historical strict-policy failures and local690-test evidence below are preserved, not relabeled as results for this new code.
 
 2026-11-05. **Latest local validation:** [64 P33 tests / full690 tests PASS, zero skips](../reports/p3_3_runner_local_validation.md), including all16 cloud-skipped tests. These use synthetic CPU torch/HDF5 fixtures and mocked locks; no official NASA runtime/model, real cohort scan or actual training/replay was executed. Earlier cloud verification below remains historical.
@@ -8,13 +16,13 @@
 
 **Concurrent local findings integrated:** [local readiness report](../reports/p3_3_local_readiness.md) verifies the actual cached config SHA256 `fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619` and an authenticated Train crop. The current guard rejects the real `pre_resize=512` / `input_size=256` config. The new runner retains that default guard. The explicit Moonstone-native256 policy is now declared but real input execution remains unverified; a compatible private runtime is still required before it can lock or train. The prior local654-test pass does not cover this newly added runner.
 
-## Scope and current blockers
+## Paired design and historical cloud limits
 
 Two arms share the same official NASA base architecture, two physical input channels, frozen historical Train/Val cohort, ordinary 49-way head initialization, epoch permutations and explicit budget. Only the encoder initialization differs: random versus verified pretrained. `frozen` trains the head; `input_affine` additionally trains four scalar affine input-adapter parameters through the frozen encoder. Neither is LoRA or full-backbone fine-tuning.
 
 All scoring is exploratory on the reused northern development split. No Test-scoring option exists. Do not repeat P3.2's old 18-run semantic matrix or compare this two-channel effect against 28-channel B0 as if inputs matched.
 
-The cloud lacks torch, h5py, raw Moonstone assets, NASA config and weights. Its runnable tests cover pure contracts, mocked I/O/orchestration, metrics and subprocess failures. Torch training/replay tests and the real-HDF5 fixture are **skipped**, not passed. Before actual execution, the local agent must supply the original assets and a compatible isolated Python/ROCm runtime without replacing working shared torch. Upstream declares Python >=3.11,<3.13 and torch >=2.12,<3; the previously recorded local Python3.10/torch2.5 runtime is not asserted compatible.
+At the original cloud-validation stage, the cloud lacked torch, h5py, raw Moonstone assets, NASA config and weights. The following describes that historical boundary, not the completed private-runtime/preflight status: Its runnable tests cover pure contracts, mocked I/O/orchestration, metrics and subprocess failures. Torch training/replay tests and the real-HDF5 fixture are **skipped**, not passed. Before actual execution, the local agent must supply the original assets and a compatible isolated Python/ROCm runtime without replacing working shared torch. Upstream declares Python >=3.11,<3.13 and torch >=2.12,<3; the previously recorded local Python3.10/torch2.5 runtime is not asserted compatible.
 
 ## Data and preprocessing
 
@@ -40,7 +48,7 @@ Both arms have the same maximum budget and early-stop rule, not necessarily the 
 
 A successful **actual paired forward/backward** receipt from the updated `p33_nasa_preflight.py`, for the same config, adaptation and device, is required. Input-only receipts are rejected. The preflight records device identity; old receipts lacking that field must not be relabeled. No receipt can substitute for actual model/runtime compatibility.
 
-In a compatible local runtime, after creating a matching real paired preflight and explicit native-grid provenance as described in the [spatial guide](P3_3_MOONSTONE_NATIVE256.md), assemble paths to the audited assets. The example below explicitly selects the new Moonstone-native256 protocol:
+For a separately authorized lock, use the completed matching real paired preflight and establish full-cohort provenance as described above and in the [spatial guide](P3_3_MOONSTONE_NATIVE256.md), then assemble paths to the audited assets. The example below explicitly selects the new Moonstone-native256 protocol:
 
 ```bash
 COMMON=(
@@ -83,4 +91,4 @@ Automatic resume is **not implemented**. Interrupted outputs and completed epoch
 
 ## Before publishing any experiment claim
 
-Run all tests in the real compatible runtime; recheck input provenance and hashes; obtain finite actual device forward/backward; inspect complete training/replay receipts, fixed IDs and losses. Report actual PASS/FAIL/BLOCKED and any skipped checks. A successful mock or toy-wrapper test does not establish official NASA execution, and a negative frozen probe alone does not refute transfer learning.
+Review existing test evidence within its recorded runtime/scope and the completed actual paired preflight; validate any later implementation changes without treating historical passes as new coverage. Recheck input provenance and hashes, and inspect complete training/replay receipts, fixed IDs and losses before claims. Report actual PASS/FAIL/BLOCKED and any skipped checks. A successful mock or toy-wrapper test does not establish official NASA execution, and a negative frozen probe alone does not refute transfer learning.

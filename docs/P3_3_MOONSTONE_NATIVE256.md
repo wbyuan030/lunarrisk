@@ -1,5 +1,9 @@
 # P3.3 explicit Moonstone-native256 spatial protocol
 
+**Current status (2026-11-06):** [Real Train 2705 input and random/pretrained frozen-encoder forward/backward PASS](../reports/p3_3_real_nasa_preflight.md), with normal pinned NASA import, strict loading of all 116 selected encoder keys and runner receipt-gate acceptance. Only this one authenticated crop is covered. The `frozen_probe` receipt label means engineering forward/backward, not a trained linear probe; no optimizer step, training, task score, full-cohort scan or actual budget lock has occurred. Do not repeat the completed preflight; Test remains HOLD.
+
+**Historical protocol declaration (2026-11-05):** The following dated declaration records the pre-execution stage; its NOT_RUN status is not the current status.
+
 2026-11-05. **Protocol and code declared before any P3.3 transfer scores; official execution remains NOT RUN.** This is a separately named downstream transfer policy, not a silent relaxation of the old interface. [Machine-readable protocol](../protocols/p33_native256_spatial_policy.json), [implementation/test report](../reports/p3_3_native256_policy.md).
 
 ## Why this is a separate policy
@@ -12,7 +16,7 @@ Moonstone tiles already contain256×256 physical samples. The named `moonstone_n
 
 At the pinned source revision, ImageEncoderEmbedding creates a256/16=16×16 positional grid and uses its existing positional tensor directly when runtime geometry matches. The matching patch size also avoids patch-weight resizing. The constructor is unchanged; no input_size/patch_size/config override is permitted. The wrapper continues to reject any runtime tensor other than its canonical size.
 
-This is source-level architectural rationale, not proof that the actual checkpoint matches. NASA's state loader can interpolate mismatched positional state; our **pre-load** complete selected-key/shape audit remains mandatory and rejects mismatch before that loader can adapt it. Actual fixed-checkpoint verification and real paired forward/backward remain execution gates.
+This is source-level architectural rationale, not proof that the actual checkpoint matches. NASA's state loader can interpolate mismatched positional state; our **pre-load** complete selected-key/shape audit remains mandatory and rejects mismatch before that loader can adapt it. Actual fixed-checkpoint verification and the one-crop frozen paired forward/backward have since passed in the report above; the unchanged key/shape audit remains mandatory.
 
 ### Physical scale remains shifted
 
@@ -45,20 +49,20 @@ Add these fields to the actual input/runner provenance, without erasing source e
 
 The value is nominal north–south spacing, not an independently measured pixel resolution. Existing batch and provenance hashes must reflect actual new files. Use a new output namespace; preserve the historical failed strict-policy receipt.
 
-First, an input-only preflight may be run with the actual audited config and existing authenticated raw Train batch, adding the policy flag to the [original command](P3_3_NASA_TRANSFER_HANDOFF.md). This does not import torch, acquire weights or establish official model compatibility. It must still say `official_model_execution: NOT_RUN`.
+The original reference sequence below has completed for Train2705; it is not an instruction or authorization to repeat either preflight. First, an input-only preflight may be run with the actual audited config and existing authenticated raw Train batch, adding the policy flag to the [original command](P3_3_NASA_TRANSFER_HANDOFF.md). This does not import torch, acquire weights or establish official model compatibility. It must still say `official_model_execution: NOT_RUN`.
 
 Only after private runtime, provenance and asset checks pass should a new **actual paired forward/backward** receipt be produced under the same policy/device/adaptation. The runner now requires the policy receipt and locks it in `P33_NASA_TERRAIN_PAIRED_V2`; missing/old/different policy receipts fail. The config, policy source, other implementation sources, assets and runtime remain locked. Run/replay cannot switch policy, and complete fixed-cohort scanning plus an actual budget lock are still mandatory before scores. No existing real budget or manifest has been frozen.
 
-## Local input validation completed
+## Historical input-only validation completed (2026-11-05)
 
-The local follow-up at `f74af37` passes75 focused and701 full tests with zero skips, plus authentic Train2705 input-only CLI and independent exact elementwise normalization/hash checks. The original config and raw batch are unchanged; new provenance and receipts live under ignored `outputs/p33/native256_input_01/`. [Local report](../reports/p3_3_native256_local_validation.md) and [verification](../reports/evidence/p33_20261105/native256_local_01/verification.json). Historical strict failures remain preserved. This is one-crop input preparation; official model execution remains NOT_RUN and no actual training manifest is locked. Do not repeat this completed input check without a new implementation or unresolved concern.
+The local follow-up at `f74af37` passes75 focused and701 full tests with zero skips, plus authentic Train2705 input-only CLI and independent exact elementwise normalization/hash checks. The original config and raw batch are unchanged; new provenance and receipts live under ignored `outputs/p33/native256_input_01/`. [Local report](../reports/p3_3_native256_local_validation.md) and [verification](../reports/evidence/p33_20261105/native256_local_01/verification.json). Historical strict failures remain preserved. At this historical stage, this was one-crop input preparation; official model execution remained NOT_RUN and no actual training manifest was locked. Do not repeat this completed input check without a new implementation or unresolved concern.
 
-## Still blocked or unverified
+## Current remaining gates
 
-- No compatible private NASA runtime is available in the existing local audit. Do not replace the shared Python/ROCm/torch environment, install packages or treat passing toy tests as compatibility.
-- No fixed checkpoint has been locally verified, no official model has run, no full real-cohort eligibility scan has passed, and no transfer benefit is established.
-- Raw source lineage and finite-sentinel provenance must remain explicit. No cohort filtering, fake masks or imputation is introduced.
-- Test remains HOLD; previous P3.2 results/budgets are preserved.
+- [129 locked dependencies are installed](../reports/evidence/p33_20261106/rocm72_runtime_01/verification.json); normal NASA import and the frozen paired preflight have passed. This is not a long-duration training-stability or vendor-certification result.
+- Establish valid raw-source lineage and NoData provenance for all 5,135 Train / 1,155 Val samples. `nodata_policy=finite_only_no_finite_sentinels` must be justified by source evidence; a finite scan alone does not rule out unknown finite sentinels.
+- Then scan the complete unchanged cohort without scores and lock an explicit actual paired budget. No filtering, fake masks, imputation or policy change is allowed by this protocol.
+- Training requires separate authorization; this status update grants no new execution permission. Transfer benefit remains NOT_ESTABLISHED, Test remains HOLD, and previous P3.2 results/budgets are preserved. See the [current plan](../protocols/p33_nasa_transfer_plan.json).
 
 ## Pinned source evidence
 

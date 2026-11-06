@@ -2,7 +2,35 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "NATIVE256_REAL_INPUT_PASS_OFFICIAL_EXECUTION_BLOCKED",
+  "status": "REAL_NASA_TRAIN2705_PAIRED_FROZEN_GPU_PREFLIGHT_PASS",
+  "latest_verified_execution": {
+    "observed_utc": "2026-11-06T06:11:53.258040+00:00",
+    "report": "reports/p3_3_real_nasa_preflight.md",
+    "evidence": "reports/evidence/p33_20261106/nasa_real_01/verification.json",
+    "preflight_receipt": "reports/evidence/p33_20261106/nasa_real_01/preflight.json",
+    "runtime_install_evidence": "reports/evidence/p33_20261106/rocm72_runtime_01/verification.json",
+    "installed_dependencies": 129,
+    "normal_nasa_import": "PASS",
+    "checkpoint_loading": "PASS_STRICT_ALL_116_SELECTED_ENCODER_KEYS",
+    "sample_ids": [
+      "2705"
+    ],
+    "spatial_policy": "moonstone_native256_v1",
+    "paired_forward_backward": "PASS_RANDOM_AND_PRETRAINED_FROZEN_ENCODERS",
+    "runner_preflight_gate": "PASS_FROZEN_ADAPTATION",
+    "scope": "Engineering preflight only; no optimizer step, training, full-cohort scan, selection, task score or transfer-benefit claim"
+  },
+  "historical_record_scope": {
+    "records": [
+      "local_followup",
+      "runner_local_validation",
+      "native256_local_validation",
+      "spatial_policy_update",
+      "private_runtime_plan",
+      "cloud_limits"
+    ],
+    "scope": "Preserved snapshots of their dated stages, not current execution status or instructions. Historical evidence hashes identify the original file versions. Current status is latest_verified_execution plus remaining_gates; this status refresh authorizes no new execution."
+  },
   "local_followup": {
     "base_commit": "8eeab47",
     "integrated_upstream_fix": "ce8b1ef",
@@ -34,15 +62,15 @@
   },
   "domain_shift": "MOONSTONE_TERRAIN_NOT_NASA_NATIVE",
   "missingness": "Explicit masks; finite zeros are observed; any invalid pixel blocks first-tier input",
-  "spatial_policy": "Strict default preserved; explicit moonstone_native256_v1 declared before scores, unchanged256/16 geometry with no interpolation/crop and non-NASA physical scale; authenticated Train2705 input-only PASS, official model NOT_RUN",
+  "spatial_policy": "Strict default preserved; explicit moonstone_native256_v1 declared before scores, unchanged256/16 geometry with no interpolation/crop and non-NASA physical scale; authenticated Train2705 input and real frozen paired forward/backward PASS only",
   "normalization": "Only supplied audited config; no guessed NASA statistics; raw physical input only",
   "model_loading": "100 percent selected inference keys and shapes including buffers; strict load after decoder pruning",
   "pretrained_arm": "Official base encoder with verified checkpoint, ordinary Geology head",
   "control_arm": "Same official architecture randomly initialized, identical input/cohort/head/adapter initialization",
-  "frozen_probe": "NOT_RUN",
+  "frozen_probe": "NOT_TRAINED; Train2705 frozen-encoder engineering forward/backward PASS is not a completed trained linear-probe experiment",
   "optional_adapter": "Input-affine only, not LoRA; implemented wrapper but not executed",
-  "training_runner": "IMPLEMENTED_NOT_EXECUTED: scripts/p33_train_pair.py lock/run/replay",
-  "actual_training_manifest": "NOT_FROZEN; explicit example budget must be locked after compatibility and input checks",
+  "training_runner": "IMPLEMENTED_TRAINING_NOT_EXECUTED: scripts/p33_train_pair.py lock/run/replay; actual frozen preflight receipt gate PASS only",
+  "actual_training_manifest": "NOT_FROZEN; explicit actual paired budget required after valid full-cohort provenance and a no-score scan; example budget is not an actual lock",
   "initial_ids": {
     "train": 5135,
     "validation": 1155,
@@ -57,11 +85,10 @@
     "No raw Moonstone pixels"
   ],
   "remaining_gates": [
-    "Retain single-crop input PASS scope; original-raster execution and whole-cohort finite-sentinel provenance remain unverified",
-    "Resolve compatible isolated Python/ROCm dependencies without replacing shared runtime",
-    "Verify local fixed-revision weights by size/hash",
-    "Run wrapper tests and one real paired forward/backward with memory record",
-    "After spatial/runtime/preflight gates, use implemented runner to scan fixed cohort and lock explicit paired budget before scores"
+    "Establish valid provenance for all fixed 5135 Train and 1155 Val samples, including raw-source lineage and justified nodata_policy=finite_only_no_finite_sentinels; a finite-only scan cannot exclude unknown finite NoData sentinels",
+    "After provenance is valid, scan the complete unchanged Train/Val cohort without scores; failure blocks this protocol, with no silent filtering, imputation or spatial-policy change",
+    "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
+    "Training requires separate authorization after these gates; no completed preflight/tests need repeating for this status update, no automatic new execution is authorized, and Test remains HOLD"
   ],
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,

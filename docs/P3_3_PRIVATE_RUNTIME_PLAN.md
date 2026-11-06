@@ -1,4 +1,12 @@
-# P3.3 private NASA runtime plan: candidate only
+# P3.3 private NASA runtime plan and execution status
+
+**Current status (2026-11-06):** [All 129 locked dependencies are installed and distribution-checked](../reports/evidence/p33_20261106/rocm72_runtime_01/verification.json). The later [real NASA preflight](../reports/p3_3_real_nasa_preflight.md) records normal pinned import, strict selected-encoder checkpoint loading and exactly one Train 2705 native256 random/pretrained frozen-encoder forward/backward PASS, including runner receipt-gate acceptance. The installation receipt's earlier NASA-import block is historical. This is not a trained frozen/linear probe, full-cohort result, task score, long-duration stability test or vendor certification.
+
+**Current next gates:** Establish valid provenance for all 5,135 Train / 1,155 Val samples, including source-backed finite-sentinel/NoData semantics; a finite scan alone cannot prove `finite_only_no_finite_sentinels`. Then scan without scores and lock an explicit actual paired budget before separately authorized training. No optimizer step, training or actual budget lock has occurred. Do not repeat completed installation, input/preflight or tests for this status update; no new execution is authorized and Test remains HOLD. [Current plan](../protocols/p33_nasa_transfer_plan.json).
+
+## Historical candidate research (2026-11-05)
+
+All remaining sections preserve the earlier candidate, driver-decision and provisioning snapshots, not current runtime status or permissions. Their NOT_RUN/blocked states, the linked historical plan and audit hashes remain unchanged; the current execution evidence is linked above.
 
 2026-11-05, after `c924566`. The local native256 input preparation and 75/701 test passes are complete; do not repeat them. This handoff adds **read-only source/package-platform research**, not an installation, accepted runtime, dependency lock or model result. [Plan](../protocols/p33_private_runtime_plan.json), [static source evidence](../reports/evidence/p33_20261105/runtime_plan_01/source_audit.json), [public runtime sources](../reports/evidence/p33_20261105/runtime_plan_01/public_runtime_sources.json).
 
@@ -18,7 +26,7 @@ The selected dtm/slope constructor does not construct VQ/text tokenizers or diff
 
 The base constructor initially allocates encoder **and decoder** blocks before our wrapper prunes unused decoder state. Plan for transient CPU allocation; no measured memory estimate or fit claim exists yet. With checkpoint_path=None the audited constructor does not request pretrained weights, but official import/construction has still NOT RUN.
 
-## Current host decision: driver mapped, candidate unsupported by matrix
+## Historical host decision: driver mapped, candidate unsupported by matrix
 
 The completed local audit at `69763c5` records Ubuntu22.04.5/kernel6.8.0-138/glibc2.35 and amdgpu package `1:6.8.5.60204-2070768.22.04`. New official package evidence maps that version to driver release **6.2.4 / family 6.2.x**. The published driver row does not include the candidate ROCm7.2. This supersedes the earlier unresolved mapping, not the historical host measurements. It is a support-matrix exclusion, not an empirical execution failure. See the [decision and official sources](../reports/p3_3_driver_runtime_compatibility.md) and [public evidence](../reports/evidence/p33_20261105/driver_support_01/public_evidence.json).
 
@@ -26,13 +34,13 @@ The checked official ROCm6.4/7.0 torch indexes offer at most2.9.1/2.10.0, below 
 
 The exact Python3.12/torch2.12.1/vision0.27.1 candidate is still uninstalled and unvalidated. AMD's [Radeon7.2 matrix](https://rocm.docs.amd.com/projects/radeon-ryzen/en/docs-7.2/docs/compatibility/compatibilityrad/native_linux/native_linux_compatibility.html) lists RX7900XT/Ubuntu22.04.5 HWE, but its production-tested torch2.9.1 entry does not certify this NASA combination.
 
-## Local Git handoff: stop before provisioning
+## Historical Git handoff: stop before provisioning
 
 Read [the completed host audit](../reports/p3_3_host_runtime_audit.md) and current decision; do not repeat OS/package/storage inventory, native256 input preparation,75/701 tests or old experiments. Do not install, pull containers, change the driver, lower requirements or silently switch NASA/model pins. `pip --dry-run` can fetch wheels/sdists and is not a zero-download probe.
 
 Potential later choices are a bounded CPU-only import/construction feasibility study (not GPU compatibility), or a separately reviewed host-driver path. Driver families6.4.x and30.10.0/.1/.2 have matrix rows containing both oldROCm6.2 and new7.2, but no exact RX7900XT/OS/kernel upgrade or rollback has been selected or validated. Neither option is permission to execute. With the current no-system-change boundary, the GPU run remains blocked pending a scoped decision, not another inventory cycle.
 
-## Later gates require a separate decision
+## Historical provisioning gates requiring a separate decision
 
 No provisioning path is currently selected. Obtain a separate decision for any resolution/provisioning phase after its platform feasibility is established. Bounded public metadata research can continue read-only, but any resolver that might fetch wheels or sdists must have an explicitly allowed scope and download limit before it runs. Prepare a complete platform-specific dependency lock with version/source/hash/size information; obtain explicit approval before private interpreter/environment creation, installation or large acquisition. Stop on conflicts or missing compatible wheels. Do not substitute a CPU build as an answer to RX 7900 XT compatibility, widen package bounds or upgrade host ROCm/driver implicitly.
 

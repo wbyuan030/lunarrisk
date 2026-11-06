@@ -1,5 +1,13 @@
 # P3.3: NASA terrain-transfer handoff
 
+**Current status (2026-11-06):** The [129-dependency installation](../reports/evidence/p33_20261106/rocm72_runtime_01/verification.json) is complete. [Normal pinned NASA import, strict loading of all 116 selected encoder keys, and one real Train 2705 random/pretrained frozen-encoder forward/backward](../reports/p3_3_real_nasa_preflight.md) passed under `moonstone_native256_v1`; the existing runner preflight gate accepted that receipt. This is engineering validation, not a trained frozen/linear probe: no optimizer step, training, full-cohort scan, actual budget lock or task score. Test remains HOLD.
+
+**Current next gates:** Establish valid provenance for all 5,135 Train / 1,155 Val samples, including a justified `nodata_policy=finite_only_no_finite_sentinels`; merely finding finite values cannot rule out unknown finite NoData sentinels. Then scan the unchanged cohort without scores and lock an explicit actual paired budget before separately authorized training. No filtering, imputation or spatial change is authorized here. Reuse completed preflight/test evidence; this status update grants no new execution permission. See the [current plan](../protocols/p33_nasa_transfer_plan.json) and [runner guide](P3_3_NASA_PAIRED_RUNNER.md).
+
+## Historical handoff updates (2026-11-05)
+
+The snapshots below retain their original PASS/FAIL/NOT_RUN boundaries; they do not override the current status above.
+
 **New explicit spatial protocol (2026-11-05):** [Moonstone-native256](P3_3_MOONSTONE_NATIVE256.md) now provides a separately declared downstream path for the unchanged audited256/16/pre_resize512 config. It requires an explicit policy flag and physical-scale provenance; strict default remains unchanged. Policy is bound through preflight and manifestV2/run/replay. Actual input/model execution under it is NOT RUN; runtime/checkpoint/full-cohort/budget gates remain. Historical strict-policy failures and local690-test evidence below are preserved, not relabeled as results for this new code.
 
 Updated 2026-11-05. **Input/weight guards and paired training runner implemented; official NASA execution and transfer experiments NOT RUN.** See the [paired-runner execution guide](P3_3_NASA_PAIRED_RUNNER.md) for the new lock/run/replay path. This is the next Git collaboration handoff, not a replacement for the completed P3.2 evidence. The P3.2 18-run negative result, original budgets, Test HOLD, and all raw assets remain unchanged.
@@ -14,7 +22,7 @@ Updated 2026-11-05. **Local follow-up:** [actual local readiness audit](../repor
 - `cohort.py`: authoritative Train membership from the already frozen P31 plan and metadata archive, both verified against fixed repository-pinned SHA256 values. Declaring `split=train` alone is insufficient; unknown, Val/Test and wrong-target rows fail before model execution.
 - `scripts/p33_nasa_preflight.py`: executable input audit and optional one-batch paired forward/backward. No training loop, optimizer step, weight acquisition or Test scoring. Outputs are new files, never overwrite existing evidence.
 
-## Verified source and unresolved assets
+## Historical source and unresolved-assets snapshot (2026-11-05)
 
 Official code: `NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model`, commit `d54c67aad513cb9daca444afa425cfb278e4fbf8` (Apache-2.0). Model repository revision: `b657bdfe6fc4c0445d918f77a2d7b919805f3bce`.
 
@@ -24,7 +32,9 @@ The previous P3.0 remote listing declares `backbone/checkpoint.pt` at 2,425,755,
 
 The cloud runtime is Python 3.12.14 with NumPy 2.3.5/PyYAML 6.0.3, but **no torch/h5py or NASA weights/data**. The old local Python 3.10.12 is outside NASA's `>=3.11,<3.13`; current upstream declares torch `>=2.12,<3` and many additional packages. Do not run unbounded `pip install -e .` against the working ROCm environment. Inspect an existing private compatible runtime; if none is usable, report that exact blocker before changing environment scope. No packages were installed for this handoff.
 
-## Local execution order
+## Historical initial execution order (2026-11-05)
+
+This original sequence is retained for traceability, not as a queue to rerun. Runtime installation, fixed-checkpoint verification, native256 input checks and the frozen paired preflight are complete; follow the current next gates above instead. Any cohort, missingness or spatial-policy change requires a separate protocol.
 
 1. `git pull --ff-only origin main`, inspect concurrent work and this handoff. Do not rerun P3.2's completed 18 runs or overwrite its artifacts.
 2. Audit the two **raw physical** HDF5 channels, not `MoonstoneHDF5Pilot.__getitem__`'s already normalized output. Confirm elevation metres, degree slope, NoData sentinels/masks, grid and per-region elevation provenance. Moonstone elevation blends SLDEM2015/LOLA with latitude/fallback behavior; degree slope and roughly 237 m/px do not make these NASA-native terrain.
@@ -65,7 +75,7 @@ Provenance JSON must contain:
 
 237.0 above illustrates the field, **not a newly measured grid value**. Populate actual audited resolution. The placeholders are documentation, not evidence.
 
-Input-only audit (no torch import):
+Historical strict input-only reference (retained failure; not a rerun request). The successful Train 2705 variant explicitly selected `--spatial-policy moonstone_native256_v1`; see the [native256 command and receipt guidance](P3_3_MOONSTONE_NATIVE256.md). The original strict command is preserved below:
 
 ```bash
 python3 scripts/p33_nasa_preflight.py \
@@ -74,9 +84,9 @@ python3 scripts/p33_nasa_preflight.py \
   --output outputs/p33/input_preflight_01.json
 ```
 
-After actual runtime and asset verification, add `--forward-backward --upstream "$PINNED_NASA_CHECKOUT" --checkpoint "$NASA_CHECKPOINT" --device cuda`. Set a fresh output filename. `--adapt-inputs` additionally checks nonzero finite gradients through the frozen encoder to the affine adapters. Do not add it retrospectively to re-label a frozen-probe score. Without `--forward-backward`, the receipt explicitly says `official_model_execution: NOT_RUN`.
+For a separately authorized future model preflight, after actual runtime and asset verification, add `--forward-backward --upstream "$PINNED_NASA_CHECKOUT" --checkpoint "$NASA_CHECKPOINT" --device cuda`. Set a fresh output filename. `--adapt-inputs` additionally checks nonzero finite gradients through the frozen encoder to the affine adapters. Do not add it retrospectively to re-label a frozen-probe score. Without `--forward-backward`, the receipt explicitly says `official_model_execution: NOT_RUN`.
 
-## Verification boundary
+## Historical cloud verification boundary (2026-11-05)
 
 The expanded cloud suite passes **48 runnable P33 tests**. **16 torch/HDF5 checks are skipped** here and require the compatible private runtime. They use a tiny synthetic stand-in even when run, and do not establish official NASA compatibility. `compileall` passes. The full cloud suite is dependency-blocked, with the same 29 missing-dependency errors as the baseline-only suite; this does not supersede P3.2's earlier 626-test local pass.
 
