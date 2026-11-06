@@ -1,0 +1,77 @@
+{
+  "observed_utc": "2026-11-06T06:11:53.258040+00:00",
+  "status": "REAL_NASA_TRAIN2705_PAIRED_FROZEN_GPU_PREFLIGHT_PASS",
+  "scope": "One real Train sample; matched random/pretrained frozen encoders; no optimizer step, training, cohort scan, selection or score",
+  "source_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+  "batch_sha256": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+  "provenance_sha256": "0a7527930da6261f433962a95f37992f0dfd1241026b664afe8b061a42c6e218",
+  "prepared_sha256": "7942299d25842593b32765c28d6866e6e6efa8dfcc1abbc966195f890d77029b",
+  "sample_ids": [
+    "2705"
+  ],
+  "target": 43,
+  "gpu": "Radeon RX 7900 XT",
+  "gpu_arch": "gfx1100",
+  "runtime": {
+    "python": "3.12.9",
+    "numpy": "2.4.4",
+    "torch": "2.12.1+rocm7.2",
+    "torch_hip": "7.2.53211",
+    "torch_cuda": null
+  },
+  "deterministic_algorithms": true,
+  "network_disabled": true,
+  "checkpoint_coverage": {
+    "inference_key_count": 116,
+    "inference_element_count": 85761024,
+    "loaded_inference_fraction": 1.0,
+    "excluded_key_count": 295
+  },
+  "arms": {
+    "random": {
+      "forward_backward": "PASS",
+      "logit_shape": [
+        1,
+        49
+      ],
+      "trainable_parameters": 37681,
+      "seconds": 4.860279356995306,
+      "peak_device_bytes": 421319168
+    },
+    "pretrained": {
+      "forward_backward": "PASS",
+      "logit_shape": [
+        1,
+        49
+      ],
+      "trainable_parameters": 37681,
+      "seconds": 0.013919436998548917,
+      "peak_device_bytes": 454873600
+    }
+  },
+  "whole_process_max_rss_kib": 3324128,
+  "launcher_elapsed_seconds": 28.337520031003805,
+  "timing_limit": "First arm includes cold GPU initialization and is not a performance comparison",
+  "independent_verification": "PASS",
+  "runner_preflight_gate": "PASS",
+  "source_checkout_clean_after": true,
+  "gpu_kernel_error_scan": "No selected GPU fault/reset/BUG/call trace patterns observed",
+  "actual_model_executions_repeated": false,
+  "actual_training_manifest": "NOT_FROZEN",
+  "complete_cohort_scan": "NOT_RUN",
+  "training": "NOT_RUN",
+  "transfer_benefit": "NOT_ESTABLISHED",
+  "Test": "HOLD",
+  "files_sha256": {
+    "commands.json": "b97a387f7ad7d295281a344413ea02d3088ea8ff3508168e0da84e751ecccff0",
+    "independent_verification.json": "1388a657f2bb1ab4d25e39273291b6b6a82a08b26d8a9f3337c7ebed0a28758b",
+    "launcher_receipt.json": "ae9dfc12c7f1912b83646527884fedc7c99771b1ab575cf12e3f73dc6cbf479a",
+    "nasa_import_receipt.json": "3b9624955937017f7b30c83d5d261a0303e8af262c6ccc8c66fd2c9ac7e42109",
+    "preflight.json": "e26c21b43abfe84eea08c1fd7c96b0754b5880ba9c2a8771cab3f2bacd3cb0da",
+    "preflight.log": "c1fe4ac24dd28e83d91402311674fd210e0a3ac80cd84cdcdc89f2c02a497a0b",
+    "runner_gate_validation.json": "4049f326eb36aef448ff0264538ff07692364dbbe03b4f8284a25ea39910d516"
+  }
+}

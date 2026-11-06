@@ -1,0 +1,44 @@
+{
+  "status": "INDEPENDENT_PREFLIGHT_RECEIPT_AND_ASSETS_PASS",
+  "sample_id": "2705",
+  "target": 43,
+  "shape": [
+    1,
+    1,
+    256,
+    256
+  ],
+  "valid_finite_pixels_per_channel": 65536,
+  "asset_sha256": {
+    "batch": "572cb90d9ed06bc73ad5ea372e1190d0ff28399009d9ce9fafc39aa50e73a9cd",
+    "provenance": "0a7527930da6261f433962a95f37992f0dfd1241026b664afe8b061a42c6e218",
+    "config": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "checkpoint": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b"
+  },
+  "prepared_sha256_matches_prior_input_only": true,
+  "checkpoint_inference_key_count": 116,
+  "excluded_key_count": 295,
+  "both_arms": "PASS",
+  "paired_runner_gate": "PASS",
+  "official_source_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "source_clean_after": true,
+  "gpu_device": "Radeon RX 7900 XT",
+  "torch": "2.12.1+rocm7.2",
+  "hip": "7.2.53211",
+  "deterministic_algorithms": true,
+  "project_source_sha256": {
+    "scripts/p33_nasa_preflight.py": "7df03c49b9aa8995eba49679c58efe2d9155af6b38ca90799256ed4c0fc1cf1f",
+    "scripts/p33_train_pair.py": "31edd3b3395b62fa0927144fa73aca06a86f4340ea6c43cdda86ed28ed418ddc",
+    "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/torch_adapter.py": "69109a8e955dad3762ee7734955dd71fff002b477b376816bb001582ff6b0533",
+    "protocols/p33_native256_spatial_policy.json": "08b4c9b71ffce4a7b8ff9b99977ae897579a7ead83f67d31988d8e159cd7af5a"
+  },
+  "preflight_receipt_sha256": "e26c21b43abfe84eea08c1fd7c96b0754b5880ba9c2a8771cab3f2bacd3cb0da",
+  "launcher_receipt_sha256": "ae9dfc12c7f1912b83646527884fedc7c99771b1ab575cf12e3f73dc6cbf479a",
+  "preflight_log_sha256": "c1fe4ac24dd28e83d91402311674fd210e0a3ac80cd84cdcdc89f2c02a497a0b",
+  "model_executions_repeated": false,
+  "optimizer_step": "NOT_RUN",
+  "transfer_benefit": "NOT_ESTABLISHED",
+  "Test": "HOLD"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PINNED_NASA_NORMAL_IMPORT_PASS",
+  "kind": "PINNED_NASA_NORMAL_IMPORT_NOT_MODEL_EXECUTION",
+  "network": "disabled via network namespace",
+  "NASA_model_construction": "NOT_RUN",
+  "NASA_checkpoint_loading": "NOT_RUN",
+  "Test": "HOLD",
+  "python": "3.12.9",
+  "torch": "2.12.1+rocm7.2",
+  "hip": "7.2.53211",
+  "source_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "module_origin": "<pinned-nasa-checkout>/terratorch_integration/lunar_backbone.py",
+  "class_present": true,
+  "checkout_clean_after": true,
+  "deterministic_algorithms": true
+}

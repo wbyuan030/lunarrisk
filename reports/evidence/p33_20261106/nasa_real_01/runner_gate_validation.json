@@ -1,0 +1,17 @@
+{
+  "status": "PAIRED_RUNNER_PREFLIGHT_GATE_PASS",
+  "validated_by": "scripts/p33_train_pair.py:validate_preflight",
+  "config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+  "adaptation": "frozen",
+  "device": "cuda",
+  "spatial_policy": "moonstone_native256_v1",
+  "runtime": {
+    "python": "3.12.9",
+    "numpy": "2.4.4",
+    "torch": "2.12.1+rocm7.2",
+    "torch_hip": "7.2.53211",
+    "torch_cuda": null
+  },
+  "model_reexecuted": false,
+  "Test": "HOLD"
+}

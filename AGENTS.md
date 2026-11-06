@@ -1,4 +1,6 @@
-# 当前任务：P3.3 — 驱动30.10.2已升级并重启验证，NASA runtime仍独立阻塞（更新2026-11-06）
+# 当前任务：P3.3 — 真实NASA Train2705配对GPU预检PASS，尚无训练或迁移分数（更新2026-11-06）
+
+**最新真实NASA预检：** 用户明确授权执行固定GitHub源码、加载固定checkpoint并对Train2705进行一次配对前后向。正常NASA导入PASS；在私有Python3.12.9/torch2.12.1+rocm7.2/HIP7.2.53211、RX7900XT gfx1100、确定性算法和无网络命名空间下，`moonstone_native256_v1`真实双模态输入与random/pretrained两臂前后向均PASS；严格加载全部116个选定encoder张量/缓冲键、85,761,024元素，295个decoder或未选模态键按规则排除。两臂均(1,49)输出、37,681可训练头参数；设备峰值分别421,319,168/454,873,600字节，进程max RSS 3,324,128 KiB。首次臂含冷GPU初始化，不作性能比较。未做optimizer step、训练或得分；checkpoint/config/batch/provenance重哈希、原input-only prepared hash一致、来源checkout clean、runner preflight gate及事后GPU故障筛查PASS。见[实际报告](reports/p3_3_real_nasa_preflight.md)、[验证](reports/evidence/p33_20261106/nasa_real_01/verification.json)。该一次预检不重跑，不代表全cohort或迁移收益。下文较早的“NOT_RUN/阻塞”等保留为对应历史阶段，不覆盖这一最新结果。
 
 **最新本地交付：** `f74af37`安全拉取后，现有私有runtime执行75项P33及完整701项测试，零跳过PASS，compileall/diff PASS。先查明旧LROC缓存测试缺DELTA产品页，补齐合成夹具并断言无urlopen调用后才运行完整回归；云端旧partial日志仍保留为INCOMPLETE。既有Train2705/target43原始裁片、batch和固定NASA配置SHA再次认证，新provenance显式选择native256，真实input-only CLI exit0/PASS；独立逐元素归一化及prepared hash完全相等。见[本地报告](reports/p3_3_native256_local_validation.md)、[22个源码hash及验证](reports/evidence/p33_20261105/native256_local_01/verification.json)。这只确认单裁片输入准备，`official_model_execution=NOT_RUN`，历史strict失败、原资产和P3.2结果不改写。
 
@@ -28,7 +30,7 @@
 
 **最新私有GPU runtime：** 用户随后明确点名授权`https://files.pythonhosted.org`、`https://download-r2.pytorch.org`及本地ANTLR构建轮子，129项依赖已按锁文件在无网络隔离的私有Python3.12.9环境离线安装，`uv pip check`及全部129版本/锁对照PASS。实测私有venv占用16,857,640,960字节，剩余435,139,547,136字节。新torch2.12.1+rocm7.2/torchvision0.27.1+rocm7.2/HIP7.2.53211在RX7900XT gfx1100上进行开启确定性算法的64×64 FP32矩阵前向和反向，数值/梯度精确PASS，峰值设备内存67,191,808字节；所观察GPU库均来自该私有环境，未混入旧`/opt/rocm`，日志筛查无新GPU fault。此为微型runtime检查，非NASA模型执行，也不代表AMD已认证此torch版本。尝试准备正常导入固定NASA源码的脚本时，自动审批拦截了脚本创建，要求明确授权执行`https://github.com/NASA-IMPACT/NASA-IBM-Lunar-Foundation-Model`的外部代码；脚本未创建，NASA导入/构造/预训练权重加载均NOT_RUN。见[运行时证据](reports/evidence/p33_20261106/rocm72_runtime_01/verification.json)。
 
-**本地下一步：** 待用户明确授权执行固定NASA GitHub源码后，在私有环境开启确定性/禁网络、验证官方正常导入及构造，再严格加载已核验checkpoint并对既有Train2705执行配对前后向预检；不绕过自动审批，不改原Python/torch/ROCm或科学pin。物理尺度差异和原strict守卫不变；完整cohort、实际预算、真实模型结果仍是独立门槛。旧18/75/701与native256不重跑，Test HOLD。
+**本地下一步：** 真实配对预检已完成并通过现有runner preflight gate，不重复。下一阶段先核实全固定Train/Val cohort的有效性及有限sentinel/来源证据，并在任何task分数前锁定独立实际配对预算；现有example仅示例，尚非实际预算。若需改变cohort、缺失值或空间策略，另立协议后执行。物理尺度差异、原strict守卫及旧Python/torch/ROCm不变；真实训练、完整回放、迁移收益仍未建立，Test HOLD。
 
 **首先阅读 [`reports/p3_3_local_readiness.md`](reports/p3_3_local_readiness.md)、[`docs/P3_3_NASA_TRANSFER_HANDOFF.md`](docs/P3_3_NASA_TRANSFER_HANDOFF.md) 和 [`protocols/p33_nasa_transfer_plan.json`](protocols/p33_nasa_transfer_plan.json)。** 上游`8eeab47`已安全拉取，并合并并发`ce8b1ef`的固定根Train身份核验；此前pre-runner本地新增28项及完整654项测试零跳过PASS，compileall PASS。身份/标签认证通过后，真实裁片仍在空间策略处被拒绝；[最新合并验证](reports/evidence/p33_20261105/local_02/verification.json)。固定NASA配置已从既有缓存复核大小/SHA256/Git blob；直连SSH取得两个固定revision的10个所需源码文件并审计，未执行上游Python。原始Train2705裁片已核验，但真实输入CLI因官方`pre_resize512/input_size256`被当前空间策略守卫拒绝，exit1及日志保留，没有成功receipt。
 
@@ -38,10 +40,10 @@
 
 ## P3.3下一项与真实边界
 
-- 现有主机/ROCm容器均为Python3.10.12、torch2.5.1；官方声明Python>=3.11,<3.13、torch>=2.12，且缺少OmegaConf/timm/einops/TerraTorch/Lightning等依赖。未找到现成兼容runtime，未安装包、创建新环境或替换共享ROCm。不能称官方模型已兼容。
-- 已显式声明Moonstone-native256配对空间策略且单个真实Train裁片输入准备PASS；下一步明确兼容私有运行时方案。官方dtm/slope的Untok数据transform先resize512、再归一化及crop/flip；native256独立下游协议保留原网格，backbone接收张量。默认strict仍拒绝旧差异，不代表模型不能接受256张量；不得修改YAML或静默跳过策略检查。
+- 原主机/ROCm容器的Python3.10.12、torch2.5.1保持不变；另立私有Python3.12.9/torch2.12.1+rocm7.2环境完成官方模型单裁片GPU前后向，但并非AMD对该框架版本的认证或完整训练稳定性验证。
+- 已显式声明Moonstone-native256配对空间策略，单个真实Train裁片输入及真实模型配对前后向PASS。官方dtm/slope的Untok数据transform先resize512、再归一化及crop/flip；native256独立下游协议保留原网格，backbone接收张量。默认strict仍拒绝旧差异，不得修改YAML或静默跳过策略检查。
 - 已核实源码声明的高程米/坡度度、58–62°SLDEM/LOLA混合、NaN处理与HDF5原通道传递。原始栅格header、完整执行谱系、逐样本fallback未独立复现。236.901m是名义南北/赤道间距，东西地面间距随纬度变化；presence不是像素mask，finite zero保留。
-- 两个先决门通过后再核实必要固定checkpoint、真实配对forward/backward，然后使用新runner在任何task分数前扫描固定Train/Val cohort并锁定预算；若需改变cohort或空间策略，另立明确协议后再执行。checkpoint未下载/完整核验，官方模型构造/梯度/训练/迁移收益均NOT_RUN/NOT_ESTABLISHED；不把合成wrapper测试当模型执行。
+- 固定checkpoint已核验并严格加载，真实Train2705配对forward/backward已PASS；使用runner在任何task分数前仍需扫描固定Train/Val cohort并锁定实际预算。若需改变cohort或空间策略，另立明确协议后再执行。官方训练、全cohort结果和迁移收益仍NOT_RUN/NOT_ESTABLISHED；不把合成wrapper测试当模型执行。
 - 保留P3.2负结果与18run，不重跑。完整地质语义来源核实仍是独立后续项，不与NASA预训练迁移混写。只用Train/Val，Test HOLD；必要数据/权重直连授权及下文其他资源边界不变。
 
 ## P3.2已完成阶段与独立语义后续项

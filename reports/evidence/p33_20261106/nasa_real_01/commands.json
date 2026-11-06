@@ -1,0 +1,40 @@
+{
+  "source_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+  "model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+  "interpreter": "isolated Python3.12.9, torch2.12.1+rocm7.2",
+  "network": "unshare --user --map-root-user --net; HF_HUB_OFFLINE=1; TRANSFORMERS_OFFLINE=1",
+  "python_flags": [
+    "-I",
+    "-B"
+  ],
+  "preflight_command": [
+    "python",
+    "scripts/p33_nasa_preflight.py",
+    "--batch",
+    "$AUTHENTICATED_TRAIN2705_NPZ",
+    "--provenance",
+    "$NATIVE256_PROVENANCE",
+    "--config",
+    "$AUDITED_NASA_CONFIG",
+    "--config-sha256",
+    "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "--spatial-policy",
+    "moonstone_native256_v1",
+    "--output",
+    "$NEW_PREFLIGHT_JSON",
+    "--forward-backward",
+    "--upstream",
+    "$PINNED_NASA_CHECKOUT",
+    "--checkpoint",
+    "$VERIFIED_NASA_CHECKPOINT",
+    "--device",
+    "cuda"
+  ],
+  "launcher_role": "Enable deterministic algorithms and four CPU threads before GPU use, verify device0 RX7900XT and exact Train2705/target43, execute one fresh subprocess and capture max RSS",
+  "launcher_sha256": "f0e91251f967034833ee3785895a15f1c85519639b08502b6c9c5bcc62fd89b1",
+  "launcher_copy": "kept only in ignored outputs/p33/real_paired_preflight_01/launcher.py",
+  "torch_version": "2.12.1+rocm7.2",
+  "adaptation": "frozen_probe",
+  "training_or_optimizer_step": "NOT_RUN",
+  "Test": "HOLD"
+}
