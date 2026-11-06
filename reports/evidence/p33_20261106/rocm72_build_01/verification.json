@@ -1,0 +1,46 @@
+{
+  "observed_utc": "2026-11-06T02:48:32.827462+00:00",
+  "status": "BUILD_TOOLS_INSTALLED_ANTLR_OFFLINE_BUILD_PASS_FINAL_WHEEL_AND_RESOLUTION_PENDING",
+  "user_authorization": "User explicitly named https://files.pythonhosted.org, pip25.3, setuptools81.0.0, wheel0.45.1, and network-isolated ANTLR4.9.3 build; previously denied installation then succeeded",
+  "build": {
+    "status": "NETWORK_ISOLATED_SOURCE_BUILD_PASS",
+    "filename": "antlr4_python3_runtime-4.9.3-py3-none-any.whl",
+    "bytes": 144590,
+    "sha256": "ed1325d05a227d3a21d12795e9faa737ddc4da022d19ea76caf9173a33e883a1",
+    "metadata_sha256": "bf325e5155318385a2fcc4680742da710bbadf13a3d1c0979a98b3487980f261",
+    "requires_dist": [
+      "typing; python_version < \"3.5\""
+    ],
+    "requires_python": null,
+    "zip_integrity": "PASS",
+    "source_sha256": "f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b",
+    "build_tool_versions": {
+      "pip": "25.3",
+      "setuptools": "81.0.0",
+      "wheel": "0.45.1"
+    },
+    "network_namespace": "unshare --user --map-root-user --net; prior connect errno101",
+    "source_origin": "https://files.pythonhosted.org/",
+    "target_runtime_install": "NOT_RUN"
+  },
+  "candidate_wheels": {
+    "count": 125,
+    "status": "ALL_DOWNLOADED_NONFRAMEWORK_WHEEL_METADATA_AND_TAGS_PASS",
+    "description": "Full wheel hashes verified separately; internal METADATA SHA256 matches previously authenticated index; filename/internal version and Python wheel tags checked"
+  },
+  "manifest": {
+    "status": "CANDIDATE_ONLY_NOT_AN_INSTALL_LOCK",
+    "packages": 129,
+    "verified_wheels": 128,
+    "pending_wheels": [
+      "torch"
+    ],
+    "advertised_or_measured_wheel_bytes": 6946211252,
+    "graph_edges_checked": 307
+  },
+  "torch_full_download": "PENDING_AS_OF_OBSERVATION",
+  "huggingface_checkpoint": "NOT_ACQUIRED; official direct connection timed out; explicit-IP diagnostic remains denied and not attempted",
+  "runtime_environment_installed": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "Test": "HOLD"
+}
