@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "PUBLIC_LABEL_AND_PINNED_SOURCE_REVIEW_COMPLETE",
+  "repository_baseline": "ee3945effab20182cf69cffdfe2895c0adf8faa2",
+  "accept_training_provenance": false,
+  "finite_sentinel_absence": "NOT_ESTABLISHED",
+  "actual_source_defect": "NOT_DEMONSTRATED",
+  "label": {
+    "url": "https://imbrium.mit.edu/DATA/SLDEM2015/GLOBAL/FLOAT_IMG/SLDEM2015_128_60S_60N_000_360_FLOAT.LBL",
+    "bytes": 4588,
+    "sha256": "948d15d1a52db229521a6dfad64494c0f3dc437a55f048440f65f5d19b5a7493",
+    "retrieval": "bounded text-only read, maximum 16384 bytes; no IMG requested",
+    "raw_label_saved": false,
+    "product_version": "V2.0",
+    "lines": 15360,
+    "line_samples": 46080,
+    "sample_type": "PC_REAL",
+    "sample_bits": 32,
+    "unit": "KILOMETER",
+    "scaling_factor": 1,
+    "offset": 1737.4,
+    "height_formula": "DN * SCALING_FACTOR",
+    "radius_formula": "DN * SCALING_FACTOR + OFFSET",
+    "map_resolution_pix_per_degree": 128,
+    "map_scale_km_per_pixel": 0.236901,
+    "missing_constant_declared": false,
+    "invalid_constant_declared": false,
+    "null_declared": false,
+    "absence_interpretation": "No declaration is not proof of no finite missing-value pixels.",
+    "description_inconsistency": "Prose says approximately 60 m; structured grid says 0.236901 km/pixel.",
+    "historical_build_identity": "NOT_VERIFIED",
+    "digest_verification": "Calculated during the single bounded read; original bytes not retained for independent rehash."
+  },
+  "source": {
+    "repository": "ayushprd/Moonstone",
+    "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+    "alignment_file": "data_preparation/step02_align.py",
+    "alignment_sha256": "5c19e986ecf0cd593a17eafd7cb58d658f5a1e21338e0dd100877102252379fe",
+    "scaling_lines": [
+      144,
+      161
+    ],
+    "reprojection_lines": [
+      188,
+      228
+    ],
+    "cached_scaled_reuse_lines": [
+      294,
+      338
+    ],
+    "slope_file": "data_preparation/step03_derive.py",
+    "slope_lines": [
+      69,
+      100
+    ],
+    "observations": [
+      "Scaling reads band 1 without masked=True and uses src.nodata equality only.",
+      "No explicit read_masks/write_mask/mask-flag/alpha handling in alignment source. Rasterio/GDAL implicit mask behavior is not determined by this review.",
+      "Scaling copies profile but only explicitly updates dtype/compress/bigtiff; it does not explicitly set destination nodata to NaN or assign scales/offsets.",
+      "Reprojection uses the scaled source nodata metadata and destination NaN.",
+      "Nonempty scaled intermediates are reused; mere existence does not authenticate identity or generating code.",
+      "Slope generation uses aligned LOLA-only input when blended DEM is absent; actual historical choice is not independently verified."
+    ],
+    "slope_lola_fallback_lines": [
+      246,
+      250
+    ]
+  },
+  "next_readonly_receipt": [
+    "Inventory existing labels/headers/receipts/logs only. Hash small labels, exported headers and receipts; for large rasters reuse existing authenticated hash receipts without reading whole rasters. Record present/absent and source versions; do not acquire rasters or rescan cohort.",
+    "For original, converted and scaled terrain inputs record observed nodata, mask flags and mask/alpha source, scale/offset, dtype and CRS/transform. Do not infer missing headers.",
+    "Trace cached-scaled reuse and generating tool versions/hashes through aligned/blended (or actual LOLA-only fallback)/slope/V1/V2/V4 records; record the actual slope input. Distinguish expected source from actual executed history.",
+    "If records cannot cover the fixed cohort, keep the guard closed. Propose separately scoped existing Train/Val window comparison only after a gap analysis, excluding Test and spatial halos that touch it; spot checks cannot prove full-cohort validity."
+  ],
+  "limits": {
+    "raw_rasters_read": false,
+    "upstream_code_executed": false,
+    "model_or_training_run": false,
+    "test_read": false,
+    "cohort_rescanned": false,
+    "source_lineage_independently_reproduced": false,
+    "usgs_product_page": "HTTP 403 from web open; not retried/bypassed; search snippet not accepted as NoData evidence",
+    "runtime_mask_semantics": "NOT_EXECUTED_OR_CONFIRMED"
+  }
+}
