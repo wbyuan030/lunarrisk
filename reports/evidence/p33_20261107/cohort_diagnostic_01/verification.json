@@ -1,0 +1,25 @@
+{
+  "status": "DIAGNOSTIC_SCAN_AND_INDEPENDENT_CSV_VERIFICATION_PASS",
+  "scope": "Numerical diagnostics, not accepted finite-sentinel provenance or a training lock",
+  "scan_exit_code": 0,
+  "network": "disabled with unshare user/network namespace",
+  "focused_tests": {
+    "pass": 78,
+    "skip": 0,
+    "seconds": 6.166,
+    "new_tests": 3
+  },
+  "syntax_and_diff": "PASS",
+  "independent_csv_verification": "6290 rows, exact ordered fixed IDs/targets/ordinals; every channel total/range/candidate count matches summary; all finite and slopes within [0,90]",
+  "pinned_source_recheck_files": 6,
+  "official_model_execution": "NOT_RUN",
+  "training": "NOT_RUN",
+  "actual_budget": "NOT_FROZEN",
+  "Test": "HOLD",
+  "files_sha256": {
+    "summary.json": "ae97c52b9b02fa625b1dd43710e49e8eb284454632b3202367852cf65740c24c",
+    "source_recheck.json": "9ebb246933c2a64ab85c53307fbb29c57c4690e5eeaa1e2706e236da7f5c7d27",
+    "commands.json": "02fd4fc29a50ab815793b043c13b5ef1eb97274fbc6232d516547392ef8c37cf",
+    "rows.csv": "448f01b3df5e82565896432de60994d4caa1c770a9a8c8dedcc8b40e90431069"
+  }
+}

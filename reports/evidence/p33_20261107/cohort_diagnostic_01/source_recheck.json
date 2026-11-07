@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "prior_audit_sha256": "8b08c1f6c0cdc2745b65854671f20b1d1f827fccadc8afb19ecf8da2c8d85873",
+  "files": [
+    {
+      "file": "config.py",
+      "sha256": "5e9c79e552c595676cc0992e219ad8fbad5c8b894b8c55d8fd8c47adfbe9da5d",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/config.py"
+    },
+    {
+      "file": "data_preparation/step02_align.py",
+      "sha256": "5c19e986ecf0cd593a17eafd7cb58d658f5a1e21338e0dd100877102252379fe",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step02_align.py"
+    },
+    {
+      "file": "data_preparation/step03_derive.py",
+      "sha256": "9d264c3e3fbdb7aaf9dc9c3dfd8e39eb551acdfb21a9fbdc6272721cb1e3e599",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step03_derive.py"
+    },
+    {
+      "file": "data_preparation/step14_build_v4.py",
+      "sha256": "88ec4d52df7122534f666e06c7530007c5a57ae9200e77f9b3e0c51a993dc7da",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step14_build_v4.py"
+    },
+    {
+      "file": "data_preparation/step04_tile.py",
+      "sha256": "598c37941fea8667cbbf22fd114395615df8ca3ce9934683c190821add5c4988",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step04_tile.py"
+    },
+    {
+      "file": "data_preparation/step12_m3_integrate.py",
+      "sha256": "adcf47decbda4811fde0d51e63e0dcc7608c1fe686d5e241a47ef13dbe60bf26",
+      "revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+      "source_url": "https://github.com/ayushprd/Moonstone/blob/cbd4720653eb05afd975d2a36280858c5c56a275/data_preparation/step12_m3_integrate.py"
+    }
+  ],
+  "scope": "Static pinned source text only, not executed build lineage"
+}

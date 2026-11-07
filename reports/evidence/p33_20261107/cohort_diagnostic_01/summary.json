@@ -1,0 +1,122 @@
+{
+  "status": "DIAGNOSTIC_SCAN_COMPLETE",
+  "model_execution": "NOT_RUN",
+  "training": "NOT_RUN",
+  "scores": "NOT_RUN",
+  "test_pixels_read": 0,
+  "Test": "HOLD",
+  "authority": {
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "train_rows": 5135,
+    "train_ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+    "val_rows": 1155,
+    "val_ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656"
+  },
+  "asset_sha256": {
+    "sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "metadata_sha256": "3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "source_sha256": {
+    "scripts/p33_audit_terrain_cohort.py": "2d60df5711e62ce30e55e7bbd942e535a24df6cdc3fd7ebf35566d7ebc151198",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd"
+  },
+  "splits": {
+    "train": {
+      "rows": 5135,
+      "all_finite_rows": 5135,
+      "nonfinite_rows": [],
+      "candidate_match_rows": [],
+      "channels": {
+        "elevation": {
+          "finite": 336527360,
+          "nan": 0,
+          "posinf": 0,
+          "neginf": 0,
+          "zero": 5,
+          "min": -6547.2724609375,
+          "max": 9537.69921875,
+          "candidate_-9999": 0,
+          "candidate_-32768": 0,
+          "candidate_32767": 0,
+          "candidate_65535": 0
+        },
+        "slope": {
+          "finite": 336527360,
+          "nan": 0,
+          "posinf": 0,
+          "neginf": 0,
+          "zero": 193,
+          "min": 0.0,
+          "max": 87.22196197509766,
+          "candidate_-9999": 0,
+          "candidate_-32768": 0,
+          "candidate_32767": 0,
+          "candidate_65535": 0
+        }
+      },
+      "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+      "hdf5_fillvalue": 0.0,
+      "raw_terrain_ordered_sha256": "a8772f7934966412da88f4fbc8aae1e140e57c7952f36ca2f545cfbffe78fcb8"
+    },
+    "val": {
+      "rows": 1155,
+      "all_finite_rows": 1155,
+      "nonfinite_rows": [],
+      "candidate_match_rows": [],
+      "channels": {
+        "elevation": {
+          "finite": 75694080,
+          "nan": 0,
+          "posinf": 0,
+          "neginf": 0,
+          "zero": 32,
+          "min": -6850.181640625,
+          "max": 8332.9306640625,
+          "candidate_-9999": 0,
+          "candidate_-32768": 0,
+          "candidate_32767": 0,
+          "candidate_65535": 0
+        },
+        "slope": {
+          "finite": 75694080,
+          "nan": 0,
+          "posinf": 0,
+          "neginf": 0,
+          "zero": 53,
+          "min": 0.0,
+          "max": 86.42427825927734,
+          "candidate_-9999": 0,
+          "candidate_-32768": 0,
+          "candidate_32767": 0,
+          "candidate_65535": 0
+        }
+      },
+      "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+      "hdf5_fillvalue": 0.0,
+      "raw_terrain_ordered_sha256": "93f542b13a2d18eebaade19977de3cbe6b039b5536c2f64625198afb806a60d3"
+    }
+  },
+  "rows_csv_sha256": "448f01b3df5e82565896432de60994d4caa1c770a9a8c8dedcc8b40e90431069",
+  "finite_sentinel_absence": "NOT_ESTABLISHED",
+  "original_raster_execution_lineage": "NOT_INDEPENDENTLY_REPRODUCED",
+  "candidate_values": [
+    -9999,
+    -32768,
+    32767,
+    65535
+  ],
+  "candidate_interpretation": "Exploratory equality counts, not declared NoData or a mask; zero remains observed",
+  "cohort_action": "UNCHANGED_NO_FILTERING_OR_IMPUTATION",
+  "elapsed_seconds": 215.55358821499976,
+  "max_rss_kib": 127968,
+  "python": "3.12.9",
+  "numpy": "2.4.4",
+  "torch_imported": false
+}

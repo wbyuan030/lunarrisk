@@ -1,0 +1,22 @@
+{
+  "audit": [
+    "unshare",
+    "--user",
+    "--map-root-user",
+    "--net",
+    "$PRIVATE_PYTHON",
+    "-I",
+    "-B",
+    "scripts/p33_audit_terrain_cohort.py",
+    "--data",
+    "$EXISTING_FIXED_PREFIX",
+    "--metadata",
+    "$EXISTING_AUTHENTICATED_METADATA",
+    "--range-report",
+    "outputs/p31/loader_pair_01/report.json",
+    "--outdir",
+    "outputs/p33/cohort_diagnostic_01"
+  ],
+  "focused_tests": "$PRIVATE_PYTHON -I -B -m unittest discover -s tests -p test_p33_nasa*.py -v",
+  "privacy": "Private interpreter and original metadata paths replaced by symbolic names; actual files authenticated by hashes"
+}
