@@ -1,0 +1,19 @@
+{
+  "status": "INVENTORY_COMPLETE_GAPS_EXPLICIT",
+  "inventory_sha256": "7764ffc3340e778d89d37dff1a793d37a1f7fbb10992d8db98ea967e5df046ab",
+  "enumerated_files": 31248,
+  "walk_errors": 0,
+  "pruned_directories": 106,
+  "expected_historical_rasters_found": 0,
+  "logs_inspected": 344,
+  "literal_pipeline_marker_log_hits": 0,
+  "source_raster_execution_lineage": "NOT_ESTABLISHED",
+  "finite_sentinel_absence": "NOT_ESTABLISHED",
+  "network_requests": 0,
+  "large_file_hashes": 0,
+  "cohort_scans": 0,
+  "model_execution": "NOT_RUN",
+  "training": "NOT_RUN",
+  "Test": "HOLD_NO_PIXEL_ACCESS",
+  "scope_limit": "Known three project/history roots, explicit pruning; no whole-host or remote-host absence claim"
+}

@@ -1,0 +1,2200 @@
+{
+  "status": "BOUNDED_HISTORICAL_ASSET_AND_LOG_INVENTORY_COMPLETE",
+  "scope": "Enumerated three known project/history roots with explicit pruning; not a whole-host or remote-host absence proof",
+  "roots": {
+    "WORKSPACE": "current shared project",
+    "HISTORICAL_REPO": "prior project copy supplying authenticated HDF5 metadata",
+    "HISTORICAL_JOB_TMP": "prior task temporary workspace"
+  },
+  "enumerated_file_counts": {
+    "WORKSPACE": 21128,
+    "HISTORICAL_REPO": 9934,
+    "HISTORICAL_JOB_TMP": 186
+  },
+  "walk_errors": [],
+  "pruned_directories": [
+    "WORKSPACE/.git",
+    "WORKSPACE/.aws",
+    "WORKSPACE/src/lunarrisk/__pycache__",
+    "WORKSPACE/src/lunarrisk/benchmarks/__pycache__",
+    "WORKSPACE/src/lunarrisk/lunarjev/__pycache__",
+    "WORKSPACE/src/lunarrisk/rules/__pycache__",
+    "WORKSPACE/src/lunarrisk/probabilistic/__pycache__",
+    "WORKSPACE/src/lunarrisk/nasa_transfer/__pycache__",
+    "WORKSPACE/tests/__pycache__",
+    "WORKSPACE/outputs/p33/source_audit_01/nasa.git",
+    "WORKSPACE/outputs/p33/source_audit_01/moonstone.git",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/nasa_checkout",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/dependency_wheels",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/wheelhouse_links",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/vision_wheel",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/triton_wheel",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/venv",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/build_inputs",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/nasa_source.git",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/build_venv",
+    "WORKSPACE/outputs/p33/runtime_rocm72_01/torch_wheel",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/sbin",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/lib32",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/bin",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/lib64",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/libx32",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic/main/lib",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/sbin",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/lib32",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/bin",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/lib64",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/libx32",
+    "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic/main/lib",
+    "WORKSPACE/scripts/__pycache__",
+    "HISTORICAL_REPO/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/tests/__pycache__",
+    "HISTORICAL_REPO/p30_tests_02/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/tests/__pycache__",
+    "HISTORICAL_REPO/p30_probe_01/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/tests/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_tests_01/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_geology_commit_baac7dc/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_geology_commit_baac7dc/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_geology_commit_baac7dc/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/tests/__pycache__",
+    "HISTORICAL_REPO/p30_geology_tests_01/scripts/__pycache__",
+    "HISTORICAL_REPO/p22_preflight_20261103/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p22_preflight_20261103/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p22_preflight_20261103/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p22_preflight_20261103/tests/__pycache__",
+    "HISTORICAL_REPO/p22_preflight_20261103/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/tests/__pycache__",
+    "HISTORICAL_REPO/p30_commit_2f064fd/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/code_p22_ac93b10/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/code_p22_ac93b10/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/code_p22_ac93b10/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/code_p22_ac93b10/tests/__pycache__",
+    "HISTORICAL_REPO/code_p22_ac93b10/scripts/__pycache__",
+    "HISTORICAL_REPO/tests/__pycache__",
+    "HISTORICAL_REPO/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/tests/__pycache__",
+    "HISTORICAL_REPO/p30_tests_01/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/tests/__pycache__",
+    "HISTORICAL_REPO/p30_mmap_tests_01/scripts/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/src/lunarrisk/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/src/lunarrisk/benchmarks/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/src/lunarrisk/rules/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/src/lunarrisk/probabilistic/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/tests/__pycache__",
+    "HISTORICAL_REPO/p30_tests_03/scripts/__pycache__",
+    "HISTORICAL_JOB_TMP/p31_runtime"
+  ],
+  "source_intermediate_expected": {
+    "Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif": [],
+    "SLDEM2015_128_60S_60N_000_360_FLOAT.IMG": [],
+    "SLDEM2015_128_60S_60N_000_360_FLOAT.LBL": [],
+    "lola_dem_scaled.tif": [],
+    "sldem2015_128ppd_converted.tif": [],
+    "sldem2015_128ppd_meters.tif": [],
+    "elevation_lola.tif": [],
+    "elevation_sldem.tif": [],
+    "elevation_blended.tif": [],
+    "slope.tif": []
+  },
+  "other_raster_candidates_filename_stat_only": [
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261107/terrain_source_01/sldem_label.lbl.gz",
+      "bytes": 1778,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/NAC_DTM_FRSHCRATER10.TIF",
+      "bytes": 136373747,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p20_ranger_mosaic.tif",
+      "bytes": 131900208,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p20_ranger_mosaic_acq.tif",
+      "bytes": 131900208,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p20_planckfloor_mosaic_acq.tif",
+      "bytes": 231037728,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p20_planckfloor_mosaic.tif",
+      "bytes": 231037728,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_frsh10/M153639872RC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_frsh10/NAC_DTM_FRSHCRATER10.LBL",
+      "bytes": 3606,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_frsh10/NAC_DTM_FRSHCRATER10.TIF",
+      "bytes": 136373747,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_frsh10/M153639872LC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_LASELMASIF2.TIF",
+      "bytes": 126708791,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_NECTRIMII1.TIF",
+      "bytes": 90760375,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_LASELMASIF2.LBL",
+      "bytes": 3566,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_ESALL_SR12.TIF",
+      "bytes": 25020674,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_ESALL_SR12.LBL",
+      "bytes": 3745,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/probe_p19/NAC_DTM_NECTRIMII1.LBL",
+      "bytes": 3578,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/M136648682RC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/NAC_DTM_PLANCKFLOOR.LBL",
+      "bytes": 3598,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/M136648682LC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/M136655466.IMG",
+      "bytes": 3139,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/NAC_DTM_PLANCKFLOOR.TIF",
+      "bytes": 231178079,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/M136655466RC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/M136655466LC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/M144490730.IMG",
+      "bytes": 3139,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/M144490730LC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/NAC_DTM_RANGER.TIF",
+      "bytes": 132014063,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/M144490730RC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/M144483945RC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/M144483945LC.IMG",
+      "bytes": 528929736,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/NAC_DTM_RANGER.LBL",
+      "bytes": 3565,
+      "symlink": false,
+      "kind": "filename_stat_only_no_pixels_or_header_read"
+    }
+  ],
+  "logs_inspected": [
+    {
+      "location": "WORKSPACE/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/baseline_tests.log",
+      "bytes": 28268,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/focused_tests.log",
+      "bytes": 4848,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/cloud_tests.log",
+      "bytes": 89587,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/driver_upgrade_01/rollback_simulation.log",
+      "bytes": 833,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/driver_upgrade_01/upgrade_simulation.log",
+      "bytes": 875,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/runner_local_01/focused_tests.log",
+      "bytes": 6680,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/runner_local_01/full_tests.log",
+      "bytes": 78300,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/native256_local_01/focused_tests.log",
+      "bytes": 8022,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/native256_local_01/input_preflight.log",
+      "bytes": 66,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/native256_local_01/full_tests.log",
+      "bytes": 79961,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/metadata_local_01/focused_tests.log",
+      "bytes": 1755,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/paired_runner/focused_tests.log",
+      "bytes": 11048,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/paired_runner/cloud_tests.log",
+      "bytes": 95786,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/native256_policy/focused_tests.log",
+      "bytes": 13009,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/train_membership_fix/focused_tests.log",
+      "bytes": 5196,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/train_membership_fix/cloud_tests.log",
+      "bytes": 89936,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_01/real_input_preflight.log",
+      "bytes": 1065,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_01/focused_tests.log",
+      "bytes": 2814,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_01/full_tests.log",
+      "bytes": 74434,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_02/real_input_preflight.log",
+      "bytes": 1065,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_02/focused_tests.log",
+      "bytes": 3042,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_02/full_tests.log",
+      "bytes": 74662,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/cpu_candidate_01/focused_tests.log",
+      "bytes": 2421,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_20261104/tests.log",
+      "bytes": 68063,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/tests.log",
+      "bytes": 54228,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/replay.log",
+      "bytes": 11966,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_geology_20261103/tests_482.log",
+      "bytes": 57886,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_geology_20261103/train.log",
+      "bytes": 2638,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_geology_20261103/replay.log",
+      "bytes": 2525,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_pair_20261104/unittest.log",
+      "bytes": 60654,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_pair_20261104/execution.log",
+      "bytes": 5517,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_20261103/unittest.log",
+      "bytes": 60654,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation_v2/initial_head_failure.log",
+      "bytes": 900,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation_v2/tests.log",
+      "bytes": 72038,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation/tests_missing_child_runtime.log",
+      "bytes": 73656,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation/tests_timestamp_fixture.log",
+      "bytes": 72420,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation/cache_attempt02.log",
+      "bytes": 947,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation/tests.log",
+      "bytes": 71869,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/implementation/cache_attempt01.log",
+      "bytes": 714,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/context/stdout.log",
+      "bytes": 639,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed43_permuted/stdout.log",
+      "bytes": 21252,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed43/stdout.log",
+      "bytes": 18262,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed44_permuted/stdout.log",
+      "bytes": 27269,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B1_seed42/stdout.log",
+      "bytes": 18997,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed42/stdout.log",
+      "bytes": 12255,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed43_permuted/stdout.log",
+      "bytes": 20478,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed42/stdout.log",
+      "bytes": 18990,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed44/stdout.log",
+      "bytes": 22017,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed44/stdout.log",
+      "bytes": 25760,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B1_seed44/stdout.log",
+      "bytes": 27987,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B0_seed44/stdout.log",
+      "bytes": 37971,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B0_seed42/stdout.log",
+      "bytes": 25957,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed44_permuted/stdout.log",
+      "bytes": 16735,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B1_seed43/stdout.log",
+      "bytes": 15995,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B2_seed42_permuted/stdout.log",
+      "bytes": 25773,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/B0_seed43/stdout.log",
+      "bytes": 25951,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed43/stdout.log",
+      "bytes": 10714,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p32_20261105/runs/J_seed42_permuted/stdout.log",
+      "bytes": 17472,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_fiveclass_20261103/tests_478.log",
+      "bytes": 57441,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_fiveclass_20261103/train.log",
+      "bytes": 1694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_fiveclass_20261103/extraction.log",
+      "bytes": 2741,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_fiveclass_20261103/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_acquisition_recovery_20261104/unittest.log",
+      "bytes": 63239,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_baseline_launch_20261104/unittest.log",
+      "bytes": 62927,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_mmap_20261103/probe.log",
+      "bytes": 60574,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p30_mmap_20261103/tests_476.log",
+      "bytes": 57318,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/age_seed42/stdout.log",
+      "bytes": 32454,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/geology_seed42/stdout.log",
+      "bytes": 242781,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/age_seed43/stdout.log",
+      "bytes": 24777,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/geology_seed44/stdout.log",
+      "bytes": 261071,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/geology_seed43/stdout.log",
+      "bytes": 289243,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p31_prefix_runs_20261104/age_seed44/stdout.log",
+      "bytes": 14512,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261106/nasa_real_01/preflight.log",
+      "bytes": 621,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261106/rocm72_runtime_01/offline_install.log",
+      "bytes": 2894,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_01/B0_seed42.stdout.log",
+      "bytes": 1013,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed44.replay.log",
+      "bytes": 1088,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed42.replay.log",
+      "bytes": 1088,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed43.replay.log",
+      "bytes": 1088,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed43.stdout.log",
+      "bytes": 16106,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed42_permuted.replay.log",
+      "bytes": 1086,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed44_permuted.stdout.log",
+      "bytes": 27380,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed44.replay.log",
+      "bytes": 391,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed44.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed44.stdout.log",
+      "bytes": 38008,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed43.replay.log",
+      "bytes": 391,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed44_permuted.replay.log",
+      "bytes": 1086,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed44.stdout.log",
+      "bytes": 28098,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed44.stdout.log",
+      "bytes": 22128,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed43_permuted.stdout.log",
+      "bytes": 21363,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed42.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed43.stdout.log",
+      "bytes": 18373,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed44.stdout.log",
+      "bytes": 25871,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed43_permuted.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed42.stdout.log",
+      "bytes": 19108,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed43_permuted.replay.log",
+      "bytes": 1086,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed42.stdout.log",
+      "bytes": 25994,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed44_permuted.stdout.log",
+      "bytes": 16846,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed42.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed42.stdout.log",
+      "bytes": 19101,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed44.replay.log",
+      "bytes": 1088,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B1_seed43.replay.log",
+      "bytes": 1088,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed42_permuted.stdout.log",
+      "bytes": 25884,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed43.replay.log",
+      "bytes": 1086,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed43_permuted.stdout.log",
+      "bytes": 20589,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed42.stdout.log",
+      "bytes": 12366,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed43.stdout.log",
+      "bytes": 10825,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed44_permuted.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/J_seed42_permuted.stdout.log",
+      "bytes": 17583,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed43.stdout.log",
+      "bytes": 25988,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B0_seed42.replay.log",
+      "bytes": 391,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p32/heads_02/B2_seed42_permuted.replay.log",
+      "bytes": 1087,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_boot_repair_01/rebuild.log",
+      "bytes": 1648,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_upgrade_01/rollback_simulation.log",
+      "bytes": 833,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_upgrade_01/upgrade_simulation.log",
+      "bytes": 875,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/real_paired_preflight_01/preflight.log",
+      "bytes": 621,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/runtime_rocm72_01/resolution_01/resolver.log",
+      "bytes": 34139,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_install_01/simulation.log",
+      "bytes": 663,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_install_01/apt.log",
+      "bytes": 494,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_install_02/simulation.log",
+      "bytes": 663,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_install_02/dpkg.log",
+      "bytes": 4870,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/native256_input_01/preflight.log",
+      "bytes": 66,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-138-generic.dependencies.log",
+      "bytes": 985,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/driver_pre_reboot_01/6.8.0-124-generic.dependencies.log",
+      "bytes": 985,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_02.log",
+      "bytes": 3257,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/full_acquisition_01.log",
+      "bytes": 26659,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01.launch.log",
+      "bytes": 375,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/full_acquisition_02.log",
+      "bytes": 10719,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/candidate_control_01.log",
+      "bytes": 8255,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_uninterrupted_01.log",
+      "bytes": 7200,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_01.log",
+      "bytes": 3257,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/loader_pair_01.log",
+      "bytes": 5517,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed42.stdout.log",
+      "bytes": 32487,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed44.replay.log",
+      "bytes": 6167,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed43.replay.log",
+      "bytes": 75979,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed42.stdout.log",
+      "bytes": 242814,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed44.stdout.log",
+      "bytes": 261104,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed44.stdout.log",
+      "bytes": 14545,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed42.replay.log",
+      "bytes": 6168,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed44.replay.log",
+      "bytes": 75980,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed42.replay.log",
+      "bytes": 75978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/geology_seed43.stdout.log",
+      "bytes": 289276,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed43.stdout.log",
+      "bytes": 24810,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/local_prefix_baselines_01/age_seed43.replay.log",
+      "bytes": 6169,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_02/interrupted.log",
+      "bytes": 6434,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_02/resumed.log",
+      "bytes": 6418,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_02/replay.log",
+      "bytes": 5627,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_01/interrupted.log",
+      "bytes": 6434,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_01/resumed.log",
+      "bytes": 6418,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/runner_verification_01/replay.log",
+      "bytes": 5627,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/print.prt",
+      "bytes": 52052,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_tests_01/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_tests_01/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_tests_01/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_tests_01/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/tests.log",
+      "bytes": 54228,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/replay.log",
+      "bytes": 11966,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_mmap_20261103/probe.log",
+      "bytes": 60574,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_fiveclass_commit_1e32a7b/reports/evidence/p30_mmap_20261103/tests_476.log",
+      "bytes": 57318,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/tests.log",
+      "bytes": 54228,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/replay.log",
+      "bytes": 11966,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_fiveclass_20261103/tests_478.log",
+      "bytes": 57441,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_fiveclass_20261103/train.log",
+      "bytes": 1694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_fiveclass_20261103/extraction.log",
+      "bytes": 2741,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_fiveclass_20261103/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_mmap_20261103/probe.log",
+      "bytes": 60574,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_commit_baac7dc/reports/evidence/p30_mmap_20261103/tests_476.log",
+      "bytes": 57318,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_tests_01/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_tests_01/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_tests_01/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_geology_tests_01/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/tests.log",
+      "bytes": 54228,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/replay.log",
+      "bytes": 11966,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_commit_2f064fd/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/tests.log",
+      "bytes": 54228,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/replay.log",
+      "bytes": 11966,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_commit_bfe37b3/reports/evidence/p22_20261103/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_recheck_cross.log",
+      "bytes": 4286,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_geo_seed42.log",
+      "bytes": 1775,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_both_seed43.log",
+      "bytes": 1690,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_full_seed44.log",
+      "bytes": 1931,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_photo_summary.log",
+      "bytes": 12425,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_seed43.log",
+      "bytes": 2238,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_geo_summary.log",
+      "bytes": 12036,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_photo_seed44.log",
+      "bytes": 2326,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_recheck_p17_no_photo.log",
+      "bytes": 12453,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_photo_seed42.log",
+      "bytes": 1845,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_recheck_p17_full.log",
+      "bytes": 12443,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_aug_seed44.log",
+      "bytes": 2400,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_seed42.log",
+      "bytes": 2238,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_geo_seed44.log",
+      "bytes": 1776,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_seed42.log",
+      "bytes": 2400,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_both_seed44.log",
+      "bytes": 1687,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_full_summary.log",
+      "bytes": 12033,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_repeat_summary.log",
+      "bytes": 12399,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_both_seed44.log",
+      "bytes": 2491,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_photo_seed43.log",
+      "bytes": 2329,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_summary.log",
+      "bytes": 12420,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_recheck_p17_no_both.log",
+      "bytes": 12447,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_seed44.log",
+      "bytes": 2239,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_aug_seed42.log",
+      "bytes": 2403,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_photo_seed42.log",
+      "bytes": 2328,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_seed43.log",
+      "bytes": 2399,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_both_summary.log",
+      "bytes": 12424,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_geo_seed43.log",
+      "bytes": 1778,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_aug_summary.log",
+      "bytes": 12395,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_full_seed43.log",
+      "bytes": 1934,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_photo_seed44.log",
+      "bytes": 1845,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_both_seed43.log",
+      "bytes": 2489,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_both_seed42.log",
+      "bytes": 1691,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_aug_seed43.log",
+      "bytes": 2402,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_both_summary.log",
+      "bytes": 12037,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_repeat_seed42.log",
+      "bytes": 2247,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_recheck_p17_no_geo.log",
+      "bytes": 12446,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_photo_seed43.log",
+      "bytes": 1848,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_repeat_seed43.log",
+      "bytes": 2246,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_seed44.log",
+      "bytes": 2398,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_geo_summary.log",
+      "bytes": 12420,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_full_repeat_seed44.log",
+      "bytes": 2244,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_no_both_seed42.log",
+      "bytes": 2491,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_no_photo_summary.log",
+      "bytes": 12043,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p17_full_seed42.log",
+      "bytes": 1934,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_validation/artifact_audit/baseline_replay.log",
+      "bytes": 289,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat2/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_validation/artifact_audit/joint_seed42_repeat1/run.log",
+      "bytes": 978,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat1/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_validation/artifact_audit/point_seed42_repeat2/run.log",
+      "bytes": 963,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/collision_v1.log",
+      "bytes": 460,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/tests.log",
+      "bytes": 54534,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/compile.log",
+      "bytes": 0,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/collision_v2.log",
+      "bytes": 463,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/replay.log",
+      "bytes": 12038,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/comparison.log",
+      "bytes": 8685,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p22_20261103_logs/diagnostic.log",
+      "bytes": 484,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/PLANCKFLOOR/print.prt",
+      "bytes": 184491,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/data/pilot_p20/RANGER/print.prt",
+      "bytes": 3484219,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_tests_01/reports/evidence/p30_20261103/tests_471.log",
+      "bytes": 56694,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_tests_01/reports/evidence/p30_20261103/age_smoke/train.log",
+      "bytes": 1693,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_tests_01/reports/evidence/p30_20261103/age_smoke/replay.log",
+      "bytes": 1644,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_REPO/p30_mmap_tests_01/reports/evidence/p30_20261103/age_smoke/tests_committed_471.log",
+      "bytes": 56796,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_heads_01.log",
+      "bytes": 1660,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_windowed_unittest.log",
+      "bytes": 64621,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_authorized_baselines_unittest.log",
+      "bytes": 64309,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_heads_02.log",
+      "bytes": 783,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_tests_commit_2f064fd.log",
+      "bytes": 57153,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_merged_full_tests.log",
+      "bytes": 75290,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_unittest_02.log",
+      "bytes": 82437,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_geology_replay_01.log",
+      "bytes": 2555,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_cache_context_03.log",
+      "bytes": 639,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_metadata_audit.log",
+      "bytes": 6664,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_runner_local_full.log",
+      "bytes": 78928,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_fiveclass_replay_01.log",
+      "bytes": 1674,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_geology_tests_01.log",
+      "bytes": 58379,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_pair_final_unittest.log",
+      "bytes": 62036,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_age_replay_01.log",
+      "bytes": 1674,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_tests_626.log",
+      "bytes": 73420,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_benchmark.log",
+      "bytes": 1000,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_mmap_tests_01.log",
+      "bytes": 57658,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_final_verification.log",
+      "bytes": 1412,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_unittest_01.log",
+      "bytes": 51444,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_focused_tests.log",
+      "bytes": 2814,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_fiveclass_smoke_01.log",
+      "bytes": 1724,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_geology_smoke_01.log",
+      "bytes": 2668,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_fiveclass_extract_01.log",
+      "bytes": 2741,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_runner_local_tests.log",
+      "bytes": 6680,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_tests_final.log",
+      "bytes": 73827,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_cache_context.log",
+      "bytes": 747,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p22_preflight_tests.log",
+      "bytes": 56624,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_native_local_full.log",
+      "bytes": 81343,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_prefix_full_tests.log",
+      "bytes": 69360,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_tests_01.log",
+      "bytes": 63621,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_tests_02.log",
+      "bytes": 56859,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_metadata_local_tests.log",
+      "bytes": 1755,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_tests_pass.log",
+      "bytes": 73251,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_age_smoke_01.log",
+      "bytes": 1723,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_fiveclass_tests_01.log",
+      "bytes": 57968,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_full_tests.log",
+      "bytes": 75062,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_cache_context_02.log",
+      "bytes": 980,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_native_local_tests.log",
+      "bytes": 8022,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p33_merged_focused_tests.log",
+      "bytes": 3042,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_tests_03.log",
+      "bytes": 57051,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_extract_01.log",
+      "bytes": 2155,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p31_unittest_03.log",
+      "bytes": 62036,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p30_mmap_probe_01.log",
+      "bytes": 60574,
+      "pipeline_marker_counts": {}
+    },
+    {
+      "location": "HISTORICAL_JOB_TMP/p32_tests.log",
+      "bytes": 75121,
+      "pipeline_marker_counts": {}
+    }
+  ],
+  "logs_over_bound_not_read": [],
+  "pipeline_log_hits": [],
+  "pipeline_markers": {
+    "lola_scale": "Applying 0.5 scale factor to LOLA",
+    "lola_reuse": "Using existing scaled LOLA:",
+    "sldem_scale": "Scaling SLDEM from km to meters",
+    "sldem_reuse": "Using existing scaled SLDEM:",
+    "lola_align": "--- Aligning LOLA DEM ---",
+    "sldem_align": "--- Aligning SLDEM2015 ---",
+    "dem_blend": "--- Blending DEM (SLDEM+LOLA) ---",
+    "slope_compute": "--- Computing Slope ---",
+    "v2_build": "=== Building V2 HDF5:"
+  },
+  "receipt_candidates_stat_only": [
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261107/terrain_source_01/source_observations.json",
+      "bytes": 3812
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261107/cohort_diagnostic_01/source_recheck.json",
+      "bytes": 2267
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/runtime_plan_01/source_audit.json",
+      "bytes": 12562
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261105/local_01/source_audit.json",
+      "bytes": 7034
+    },
+    {
+      "location": "WORKSPACE/outputs/p18_source_audit.json",
+      "bytes": 1002
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/source_audit_01/acquisition.json",
+      "bytes": 2546
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/source_audit_01/additional_sources.json",
+      "bytes": 979
+    },
+    {
+      "location": "WORKSPACE/outputs/p33/cohort_diagnostic_01/source_recheck.json",
+      "bytes": 2267
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/loader_pair_01/report.json",
+      "bytes": 3847824
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/assets/moonstone_53099efd/download_manifest.json",
+      "bytes": 43708
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p18_source_audit.json",
+      "bytes": 1002
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p30/hdf5_inspection_02.json",
+      "bytes": 9745871
+    },
+    {
+      "location": "HISTORICAL_REPO/outputs/p30/hdf5_inspection_01.json",
+      "bytes": 511
+    }
+  ],
+  "existing_hdf5_archived_header": {
+    "location": "HISTORICAL_REPO/outputs/p30/hdf5_inspection_02.json",
+    "bytes_read": 4096,
+    "attributes": {
+      "channel_names": [
+        "wac_morphology",
+        "elevation",
+        "slope",
+        "roughness",
+        "diviner_tbol_midnight",
+        "diviner_temp_night",
+        "rock_abundance",
+        "christiansen_feature",
+        "m3_750",
+        "m3_950",
+        "m3_1000",
+        "m3_1250",
+        "m3_1580",
+        "m3_2000",
+        "m3_2817",
+        "m3_2857",
+        "grail_freeair",
+        "grail_bouguer",
+        "grail_uncertainty",
+        "minirf_cpr",
+        "minirf_s1",
+        "wac_hapke_415nm",
+        "wac_hapke_566nm",
+        "wac_hapke_604nm",
+        "wac_hapke_689nm",
+        "clementine_uvvis_750nm",
+        "lpgrs_tio2",
+        "lpgrs_feo"
+      ],
+      "n_channels": 28,
+      "patch_size": 256,
+      "ppd": 128
+    },
+    "interpretation": "Only common channel/shape/grid fields present in root attributes; not a raster hash/build-command/lineage manifest"
+  },
+  "current_public_metadata_evidence": {
+    "location": "WORKSPACE/reports/evidence/p33_20261107/terrain_source_01/source_observations.json",
+    "lola_header_observed": "-32768",
+    "lola_range_sha256": "405f2abdd21976c8d1d7ed623a010e1bb5963c0665b4142c521211f77d796fcf",
+    "sldem_label_sha256_verified_against_archived_gzip": "948d15d1a52db229521a6dfad64494c0f3dc437a55f048440f65f5d19b5a7493",
+    "historical_identity": "NOT_ESTABLISHED"
+  },
+  "conclusion": "No original LOLA/SLDEM raster, scaled/converted/aligned terrain raster, slope raster or exact pipeline build/reuse runtime marker found within inspected scope. Existing source/download/pixel audits authenticate code or acquired products, not original raster execution lineage.",
+  "network_requests": 0,
+  "large_file_hashes": 0,
+  "raw_raster_headers_read": 0,
+  "cohort_scans": 0,
+  "model_execution": "NOT_RUN",
+  "Test": "HOLD_NO_PIXEL_ACCESS",
+  "receipt_interpretations": [
+    {
+      "location": "WORKSPACE/outputs/p33/source_audit_01/acquisition.json",
+      "type": "Fixed source text acquisition, explicitly not executed",
+      "top_level_fields": [
+        "route",
+        "files_not_executed",
+        "repositories"
+      ],
+      "historical_raster_build_receipt": false
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/assets/moonstone_53099efd/download_manifest.json",
+      "type": "HDF5 prefix acquisition attempts; not source raster ingestion/build",
+      "top_level_fields": [
+        "asset",
+        "returned_body_bytes",
+        "attempts",
+        "policy",
+        "status",
+        "partial_bytes",
+        "chunk_bytes",
+        "error_type",
+        "window_bytes",
+        "interruption_limit_per_invocation"
+      ],
+      "historical_raster_build_receipt": false
+    },
+    {
+      "location": "WORKSPACE/outputs/p31/loader_pair_01/report.json",
+      "type": "Selected downstream raw-crop pair/range acquisition; not upstream raster construction",
+      "historical_raster_build_receipt": false
+    },
+    {
+      "location": "WORKSPACE/reports/evidence/p33_20261107/terrain_source_01/source_observations.json",
+      "type": "Current public LOLA header and SLDEM label evidence; original historical bytes unlinked",
+      "historical_raster_build_receipt": false
+    }
+  ],
+  "log_search_method": "All enumerated .log/.out/.prt files up to 10MB; directory names pruned using basenames of initial excluded directories, and symlinks not followed; fixed literal runtime marker search only, not semantic proof that no differently worded logs exist."
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PARTIAL_HEADER_OBSERVED_UNINTENDED_COMPRESSED_RASTER_BYTES",
+  "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+  "source": "https://hf-mirror.com/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/aligned/",
+  "route": "Direct HTTPS without proxy, mirror redirect to Xet bridge; no full files",
+  "per_file_request": "bytes=0-1048575; HTTP 206 and matching Content-Range; 1048576 bytes each",
+  "total_response_body_bytes": 3145728,
+  "common_tiff_metadata": {
+    "width": 46080, "height": 23040, "sample_format": "IEEE floating point", "bits": 32,
+    "bands": 1, "compression": "LZW", "rows_per_strip": 1, "gdal_nodata": "nan",
+    "pixel_scale": [236.90117518866782, 236.90117518866782, 0.0],
+    "tiepoint": [0.0, 0.0, 0.0, -5458203.076346907, 2729101.5381734534, 0.0],
+    "first_strip_offset": 277269
+  },
+  "files": [
+    {"name": "elevation_blended.tif", "listed_size": 4391122761, "listed_sha256": "d4e70b1049f073feab19a18eca3c18b11469760dd67251879cc7d99d5de225ef", "range_sha256": "b8ceb10f409cca90d1f15427f1ef179f186faf21e9e5ded628e66364d50a300b"},
+    {"name": "elevation_lola.tif", "listed_size": 3781456435, "listed_sha256": "039fd8b8d629ab21eced30dbbe4b9988b1cff5bc4f301b8086998b009f8404d6", "range_sha256": "18320a5d020dc8288019b4530be056a4b1774f9cc3a2e5436c98838329f7327b"},
+    {"name": "elevation_sldem.tif", "listed_size": 3169129871, "listed_sha256": "0e1d6f23dd5a2a79e18d02ec55e4ecf4ae47a2b53b099f7ec56f334876f3892f", "range_sha256": "b85c9a5e31b08e74671e88c2eeae5c3f58e89083a0da0fb00fc71b4f4d6a1e44"}
+  ],
+  "identity_limit": "Mirror response revision and linked hashes agree with earlier official listing; 1 MiB partial hashes cannot establish full-file SHA256 or historical build lineage.",
+  "scope_deviation": "The first raster strip starts at byte 277269, so each 1 MiB response included compressed image bytes beyond the header. Those bytes were not decoded or used for analysis, and may cover held-out Test geography. No claim of zero Test-related bytes received is made. No model, task predictions or scores were computed. Further raster requests stopped.",
+  "actual_original_build_lineage": "NOT_ESTABLISHED",
+  "finite_sentinel_absence": "NOT_ESTABLISHED",
+  "training": "NOT_RUN", "test_scoring": "HOLD"
+}
