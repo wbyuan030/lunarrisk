@@ -2,7 +2,7 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "REAL_NASA_TRAIN2705_PAIRED_FROZEN_GPU_PREFLIGHT_PASS",
+  "status": "FULL_COHORT_NUMERICAL_DIAGNOSTIC_COMPLETE_SOURCE_VALIDITY_NOT_ESTABLISHED",
   "latest_verified_execution": {
     "observed_utc": "2026-11-06T06:11:53.258040+00:00",
     "report": "reports/p3_3_real_nasa_preflight.md",
@@ -20,6 +20,24 @@
     "runner_preflight_gate": "PASS_FROZEN_ADAPTATION",
     "scope": "Engineering preflight only; no optimizer step, training, full-cohort scan, selection, task score or transfer-benefit claim"
   },
+  "latest_cohort_diagnostic": {
+    "observed_date": "2026-11-07",
+    "status": "DIAGNOSTIC_SCAN_COMPLETE",
+    "report": "reports/p3_3_cohort_terrain_diagnostic.md",
+    "evidence": "reports/evidence/p33_20261107/cohort_diagnostic_01/verification.json",
+    "summary": "reports/evidence/p33_20261107/cohort_diagnostic_01/summary.json",
+    "train_rows": 5135,
+    "val_rows": 1155,
+    "numerical_result": "All raw elevation and slope pixels finite; slopes within [0,90] degrees; finite zeros retained",
+    "finite_sentinel_absence": "NOT_ESTABLISHED",
+    "original_raster_execution_lineage": "NOT_INDEPENDENTLY_REPRODUCED",
+    "accepted_training_provenance": "NOT_ESTABLISHED",
+    "cohort_action": "UNCHANGED_NO_FILTERING_OR_IMPUTATION",
+    "repeat_scan": "DO_NOT_REPEAT",
+    "source_validity_report": "reports/p3_3_terrain_source_validity_followup.md",
+    "lineage_inventory_report": "reports/p3_3_local_terrain_lineage_inventory.md",
+    "scope": "Existing 2026-11-07 numerical diagnostics and verification; not a new scan, accepted source validity, budget lock, training or task score"
+  },
   "historical_record_scope": {
     "records": [
       "local_followup",
@@ -29,7 +47,7 @@
       "private_runtime_plan",
       "cloud_limits"
     ],
-    "scope": "Preserved snapshots of their dated stages, not current execution status or instructions. Historical evidence hashes identify the original file versions. Current status is latest_verified_execution plus remaining_gates; this status refresh authorizes no new execution."
+    "scope": "Preserved snapshots of their dated stages, not current execution status or instructions. Historical evidence hashes identify the original file versions. Current status combines the dated latest_verified_execution preflight, latest_cohort_diagnostic and remaining_gates; this documentation refresh authorizes no new execution."
   },
   "local_followup": {
     "base_commit": "8eeab47",
@@ -70,11 +88,11 @@
   "frozen_probe": "NOT_TRAINED; Train2705 frozen-encoder engineering forward/backward PASS is not a completed trained linear-probe experiment",
   "optional_adapter": "Input-affine only, not LoRA; implemented wrapper but not executed",
   "training_runner": "IMPLEMENTED_TRAINING_NOT_EXECUTED: scripts/p33_train_pair.py lock/run/replay; actual frozen preflight receipt gate PASS only",
-  "actual_training_manifest": "NOT_FROZEN; explicit actual paired budget required after valid full-cohort provenance and a no-score scan; example budget is not an actual lock",
+  "actual_training_manifest": "NOT_FROZEN; reuse the completed no-score numerical diagnostic, with no repeat scan; an explicit actual paired budget still requires accepted full-cohort source validity; example budget is not an actual lock",
   "initial_ids": {
     "train": 5135,
     "validation": 1155,
-    "final_terrain_eligible_ids": "NOT_AUDITED"
+    "final_terrain_eligible_ids": "NUMERICAL_DIAGNOSTIC_COMPLETE_SOURCE_VALIDITY_NOT_ESTABLISHED"
   },
   "public_test": "HOLD",
   "existing_p32_evidence": "PRESERVE_NO_REPEATED_18_RUN_MATRIX",
@@ -86,9 +104,9 @@
   ],
   "remaining_gates": [
     "Establish valid provenance for all fixed 5135 Train and 1155 Val samples, including raw-source lineage and justified nodata_policy=finite_only_no_finite_sentinels; a finite-only scan cannot exclude unknown finite NoData sentinels",
-    "After provenance is valid, scan the complete unchanged Train/Val cohort without scores; failure blocks this protocol, with no silent filtering, imputation or spatial-policy change",
-    "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
-    "Training requires separate authorization after these gates; no completed preflight/tests need repeating for this status update, no automatic new execution is authorized, and Test remains HOLD"
+    "Reuse the completed 2026-11-07 full-cohort numerical diagnostic; do not repeat the scan. Review only existing text records, source code and standalone text metadata. Do not issue raster HEAD/range/window requests or decode received raster strips; contacting the producer or changing this boundary requires separate user authorization",
+    "After source validity is established, select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget, and no filtering, imputation or spatial-policy change is authorized",
+    "Training requires separate authorization after these gates; no completed preflight/tests need repeating for this documentation refresh, no automatic new execution is authorized, and Test remains HOLD"
   ],
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,
