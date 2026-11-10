@@ -2,7 +2,7 @@
   "plan_id": "p33_nasa_terrain_transfer",
   "created_date": "2026-11-05",
   "base_commit": "aea52f28444598df7692f76ac67bbd0466b65ff7",
-  "status": "REAL_NASA_TRAIN2705_PAIRED_FROZEN_GPU_PREFLIGHT_PASS",
+  "status": "FULL_COHORT_NUMERICAL_DIAGNOSTIC_COMPLETE_SOURCE_VALIDITY_NOT_ESTABLISHED",
   "latest_verified_execution": {
     "observed_utc": "2026-11-06T06:11:53.258040+00:00",
     "report": "reports/p3_3_real_nasa_preflight.md",
@@ -46,6 +46,26 @@
     "still_open": "raw LOLA/SLDEM ingestion re-execution, GDAL/rasterio versions, intermediate headers and reuse, byte comparison against aligned/derived GeoTIFFs, and the fact that derived/slope.tif is not published",
     "scope": "No model, training, optimizer step, budget lock, score or Test pixel"
   },
+  "latest_cohort_diagnostic": {
+    "observed_date": "2026-11-07",
+    "status": "DIAGNOSTIC_SCAN_COMPLETE",
+    "report": "reports/p3_3_cohort_terrain_diagnostic.md",
+    "evidence": "reports/evidence/p33_20261107/cohort_diagnostic_01/verification.json",
+    "summary": "reports/evidence/p33_20261107/cohort_diagnostic_01/summary.json",
+    "train_rows": 5135,
+    "val_rows": 1155,
+    "numerical_result": "All raw elevation and slope pixels finite; slopes within [0,90] degrees; finite zeros retained",
+    "finite_sentinel_absence": "NOT_ESTABLISHED",
+    "original_raster_execution_lineage": "NOT_INDEPENDENTLY_REPRODUCED",
+    "accepted_training_provenance": "NOT_ESTABLISHED",
+    "cohort_action": "UNCHANGED_NO_FILTERING_OR_IMPUTATION",
+    "repeat_scan": "DO_NOT_REPEAT",
+    "source_validity_report": "reports/p3_3_terrain_source_validity_followup.md",
+    "lineage_inventory_report": "reports/p3_3_local_terrain_lineage_inventory.md",
+    "scope": "Existing 2026-11-07 numerical diagnostics and verification; not a new scan, accepted source validity, budget lock, training or task score",
+    "product_identity_reference": "reports/p3_3_mmap_terrain_linkage.md",
+    "product_identity_status": "TERRAIN_MMAP_LINKAGE_PASS_ON_2026_11_10"
+  },
   "historical_record_scope": {
     "records": [
       "local_followup",
@@ -55,7 +75,7 @@
       "private_runtime_plan",
       "cloud_limits"
     ],
-    "scope": "Preserved snapshots of their dated stages, not current execution status or instructions. Historical evidence hashes identify the original file versions. Current status is latest_verified_execution plus remaining_gates; this status refresh authorizes no new execution."
+    "scope": "Preserved snapshots of their dated stages, not current execution status or instructions. Historical evidence hashes identify the original file versions. Current status combines the dated latest_verified_execution preflight, latest_cohort_diagnostic and remaining_gates; this documentation refresh authorizes no new execution."
   },
   "local_followup": {
     "base_commit": "8eeab47",
@@ -96,11 +116,11 @@
   "frozen_probe": "NOT_TRAINED; Train2705 frozen-encoder engineering forward/backward PASS is not a completed trained linear-probe experiment",
   "optional_adapter": "Input-affine only, not LoRA; implemented wrapper but not executed",
   "training_runner": "IMPLEMENTED_TRAINING_NOT_EXECUTED: scripts/p33_train_pair.py lock/run/replay; actual frozen preflight receipt gate PASS only",
-  "actual_training_manifest": "NOT_FROZEN; explicit actual paired budget required after valid full-cohort provenance and a no-score scan; example budget is not an actual lock",
+  "actual_training_manifest": "NOT_FROZEN; reuse the completed no-score numerical diagnostic, with no repeat scan; an explicit actual paired budget still requires accepted full-cohort source validity; example budget is not an actual lock",
   "initial_ids": {
     "train": 5135,
     "validation": 1155,
-    "final_terrain_eligible_ids": "NOT_AUDITED"
+    "final_terrain_eligible_ids": "NUMERICAL_DIAGNOSTIC_COMPLETE_SOURCE_VALIDITY_NOT_ESTABLISHED"
   },
   "public_test": "HOLD",
   "existing_p32_evidence": "PRESERVE_NO_REPEATED_18_RUN_MATRIX",
@@ -112,9 +132,10 @@
   ],
   "remaining_gates": [
     "Product identity for all fixed 5135 Train and 1155 Val samples is PASS (reports/p3_3_mmap_terrain_linkage.md); the residual provenance limit is that the raw LOLA/SLDEM ingestion, GDAL versions, intermediate reuse and the unpublished derived slope product were not independently re-executed",
-    "The complete unchanged Train/Val cohort was scanned without scores (reports/p3_3_cohort_terrain_diagnostic.md); every terrain pixel is finite, slope stays inside 0-90 degrees, and no filtering, imputation or spatial-policy change was applied",
+    "Reuse the completed 2026-11-07 full-cohort numerical diagnostic (reports/p3_3_cohort_terrain_diagnostic.md); do not repeat the scan, and keep the cohort unchanged with no filtering, imputation or spatial-policy change",
+    "Source-raster HEAD/range/window probing of unidentified products stays disallowed; the 2026-11-10 linkage phase downloaded the three published pretraining/mmap arrays under the standing data-download authorization, matched every published LFS digest, and compared only Train/Val tiles, so Test geography was never selected",
     "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
-    "Training requires separate authorization after these gates; no completed preflight/tests need repeating for this status update, no automatic new execution is authorized, and Test remains HOLD"
+    "Training requires separate authorization after these gates; no completed preflight/tests need repeating, no automatic new execution is authorized, and Test remains HOLD"
   ],
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,

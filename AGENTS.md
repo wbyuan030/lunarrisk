@@ -4,7 +4,7 @@
 
 **2026-11-07 本地谱系及发布栅格头部：** 本地限定范围清点未找到原始/中间地形文件或实际构建日志，见[清点](reports/p3_3_local_terrain_lineage_inventory.md)。固定revision三个发布aligned TIFF头部均声明float32、NaN NoData及相同网格，但无法证明实际HDF5谱系。**范围偏差：** 三个各1MiB请求及此前USGS 1MiB请求均包含TIFF头后的压缩或原始栅格条带，可能涉及Test地理区域；未解码、分析或评分，已停止后续栅格请求，详见[记录](reports/p3_3_aligned_header_observations.md)。不要声称未收到Test相关字节；Test评分仍HOLD。有限哨兵、实际谱系及预算仍未建立。
 
-**2026-11-07 源元数据后续：** 当前USGS LOLA TIFF有界头部显示int16、NoData −32768、scale0.5；固定SLDEM标签无显式NULL/MISSING/INVALID/SPECIAL字段，不能据此断言无特殊值。源码缩放将声明NoData写为NaN但未明确同步更新profile的nodata，重投影如何处理需结合实际中间文件和版本核实。原样−16384m不在已有cohort范围内，但不能排除插值/混合影响或证明历史来源身份。见[报告](reports/p3_3_terrain_source_metadata.md)及[证据](reports/evidence/p33_20261107/terrain_source_01/source_observations.json)。未重复扫描或预检，来源有效性及实际预算仍未锁定；后续可有界核查固定revision已发布aligned栅格元数据及Train/Val对应窗口，不得将其等同于完整构建谱系。
+**2026-11-07 源元数据后续：** 当前USGS LOLA TIFF有界头部显示int16、NoData −32768、scale0.5；固定SLDEM标签无显式NULL/MISSING/INVALID/SPECIAL字段，不能据此断言无特殊值。源码缩放将声明NoData写为NaN但未明确同步更新profile的nodata，重投影如何处理需结合实际中间文件和版本核实。原样−16384m不在已有cohort范围内，但不能排除插值/混合影响或证明历史来源身份。见[报告](reports/p3_3_terrain_source_metadata.md)及[证据](reports/evidence/p33_20261107/terrain_source_01/source_observations.json)。未重复扫描或预检，来源有效性及实际预算仍未锁定；该阶段提出的后续栅格头部/窗口请求已被上方停止指令取代，不得继续；当前仅审查已有文字记录、源码和独立文本元数据。
 
 **2026-11-07 全cohort数值诊断：** 固定Train 5,135/Val 1,155全部原始高程及坡度像素有限，坡度在0–90度内；保留有限零值。认证历史资产和物理chunk，未读取Test或运行模型；四个探索候选哨兵无匹配并不证明其他有限哨兵不存在。源栅格实际执行谱系仍未独立复现，`finite_only_no_finite_sentinels`未获证实，实际预算未锁定。78项P33测试零跳过PASS。见[报告](reports/p3_3_cohort_terrain_diagnostic.md)和[验证](reports/evidence/p33_20261107/cohort_diagnostic_01/verification.json)。不要重复扫描，下一步核实源有效性后再考虑锁预算；训练须另行授权。
 
