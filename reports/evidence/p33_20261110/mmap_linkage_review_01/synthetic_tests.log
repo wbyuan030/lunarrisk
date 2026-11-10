@@ -1,0 +1,24 @@
+test_bitwise_accounting_handles_noncontiguous_windows (test_p33_nasa_mmap_linkage.CompareTests.test_bitwise_accounting_handles_noncontiguous_windows) ... ok
+test_equal_infinities_are_not_valid_terrain_matches (test_p33_nasa_mmap_linkage.CompareTests.test_equal_infinities_are_not_valid_terrain_matches) ... ok
+test_exact_and_tolerance_accounting (test_p33_nasa_mmap_linkage.CompareTests.test_exact_and_tolerance_accounting) ... ok
+test_nan_never_counts_as_match (test_p33_nasa_mmap_linkage.CompareTests.test_nan_never_counts_as_match) ... ok
+test_rejects_shape_and_dimensionality (test_p33_nasa_mmap_linkage.CompareTests.test_rejects_shape_and_dimensionality) ... ok
+test_representable_difference_can_be_within_tolerance (test_p33_nasa_mmap_linkage.CompareTests.test_representable_difference_can_be_within_tolerance) ... ok
+test_signed_zero_is_numerical_not_bitwise_equality (test_p33_nasa_mmap_linkage.CompareTests.test_signed_zero_is_numerical_not_bitwise_equality) ... ok
+test_all_zero_payload_reports_no_declared_nan (test_p33_nasa_mmap_linkage.MaskTests.test_all_zero_payload_reports_no_declared_nan) ... ok
+test_bit_offsets_match_packbits_rows (test_p33_nasa_mmap_linkage.MaskTests.test_bit_offsets_match_packbits_rows) ... ok
+test_counts_set_bits_not_nonzero_bytes (test_p33_nasa_mmap_linkage.MaskTests.test_counts_set_bits_not_nonzero_bytes) ... ok
+test_counts_tile_edge_bits_without_neighbor_leakage (test_p33_nasa_mmap_linkage.MaskTests.test_counts_tile_edge_bits_without_neighbor_leakage) ... ok
+test_rejects_wrong_payload_size (test_p33_nasa_mmap_linkage.MaskTests.test_rejects_wrong_payload_size) ... ok
+test_rejects_plan_with_altered_geometry_or_tolerance (test_p33_nasa_mmap_linkage.PlanTests.test_rejects_plan_with_altered_geometry_or_tolerance) ... ok
+test_repository_plan_is_geometry_and_tolerance_consistent (test_p33_nasa_mmap_linkage.PlanTests.test_repository_plan_is_geometry_and_tolerance_consistent) ... ok
+test_rejects_out_of_grid_and_non_integer (test_p33_nasa_mmap_linkage.WindowTests.test_rejects_out_of_grid_and_non_integer) ... ok
+test_tile_bounds (test_p33_nasa_mmap_linkage.WindowTests.test_tile_bounds) ... ok
+test_float32_convention_roundtrip (test_p33_nasa_mmap_linkage.ZScoreTests.test_float32_convention_roundtrip) ... ok
+test_nonfinite_becomes_zero_after_norm (test_p33_nasa_mmap_linkage.ZScoreTests.test_nonfinite_becomes_zero_after_norm) ... ok
+test_rejects_non_float32_and_bad_stats (test_p33_nasa_mmap_linkage.ZScoreTests.test_rejects_non_float32_and_bad_stats) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.005s
+
+OK

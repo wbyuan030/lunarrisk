@@ -52,6 +52,7 @@ class CompareTests(unittest.TestCase):
         result = linkage.compare(within, reference, 1e-5, 1e-6)
         self.assertEqual(result["pixels"], 3)
         self.assertEqual(result["exact"], 2)
+        self.assertEqual(result["bitwise_exact"], 2)
         self.assertEqual(result["within"], 2)
         self.assertEqual(result["beyond"], 1)
         self.assertAlmostEqual(result["max_abs_diff"], 1e-3, places=6)
@@ -71,6 +72,40 @@ class CompareTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 linkage.compare(derived.astype(np.float32), reference.astype(np.float32), 1e-5, 1e-6)
 
+    def test_signed_zero_is_numerical_not_bitwise_equality(self):
+        derived = np.array([[0.0, -0.0, 1.0]], dtype=np.float32)
+        reference = np.array([[-0.0, -0.0, 1.0]], dtype=np.float32)
+        result = linkage.compare(derived, reference, 1e-5, 1e-6)
+        self.assertEqual(result["exact"], 3)
+        self.assertEqual(result["bitwise_exact"], 2)
+        self.assertEqual(result["within"], 3)
+        self.assertEqual(result["beyond"], 0)
+
+    def test_representable_difference_can_be_within_tolerance(self):
+        reference = np.array([[2.0]], dtype=np.float32)
+        derived = np.nextafter(reference, np.float32(np.inf))
+        result = linkage.compare(derived, reference, 1e-5, 1e-6)
+        self.assertEqual(result["exact"], 0)
+        self.assertEqual(result["bitwise_exact"], 0)
+        self.assertEqual(result["within"], 1)
+        self.assertEqual(result["beyond"], 0)
+
+    def test_equal_infinities_are_not_valid_terrain_matches(self):
+        values = np.array([[np.inf, -np.inf, np.nan, 1.0]], dtype=np.float32)
+        result = linkage.compare(values, values, 1e-5, 1e-6)
+        self.assertEqual(result["exact"], 1)
+        self.assertEqual(result["bitwise_exact"], 1)
+        self.assertEqual(result["within"], 1)
+        self.assertEqual(result["beyond"], 3)
+
+    def test_bitwise_accounting_handles_noncontiguous_windows(self):
+        derived = np.array([[0.0, 8.0, 1.0], [2.0, 9.0, 3.0]], dtype=np.float32)[:, ::2]
+        reference = derived.copy()
+        reference[0, 0] = -0.0
+        result = linkage.compare(derived, reference, 1e-5, 1e-6)
+        self.assertEqual(result["exact"], 4)
+        self.assertEqual(result["bitwise_exact"], 3)
+
 
 class WindowTests(unittest.TestCase):
     def test_tile_bounds(self):
@@ -84,6 +119,23 @@ class WindowTests(unittest.TestCase):
 
 
 class MaskTests(unittest.TestCase):
+    def test_counts_set_bits_not_nonzero_bytes(self):
+        rows, columns = 512, 1024
+        mask = np.zeros((rows, columns), dtype=bool)
+        mask[300, 696:704] = True
+        mask[301, 704:707] = True
+        self.assertEqual(linkage.mask_nonzero(packed(mask), 1, 2, rows=rows, row_bytes=columns // 8), 11)
+
+    def test_counts_tile_edge_bits_without_neighbor_leakage(self):
+        rows, columns = 512, 1024
+        mask = np.zeros((rows, columns), dtype=bool)
+        mask[256, 512] = True
+        mask[511, 767] = True
+        mask[255, 512] = True
+        mask[256, 511] = True
+        mask[511, 768] = True
+        self.assertEqual(linkage.mask_nonzero(packed(mask), 1, 2, rows=rows, row_bytes=columns // 8), 2)
+
     def test_bit_offsets_match_packbits_rows(self):
         rows, columns = 512, 1024
         mask = np.zeros((rows, columns), dtype=bool)

@@ -31,7 +31,6 @@
       "val": 1155
     },
     "pixels_per_channel": 412221440,
-    "bitwise_exact_pixels": 412221440,
     "beyond_tolerance_pixels": 0,
     "max_abs_difference": 0.0,
     "declared_nan_bits_global": 0,
@@ -44,7 +43,10 @@
     "historical_metadata_export": "absent locally (3b3ed8...); rebuilt from the guarded HDF5 metadata group and required to match the pinned archive on all 16200 rows before use",
     "closed": "the cohort terrain is the published product at the fixed revision, so no downstream filtering, imputation or sentinel substitution is needed to reach that product",
     "still_open": "raw LOLA/SLDEM ingestion re-execution, GDAL/rasterio versions, intermediate headers and reuse, byte comparison against aligned/derived GeoTIFFs, and the fact that derived/slope.tif is not published",
-    "scope": "No model, training, optimizer step, budget lock, score or Test pixel"
+    "scope": "No model, training, optimizer step, budget lock or task score; numerical value-window comparisons were Train/Val only, but the historical global downloads and global mask inspection cover Test geography",
+    "numerically_exact_pixels": 412221440,
+    "bitwise_equality": "NOT_ESTABLISHED_BY_ARCHIVED_EXECUTION; exact used floating-point equality, not a bit-pattern comparison",
+    "review_report": "reports/p3_3_mmap_linkage_review.md"
   },
   "latest_cohort_diagnostic": {
     "observed_date": "2026-11-07",
@@ -133,7 +135,7 @@
   "remaining_gates": [
     "Product identity for all fixed 5135 Train and 1155 Val samples is PASS (reports/p3_3_mmap_terrain_linkage.md); the residual provenance limit is that the raw LOLA/SLDEM ingestion, GDAL versions, intermediate reuse and the unpublished derived slope product were not independently re-executed",
     "Reuse the completed 2026-11-07 full-cohort numerical diagnostic (reports/p3_3_cohort_terrain_diagnostic.md); do not repeat the scan, and keep the cohort unchanged with no filtering, imputation or spatial-policy change",
-    "Source-raster HEAD/range/window probing of unidentified products stays disallowed; the 2026-11-10 linkage phase downloaded the three published pretraining/mmap arrays under the standing data-download authorization, matched every published LFS digest, and compared only Train/Val tiles, so Test geography was never selected",
+    "Source-raster HEAD/range/window probing remains disallowed. The historical 2026-11-10 linkage acquired global published mmap arrays and inspected global masks; numerical value-window comparisons were Train/Val only. Do not infer zero Test-related byte acquisition, repeat the acquisition, inspect more pixels, or unlock Test scoring.",
     "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
     "Training requires separate authorization after these gates; no completed preflight/tests need repeating, no automatic new execution is authorized, and Test remains HOLD"
   ],

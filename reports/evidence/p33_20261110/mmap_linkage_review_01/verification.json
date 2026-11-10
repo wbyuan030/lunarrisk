@@ -1,0 +1,116 @@
+{
+  "review": "P33_MMAP_LINKAGE_SOURCE_TEXT_CORRECTION_V1",
+  "reviewed_commit": "b709e9b21acd00b9492de1afef6fa04240983833",
+  "observed_utc": "2026-11-10T02:19:13.976735+00:00",
+  "status": "PASS_SOURCE_TEXT_AND_SYNTHETIC_CHECKS_ONLY",
+  "corrections": {
+    "mask_nonzero": "Popcount of selected bytes replaces count_nonzero; historical all-zero conclusion unchanged",
+    "exact": "Numerical float32 equality, not a bit-pattern comparison",
+    "bitwise_exact": "New finite-pair bit-pattern count; not measured on historical real windows",
+    "nonfinite_pairs": "NaN and infinity cannot contribute to exact, bitwise_exact or within counts",
+    "acquisition_scope": "Historical global downloads/global masks cover Test geography; numerical comparison windows were Train/Val only; no Test score is established"
+  },
+  "archived_artifacts_unchanged": {
+    "summary.json": "806595f2a9f43c05ac21861fa84e4973a451efe2e1367638b83eb3c38e0a57ab",
+    "train_rows.csv": "841a617cbabf26525cbcc7b11624ce9bf1af3073b8f020751bc16ee162a2e797",
+    "val_rows.csv": "ad674325f61bd7587aaf3338931e3ada6dad61e28d572621c7bcbfff619b8f8f",
+    "verification.json": "214d26fe9074670481a3811a7a979dcdbc0066cd405211647c74d10175e7cc1b",
+    "acquisition.json": "00fb8ddd900b96c6c6a78c09490fdd4899e4b324ec3ef5a668f16a7e8325a5cb"
+  },
+  "prior_finite_diagnostic_summary_sha256": "ae97c52b9b02fa625b1dd43710e49e8eb284454632b3202367852cf65740c24c",
+  "independent_csv_recount": {
+    "train": {
+      "rows": 5135,
+      "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
+      "sha256": "841a617cbabf26525cbcc7b11624ce9bf1af3073b8f020751bc16ee162a2e797",
+      "channels": {
+        "elevation": {
+          "pixels": 336527360,
+          "exact": 336527360,
+          "within": 336527360,
+          "beyond": 0,
+          "derived_nan": 0,
+          "reference_nan": 0,
+          "max_abs_diff": 0.0
+        },
+        "slope": {
+          "pixels": 336527360,
+          "exact": 336527360,
+          "within": 336527360,
+          "beyond": 0,
+          "derived_nan": 0,
+          "reference_nan": 0,
+          "max_abs_diff": 0.0
+        }
+      },
+      "declared_nan_bits": 0,
+      "raw_terrain_hash_matches_prior_finite_diagnostic": true
+    },
+    "val": {
+      "rows": 1155,
+      "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
+      "sha256": "ad674325f61bd7587aaf3338931e3ada6dad61e28d572621c7bcbfff619b8f8f",
+      "channels": {
+        "elevation": {
+          "pixels": 75694080,
+          "exact": 75694080,
+          "within": 75694080,
+          "beyond": 0,
+          "derived_nan": 0,
+          "reference_nan": 0,
+          "max_abs_diff": 0.0
+        },
+        "slope": {
+          "pixels": 75694080,
+          "exact": 75694080,
+          "within": 75694080,
+          "beyond": 0,
+          "derived_nan": 0,
+          "reference_nan": 0,
+          "max_abs_diff": 0.0
+        }
+      },
+      "declared_nan_bits": 0,
+      "raw_terrain_hash_matches_prior_finite_diagnostic": true
+    }
+  },
+  "train_val_id_overlap": 0,
+  "original_dependent_source_hashes_match": {
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd"
+  },
+  "corrected_source_sha256": {
+    "scripts/p33_audit_mmap_linkage.py": "5f3e5db9c2b4bee7b3d3884f090f16e5819d66b88e515dbe55e16a158daa80a1",
+    "tests/test_p33_nasa_mmap_linkage.py": "06d7ba54c44b7fdf6dbe6388b6bb36a52b3b78b337a36f315d7001c91738fced"
+  },
+  "verification": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "tests_passed": 19,
+    "new_tests": 6,
+    "skips": 0,
+    "elapsed_seconds": 0.161,
+    "command": "python3 -I -B -m unittest discover -s tests -p test_p33_nasa_mmap_linkage.py -v",
+    "test_log_sha256": "9fef814006c23f773384599b97bfef0c71905fd370c8cc0773cd2559c0047839",
+    "compileall": "PASS for materialized script, test and seven package source files only",
+    "diff_check": "PASS",
+    "full_suite": "NOT_RUN; sparse source-only review, no old P33/preflight/full-suite re-execution"
+  },
+  "scope": {
+    "user_computer_access": false,
+    "model_execution": "NOT_RUN",
+    "training": "NOT_RUN",
+    "actual_budget_lock": "NOT_FROZEN",
+    "real_pixel_reads": 0,
+    "new_asset_downloads": 0,
+    "actual_linkage_reexecution": false,
+    "Test_scoring": "HOLD"
+  },
+  "not_reverified": [
+    "mmap arrays, mask arrays, HDF5 prefix and metadata export bytes were not acquired here",
+    "producer ingestion and intermediate raster execution",
+    "historical full-suite test log; original report says 714 passed and 7 failures, not a clean full-suite pass"
+  ]
+}

@@ -72,18 +72,27 @@ def zscore(raw, mean, std):
 
 
 def compare(z_derived, reference, rtol, atol):
-    """Count exact/within/beyond matches; NaN never counts as a match."""
+    """Count numerical, bitwise and tolerant matches for finite float32 pairs.
+
+    ``exact`` is numerical equality: +0.0 and -0.0 compare equal. Only the
+    separate ``bitwise_exact`` field establishes identical float32 bits.
+    Neither NaN nor infinity counts as a valid terrain match.
+    """
     z_derived = np.asarray(z_derived, dtype=np.float32)
     reference = np.asarray(reference, dtype=np.float32)
     if z_derived.shape != reference.shape or z_derived.ndim != 2:
         raise ValueError("paired windows must be equal two-dimensional shapes")
-    exact = int((z_derived == reference).sum())
-    within = int(np.isclose(z_derived, reference, rtol=rtol, atol=atol).sum())
-    diff = np.abs(z_derived.astype(np.float64) - reference.astype(np.float64))
+    valid = np.isfinite(z_derived) & np.isfinite(reference)
+    exact = int((valid & (z_derived == reference)).sum())
+    bitwise_exact = int((valid & (z_derived.view(np.uint32) == reference.view(np.uint32))).sum())
+    within = int((valid & np.isclose(z_derived, reference, rtol=rtol, atol=atol)).sum())
+    with np.errstate(invalid="ignore"):
+        diff = np.abs(z_derived.astype(np.float64) - reference.astype(np.float64))
     finite = np.isfinite(diff)
     return {
         "pixels": int(z_derived.size),
         "exact": exact,
+        "bitwise_exact": bitwise_exact,
         "within": within,
         "beyond": int(z_derived.size - within),
         "derived_nan": int(np.isnan(z_derived).sum()),
@@ -109,7 +118,7 @@ def mask_nonzero(packed, row, col, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
         raise ValueError("packed mask does not match the fixed grid")
     y0, _, x0, _ = window(row, col, width=row_bytes * 8)
     tile = packed.reshape(rows, row_bytes)[y0:y0 + PATCH, x0 // 8:(x0 + PATCH) // 8]
-    return int(np.count_nonzero(tile))
+    return int(np.unpackbits(tile, bitorder=MASK_BITORDER).sum())
 
 
 def load_linkage_plan_object(plan):
@@ -298,9 +307,9 @@ def main():
                                            linkage["comparison"]["rtol"], linkage["comparison"]["atol"])
                         record.update({name + "_" + key: value for key, value in measures.items()})
                         total = aggregate["channels"].setdefault(
-                            name, {"pixels": 0, "exact": 0, "within": 0, "beyond": 0,
+                            name, {"pixels": 0, "exact": 0, "bitwise_exact": 0, "within": 0, "beyond": 0,
                                    "derived_nan": 0, "reference_nan": 0, "max_abs_diff": None})
-                        for key in ("pixels", "exact", "within", "beyond", "derived_nan", "reference_nan"):
+                        for key in ("pixels", "exact", "bitwise_exact", "within", "beyond", "derived_nan", "reference_nan"):
                             total[key] += measures[key]
                         if measures["max_abs_diff"] is not None:
                             current = total["max_abs_diff"]
