@@ -1,0 +1,140 @@
+{
+  "protocol": "P33_MMAP_TERRAIN_LINKAGE_V1",
+  "status": "AUTHORED_AFTER_ASSET_DOWNLOAD_BEFORE_PIXEL_COMPARISON",
+  "created_date": "2026-11-10",
+  "purpose": "Decide in advance whether every fixed Train/Val terrain window is the published Moonstone product, and record exactly which provenance claims that does and does not support.",
+  "repository": {
+    "name": "ayushprd/Moonstone",
+    "dataset_revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
+    "code_revision": "cbd4720653eb05afd975d2a36280858c5c56a275",
+    "mirror_base": "https://hf-mirror.com/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310",
+    "proxy_used": false
+  },
+  "grid": {
+    "shape": [
+      23040,
+      46080
+    ],
+    "dtype": "float32",
+    "byte_order": "little-endian, headerless C order for values; NumPy v1 header for the packed mask",
+    "patch": 256,
+    "row_index_origin": "north pole row 0 (89.996 deg centre latitude at 128 ppd)",
+    "column_index_origin": "longitude -180 deg at column 0",
+    "pixels_per_degree": 128
+  },
+  "terrain_channels": [
+    "elevation",
+    "slope"
+  ],
+  "assets": [
+    {
+      "path": "pretraining/mmap/elevation.npy",
+      "bytes": 4246732800,
+      "lfs_sha256": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
+      "sha256_verified_locally": true,
+      "role": "z-scored copy of aligned/elevation_blended.tif"
+    },
+    {
+      "path": "pretraining/mmap/slope.npy",
+      "bytes": 4246732800,
+      "lfs_sha256": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
+      "sha256_verified_locally": true,
+      "role": "z-scored copy of derived/slope.tif"
+    },
+    {
+      "path": "pretraining/mmap/elevation_mask.npy",
+      "bytes": 132710528,
+      "lfs_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "sha256_verified_locally": true,
+      "role": "packbits(~isfinite) of elevation_blended.tif"
+    },
+    {
+      "path": "pretraining/mmap/slope_mask.npy",
+      "bytes": 132710528,
+      "lfs_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "sha256_verified_locally": true,
+      "role": "byte-identical to elevation_mask.npy at this revision, hence the same published NaN pattern"
+    },
+    {
+      "path": "pretraining/channel_stats.json",
+      "bytes": 2039,
+      "git_blob_sha": "8455a9c0370e844d53e4273728915fa5a7478181",
+      "sha256_verified_locally": true,
+      "role": "published mean/std used by step15 during conversion"
+    },
+    {
+      "path": "pretraining/mmap/channel_index.json",
+      "bytes": 2775,
+      "git_blob_sha": "2639bd6ae1564290fe9b9898122900c3e828b27e",
+      "sha256_verified_locally": true,
+      "role": "declares shape (23040, 46080), float32 and normalized=true"
+    }
+  ],
+  "normalization": {
+    "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "stats_source": "pretraining/channel_stats.json (byte-identical to the locally retained file)",
+    "convention": "z = (x - mean) / std evaluated in float32; non-finite pixels are replaced by 0 after normalization (step15_build_mmap.py)"
+  },
+  "mask_semantics": {
+    "encoding": "np.packbits(~np.isfinite(data).ravel()) with default big-endian bit order; row stride 5760 bytes, tile stride 32 bytes",
+    "meaning": "a set bit marks a source pixel that the pinned builder treated as non-finite; 0 means the published product declares a finite value there",
+    "caveat": "finite does not imply an un-interpolated measurement; the blend of SLDEM inside 58 deg, LOLA outside 62 deg, linear 58-62 deg transition and LOLA fallback where SLDEM is non-finite is the publisher's declared construction"
+  },
+  "source_semantics": {
+    "data_preparation/step04_tile.py": {
+      "sha256": "598c37941fea8667cbbf22fd114395615df8ca3ce9934683c190821add5c4988",
+      "claim": "HDF5 channel 1 is read from aligned/elevation_blended.tif and channel 2 from derived/slope.tif by rasterio window, in physical units with no normalization"
+    },
+    "data_preparation/step15_build_mmap.py": {
+      "sha256": "078ef9b4e17da5fc4af754b3f0d2556a5ebaf8aca1f1a6b68b75dfe2eac683cb",
+      "claim": "mmap values are the same GeoTIFF band 1 pixel grid, float32, NaN to 0, then z-scored with channel_stats.json; the mask is packbits(~isfinite)"
+    },
+    "data_preparation/step02_align.py": {
+      "sha256": "5c19e986ecf0cd593a17eafd7cb58d658f5a1e21338e0dd100877102252379fe",
+      "claim": "elevation_blended.tif is SLDEM inside 58 deg, LOLA outside 62 deg, a linear blend between, and keeps LOLA where SLDEM is non-finite; reprojection uses bilinear resampling"
+    },
+    "config.py": {
+      "sha256": "5e9c79e552c595676cc0992e219ad8fbad5c8b894b8c55d8fd8c47adfbe9da5d",
+      "claim": "channel order, grid constants and the elevation/slope file bindings used by both steps"
+    }
+  },
+  "mapping": {
+    "source": "authenticated metadata archive reports/evidence/p30_20261103/metadata_rows.csv.gz (row_idx/col_idx per sample_id)",
+    "identity_gate": "the frozen P31 Train/Val IDs, targets and counts must still match before any comparison",
+    "tile_rule": "y0 = row_idx * 256, x0 = col_idx * 256, 256 rows and 256 columns",
+    "allowed_splits": [
+      "stored_split 0 (Train)",
+      "stored_split 1 (Val)"
+    ],
+    "test_policy": "no Test ID is selectable; the 256x256 tiles of Train/Val are disjoint from Test tiles, so no held-out pixel is read"
+  },
+  "comparison": {
+    "reference": "published mmap window",
+    "derived": "float32 z-score of the retained HDF5 physical terrain slice using the published statistics",
+    "rtol": 1e-05,
+    "atol": 1e-06,
+    "note": "tolerance identical to the pre-registered P3.0 fixed-row probe; exact equality is also counted and reported"
+  },
+  "criteria": {
+    "pass": "all 6,290 Train/Val rows have zero pixels beyond tolerance in both channels and zero declared-NaN bits inside the tile",
+    "fail": "any row exceeds the tolerance, any declared-NaN bit falls inside a fixed Train/Val tile, or the published mask files disagree with each other",
+    "blocked": "asset size/SHA256 mismatch, truncated download, or missing authenticated metadata"
+  },
+  "claims_permitted": [
+    "Every fixed Train/Val elevation and slope pixel equals the published mmap product (same value, same declared NaN pattern) to the stated tolerance",
+    "Because the pinned builders read the same GeoTIFF grid, the cohort terrain is the aligned elevation_blended.tif and derived slope.tif product shipped at the fixed revision",
+    "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02"
+  ],
+  "claims_not_permitted": [
+    "Independent re-execution or byte-level authentication of the raw LOLA/SLDEM ingestion, GDAL versions, intermediate reuse or per-stage headers",
+    "Absence of every possible undocumented finite sentinel arising from interpolation or blending",
+    "Any model execution, training, actual budget lock, transfer score or held-out result",
+    "Equivalence of the Git-repository channel statistics path, which is kept only as a diagnostic"
+  ],
+  "new_download_bytes_planned": 8626176128,
+  "acquisition_note": "Three files were downloaded and SHA256-verified against the published LFS digests before this plan file was committed; slope_mask.npy shares the elevation_mask.npy digest, so one 132,710,528-byte mask covers both channels. No pixel comparison ran before the plan was written.",
+  "test_pixels_requested": 0,
+  "model_execution": "NOT_RUN",
+  "training": "NOT_RUN",
+  "scores": "NOT_RUN"
+}

@@ -1,0 +1,144 @@
+{
+  "protocol": "P33_MMAP_TERRAIN_LINKAGE_V1",
+  "status": "TERRAIN_MMAP_LINKAGE_PASS",
+  "report": "reports/p3_3_mmap_terrain_linkage.md",
+  "plan": "protocols/p33_mmap_terrain_linkage_plan.json",
+  "script": "scripts/p33_audit_mmap_linkage.py",
+  "tests": "tests/test_p33_nasa_mmap_linkage.py",
+  "commands": {
+    "audit": [
+      "unshare",
+      "--user",
+      "--map-root-user",
+      "--net",
+      "$PRIVATE_PYTHON",
+      "-I",
+      "-B",
+      "scripts/p33_audit_mmap_linkage.py",
+      "--data",
+      "$EXISTING_FIXED_PREFIX",
+      "--range-report",
+      "outputs/p31/loader_pair_01/report.json",
+      "--mmap-dir",
+      "$EXISTING_PUBLISHED_MMAP_DIR",
+      "--outdir",
+      "outputs/p33/mmap_linkage_04"
+    ],
+    "focused_tests": "$PRIVATE_PYTHON -I -B -m unittest discover -s tests -p test_p33_nasa*.py -v",
+    "syntax": "$PRIVATE_PYTHON -I -B -m compileall -q scripts src tests"
+  },
+  "privacy": "Private interpreter, prefix and mmap directory paths are replaced by symbolic names; every asset is authenticated by SHA256 in summary.json",
+  "execution": {
+    "python": "3.12.9",
+    "numpy": "2.4.4",
+    "torch_imported": false,
+    "network_namespace": "unshare --net",
+    "elapsed_seconds": 226.81,
+    "max_rss_kib": 4224768
+  },
+  "authenticated_inputs": {
+    "prefix_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "prefix_bytes": 33964443553,
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+    "hf_channel_stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "published_assets": {
+    "elevation_sha256": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
+    "slope_sha256": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
+    "shared_mask_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+    "channel_stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64"
+  },
+  "source_sha256": {
+    "scripts/p33_audit_mmap_linkage.py": "cbcb2d781f87717dc05b4c49e1a43f0c9bd239e77111b63e0af1fe02eba44029",
+    "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
+    "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
+    "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
+    "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd"
+  },
+  "independent_recount": {
+    "source": "standard-library read of train_rows.csv and val_rows.csv, not the audit summary",
+    "train": {
+      "rows": 5135,
+      "elevation_pixels": 336527360,
+      "elevation_exact": 336527360,
+      "elevation_beyond": 0,
+      "slope_pixels": 336527360,
+      "slope_exact": 336527360,
+      "slope_beyond": 0,
+      "max_abs_diff": 0.0,
+      "declared_nan_bits": 0,
+      "distinct_tiles": 5135,
+      "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17"
+    },
+    "val": {
+      "rows": 1155,
+      "elevation_pixels": 75694080,
+      "elevation_exact": 75694080,
+      "elevation_beyond": 0,
+      "slope_pixels": 75694080,
+      "slope_exact": 75694080,
+      "slope_beyond": 0,
+      "max_abs_diff": 0.0,
+      "declared_nan_bits": 0,
+      "distinct_tiles": 1155,
+      "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656"
+    },
+    "train_val_id_overlap": 0,
+    "ordered_ids_sha256_match_frozen_plan": true
+  },
+  "metadata_cross_check": {
+    "source": "HDF5 metadata group read through the guarded prefix adapter",
+    "rows": 16200,
+    "checks": {
+      "split": true,
+      "unit_id": true,
+      "unit_name": true,
+      "row_idx": true,
+      "col_idx": true,
+      "center_lat_within_half_pixel": true,
+      "center_lon_within_half_pixel": true
+    },
+    "historical_export_note": "The historical metadata export at SHA256 3b3ed8cade200f79f720beeba6a666365d66383dbb623337cd96ebec31a0a98d is not present locally; the audit rebuilt an equivalent table from the HDF5 metadata group and required exact agreement with the pinned archive before using it."
+  },
+  "mask_semantics": {
+    "global_declared_nan_bytes": {
+      "elevation": 0,
+      "slope": 0
+    },
+    "interpretation": "The pinned step15 builder writes packbits(~isfinite) and does so after NaN-to-zero; zero set bits therefore declare that the published elevation and slope products contain no non-finite pixel anywhere on the grid.",
+    "caveat": "A finite value is not proof of an un-interpolated measurement; step02 blends SLDEM inside 58 deg, LOLA outside 62 deg with a linear transition and keeps LOLA wherever SLDEM is non-finite."
+  },
+  "artifacts": {
+    "summary.json": {
+      "bytes": 5580,
+      "sha256": "806595f2a9f43c05ac21861fa84e4973a451efe2e1367638b83eb3c38e0a57ab"
+    },
+    "train_rows.csv": {
+      "bytes": 454711,
+      "sha256": "841a617cbabf26525cbcc7b11624ce9bf1af3073b8f020751bc16ee162a2e797"
+    },
+    "val_rows.csv": {
+      "bytes": 99357,
+      "sha256": "ad674325f61bd7587aaf3338931e3ada6dad61e28d572621c7bcbfff619b8f8f"
+    },
+    "metadata_export.json": {
+      "bytes": 1451013,
+      "sha256": "b7345c8248d4c94e5c7e53418b456a5366796fef56184d444d6b45894a933d0b"
+    }
+  },
+  "scope": {
+    "model_execution": "NOT_RUN",
+    "training": "NOT_RUN",
+    "optimizer_step": "NOT_RUN",
+    "task_scores": "NOT_RUN",
+    "actual_budget_lock": "NOT_FROZEN",
+    "test_pixels_read": 0,
+    "Test": "HOLD",
+    "upstream_ingestion_re_executed": false,
+    "tiff_byte_comparison": "NOT_PERFORMED; equality is established against the published z-scored mmap, which the pinned builder derives from the same GeoTIFF grid",
+    "derived_slope_tif_public": false
+  }
+}

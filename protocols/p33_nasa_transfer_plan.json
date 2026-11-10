@@ -20,6 +20,32 @@
     "runner_preflight_gate": "PASS_FROZEN_ADAPTATION",
     "scope": "Engineering preflight only; no optimizer step, training, full-cohort scan, selection, task score or transfer-benefit claim"
   },
+  "terrain_product_identity": {
+    "observed_utc": "2026-11-10T01:39:00+00:00",
+    "report": "reports/p3_3_mmap_terrain_linkage.md",
+    "plan": "protocols/p33_mmap_terrain_linkage_plan.json",
+    "evidence": "reports/evidence/p33_20261110/mmap_linkage_01/verification.json",
+    "status": "TERRAIN_MMAP_LINKAGE_PASS",
+    "rows": {
+      "train": 5135,
+      "val": 1155
+    },
+    "pixels_per_channel": 412221440,
+    "bitwise_exact_pixels": 412221440,
+    "beyond_tolerance_pixels": 0,
+    "max_abs_difference": 0.0,
+    "declared_nan_bits_global": 0,
+    "published_assets": {
+      "elevation_npy_sha256": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
+      "slope_npy_sha256": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
+      "shared_mask_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511"
+    },
+    "new_download_bytes": 8626176128,
+    "historical_metadata_export": "absent locally (3b3ed8...); rebuilt from the guarded HDF5 metadata group and required to match the pinned archive on all 16200 rows before use",
+    "closed": "the cohort terrain is the published product at the fixed revision, so no downstream filtering, imputation or sentinel substitution is needed to reach that product",
+    "still_open": "raw LOLA/SLDEM ingestion re-execution, GDAL/rasterio versions, intermediate headers and reuse, byte comparison against aligned/derived GeoTIFFs, and the fact that derived/slope.tif is not published",
+    "scope": "No model, training, optimizer step, budget lock, score or Test pixel"
+  },
   "historical_record_scope": {
     "records": [
       "local_followup",
@@ -85,8 +111,8 @@
     "No raw Moonstone pixels"
   ],
   "remaining_gates": [
-    "Establish valid provenance for all fixed 5135 Train and 1155 Val samples, including raw-source lineage and justified nodata_policy=finite_only_no_finite_sentinels; a finite-only scan cannot exclude unknown finite NoData sentinels",
-    "After provenance is valid, scan the complete unchanged Train/Val cohort without scores; failure blocks this protocol, with no silent filtering, imputation or spatial-policy change",
+    "Product identity for all fixed 5135 Train and 1155 Val samples is PASS (reports/p3_3_mmap_terrain_linkage.md); the residual provenance limit is that the raw LOLA/SLDEM ingestion, GDAL versions, intermediate reuse and the unpublished derived slope product were not independently re-executed",
+    "The complete unchanged Train/Val cohort was scanned without scores (reports/p3_3_cohort_terrain_diagnostic.md); every terrain pixel is finite, slope stays inside 0-90 degrees, and no filtering, imputation or spatial-policy change was applied",
     "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
     "Training requires separate authorization after these gates; no completed preflight/tests need repeating for this status update, no automatic new execution is authorized, and Test remains HOLD"
   ],
