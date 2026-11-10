@@ -45,8 +45,7 @@
     "historical_metadata_export": "absent locally (3b3ed8...); rebuilt from the guarded HDF5 metadata group and required to match the pinned archive on all 16200 rows before use",
     "closed": "the cohort terrain is the published product at the fixed revision, so no downstream filtering, imputation or sentinel substitution is needed to reach that product",
     "still_open": "raw LOLA/SLDEM ingestion re-execution, GDAL/rasterio versions, intermediate headers and reuse, byte comparison against aligned/derived GeoTIFFs, and the fact that derived/slope.tif is not published",
-    "scope": "No model, training, optimizer step, budget lock, score or Test tile comparison",
-    "bitwise_identical_pixels_per_channel": 412221440,
+    "scope": "No model, training, optimizer step, budget lock or task score; value-window comparisons were Train/Val only, while global file hashing and the global mask count cover Test geography bytes",
     "raw_nonfinite_pixels": 0,
     "declared_nan_global": {
       "elevation": {
@@ -66,12 +65,15 @@
       "selected_test_intersection": 0
     },
     "tests": {
-      "new_audit_tests": 19,
-      "focused_p33_pass": 97,
+      "new_audit_tests": 23,
+      "focused_p33_pass": 101,
       "full_suite": "727 tests, 720 PASS, 7 legacy environment failures"
     },
     "test_bytes_wording": "No Test tile was selected, compared or scored; whole-file SHA256 and the global mask count do stream bytes covering Test geography, so 'zero Test-related bytes received' must not be claimed",
-    "supersedes": "The earlier same-day PASS receipt used a weaker predicate and is superseded; both remain in git history"
+    "supersedes": "The earlier same-day PASS receipt used a weaker predicate and is superseded; both remain in git history",
+    "bitwise_exact_pixels_per_channel": 412221440,
+    "bitwise_equality": "ESTABLISHED_BY_THE_2026_11_10_REEVECUTION (float32 bit-pattern comparison on finite pairs; 412,221,440 pixels per channel)",
+    "review_report": "reports/p3_3_mmap_linkage_review.md"
   },
   "latest_cohort_diagnostic": {
     "observed_date": "2026-11-07",

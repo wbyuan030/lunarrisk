@@ -5,13 +5,13 @@
   "plan": "protocols/p33_mmap_terrain_linkage_plan.json",
   "script": "scripts/p33_audit_mmap_linkage.py",
   "tests": {
-    "audit_tests": "tests/test_p33_nasa_mmap_linkage.py: 19 PASS, zero skips",
-    "focused_p33_suite": "97 PASS, zero skips, 6.1 s (discover -p 'test_p33_nasa*.py')",
-    "full_suite": "727 tests in 17.0 s with 720 PASS and the same 7 legacy failures recorded on the earlier receipt (test_posterior_rules_integration and test_build_manifest hitting NumPy 2.4 float conversion and pandas NaN semantics, LROC DTM/EDR modules missing the optional shapefile dependency in the private interpreter); untouched by this change and not fixed",
+    "audit_tests": "tests/test_p33_nasa_mmap_linkage.py: 23 PASS, zero skips (19 original plus four review edge cases retained)",
+    "focused_p33_suite": "101 PASS, zero skips (discover -p test_p33_nasa*.py)",
+    "full_suite": "727 tests, 720 PASS, the same 7 legacy environment failures (NumPy 2.4 float conversion, pandas NaN semantics, missing shapefile in the private interpreter); untouched and not fixed",
     "syntax": "compileall PASS",
-    "diff_check": "PASS for source, Markdown and JSON; the CRLF evidence CSVs are reported as trailing whitespace by git diff --check, matching the already committed 2026-11-07 rows.csv convention"
+    "diff_check": "PASS for source, Markdown and JSON; CRLF evidence CSVs are reported as trailing whitespace exactly like the already committed 2026-11-07 rows.csv"
   },
-  "supersedes": "The first 2026-11-10 linkage receipt produced status PASS on a weaker predicate; an independent review found the Test-byte wording, signed-zero/NaN bit identity, shared-mask vacuity and mask-bit counting too weak. This receipt uses the strengthened script and is the only accepted one.",
+  "supersedes": "Three 2026-11-10 receipts exist in git history: the first PASS used a weaker predicate (marked 'bit for bit' without a bit-pattern comparison); an independent review (reports/p3_3_mmap_linkage_review.md) then strengthened the predicate and wording without re-executing; this receipt is the first re-execution under the strengthened predicate and is the only accepted one.",
   "commands": {
     "audit": [
       "unshare",
@@ -40,8 +40,8 @@
     "numpy": "2.4.4",
     "torch_imported": false,
     "network_namespace": "unshare --net",
-    "elapsed_seconds": 242.59,
-    "max_rss_kib": 4236568
+    "elapsed_seconds": 236.34,
+    "max_rss_kib": 4236596
   },
   "authenticated_inputs": {
     "prefix_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
@@ -63,7 +63,7 @@
     "slope_mask_note": "Downloaded and verified separately; the two published masks are byte-identical at this revision, so agreement is a fact about the product rather than a comparison of one local file with itself"
   },
   "source_sha256": {
-    "scripts/p33_audit_mmap_linkage.py": "e2a9c19e432c1a5e74af34d9992f12b3082c90a9172cb564c7e09c4f56bc47ff",
+    "scripts/p33_audit_mmap_linkage.py": "ffe5ac156f038a05fa03b4cbbaa00cde7d81a95e9041e1272cc5d8e83c368a02",
     "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
     "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
     "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
@@ -100,7 +100,8 @@
       "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656"
     },
     "train_val_id_overlap": 0,
-    "ordered_ids_sha256_match_frozen_plan": true
+    "ordered_ids_sha256_match_frozen_plan": true,
+    "note": "The 2026-11-10 review receipt (mmap_linkage_review_01) independently recounts the earlier CSVs; the numbers below were recounted from the final csv schema after the re-execution."
   },
   "tile_policy": {
     "published_metadata_tiles": 16200,
@@ -143,16 +144,16 @@
   },
   "artifacts": {
     "summary.json": {
-      "bytes": 7215,
-      "sha256": "f35b28ac3bf0b3420d2f7f2a2dd55d80f798280b84a5983a391994cc17ddacb1"
+      "bytes": 7239,
+      "sha256": "c0da54d0e60a4a65e6d831f93896de206673b661c5772c4e1c48d0084121a57d"
     },
     "train_rows.csv": {
-      "bytes": 598725,
-      "sha256": "331d0485d860bf55d44c450972df90aff4eaa7bedb07aec975eae8e3842b857f"
+      "bytes": 598737,
+      "sha256": "7773d351a519df9a1a4145c75cd75e306d930a17decc4e8ec43d1fcaceadc963"
     },
     "val_rows.csv": {
-      "bytes": 131931,
-      "sha256": "15de35083fa38bbfc7bdbb745f38f6510c7806369f1ce2d71beb424d07dfc690"
+      "bytes": 131943,
+      "sha256": "929921c745a61b2dfbfc2137936ad68cecca2ed552c5d78f7574705853fe9681"
     },
     "metadata_export.json": {
       "bytes": 1451013,
@@ -169,5 +170,12 @@
     "upstream_ingestion_re_executed": false,
     "tiff_byte_comparison": "NOT_PERFORMED; equality is established against the published z-scored mmap whose pinned builder reads the same GeoTIFF grid",
     "derived_slope_tif_public": false
+  },
+  "comparison_fields": {
+    "exact": "numerical equality on finite pairs only",
+    "bitwise_exact": "identity of the float32 bit pattern on finite pairs only",
+    "within": "finite pairs inside rtol/atol",
+    "beyond": "pixels minus within, so NaN and infinity count as beyond",
+    "derived_nonfinite": "raw HDF5 window non-finite pixels; must be zero for PASS"
   }
 }

@@ -48,7 +48,7 @@
     }
   },
   "source_sha256": {
-    "scripts/p33_audit_mmap_linkage.py": "e2a9c19e432c1a5e74af34d9992f12b3082c90a9172cb564c7e09c4f56bc47ff",
+    "scripts/p33_audit_mmap_linkage.py": "ffe5ac156f038a05fa03b4cbbaa00cde7d81a95e9041e1272cc5d8e83c368a02",
     "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
     "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
     "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
@@ -98,8 +98,8 @@
       "channels": {
         "elevation": {
           "pixels": 336527360,
-          "bitwise": 336527360,
           "exact": 336527360,
+          "bitwise_exact": 336527360,
           "within": 336527360,
           "beyond": 0,
           "derived_nonfinite": 0,
@@ -110,8 +110,8 @@
         },
         "slope": {
           "pixels": 336527360,
-          "bitwise": 336527360,
           "exact": 336527360,
+          "bitwise_exact": 336527360,
           "within": 336527360,
           "beyond": 0,
           "derived_nonfinite": 0,
@@ -135,8 +135,8 @@
       "channels": {
         "elevation": {
           "pixels": 75694080,
-          "bitwise": 75694080,
           "exact": 75694080,
+          "bitwise_exact": 75694080,
           "within": 75694080,
           "beyond": 0,
           "derived_nonfinite": 0,
@@ -147,8 +147,8 @@
         },
         "slope": {
           "pixels": 75694080,
-          "bitwise": 75694080,
           "exact": 75694080,
+          "bitwise_exact": 75694080,
           "within": 75694080,
           "beyond": 0,
           "derived_nonfinite": 0,
@@ -167,8 +167,8 @@
     }
   },
   "rows_csv_sha256": {
-    "train": "331d0485d860bf55d44c450972df90aff4eaa7bedb07aec975eae8e3842b857f",
-    "val": "15de35083fa38bbfc7bdbb745f38f6510c7806369f1ce2d71beb424d07dfc690"
+    "train": "7773d351a519df9a1a4145c75cd75e306d930a17decc4e8ec43d1fcaceadc963",
+    "val": "929921c745a61b2dfbfc2137936ad68cecca2ed552c5d78f7574705853fe9681"
   },
   "upstream_ingestion_re_executed": false,
   "claims_permitted": [
@@ -177,8 +177,8 @@
     "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02",
     "Whole-file SHA256 hashing and the global mask count stream bytes that cover all latitudes, including Test geography; no Test tile is selected, decoded, compared or scored"
   ],
-  "elapsed_seconds": 242.59353836497758,
-  "max_rss_kib": 4236568,
+  "elapsed_seconds": 236.33963176899124,
+  "max_rss_kib": 4236596,
   "python": "3.12.9",
   "numpy": "2.4.4",
   "torch_imported": false

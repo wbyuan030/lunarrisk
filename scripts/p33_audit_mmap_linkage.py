@@ -72,24 +72,28 @@ def zscore(raw, mean, std):
 
 
 def compare(z_derived, reference, rtol, atol):
-    """Count bitwise/numeric matches; a NaN never counts as a match."""
+    """Count numerical, bitwise and tolerant matches for finite float32 pairs.
+
+    ``exact`` is numerical equality: +0.0 and -0.0 compare equal. Only the
+    separate ``bitwise_exact`` field establishes identical float32 bits.
+    Neither NaN nor infinity counts as a valid terrain match.
+    """
     z_derived = np.asarray(z_derived, dtype=np.float32)
     reference = np.asarray(reference, dtype=np.float32)
     if z_derived.shape != reference.shape or z_derived.ndim != 2:
         raise ValueError("paired windows must be equal two-dimensional shapes")
-    contiguous = np.ascontiguousarray
-    bitwise = int((contiguous(z_derived).view(np.uint32)
-                   == contiguous(reference).view(np.uint32)).sum())
-    exact = int((z_derived == reference).sum())
-    within = int(np.isclose(z_derived, reference, rtol=rtol, atol=atol).sum())
-    finite = np.isfinite(z_derived) & np.isfinite(reference)
-    masked = np.abs(np.where(finite, z_derived, np.float32(0)).astype(np.float64)
-                    - np.where(finite, reference, np.float32(0)).astype(np.float64))
-    diff = masked[finite]
+    valid = np.isfinite(z_derived) & np.isfinite(reference)
+    exact = int((valid & (z_derived == reference)).sum())
+    bitwise_exact = int((valid & (np.ascontiguousarray(z_derived).view(np.uint32)
+                                  == np.ascontiguousarray(reference).view(np.uint32))).sum())
+    within = int((valid & np.isclose(z_derived, reference, rtol=rtol, atol=atol)).sum())
+    with np.errstate(invalid="ignore"):
+        diff = np.abs(z_derived.astype(np.float64) - reference.astype(np.float64))
+    diff = diff[np.isfinite(diff)]
     return {
         "pixels": int(z_derived.size),
-        "bitwise": bitwise,
         "exact": exact,
+        "bitwise_exact": bitwise_exact,
         "within": within,
         "beyond": int(z_derived.size - within),
         "derived_nonfinite": int((~np.isfinite(z_derived)).sum()),
@@ -131,6 +135,11 @@ def mask_total(packed, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
         total_bytes += int(np.count_nonzero(block))
         total_bits += int(np.unpackbits(block).sum())
     return {"nonzero_bytes": total_bytes, "set_bits": total_bits}
+
+
+def mask_nonzero(packed, row, col, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
+    """Return only the set-bit count for a tile (compatibility helper)."""
+    return mask_window(packed, row, col, rows, row_bytes)["set_bits"]
 
 
 def load_linkage_plan_object(plan):
@@ -341,10 +350,10 @@ def main():
                                            linkage["comparison"]["rtol"], linkage["comparison"]["atol"])
                         record.update({name + "_" + key: value for key, value in measures.items()})
                         total = aggregate["channels"].setdefault(
-                            name, {"pixels": 0, "bitwise": 0, "exact": 0, "within": 0, "beyond": 0,
+                            name, {"pixels": 0, "exact": 0, "bitwise_exact": 0, "within": 0, "beyond": 0,
                                    "derived_nonfinite": 0, "reference_nonfinite": 0,
                                    "derived_nan": 0, "reference_nan": 0, "max_abs_diff": None})
-                        for key in ("pixels", "bitwise", "exact", "within", "beyond",
+                        for key in ("pixels", "exact", "bitwise_exact", "within", "beyond",
                                     "derived_nonfinite", "reference_nonfinite",
                                     "derived_nan", "reference_nan"):
                             total[key] += measures[key]
@@ -390,7 +399,7 @@ def main():
     if source_hashes != {name: file_sha256(ROOT / name) for name in SOURCES}:
         raise ValueError("source changed during scan")
     complete = all(summaries[split]["failed_ids"] == [] and summaries[split]["rows"] > 0 for split in summaries) \
-        and all(total["beyond"] == 0 and total["bitwise"] == total["pixels"]
+        and all(total["beyond"] == 0 and total["bitwise_exact"] == total["pixels"]
                 for value in summaries.values() for total in value["channels"].values()) \
         and all(value == {"nonzero_bytes": 0, "set_bits": 0} for value in mask_global.values()) \
         and sum(value["rows"] for value in summaries.values()) == len(seen_tiles) \

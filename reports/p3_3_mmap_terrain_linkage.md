@@ -1,6 +1,6 @@
 # P3.3 terrain product identity: fixed Train/Val cohort equals the published mmap
 
-2026-11-10. **`TERRAIN_MMAP_LINKAGE_PASS`:** every fixed Train/Val elevation and slope pixel is bit-for-bit identical to the published `pretraining/mmap` window after the published z-score, including signed-zero and NaN payload bits. This establishes product identity for the cohort, not an independent re-execution of the raw LOLA/SLDEM ingestion, and it does not train, rank or score anything.
+2026-11-10. **`TERRAIN_MMAP_LINKAGE_PASS`:** every fixed Train/Val elevation and slope pixel has an identical float32 bit pattern to the published `pretraining/mmap` window after the published z-score, and no terrain pixel in those windows is non-finite in either source. This establishes product identity for the cohort, not an independent re-execution of the raw LOLA/SLDEM ingestion, and it does not train, rank or score anything.
 
 ## What was actually compared
 
@@ -11,7 +11,7 @@ The pinned builders define the relation being tested: [`step04_tile.py`](https:/
 | Train | 5,135 | 336,527,360 | 336,527,360 | 336,527,360 | 0 | 0.0 | 0 | 0 |
 | Val | 1,155 | 75,694,080 | 75,694,080 | 75,694,080 | 0 | 0.0 | 0 | 0 |
 
-Both channels are counted separately; 824,442,880 terrain pixels were compared in total, 151,388,160 of them in Val. The pre-registered tolerance `rtol=1e-5, atol=1e-6` was never needed: the maximum absolute difference is exactly zero, and every float32 payload matched bit for bit. The packed masks contain no set bit anywhere on the grid - 0 nonzero bytes and 0 set bits for both channels - so the publisher declares no non-finite elevation or slope pixel at all. The two published masks are byte-identical at this revision, and each was downloaded and SHA256-verified separately so that the agreement check is not one local file compared with itself.
+Both channels are counted separately; 824,442,880 terrain pixels were compared in total, 151,388,160 of them in Val. The pre-registered tolerance `rtol=1e-5, atol=1e-6` was never needed: the maximum absolute difference is exactly zero, and every finite float32 payload matched bit for bit (`bitwise_exact` equals the pixel count in both channels). The packed masks contain no set bit anywhere on the grid - 0 nonzero bytes and 0 set bits for both channels - so the publisher declares no non-finite elevation or slope pixel at all. The two published masks are byte-identical at this revision, and each was downloaded and SHA256-verified separately so that the agreement check is not one local file compared with itself.
 
 ## Inputs, mapping and identity checks
 
@@ -30,11 +30,11 @@ Test scope is stated precisely: no Test tile was selected, compared or scored, a
 
 ## Execution and cost
 
-Private Python 3.12.9 / NumPy 2.4.4, `-I -B`, inside `unshare --user --map-root-user --net`; torch was not imported. Elapsed 242.6 s, process max RSS 4,236,568 KiB, no model, no optimizer step, no budget lock, no score. Earlier aborted launches in this phase were engineering iterations before the accepted run and produced no evidence artifacts; only the final run is archived, and the weaker first receipt is explicitly superseded in the verification file.
+Private Python 3.12.9 / NumPy 2.4.4, `-I -B`, inside `unshare --user --map-root-user --net`; torch was not imported. Elapsed 236.3 s, process max RSS 4,236,596 KiB, no model, no optimizer step, no budget lock, no score. Earlier aborted launches in this phase were engineering iterations before the accepted run and produced no evidence artifacts; only the final run is archived, and the weaker first receipt is explicitly superseded in the verification file.
 
-An independent review of the first receipt found four real weaknesses - the "zero Test bytes" wording, value equality standing in for bit identity, a mask-agreement check that compared one file with itself, and a byte count labelled as a bit count. All four were fixed before this receipt: the bitwise comparison, the separate mask download, the byte/bit split and the corrected Test wording are visible in the archived evidence.
+An independent review (see [the review report](p3_3_mmap_linkage_review.md)) of the first receipt found four real weaknesses - the "zero Test bytes" wording, value equality standing in for bit identity, a mask-agreement check that compared one file with itself, and a byte count labelled as a bit count. All four were fixed before this re-execution: the `bitwise_exact` comparison, the separate mask download, the byte/bit split, the raw non-finite count, the tile-disjointness checks and the corrected Test wording are visible in the archived evidence. The review retained the first receipt unchanged and added synthetic tests; this receipt is the re-execution it asked for.
 
-Verification: 19 new audit tests PASS and the focused P33 suite runs 97 PASS with zero skips; the full suite runs 727 tests with 720 PASS and the same 7 legacy NumPy-2.4/pandas and missing-`shapefile` failures recorded on the previous receipt. `compileall` PASS and `git diff --check` PASS for source, Markdown and JSON; the CRLF evidence CSVs are flagged as trailing whitespace exactly like the already committed 2026-11-07 `rows.csv`.
+Verification: 23 audit tests PASS and the focused P33 suite runs 101 PASS with zero skips; the full suite runs 727 tests with 720 PASS and the same 7 legacy NumPy-2.4/pandas and missing-`shapefile` failures recorded on the previous receipt. `compileall` PASS and `git diff --check` PASS for source, Markdown and JSON; the CRLF evidence CSVs are flagged as trailing whitespace exactly like the already committed 2026-11-07 `rows.csv`.
 
 Evidence: [summary](evidence/p33_20261110/mmap_linkage_01/summary.json), [Train rows](evidence/p33_20261110/mmap_linkage_01/train_rows.csv), [Val rows](evidence/p33_20261110/mmap_linkage_01/val_rows.csv), [acquisition receipt](evidence/p33_20261110/mmap_linkage_01/acquisition.json), [metadata export](evidence/p33_20261110/mmap_linkage_01/metadata_export.json) and [verification](evidence/p33_20261110/mmap_linkage_01/verification.json) with an independent standard-library recount of every CSV total.
 
