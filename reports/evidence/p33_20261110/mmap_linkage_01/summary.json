@@ -4,8 +4,9 @@
   "model_execution": "NOT_RUN",
   "training": "NOT_RUN",
   "scores": "NOT_RUN",
-  "test_pixels_read": 0,
   "Test": "HOLD",
+  "test_tiles_compared": 0,
+  "test_geography_note": "the published global arrays were streamed for SHA256 and the global packed mask was counted; those bytes cover every latitude including Test geography, but no Test tile was selected, decoded, compared or scored",
   "authority": {
     "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
     "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
@@ -20,24 +21,55 @@
     "stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
     "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
   },
-  "published_sha256": {
-    "pretraining/mmap/elevation.npy": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
-    "pretraining/mmap/slope.npy": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
-    "pretraining/mmap/elevation_mask.npy": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
-    "pretraining/mmap/slope_mask.npy": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
-    "pretraining/channel_stats.json": "8455a9c0370e844d53e4273728915fa5a7478181",
-    "pretraining/mmap/channel_index.json": "2639bd6ae1564290fe9b9898122900c3e828b27e"
+  "published_digests": {
+    "pretraining/mmap/elevation.npy": {
+      "digest": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
+      "kind": "lfs_sha256"
+    },
+    "pretraining/mmap/slope.npy": {
+      "digest": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
+      "kind": "lfs_sha256"
+    },
+    "pretraining/mmap/elevation_mask.npy": {
+      "digest": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "kind": "lfs_sha256"
+    },
+    "pretraining/mmap/slope_mask.npy": {
+      "digest": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "kind": "lfs_sha256"
+    },
+    "pretraining/channel_stats.json": {
+      "digest": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+      "kind": "sha256"
+    },
+    "pretraining/mmap/channel_index.json": {
+      "digest": "354ed51bd8cb7087313471b069faa8d61aa012eacdaed89bd3b609faec094fb7",
+      "kind": "sha256"
+    }
   },
   "source_sha256": {
-    "scripts/p33_audit_mmap_linkage.py": "cbcb2d781f87717dc05b4c49e1a43f0c9bd239e77111b63e0af1fe02eba44029",
+    "scripts/p33_audit_mmap_linkage.py": "e2a9c19e432c1a5e74af34d9992f12b3082c90a9172cb564c7e09c4f56bc47ff",
     "src/lunarrisk/benchmarks/prefix.py": "dd92b8a3ca4451098a9c50462f904d186913f3684a8087c0859bf164f4ba70f2",
     "src/lunarrisk/benchmarks/moonstone.py": "34e184ee878dfb38944be49d2fc34c7a1438a36b7a06b778db8cc49c96209078",
     "src/lunarrisk/nasa_transfer/cohort.py": "2a50df0dedd7c6d5ed7a4b9bf253d840af6df2a3eef974d63904ef8ea4a4255b",
     "src/lunarrisk/nasa_transfer/contracts.py": "722154580569d83d7525d8dcb7af4ef5dac5ddf81f7460d8cceac336af60e0dd"
   },
-  "declared_nan_bytes_global": {
-    "elevation": 0,
-    "slope": 0
+  "declared_nan_global": {
+    "elevation": {
+      "nonzero_bytes": 0,
+      "set_bits": 0
+    },
+    "slope": {
+      "nonzero_bytes": 0,
+      "set_bits": 0
+    }
+  },
+  "tiles": {
+    "published_metadata_tiles": 16200,
+    "train_val_tiles": 13800,
+    "test_tiles": 2400,
+    "selected_unique_tiles": 6290,
+    "selected_train_val_rows": 6290
   },
   "metadata": {
     "findings": {
@@ -66,24 +98,33 @@
       "channels": {
         "elevation": {
           "pixels": 336527360,
+          "bitwise": 336527360,
           "exact": 336527360,
           "within": 336527360,
           "beyond": 0,
+          "derived_nonfinite": 0,
+          "reference_nonfinite": 0,
           "derived_nan": 0,
           "reference_nan": 0,
           "max_abs_diff": 0.0
         },
         "slope": {
           "pixels": 336527360,
+          "bitwise": 336527360,
           "exact": 336527360,
           "within": 336527360,
           "beyond": 0,
+          "derived_nonfinite": 0,
+          "reference_nonfinite": 0,
           "derived_nan": 0,
           "reference_nan": 0,
           "max_abs_diff": 0.0
         }
       },
-      "declared_nan_bits": 0,
+      "declared_nan_bits": {
+        "elevation": 0,
+        "slope": 0
+      },
       "ordered_ids_sha256": "911890928f0be4fcfeeb513e143eeff57bc99dc5a78c95814ec94b7859fb9b17",
       "terrain_ordered_sha256": "a8772f7934966412da88f4fbc8aae1e140e57c7952f36ca2f545cfbffe78fcb8"
     },
@@ -94,40 +135,50 @@
       "channels": {
         "elevation": {
           "pixels": 75694080,
+          "bitwise": 75694080,
           "exact": 75694080,
           "within": 75694080,
           "beyond": 0,
+          "derived_nonfinite": 0,
+          "reference_nonfinite": 0,
           "derived_nan": 0,
           "reference_nan": 0,
           "max_abs_diff": 0.0
         },
         "slope": {
           "pixels": 75694080,
+          "bitwise": 75694080,
           "exact": 75694080,
           "within": 75694080,
           "beyond": 0,
+          "derived_nonfinite": 0,
+          "reference_nonfinite": 0,
           "derived_nan": 0,
           "reference_nan": 0,
           "max_abs_diff": 0.0
         }
       },
-      "declared_nan_bits": 0,
+      "declared_nan_bits": {
+        "elevation": 0,
+        "slope": 0
+      },
       "ordered_ids_sha256": "f03229216905228597f7627d168581ac2c5bbd3c83331b8f8770ea0594c1c656",
       "terrain_ordered_sha256": "93f542b13a2d18eebaade19977de3cbe6b039b5536c2f64625198afb806a60d3"
     }
   },
   "rows_csv_sha256": {
-    "train": "841a617cbabf26525cbcc7b11624ce9bf1af3073b8f020751bc16ee162a2e797",
-    "val": "ad674325f61bd7587aaf3338931e3ada6dad61e28d572621c7bcbfff619b8f8f"
+    "train": "331d0485d860bf55d44c450972df90aff4eaa7bedb07aec975eae8e3842b857f",
+    "val": "15de35083fa38bbfc7bdbb745f38f6510c7806369f1ce2d71beb424d07dfc690"
   },
   "upstream_ingestion_re_executed": false,
   "claims_permitted": [
-    "Every fixed Train/Val elevation and slope pixel equals the published mmap product (same value, same declared NaN pattern) to the stated tolerance",
-    "Because the pinned builders read the same GeoTIFF grid, the cohort terrain is the aligned elevation_blended.tif and derived slope.tif product shipped at the fixed revision",
-    "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02"
+    "Every fixed Train/Val elevation and slope pixel is numerically and bit-for-bit equal to the published pretraining/mmap window at the stated tolerance, with the same declared NaN pattern",
+    "The published mmap channel is produced by the pinned step15 builder from the same 128 ppd GeoTIFF grid that step04 uses for the HDF5 patch, so the cohort equals the published product form of those GeoTIFFs",
+    "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02",
+    "Whole-file SHA256 hashing and the global mask count stream bytes that cover all latitudes, including Test geography; no Test tile is selected, decoded, compared or scored"
   ],
-  "elapsed_seconds": 226.80967687501106,
-  "max_rss_kib": 4224768,
+  "elapsed_seconds": 242.59353836497758,
+  "max_rss_kib": 4236568,
   "python": "3.12.9",
   "numpy": "2.4.4",
   "torch_imported": false

@@ -38,13 +38,40 @@
     "published_assets": {
       "elevation_npy_sha256": "2013f78a5507f9ebd4a94774e545fb6846553723507608f44d33617c952ffbef",
       "slope_npy_sha256": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
-      "shared_mask_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511"
+      "elevation_mask_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "slope_mask_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511"
     },
-    "new_download_bytes": 8626176128,
+    "new_download_bytes": 8758886656,
     "historical_metadata_export": "absent locally (3b3ed8...); rebuilt from the guarded HDF5 metadata group and required to match the pinned archive on all 16200 rows before use",
     "closed": "the cohort terrain is the published product at the fixed revision, so no downstream filtering, imputation or sentinel substitution is needed to reach that product",
     "still_open": "raw LOLA/SLDEM ingestion re-execution, GDAL/rasterio versions, intermediate headers and reuse, byte comparison against aligned/derived GeoTIFFs, and the fact that derived/slope.tif is not published",
-    "scope": "No model, training, optimizer step, budget lock, score or Test pixel"
+    "scope": "No model, training, optimizer step, budget lock, score or Test tile comparison",
+    "bitwise_identical_pixels_per_channel": 412221440,
+    "raw_nonfinite_pixels": 0,
+    "declared_nan_global": {
+      "elevation": {
+        "nonzero_bytes": 0,
+        "set_bits": 0
+      },
+      "slope": {
+        "nonzero_bytes": 0,
+        "set_bits": 0
+      }
+    },
+    "tiles": {
+      "published": 16200,
+      "train_val": 13800,
+      "test": 2400,
+      "selected_unique": 6290,
+      "selected_test_intersection": 0
+    },
+    "tests": {
+      "new_audit_tests": 19,
+      "focused_p33_pass": 97,
+      "full_suite": "727 tests, 720 PASS, 7 legacy environment failures"
+    },
+    "test_bytes_wording": "No Test tile was selected, compared or scored; whole-file SHA256 and the global mask count do stream bytes covering Test geography, so 'zero Test-related bytes received' must not be claimed",
+    "supersedes": "The earlier same-day PASS receipt used a weaker predicate and is superseded; both remain in git history"
   },
   "latest_cohort_diagnostic": {
     "observed_date": "2026-11-07",

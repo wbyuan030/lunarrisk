@@ -1,10 +1,15 @@
 {
   "protocol": "P33_MMAP_TERRAIN_LINKAGE_V1",
-  "observed_utc": "2026-11-10T01:25:25+00:00",
   "repository": "ayushprd/Moonstone",
   "revision": "53099efd0f2db81eee96b28eae87e1efdd281310",
-  "endpoint": "https://hf-mirror.com/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining/mmap",
+  "endpoint": "https://hf-mirror.com/datasets/ayushprd/Moonstone/resolve/53099efd0f2db81eee96b28eae87e1efdd281310/pretraining",
   "proxy": "disabled explicitly with --noproxy '*'",
+  "observed_local_dates": [
+    "2026-11-10T01:09:37+00:00",
+    "2026-11-10T01:18:45+00:00",
+    "2026-11-10T01:25:25+00:00",
+    "2026-11-10T02:16:00+00:00"
+  ],
   "files": [
     {
       "path": "pretraining/mmap/elevation_mask.npy",
@@ -29,32 +34,41 @@
       "published_lfs_sha256": "38c8459408c6f22848d0417cca88b6084d9e1f73ec30366a549d22550649d4b8",
       "attempts": 1,
       "status": "COMPLETE"
+    },
+    {
+      "path": "pretraining/mmap/slope_mask.npy",
+      "bytes": 132710528,
+      "sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "published_lfs_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
+      "attempts": 1,
+      "status": "COMPLETE",
+      "note": "Byte-identical to elevation_mask.npy at this revision, downloaded and verified separately so the audit never compares one local file against itself"
     }
   ],
-  "shared_digest": "pretraining/mmap/slope_mask.npy declares the same LFS digest as elevation_mask.npy at this revision; one local copy was reused and no separate transfer was made",
   "small_metadata_files": {
     "pretraining/channel_stats.json": {
       "bytes": 2039,
       "sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
-      "bytes_from_public_source": 2039,
-      "read_via": "hf-mirror resolve"
+      "verified_against_plan": true
     },
     "pretraining/mmap/channel_index.json": {
       "bytes": 2775,
-      "git_blob_sha": "2639bd6ae1564290fe9b9898122900c3e828b27e",
-      "read_via": "hf-mirror resolve"
+      "sha256": "354ed51bd8cb7087313471b069faa8d61aa012eacdaed89bd3b609faec094fb7",
+      "verified_against_plan": true,
+      "declares": "shape [23040, 46080], dtype float32, normalized true"
     },
     "README.md": {
       "bytes": 3858,
       "sha256": "d7849be668e1a3499618ff1f34e1c6de95e7d2088af70eb368093392433b96f0",
-      "read_via": "hf-mirror resolve"
+      "use": "dataset card check only"
     }
   },
-  "new_pixel_channel_bytes": 8626176128,
+  "new_pixel_channel_bytes": 8758886656,
   "retries": 0,
   "partial_failures": 0,
-  "notes": [
-    "Only elevation, slope and the shared packed mask were fetched; the 4.39 GB aligned elevation_blended.tif and the unpublished derived slope.tif were not acquired.",
-    "No Test pixel was requested: the downloaded arrays are global public products, and only Train/Val tile windows were compared locally."
+  "scope": [
+    "Only the two z-scored terrain channels and their packed masks plus two small metadata files were fetched; the 4.39 GB aligned elevation_blended.tif and the unpublished derived slope.tif were not acquired.",
+    "The published arrays cover all latitudes, so the whole-file SHA256 and global mask count stream bytes that include Test geography. No Test tile was selected, decoded, compared or scored.",
+    "A first background fetch attempt in this session was killed by the shell when its launching command returned; the retry used setsid. Both attempts produced only complete, digest-verified files and the aborted attempt transferred no partial file into the evidence chain."
   ]
 }

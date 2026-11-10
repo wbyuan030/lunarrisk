@@ -72,23 +72,31 @@ def zscore(raw, mean, std):
 
 
 def compare(z_derived, reference, rtol, atol):
-    """Count exact/within/beyond matches; NaN never counts as a match."""
+    """Count bitwise/numeric matches; a NaN never counts as a match."""
     z_derived = np.asarray(z_derived, dtype=np.float32)
     reference = np.asarray(reference, dtype=np.float32)
     if z_derived.shape != reference.shape or z_derived.ndim != 2:
         raise ValueError("paired windows must be equal two-dimensional shapes")
+    contiguous = np.ascontiguousarray
+    bitwise = int((contiguous(z_derived).view(np.uint32)
+                   == contiguous(reference).view(np.uint32)).sum())
     exact = int((z_derived == reference).sum())
     within = int(np.isclose(z_derived, reference, rtol=rtol, atol=atol).sum())
-    diff = np.abs(z_derived.astype(np.float64) - reference.astype(np.float64))
-    finite = np.isfinite(diff)
+    finite = np.isfinite(z_derived) & np.isfinite(reference)
+    masked = np.abs(np.where(finite, z_derived, np.float32(0)).astype(np.float64)
+                    - np.where(finite, reference, np.float32(0)).astype(np.float64))
+    diff = masked[finite]
     return {
         "pixels": int(z_derived.size),
+        "bitwise": bitwise,
         "exact": exact,
         "within": within,
         "beyond": int(z_derived.size - within),
+        "derived_nonfinite": int((~np.isfinite(z_derived)).sum()),
+        "reference_nonfinite": int((~np.isfinite(reference)).sum()),
         "derived_nan": int(np.isnan(z_derived).sum()),
         "reference_nan": int(np.isnan(reference).sum()),
-        "max_abs_diff": float(diff[finite].max()) if finite.any() else None,
+        "max_abs_diff": float(diff.max()) if diff.size else None,
     }
 
 
@@ -102,14 +110,27 @@ def window(row, col, width=GRID[1]):
     return int(row) * PATCH, (int(row) + 1) * PATCH, int(col) * PATCH, (int(col) + 1) * PATCH
 
 
-def mask_nonzero(packed, row, col, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
-    """Count declared-NaN bits inside a tile of the packed global mask."""
+def mask_window(packed, row, col, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
+    """Count set bits inside a tile of the packed global mask."""
     packed = np.asarray(packed, dtype=np.uint8)
     if packed.ndim != 1 or packed.size != rows * row_bytes:
         raise ValueError("packed mask does not match the fixed grid")
     y0, _, x0, _ = window(row, col, width=row_bytes * 8)
     tile = packed.reshape(rows, row_bytes)[y0:y0 + PATCH, x0 // 8:(x0 + PATCH) // 8]
-    return int(np.count_nonzero(tile))
+    return {"nonzero_bytes": int(np.count_nonzero(tile)), "set_bits": int(np.unpackbits(tile).sum())}
+
+
+def mask_total(packed, rows=GRID[0], row_bytes=MASK_ROW_BYTES):
+    """Count every set bit of the packed global mask in bounded chunks."""
+    packed = np.asarray(packed, dtype=np.uint8)
+    if packed.ndim != 1 or packed.size != rows * row_bytes:
+        raise ValueError("packed mask does not match the fixed grid")
+    total_bytes, total_bits = 0, 0
+    for start in range(0, packed.size, 1 << 22):
+        block = packed[start:start + (1 << 22)]
+        total_bytes += int(np.count_nonzero(block))
+        total_bits += int(np.unpackbits(block).sum())
+    return {"nonzero_bytes": total_bytes, "set_bits": total_bits}
 
 
 def load_linkage_plan_object(plan):
@@ -226,35 +247,54 @@ def main():
     export_path = args.outdir / "metadata_export.json"
     export_path.write_text(json.dumps(export, indent=2))
     print("HDF5 metadata group matches the pinned archive", flush=True)
-    published, local_by_digest = {}, {}
+    published, local_files = {}, {}
     for entry in linkage["assets"]:
-        if "lfs_sha256" not in entry:
-            published[entry["path"]] = entry["git_blob_sha"]
-            continue
+        expected = entry.get("lfs_sha256") or entry.get("sha256")
+        if expected is None:
+            raise ValueError(f"asset entry lacks a digest: {entry['path']}")
         local = args.mmap_dir / entry["path"].rsplit("/", 1)[-1]
-        if local.is_file() and local.stat().st_size == entry["bytes"]:
-            digest = file_sha256(local)
-            if digest != entry["lfs_sha256"]:
-                raise ValueError(f"published asset SHA256 mismatch: {entry['path']}")
-            local_by_digest[digest] = local
-        elif entry["lfs_sha256"] not in local_by_digest:
+        if not local.is_file() or local.stat().st_size != entry["bytes"]:
             raise ValueError(f"published asset absent or truncated: {entry['path']}")
-        published[entry["path"]] = entry["lfs_sha256"]
+        digest = file_sha256(local)
+        if digest != expected:
+            raise ValueError(f"published asset SHA256 mismatch: {entry['path']}")
+        published[entry["path"]] = {"digest": digest,
+                                    "kind": "lfs_sha256" if "lfs_sha256" in entry else "sha256"}
+        local_files[entry["path"]] = local
     print("published mmap assets authenticated", flush=True)
+    index = json.loads(local_files["pretraining/mmap/channel_index.json"].read_text())
+    if tuple(index["shape"]) != GRID or index["dtype"] != "float32" or index["normalized"] is not True:
+        raise ValueError("published channel index disagrees with the pinned geometry or normalization")
+    if not all(name in index["channels"] for name in TERRAIN):
+        raise ValueError("published channel index lacks a terrain channel")
+    if file_sha256(local_files["pretraining/channel_stats.json"]) != linkage["normalization"]["stats_sha256"]:
+        raise ValueError("published channel statistics differ from the pre-registered digest")
     stats = json.loads(args.stats.read_text())
     if file_sha256(args.stats) != linkage["normalization"]["stats_sha256"]:
         raise ValueError("normalization statistics differ from the pre-registered file")
     mapping = json.loads(args.class_map.read_text())
-    memory, masks, mask_total = {}, {}, {}
+    memory, masks, mask_global = {}, {}, {}
     for name in TERRAIN:
         memory[name] = np.memmap(args.mmap_dir / f"{name}.npy", dtype=np.float32, mode="r", shape=GRID)
         if memory[name].shape != GRID:
             raise ValueError("published value array does not match the fixed grid")
-        digest = published[f"pretraining/mmap/{name}_mask.npy"]
-        masks[name] = np.load(local_by_digest[digest], mmap_mode="r")
+        masks[name] = np.load(local_files[f"pretraining/mmap/{name}_mask.npy"], mmap_mode="r")
         if masks[name].shape != (GRID[0] * MASK_ROW_BYTES,) or masks[name].dtype != np.uint8:
             raise ValueError("published packed mask does not match the fixed grid")
-        mask_total[name] = int(np.count_nonzero(masks[name]))
+        mask_global[name] = mask_total(masks[name])
+    splits_meta = export["metadata"]
+    tile_of, split_of = {}, {}
+    test_tiles = set()
+    for sample, row, col, split in zip(splits_meta["metadata/patch_id"], splits_meta["metadata/row_idx"],
+                                       splits_meta["metadata/col_idx"], splits_meta["metadata/split"]):
+        tile_of[str(sample)] = (int(row), int(col))
+        split_of[str(sample)] = int(split)
+        if int(split) == 2:
+            test_tiles.add((int(row), int(col)))
+    if len(set(tile_of.values())) != len(tile_of):
+        raise ValueError("metadata reuse: two patches share one tile")
+    train_val_tiles = {tile for sample, tile in tile_of.items() if split_of[sample] in (0, 1)}
+    seen_tiles = set()
     summaries = {}
     for split, code in (("train", 0), ("val", 1)):
         dataset = PrefixClassifierDataset(args.data, stats, mapping, export_path,
@@ -268,7 +308,8 @@ def main():
                             export["metadata"]["metadata/row_idx"],
                             export["metadata"]["metadata/col_idx"])}
             aggregate = {"rows": 0, "pass_rows": 0, "failed_ids": [], "channels": {},
-                         "declared_nan_bits": 0, "ordered_ids_sha256": dataset.ordered_ids_hash}
+                         "declared_nan_bits": {"elevation": 0, "slope": 0},
+                         "ordered_ids_sha256": dataset.ordered_ids_hash}
             digest = hashlib.sha256()
             patches = dataset._file()["patches"]
             start = CHANNELS.index("elevation")
@@ -291,28 +332,41 @@ def main():
                               "sample_id": sample_id, "target": int(dataset.targets[ordinal]),
                               "row_idx": row_idx, "col_idx": col_idx}
                     ok = True
+                    nonfinite_raw = 0
                     for band, name in zip(raw, TERRAIN):
                         mean, std = stats[name]
+                        nonfinite_raw += int((~np.isfinite(band)).sum())
                         reference = np.asarray(memory[name][y0:y1, x0:x1], dtype=np.float32)
                         measures = compare(zscore(band, mean, std), reference,
                                            linkage["comparison"]["rtol"], linkage["comparison"]["atol"])
                         record.update({name + "_" + key: value for key, value in measures.items()})
                         total = aggregate["channels"].setdefault(
-                            name, {"pixels": 0, "exact": 0, "within": 0, "beyond": 0,
+                            name, {"pixels": 0, "bitwise": 0, "exact": 0, "within": 0, "beyond": 0,
+                                   "derived_nonfinite": 0, "reference_nonfinite": 0,
                                    "derived_nan": 0, "reference_nan": 0, "max_abs_diff": None})
-                        for key in ("pixels", "exact", "within", "beyond", "derived_nan", "reference_nan"):
+                        for key in ("pixels", "bitwise", "exact", "within", "beyond",
+                                    "derived_nonfinite", "reference_nonfinite",
+                                    "derived_nan", "reference_nan"):
                             total[key] += measures[key]
                         if measures["max_abs_diff"] is not None:
                             current = total["max_abs_diff"]
                             total["max_abs_diff"] = measures["max_abs_diff"] if current is None \
                                 else max(current, measures["max_abs_diff"])
-                        ok = ok and measures["beyond"] == 0
-                    bits = mask_nonzero(masks["elevation"], row_idx, col_idx)
-                    if bits != mask_nonzero(masks["slope"], row_idx, col_idx):
-                        raise ValueError("elevation/slope masks disagree on the shared file")
-                    record["declared_nan_bits"] = bits
-                    aggregate["declared_nan_bits"] += bits
-                    ok = ok and bits == 0
+                        ok = ok and measures["beyond"] == 0 and measures["derived_nonfinite"] == 0
+                    record["raw_nonfinite"] = nonfinite_raw
+                    ok = ok and nonfinite_raw == 0
+                    declared = {}
+                    for name in TERRAIN:
+                        declared[name] = mask_window(masks[name], row_idx, col_idx)
+                        record[name + "_mask_nonzero_bytes"] = declared[name]["nonzero_bytes"]
+                        record[name + "_mask_set_bits"] = declared[name]["set_bits"]
+                        aggregate["declared_nan_bits"][name] += declared[name]["set_bits"]
+                        ok = ok and declared[name]["set_bits"] == 0
+                    if (row_idx, col_idx) in test_tiles:
+                        raise ValueError("Train/Val tile coincides with a Test tile")
+                    if (row_idx, col_idx) in seen_tiles or (row_idx, col_idx) not in train_val_tiles:
+                        raise ValueError("duplicate or non-Train/Val tile selected")
+                    seen_tiles.add((row_idx, col_idx))
                     aggregate["rows"] += 1
                     aggregate["pass_rows"] += int(ok)
                     if not ok:
@@ -330,15 +384,27 @@ def main():
     for key, path in paths.items():
         if _signature(path.stat()) != signatures[key]:
             raise ValueError(f"asset mutated during scan: {key}")
+    recheck = {entry["path"]: file_sha256(local_files[entry["path"]]) for entry in linkage["assets"]}
+    if recheck != {path: value["digest"] for path, value in published.items()}:
+        raise ValueError("published asset changed during the scan")
     if source_hashes != {name: file_sha256(ROOT / name) for name in SOURCES}:
         raise ValueError("source changed during scan")
     complete = all(summaries[split]["failed_ids"] == [] and summaries[split]["rows"] > 0 for split in summaries) \
-        and all(total["beyond"] == 0 for value in summaries.values() for total in value["channels"].values())
+        and all(total["beyond"] == 0 and total["bitwise"] == total["pixels"]
+                for value in summaries.values() for total in value["channels"].values()) \
+        and all(value == {"nonzero_bytes": 0, "set_bits": 0} for value in mask_global.values()) \
+        and sum(value["rows"] for value in summaries.values()) == len(seen_tiles) \
+        and seen_tiles <= train_val_tiles
     report = {"status": "TERRAIN_MMAP_LINKAGE_PASS" if complete else "TERRAIN_MMAP_LINKAGE_FAILED",
               "protocol": linkage["protocol"], "model_execution": "NOT_RUN", "training": "NOT_RUN",
-              "scores": "NOT_RUN", "test_pixels_read": 0, "Test": "HOLD",
-              "authority": authority, "asset_sha256": assets, "published_sha256": published,
-              "source_sha256": source_hashes, "declared_nan_bytes_global": mask_total,
+              "scores": "NOT_RUN", "Test": "HOLD",
+              "test_tiles_compared": 0,
+              "test_geography_note": "the published global arrays were streamed for SHA256 and the global packed mask was counted; those bytes cover every latitude including Test geography, but no Test tile was selected, decoded, compared or scored",
+              "authority": authority, "asset_sha256": assets, "published_digests": published,
+              "source_sha256": source_hashes, "declared_nan_global": mask_global,
+              "tiles": {"published_metadata_tiles": len(tile_of), "train_val_tiles": len(train_val_tiles),
+                        "test_tiles": len(test_tiles), "selected_unique_tiles": len(seen_tiles),
+                        "selected_train_val_rows": sum(value["rows"] for value in summaries.values())},
               "metadata": {"findings": findings, "derived_export_sha256": file_sha256(export_path),
                            "historical_export_sha256": plan["data"]["metadata_sha256"]},
               "splits": summaries,

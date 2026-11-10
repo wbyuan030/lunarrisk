@@ -51,10 +51,27 @@ class CompareTests(unittest.TestCase):
         within = np.array([[1.0, 2.0 + 1e-7, 3.0 - 1e-3]], dtype=np.float32)
         result = linkage.compare(within, reference, 1e-5, 1e-6)
         self.assertEqual(result["pixels"], 3)
+        self.assertEqual(result["bitwise"], 2)
         self.assertEqual(result["exact"], 2)
         self.assertEqual(result["within"], 2)
         self.assertEqual(result["beyond"], 1)
         self.assertAlmostEqual(result["max_abs_diff"], 1e-3, places=6)
+
+    def test_bitwise_separates_signed_zero_and_nan_payloads(self):
+        reference = np.array([[0.0, -0.0, np.float32(np.nan)]], dtype=np.float32)
+        derived = np.array([[0.0, 0.0, np.float32(np.nan)]], dtype=np.float32)
+        result = linkage.compare(derived, reference, 1e-5, 1e-6)
+        self.assertEqual(result["exact"], 2)
+        self.assertEqual(result["bitwise"], 2)
+        self.assertEqual(result["derived_nonfinite"], 1)
+        self.assertEqual(result["beyond"], 1)
+
+    def test_inf_is_not_silently_accepted(self):
+        reference = np.array([[np.inf, 1.0]], dtype=np.float32)
+        result = linkage.compare(reference, reference, 1e-5, 1e-6)
+        self.assertEqual(result["within"], 2)
+        self.assertEqual(result["derived_nonfinite"], 1)
+        self.assertEqual(result["reference_nonfinite"], 1)
 
     def test_nan_never_counts_as_match(self):
         reference = np.array([[np.nan, 1.0]], dtype=np.float32)
@@ -89,18 +106,86 @@ class MaskTests(unittest.TestCase):
         mask = np.zeros((rows, columns), dtype=bool)
         mask[300, 700] = True
         packed_mask = packed(mask)
-        self.assertEqual(linkage.mask_nonzero(packed_mask, 1, 2, rows=rows, row_bytes=columns // 8), 1)
-        self.assertEqual(linkage.mask_nonzero(packed_mask, 1, 1, rows=rows, row_bytes=columns // 8), 0)
-        self.assertEqual(linkage.mask_nonzero(packed_mask, 0, 0, rows=rows, row_bytes=columns // 8), 0)
+        self.assertEqual(linkage.mask_window(packed_mask, 1, 2, rows=rows, row_bytes=columns // 8),
+                         {"nonzero_bytes": 1, "set_bits": 1})
+        self.assertEqual(linkage.mask_window(packed_mask, 1, 1, rows=rows, row_bytes=columns // 8),
+                         {"nonzero_bytes": 0, "set_bits": 0})
+        self.assertEqual(linkage.mask_window(packed_mask, 0, 0, rows=rows, row_bytes=columns // 8),
+                         {"nonzero_bytes": 0, "set_bits": 0})
 
     def test_rejects_wrong_payload_size(self):
         with self.assertRaises(ValueError):
-            linkage.mask_nonzero(np.zeros(10, dtype=np.uint8), 0, 0, rows=512, row_bytes=64)
+            linkage.mask_window(np.zeros(10, dtype=np.uint8), 0, 0, rows=512, row_bytes=64)
+        with self.assertRaises(ValueError):
+            linkage.mask_total(np.zeros(10, dtype=np.uint8), rows=512, row_bytes=64)
 
     def test_all_zero_payload_reports_no_declared_nan(self):
         packed_mask = np.zeros(512 * 128, dtype=np.uint8)
         for row, col in ((0, 0), (1, 2), (1, 3)):
-            self.assertEqual(linkage.mask_nonzero(packed_mask, row, col, rows=512, row_bytes=128), 0)
+            self.assertEqual(linkage.mask_window(packed_mask, row, col, rows=512, row_bytes=128),
+                             {"nonzero_bytes": 0, "set_bits": 0})
+        self.assertEqual(linkage.mask_total(packed_mask, rows=512, row_bytes=128),
+                         {"nonzero_bytes": 0, "set_bits": 0})
+
+    def test_global_total_counts_bits_not_bytes(self):
+        rows, columns = 512, 1024
+        mask = np.zeros((rows, columns), dtype=bool)
+        mask[10, 10] = True
+        mask[400, 900] = True
+        packed_mask = packed(mask)
+        self.assertEqual(linkage.mask_total(packed_mask, rows=rows, row_bytes=columns // 8),
+                         {"nonzero_bytes": 2, "set_bits": 2})
+        packed_one_byte = np.zeros(rows * columns // 8, dtype=np.uint8)
+        packed_one_byte[0] = 0xFF
+        self.assertEqual(linkage.mask_total(packed_one_byte, rows=rows, row_bytes=columns // 8),
+                         {"nonzero_bytes": 1, "set_bits": 8})
+
+
+class MetadataTests(unittest.TestCase):
+    @staticmethod
+    def build(row_idx, col_idx, unit_id=None, unit_name=None, split=0):
+        unit_id = [44 for _ in row_idx] if unit_id is None else unit_id
+        unit_name = ["Nt" for _ in row_idx] if unit_name is None else unit_name
+        ids = [str(index) for index in range(len(row_idx))]
+        export = {"attributes": {"channel_names": ["placeholder"]}, "metadata": {
+            "metadata/patch_id": [int(value) for value in ids],
+            "metadata/split": [split for _ in range(len(row_idx))],
+            "metadata/row_idx": row_idx,
+            "metadata/col_idx": col_idx,
+            "metadata/center_lat": [90.0 - (row * 256 + 128) / 128.0 for row in row_idx],
+            "metadata/center_lon": [-180.0 + (col * 256 + 128) / 128.0 for col in col_idx],
+            "metadata/geology/dominant_unit_id": unit_id,
+            "metadata/geology/dominant_unit_name": unit_name,
+        }}
+        archive = [{"sample_id": str(index), "stored_split": str(split), "unit_id": "44",
+                    "unit_name": "Nt", "row_idx": str(row), "col_idx": str(col)}
+                   for index, (row, col) in enumerate(zip(row_idx, col_idx))]
+        return export, archive
+
+    def test_matching_metadata_is_accepted(self):
+        export, archive = self.build([0, 0], [0, 1])
+        findings = linkage.verify_metadata(export, archive)
+        self.assertEqual(findings["rows"], 2)
+        self.assertTrue(all(findings["checks"].values()))
+        self.assertEqual(findings["archive_sha256"], linkage.METADATA_ARCHIVE_SHA256)
+        self.assertFalse(findings["historical_export_sha256_present_locally"])
+
+    def test_any_column_mismatch_is_rejected(self):
+        for key, value in (("col_idx", [0, 3]), ("row_idx", [1, 0]),
+                           ("metadata/split", [0, 1]),
+                           ("metadata/geology/dominant_unit_id", [44, 45]),
+                           ("metadata/geology/dominant_unit_name", ["Nt", "Nt1"])):
+            export, archive = self.build([0, 0], [0, 1])
+            base_key = key if key.startswith("metadata/") else "metadata/" + key
+            export["metadata"][base_key] = value
+            with self.assertRaises(ValueError):
+                linkage.verify_metadata(export, archive)
+
+    def test_duplicate_ids_are_rejected(self):
+        export, archive = self.build([0, 0], [0, 1])
+        export["metadata"]["metadata/patch_id"] = [0, 0]
+        with self.assertRaises(ValueError):
+            linkage.verify_metadata(export, archive)
 
 
 class PlanTests(unittest.TestCase):

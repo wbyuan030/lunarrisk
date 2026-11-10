@@ -53,21 +53,24 @@
       "bytes": 132710528,
       "lfs_sha256": "1c09aaba85a93da746cd6e3f68132f59b189397558f569bc7e643b66912a7511",
       "sha256_verified_locally": true,
-      "role": "byte-identical to elevation_mask.npy at this revision, hence the same published NaN pattern"
+      "role": "byte-identical to elevation_mask.npy at this revision, hence the same published NaN pattern",
+      "note": "slope_mask.npy is byte-identical to elevation_mask.npy at this revision and was downloaded and SHA256-verified separately on 2026-11-10"
     },
     {
       "path": "pretraining/channel_stats.json",
       "bytes": 2039,
       "git_blob_sha": "8455a9c0370e844d53e4273728915fa5a7478181",
       "sha256_verified_locally": true,
-      "role": "published mean/std used by step15 during conversion"
+      "role": "published mean/std used by step15 during conversion",
+      "sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64"
     },
     {
       "path": "pretraining/mmap/channel_index.json",
       "bytes": 2775,
       "git_blob_sha": "2639bd6ae1564290fe9b9898122900c3e828b27e",
       "sha256_verified_locally": true,
-      "role": "declares shape (23040, 46080), float32 and normalized=true"
+      "role": "declares shape (23040, 46080), float32 and normalized=true",
+      "sha256": "354ed51bd8cb7087313471b069faa8d61aa012eacdaed89bd3b609faec094fb7"
     }
   ],
   "normalization": {
@@ -121,20 +124,24 @@
     "blocked": "asset size/SHA256 mismatch, truncated download, or missing authenticated metadata"
   },
   "claims_permitted": [
-    "Every fixed Train/Val elevation and slope pixel equals the published mmap product (same value, same declared NaN pattern) to the stated tolerance",
-    "Because the pinned builders read the same GeoTIFF grid, the cohort terrain is the aligned elevation_blended.tif and derived slope.tif product shipped at the fixed revision",
-    "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02"
+    "Every fixed Train/Val elevation and slope pixel is numerically and bit-for-bit equal to the published pretraining/mmap window at the stated tolerance, with the same declared NaN pattern",
+    "The published mmap channel is produced by the pinned step15 builder from the same 128 ppd GeoTIFF grid that step04 uses for the HDF5 patch, so the cohort equals the published product form of those GeoTIFFs",
+    "The publisher declares no non-finite terrain pixel anywhere; finite values may still be bilinear-interpolated or blended as described by step02",
+    "Whole-file SHA256 hashing and the global mask count stream bytes that cover all latitudes, including Test geography; no Test tile is selected, decoded, compared or scored"
   ],
   "claims_not_permitted": [
+    "A byte-level comparison against aligned/elevation_blended.tif or derived/slope.tif; the latter is not published and only the mmap form is available",
     "Independent re-execution or byte-level authentication of the raw LOLA/SLDEM ingestion, GDAL versions, intermediate reuse or per-stage headers",
-    "Absence of every possible undocumented finite sentinel arising from interpolation or blending",
+    "A guarantee that no possible undocumented finite sentinel arises from interpolation or blending",
     "Any model execution, training, actual budget lock, transfer score or held-out result",
     "Equivalence of the Git-repository channel statistics path, which is kept only as a diagnostic"
   ],
-  "new_download_bytes_planned": 8626176128,
-  "acquisition_note": "Three files were downloaded and SHA256-verified against the published LFS digests before this plan file was committed; slope_mask.npy shares the elevation_mask.npy digest, so one 132,710,528-byte mask covers both channels. No pixel comparison ran before the plan was written.",
+  "new_download_bytes_planned": 8758886656,
+  "acquisition_note": "Four published files were downloaded and SHA256-verified against their published digests before this plan file was committed; slope_mask.npy declares the same digest as elevation_mask.npy and was nevertheless fetched separately. No pixel comparison ran before the plan was written.",
   "test_pixels_requested": 0,
   "model_execution": "NOT_RUN",
   "training": "NOT_RUN",
-  "scores": "NOT_RUN"
+  "scores": "NOT_RUN",
+  "test_geography_policy": "Only Train/Val tiles are selected for comparison. Full-file SHA256 of the published arrays and the global packed-mask count necessarily stream bytes covering every latitude; those bytes are hashed or counted, never decoded into per-tile values for Test geography.",
+  "test_tiles_compared": 0
 }
