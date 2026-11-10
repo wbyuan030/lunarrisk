@@ -1,0 +1,86 @@
+{
+  "plan": "P33_FROZEN_FEATURE_PROBE_V1",
+  "checks": [
+    {
+      "split": "train",
+      "arm": "random",
+      "positions": [
+        0,
+        1,
+        5133,
+        5134
+      ],
+      "values": 3072,
+      "bitwise": 785,
+      "max_abs_diff": 4.76837158203125e-07,
+      "tolerance": 0.001,
+      "sample_ids": [
+        "0",
+        "1",
+        "7398",
+        "7399"
+      ]
+    },
+    {
+      "split": "train",
+      "arm": "pretrained",
+      "positions": [
+        0,
+        1,
+        5133,
+        5134
+      ],
+      "values": 3072,
+      "bitwise": 15,
+      "max_abs_diff": 0.00014667212963104248,
+      "tolerance": 0.001,
+      "sample_ids": [
+        "0",
+        "1",
+        "7398",
+        "7399"
+      ]
+    },
+    {
+      "split": "val",
+      "arm": "random",
+      "positions": [
+        0,
+        1,
+        1153,
+        1154
+      ],
+      "values": 3072,
+      "bitwise": 685,
+      "max_abs_diff": 4.76837158203125e-07,
+      "tolerance": 0.001,
+      "sample_ids": [
+        "20",
+        "21",
+        "7333",
+        "7334"
+      ]
+    },
+    {
+      "split": "val",
+      "arm": "pretrained",
+      "positions": [
+        0,
+        1,
+        1153,
+        1154
+      ],
+      "values": 3072,
+      "bitwise": 3,
+      "max_abs_diff": 8.52346420288086e-05,
+      "tolerance": 0.001,
+      "sample_ids": [
+        "20",
+        "21",
+        "7333",
+        "7334"
+      ]
+    }
+  ],
+  "status": "PASS"
+}

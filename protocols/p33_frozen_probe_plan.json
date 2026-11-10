@@ -1,0 +1,99 @@
+{
+  "protocol": "P33_FROZEN_FEATURE_PROBE_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION",
+  "created_date": "2026-11-10",
+  "trigger": "User authorized the experiment after the terrain product-identity PASS; no further data-validity work is in scope.",
+  "question": "Does the official pretrained NASA encoder give a better frozen-feature Geology probe than an identically initialized random encoder on the fixed Moonstone Train/Val cohort?",
+  "design": {
+    "arms": [
+      "pretrained: official base encoder with the verified checkpoint, strictly loaded",
+      "random: identical architecture and head/adapters from the same seed, no pretrained weights"
+    ],
+    "adaptation": "frozen",
+    "encoder_gradients": "none; encoder weights and buffers are never updated",
+    "feature": "encoder token sequence, mean-pooled over tokens, exactly the mean-pool that TerrainTransfer.forward applies",
+    "head": "single Linear(out_channels, 49), identical initialization across arms",
+    "inputs": [
+      "elevation (dtm)",
+      "slope"
+    ],
+    "spatial_policy": "moonstone_native256_v1",
+    "normalization": "audited NASA config via prepare_terrain; raw physical metres and degrees",
+    "cohort": {
+      "train": 5135,
+      "val": 1155,
+      "test": "HOLD, never selected"
+    }
+  },
+  "budget": {
+    "epochs": 20,
+    "patience": 5,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "optimizer": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "schedule": "constant",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "extraction_batch_size": 8,
+    "selection": "val_macro_f1_full_earliest_tie",
+    "test_scored": false,
+    "epoch_permutation": "torch.randperm with Generator().manual_seed(seed + epoch), identical across arms",
+    "batch_size": 8
+  },
+  "acceptance_gates": [
+    "Both arms use the same cohort, batch order, head initialization and budget",
+    "Cached features must match a fresh-process recomputation within 1e-3 absolute, with bitwise identity recorded as a diagnostic; measured cross-process differences reach 1.5e-4 against features whose mean absolute value is 0.28 (pretrained) and 0.77 (random)",
+    "Cached-feature logits must match a direct model forward on the same samples",
+    "Encoder state digest must be unchanged after head training",
+    "No Test ID is constructed, read or scored"
+  ],
+  "reported_metrics": [
+    "val macro-F1 over the full 49 classes",
+    "val accuracy",
+    "per-seed pretrained-minus-random difference",
+    "mean and sample standard deviation over the three seeds (never a confidence interval)"
+  ],
+  "claims_permitted": [
+    "A paired frozen-feature probe result on the fixed cohort under the declared limitation",
+    "If pretrained minus random exceeds the seed-to-seed spread, a first positive transfer signal for this probe only"
+  ],
+  "claims_not_permitted": [
+    "Full fine-tuning, LoRA or any trained-encoder result",
+    "Test performance, new-class capability, landing safety or global lunar conclusions",
+    "Independently re-executed upstream LOLA/SLDEM ingestion",
+    "Statistical significance from three seeds"
+  ],
+  "provenance_limitation": "Terrain equals the published Moonstone product bitwise (reports/p3_3_mmap_terrain_linkage.md); the upstream ingestion and interpolation provenance remain the publisher's declaration and are accepted explicitly here.",
+  "inputs": {
+    "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+    "nasa_model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+    "nasa_config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "nasa_checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+    "training_prefix_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74efbf0",
+    "metadata_export_sha256": "b7345c8248d4c94e5c7e53418b456a5366796fef56184d444d6b45894a933d0b",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+    "hf_channel_stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "runtime": "private Python3.12.9, torch2.12.1+rocm7.2, RX7900XT gfx1100, deterministic algorithms, no network",
+  "model_execution": "authorized",
+  "training": "authorized for the frozen head only",
+  "actual_budget": "FROZEN_BY_THIS_PLAN_BEFORE_ANY_SCORE",
+  "revision_log": [
+    {
+      "date": "2026-11-10",
+      "change": "Cached-feature acceptance moved from bitwise to an absolute bound before any head was trained, after measuring cross-process kernel nondeterminism (random 4.8e-7, pretrained up to 1.5e-4; feature scale mean-abs 0.28-0.77, max 3.8). The 1e-3 bound is set from measurement before scores were observed."
+    }
+  ]
+}

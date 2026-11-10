@@ -1,0 +1,170 @@
+{
+  "protocol": "P33_FROZEN_FEATURE_PROBE_V1",
+  "status": "FROZEN_PROBE_COMPLETE_POSITIVE_TRANSFER_SIGNAL",
+  "report": "reports/p3_3_frozen_probe.md",
+  "plan": "protocols/p33_frozen_probe_plan.json",
+  "script": "scripts/p33_frozen_probe.py",
+  "tests": {
+    "synthetic_probe_tests": "6 PASS, zero skips",
+    "focused_p33_suite": "107 PASS, zero skips",
+    "full_suite": "not rerun for this phase; the earlier 2026-11-10 full-suite state (727 tests, 720 PASS, 7 legacy environment failures) is unchanged by this addition",
+    "syntax": "compileall PASS"
+  },
+  "commands": {
+    "extract": "unshare --user --map-root-user --net $PRIVATE_PYTHON -I -B scripts/p33_frozen_probe.py --mode extract --data $EXISTING_FIXED_PREFIX --metadata reports/evidence/p33_20261110/mmap_linkage_01/metadata_export.json --range-report outputs/p31/loader_pair_01/report.json --config $AUDITED_NASA_CONFIG --config-sha256 fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619 --checkpoint $VERIFIED_NASA_CHECKPOINT --provenance $NATIVE256_PROVENANCE --upstream $PINNED_NASA_CHECKOUT --outdir outputs/p33/frozen_probe_02 --device cuda --extraction-batch 8",
+    "check": "same inputs --mode check --outdir outputs/p33/frozen_probe_02/check3 --cache-dir outputs/p33/frozen_probe_02/features --device cuda",
+    "train": "same inputs --mode train --outdir outputs/p33/frozen_probe_02/heads_02 --cache-dir outputs/p33/frozen_probe_02/features --device cpu",
+    "determinism_rerun": "same train command with --outdir outputs/p33/frozen_probe_02/heads_03"
+  },
+  "privacy": "Private interpreter, prefix, config, checkpoint, provenance and checkout paths are symbolic; every input is authenticated by SHA256",
+  "inputs": {
+    "training_prefix_sha256": "77f9e3dbb31601182557308717c705c6efbf8be29eeed3c2920069d158d5adf8",
+    "metadata_export_sha256": "b7345c8248d4c94e5c7e53418b456a5366796fef56184d444d6b45894a933d0b",
+    "range_report_sha256": "ec8ee89fb4a6c5189efc7de97646c4459f598a57a27d6797a576a3ec73695e8e",
+    "nasa_config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "nasa_checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+    "hf_channel_stats_sha256": "3e421d3a660a19cbd68c1941bf3b122da56777987de4848ac1382ebe3e39ab64",
+    "class_map_sha256": "d7823219998184601e73a2445106a6483b88a4365384aee81fb3f343914562ba"
+  },
+  "runtime": {
+    "python": "3.12.9",
+    "torch": "2.12.1+rocm7.2",
+    "device": "AMD Radeon RX 7900 XT gfx1100",
+    "network": "unshare --net",
+    "tf32": "disabled for extraction and check"
+  },
+  "feature_cache": {
+    "shape": {
+      "train": [
+        5135,
+        768
+      ],
+      "val": [
+        1155,
+        768
+      ]
+    },
+    "dtype": "float32",
+    "manifest_sha256": "e81d56f6eb9a279abddb5f5d09421bfd4494782810c2812d4ee40ffd27aa0df2",
+    "check": "feature_check_replay.json",
+    "reproducibility": "Fresh-process recomputation differs from the cached snapshot by at most 1.47e-4 (pretrained) and 4.8e-7 (random) on values whose mean absolute magnitude is 0.28 and 0.77; the pre-registered bound is 1e-3. Bitwise identity is not claimed across processes.",
+    "direct_forward_equivalence": "head(mean(tokens)) versus the full TerrainTransfer forward gave max absolute difference 0.0 on the smoke batch",
+    "arm_state_digest": {
+      "random": {
+        "state_sha256": "01b28de4a0e9db6774aaff1867a67c12ac0bc7848965a9e55f19736be86083c4"
+      },
+      "pretrained": {
+        "state_sha256": "96d4eaef9ed8960d917997b86873f766f8597925834fd2e89400ea631b455c08"
+      }
+    }
+  },
+  "results": {
+    "val_macro_f1_full": {
+      "pretrained_mean": 0.18851020113352338,
+      "pretrained_sample_std": 0.008293318329597378,
+      "pretrained_values": [
+        0.18655252381468157,
+        0.18137086551836107,
+        0.19760721406752754
+      ],
+      "random_mean": 0.07213817192289153,
+      "random_sample_std": 0.0017628547580975124,
+      "random_values": [
+        0.07415856729638179,
+        0.0713428202257097,
+        0.07091312824658312
+      ]
+    },
+    "per_seed_difference": {
+      "42": 0.11239395651829978,
+      "43": 0.11002804529265137,
+      "44": 0.12669408582094444
+    },
+    "difference_mean": 0.11637202921063187,
+    "difference_sample_std": 0.009017096177915894,
+    "val_accuracy": {
+      "pretrained": [
+        0.441558,
+        0.440693,
+        0.447619
+      ],
+      "random": [
+        0.336797,
+        0.338528,
+        0.341126
+      ]
+    },
+    "best_epochs": {
+      "42": {
+        "pretrained": 10,
+        "random": 10
+      },
+      "43": {
+        "pretrained": 9,
+        "random": 9
+      },
+      "44": {
+        "pretrained": 20,
+        "random": 8
+      }
+    },
+    "trainable_parameters": 37681,
+    "determinism": "Two independent train runs on the same cache produced identical per-arm macro-F1 values"
+  },
+  "scope": {
+    "adaptation": "frozen encoder; only a linear 49-way head is trained",
+    "encoder_gradients": "none",
+    "test_scored": false,
+    "Test": "HOLD",
+    "training": "RUN_FROZEN_HEAD_ONLY",
+    "optimizer_step": "RUN_FOR_HEAD_ONLY",
+    "budget": "frozen in protocols/p33_frozen_probe_plan.json before any score",
+    "provenance_limitation": "Terrain equals the published Moonstone product bitwise (reports/p3_3_mmap_terrain_linkage.md); the upstream ingestion and interpolation provenance remain the publisher's declaration and are accepted explicitly here."
+  },
+  "caveats": [
+    "Val is used for early stopping and checkpoint selection, so the reported macro-F1 is mildly optimistic and equally so for both arms",
+    "Three seeds give a sample standard deviation, not a confidence interval",
+    "Pretraining-data overlap with the Val geography cannot be excluded; this is a frozen-feature transfer signal, not a clean generalisation claim"
+  ],
+  "artifacts": {
+    "cache_manifest.json": {
+      "bytes": 175242,
+      "sha256": "e81d56f6eb9a279abddb5f5d09421bfd4494782810c2812d4ee40ffd27aa0df2"
+    },
+    "feature_check_replay.json": {
+      "bytes": 1449,
+      "sha256": "8dbaca3e651840a32c0587a2d5a6fc8c41acb44e3b132a16946e5df6bcbe64ed"
+    },
+    "pretrained_seed42_val_predictions.csv": {
+      "bytes": 1248501,
+      "sha256": "71e783e0a5a65c865bb5e3be3dfbe8f1716f2016d6c1c9a3b5249144789a4a95"
+    },
+    "pretrained_seed43_val_predictions.csv": {
+      "bytes": 1248035,
+      "sha256": "2f354d26fd05e0641b60a02a5a3c0900c58e34390cf305dcbcd2bb1b893ce81d"
+    },
+    "pretrained_seed44_val_predictions.csv": {
+      "bytes": 1252079,
+      "sha256": "e36d95b21e3e422904e3e5e99e291d3a188b5712b208ad2ea281b4b67e1b03ea"
+    },
+    "random_seed42_val_predictions.csv": {
+      "bytes": 1244423,
+      "sha256": "b87c0047e37c7317e797a75325a2d6852eeba7b58ef6425a52ad6a7b07f712c8"
+    },
+    "random_seed43_val_predictions.csv": {
+      "bytes": 1244267,
+      "sha256": "1503b9c998c843e0c400caaf106163f4a51d460045344f8c84d53fde11a06d1a"
+    },
+    "random_seed44_val_predictions.csv": {
+      "bytes": 1243919,
+      "sha256": "4bc4b43056c407c00263124d7c9f5484eca604f5be2a462d37cb52a3f0dae46f"
+    },
+    "summary.json": {
+      "bytes": 4777204,
+      "sha256": "20cce6707cd37315d6070842caf96300d061f673cdd5ae87d63f82b08bdab715"
+    }
+  },
+  "script_sha256": "edba29ced030e04b7998c26c752738c0461280a9ad2414eb98ccaee8b1560519",
+  "test_sha256": "58d68f8071104f84440e81039f04a5f43e288694ad9502003dd9ee1269163748",
+  "plan_sha256": "d1023f6ff8e51a4c21511604e3493c2229f54ce4bf51920716dbc8dd7f128af8"
+}

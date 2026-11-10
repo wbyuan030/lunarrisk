@@ -231,5 +231,40 @@
     "install_performed": false,
     "official_execution": "NOT_RUN",
     "next_action": "Read-only host collection complete; stop at exact driver support mapping gap. No repeated inventories/tests, resolver, installations, driver changes or big downloads"
+  },
+  "frozen_probe_result": {
+    "observed_utc": "2026-11-10T11:30:00+00:00",
+    "status": "FROZEN_PROBE_COMPLETE_POSITIVE_TRANSFER_SIGNAL",
+    "plan": "protocols/p33_frozen_probe_plan.json",
+    "report": "reports/p3_3_frozen_probe.md",
+    "evidence": "reports/evidence/p33_20261110/frozen_probe_01/verification.json",
+    "adaptation": "frozen encoder; linear 49-way head on mean-pooled 768-d tokens",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "pretrained_macro_f1_mean": 0.18851020113352338,
+    "pretrained_macro_f1_sample_std": 0.008293318329597378,
+    "random_macro_f1_mean": 0.07213817192289153,
+    "random_macro_f1_sample_std": 0.0017628547580975124,
+    "paired_difference_mean": 0.11637202921063187,
+    "paired_difference_sample_std": 0.009017096177915894,
+    "pretrained_accuracy_mean": 0.4433,
+    "random_accuracy_mean": 0.3388,
+    "feature_cache_shape": {
+      "train": [
+        5135,
+        768
+      ],
+      "val": [
+        1155,
+        768
+      ]
+    },
+    "feature_reproducibility": "fresh-process max abs difference 1.47e-4 (pretrained) / 4.8e-7 (random) against a pre-set 1e-3 bound; bitwise identity across processes is not claimed",
+    "training_determinism": "two independent head-training runs produced identical metrics and identical prediction hashes",
+    "test_scored": false,
+    "scope": "frozen-feature transfer signal only; no fine-tuning, no Test, no significance claim, no new-class capability"
   }
 }
