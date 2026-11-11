@@ -84,17 +84,17 @@ def class_weights(targets, torch):
     return torch.tensor(weights, dtype=torch.float32)
 
 
-def evaluate(head, features, targets, torch):
+def evaluate(head, features, targets, torch, device="cpu"):
     head.eval()
     with torch.no_grad():
-        logits = head(torch.from_numpy(np.asarray(features, dtype=np.float32)))
-        probability = torch.softmax(logits.double(), dim=1).numpy()
+        logits = head(torch.from_numpy(np.asarray(features, dtype=np.float32)).to(device))
+        probability = torch.softmax(logits.double(), dim=1).cpu().numpy()
     return probability_metrics(probability, targets)
 
 
-def train_cell(name, features, targets, seed, budget, torch, nn):
+def train_cell(name, features, targets, seed, budget, torch, nn, device="cpu"):
     torch.manual_seed(seed)
-    head = make_head(name, features[("x", "train")].shape[1], torch, nn)
+    head = make_head(name, features[("x", "train")].shape[1], torch, nn).to(device)
     criterion = nn.CrossEntropyLoss(weight=class_weights(targets["train"], torch)
                                     if name == "linear_balanced" else None)
     optimizer = torch.optim.AdamW(head.parameters(), lr=budget["lr"],
@@ -109,8 +109,8 @@ def train_cell(name, features, targets, seed, budget, torch, nn):
         for start in range(0, len(permutation), budget["batch_size"]):
             chosen = permutation[start:start + budget["batch_size"]]
             optimizer.zero_grad(set_to_none=True)
-            tokens = torch.from_numpy(np.asarray(features[("x", "train")][chosen], dtype=np.float32))
-            labels = torch.from_numpy(targets["train"][chosen])
+            tokens = torch.from_numpy(np.asarray(features[("x", "train")][chosen], dtype=np.float32)).to(device)
+            labels = torch.from_numpy(targets["train"][chosen]).to(device)
             loss = criterion(head(tokens), labels) if criterion is not None else \
                 torch.nn.functional.cross_entropy(head(tokens), labels)
             if not torch.isfinite(loss):
@@ -123,7 +123,7 @@ def train_cell(name, features, targets, seed, budget, torch, nn):
             order.extend(str(index) for index in chosen)
         if seen != len(features[("x", "train")]) or len(set(order)) != seen:
             raise ValueError("training dropped or repeated rows")
-        metrics = evaluate(head, features[("x", "val")], targets["val"], torch)
+        metrics = evaluate(head, features[("x", "val")], targets["val"], torch, device)
         if metrics["macro_f1_full"] > best:
             best, best_epoch, stale = metrics["macro_f1_full"], epoch, 0
             best_state = {key: value.clone() for key, value in head.state_dict().items()}
@@ -134,7 +134,7 @@ def train_cell(name, features, targets, seed, budget, torch, nn):
         if stale >= budget["patience"]:
             break
     head.load_state_dict(best_state)
-    final = evaluate(head, features[("x", "val")], targets["val"], torch)
+    final = evaluate(head, features[("x", "val")], targets["val"], torch, device)
     return {"metrics": final, "best_epoch": best_epoch, "history": history,
             "seconds": time.monotonic() - started,
             "parameters": int(sum(p.numel() for p in head.parameters()))}
@@ -146,6 +146,7 @@ def main():
     parser.add_argument("--moonstone-cache", type=Path, required=True)
     parser.add_argument("--outdir", type=Path, required=True)
     parser.add_argument("--plan", type=Path, default=ROOT / PLAN_PATH)
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     args = parser.parse_args()
     plan, budget = load_plan(args.plan)
     import torch
@@ -160,7 +161,7 @@ def main():
         features = {("x", split): nasa[(key, split)] for split in ("train", "val")}
         ids, targets = nasa_ids, nasa_targets
         for head_name in ("linear", "mlp", "linear_balanced"):
-            runs = [train_cell(head_name, features, targets, seed, budget, torch, nn)
+            runs = [train_cell(head_name, features, targets, seed, budget, torch, nn, args.device)
                     for seed in budget["seeds"]]
             cells[f"{feature_name}/{head_name}"] = {
                 "values": [run["metrics"]["macro_f1_full"] for run in runs],
@@ -177,7 +178,7 @@ def main():
                 or not np.array_equal(moon_targets["val"], nasa_targets["val"]):
             raise ValueError(f"Moonstone cache seed{seed} cohort differs from the NASA manifest")
         for head_name in ("linear", "mlp", "linear_balanced"):
-            run = train_cell(head_name, moon, moon_targets, seed, budget, torch, nn)
+            run = train_cell(head_name, moon, moon_targets, seed, budget, torch, nn, args.device)
             cell = cells.setdefault(f"moonstone/{head_name}", {"values": [], "accuracy": [],
                                                                "best_epochs": [], "seconds": [],
                                                                "parameters": run["parameters"], "history": []})
