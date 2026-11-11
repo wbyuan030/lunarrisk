@@ -300,5 +300,50 @@
       "matrix_seconds": 123.4
     },
     "test_scored": false
+  },
+  "feature_fusion_result": {
+    "observed_utc": "2026-11-11T03:40:00+00:00",
+    "status": "FEATURE_FUSION_COMPLETE",
+    "plan": "protocols/p33_feature_fusion_plan.json",
+    "report": "reports/p3_3_feature_fusion.md",
+    "evidence": "reports/evidence/p33_20261111/feature_fusion_01/verification.json",
+    "cells": {
+      "moonstone_geology_linear": 0.235176,
+      "moonstone_geology_balanced": 0.248381,
+      "nasa_geology_linear": 0.18851,
+      "nasa_geology_balanced": 0.196045,
+      "fusion_geology_linear": 0.268314,
+      "fusion_geology_balanced": 0.286517,
+      "moonstone_age_linear": 0.407454,
+      "moonstone_age_balanced": 0.423393,
+      "nasa_age_linear": 0.411073,
+      "nasa_age_balanced": 0.430482,
+      "fusion_age_linear": 0.429163,
+      "fusion_age_balanced": 0.449843
+    },
+    "fusion_minus_moonstone": {
+      "geology_linear": 0.033138,
+      "geology_balanced": 0.038136,
+      "age_linear": 0.021709,
+      "age_balanced": 0.02645
+    },
+    "finding": "NASA features are complementary under concatenation: fusion beats Moonstone alone on Geology and Age with all three seeds positive, even though NASA alone loses on Geology and roughly ties on Age",
+    "age_support": {
+      "train": [
+        811,
+        1697,
+        2244,
+        283,
+        100
+      ],
+      "val": [
+        232,
+        366,
+        471,
+        62,
+        24
+      ]
+    },
+    "test_scored": false
   }
 }

@@ -1,0 +1,206 @@
+{
+  "protocol": "P33_FEATURE_FUSION_V1",
+  "status": "FEATURE_FUSION_COMPLETE",
+  "report": "reports/p3_3_feature_fusion.md",
+  "plan": "protocols/p33_feature_fusion_plan.json",
+  "script": "scripts/p33_feature_fusion.py",
+  "tests": "tests/test_p33_nasa_feature_fusion.py",
+  "cells": {
+    "moonstone_256/geology/linear": {
+      "mean": 0.23517614410398846,
+      "sample_std": 0.0042104324972116434,
+      "values": [
+        0.23073501881363667,
+        0.2356835090284899,
+        0.23910990446983882
+      ],
+      "accuracy_mean": 0.47388167388167385,
+      "parameters": 12593
+    },
+    "moonstone_256/geology/linear_balanced": {
+      "mean": 0.24838131820893705,
+      "sample_std": 0.009622601810307652,
+      "values": [
+        0.2417725579460682,
+        0.25942118031893496,
+        0.24395021636180803
+      ],
+      "accuracy_mean": 0.455988455988456,
+      "parameters": 12593
+    },
+    "moonstone_256/age/linear": {
+      "mean": 0.4074539167940738,
+      "sample_std": 0.012380074750107184,
+      "values": [
+        0.40170445588192916,
+        0.42166328554314125,
+        0.3989940089571509
+      ],
+      "accuracy_mean": 0.6043290043290043,
+      "parameters": 1285
+    },
+    "moonstone_256/age/linear_balanced": {
+      "mean": 0.4233932615710232,
+      "sample_std": 0.008451424569595516,
+      "values": [
+        0.4231220652087838,
+        0.43197702030077084,
+        0.4150806992035149
+      ],
+      "accuracy_mean": 0.591053391053391,
+      "parameters": 1285
+    },
+    "nasa_768/geology/linear": {
+      "mean": 0.18851020113352338,
+      "sample_std": 0.008293318329597378,
+      "values": [
+        0.18655252381468157,
+        0.18137086551836107,
+        0.19760721406752754
+      ],
+      "accuracy_mean": 0.4432900432900433,
+      "parameters": 37681
+    },
+    "nasa_768/geology/linear_balanced": {
+      "mean": 0.1960446300640654,
+      "sample_std": 0.00017562117559438806,
+      "values": [
+        0.19608115142792945,
+        0.19619911902700507,
+        0.19585361973726173
+      ],
+      "accuracy_mean": 0.41645021645021646,
+      "parameters": 37681
+    },
+    "nasa_768/age/linear": {
+      "mean": 0.41107306814139427,
+      "sample_std": 0.035003335163879414,
+      "values": [
+        0.3706741533196731,
+        0.4323584507409161,
+        0.43018660036359346
+      ],
+      "accuracy_mean": 0.5494949494949495,
+      "parameters": 3845
+    },
+    "nasa_768/age/linear_balanced": {
+      "mean": 0.4304823005364888,
+      "sample_std": 0.01719021258789533,
+      "values": [
+        0.43093253136324383,
+        0.41307139512180446,
+        0.44744297512441794
+      ],
+      "accuracy_mean": 0.5526695526695526,
+      "parameters": 3845
+    },
+    "fusion_1024/geology/linear": {
+      "mean": 0.2683137620206421,
+      "sample_std": 0.008926620677111894,
+      "values": [
+        0.27439759850256457,
+        0.272477727275753,
+        0.25806596028360884
+      ],
+      "accuracy_mean": 0.4874458874458874,
+      "parameters": 50225
+    },
+    "fusion_1024/geology/linear_balanced": {
+      "mean": 0.28651715799951,
+      "sample_std": 0.011505812236770229,
+      "values": [
+        0.2899226066021229,
+        0.2959358502037137,
+        0.27369301719269346
+      ],
+      "accuracy_mean": 0.48253968253968255,
+      "parameters": 50225
+    },
+    "fusion_1024/age/linear": {
+      "mean": 0.42916288287717674,
+      "sample_std": 0.0033819803507784026,
+      "values": [
+        0.4330658116318493,
+        0.4273260982496388,
+        0.42709673875004217
+      ],
+      "accuracy_mean": 0.6028860028860029,
+      "parameters": 5125
+    },
+    "fusion_1024/age/linear_balanced": {
+      "mean": 0.4498433220729246,
+      "sample_std": 0.004326064682771363,
+      "values": [
+        0.45002522871634804,
+        0.45407556411105165,
+        0.44542917339137433
+      ],
+      "accuracy_mean": 0.5927849927849929,
+      "parameters": 5125
+    }
+  },
+  "fusion_minus_moonstone": {
+    "geology/linear": [
+      0.043663,
+      0.036794,
+      0.018956
+    ],
+    "geology/linear_balanced": [
+      0.04815,
+      0.036515,
+      0.029743
+    ],
+    "age/linear": [
+      0.031361,
+      0.005663,
+      0.028103
+    ],
+    "age/linear_balanced": [
+      0.026903,
+      0.022099,
+      0.030348
+    ]
+  },
+  "age_support": {
+    "train": [
+      811,
+      1697,
+      2244,
+      283,
+      100
+    ],
+    "val": [
+      232,
+      366,
+      471,
+      62,
+      24
+    ]
+  },
+  "elapsed_seconds": 130.29523583798436,
+  "nasa_manifest_sha256": "e81d56f6eb9a279abddb5f5d09421bfd4494782810c2812d4ee40ffd27aa0df2",
+  "moonstone_cache_sha256": {
+    "42": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+    "43": "84cecee9b7e17c9628451f8be4200edf749196521d0bc03ef4b341c180de6138",
+    "44": "38a06f49546d0f524a56fe5ee01e8a843a18feb3ed47b3584c64025075bb05f0"
+  },
+  "tests_result": {
+    "synthetic_fusion_tests": "5 PASS, zero skips",
+    "focused_p33_suite": "116 PASS, zero skips"
+  },
+  "scope": {
+    "test_scored": false,
+    "Test": "HOLD",
+    "adaptation": "frozen features only",
+    "heads": "linear/balanced linear",
+    "claim": "cross-domain NASA features are complementary to in-domain Moonstone features under plain concatenation; not a significance claim"
+  },
+  "artifacts": {
+    "summary.json": {
+      "bytes": 7154,
+      "sha256": "97f4de38be63a15b1b80717f4471dc33b911e3482787ba557e57877d5d1a91ae"
+    }
+  },
+  "script_sha256": "316cdb34ad183a5b361cf026af62881917e10bf737aed4aa02ef485a93aeafdb",
+  "plan_sha256": "4c687d419e51887a16ff3c8ad8b9d48e173e72d5241c4b87c09ef4db66f38188"
+}

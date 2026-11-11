@@ -1,0 +1,51 @@
+{
+  "protocol": "P33_FEATURE_FUSION_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION",
+  "created_date": "2026-11-11",
+  "question": "Do the cross-domain NASA features add anything on top of the in-domain Moonstone features when simply concatenated, and does either feature source help the coarser 5-class Age task more than Geology?",
+  "feature_sets": {
+    "moonstone_256": "P3.2 pooled tokens, width 256",
+    "nasa_768": "verified NASA pretrained pooled tokens, width 768",
+    "fusion_1024": "column concatenation of the two, width 1024, same row order"
+  },
+  "tasks": {
+    "geology": "49 classes, targets from the authenticated metadata",
+    "age": "5 classes, targets from the authenticated P3.2 cache (derived from the same ordered IDs)"
+  },
+  "heads": {
+    "linear": "Linear(d, C)",
+    "linear_balanced": "Linear(d, C) with inverse-sqrt-frequency class weights"
+  },
+  "budget": {
+    "epochs": 20,
+    "patience": 5,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "optimizer": "AdamW",
+    "schedule": "constant",
+    "seeds": [42, 43, 44],
+    "selection": "val_macro_f1_full_earliest_tie",
+    "test_scored": false,
+    "epoch_permutation": "torch.randperm with Generator().manual_seed(seed + epoch)"
+  },
+  "grid": "3 feature sets x 2 tasks x 2 heads x 3 seeds = 36 runs",
+  "acceptance": [
+    "Ordered Train/Val IDs agree across the NASA manifest and every Moonstone cache",
+    "Age targets come only from the authenticated cache, never from names or IDs",
+    "Macro-F1 is computed over the full class count, absent classes included",
+    "No Test ID is read or scored"
+  ],
+  "reporting": [
+    "Mean and sample standard deviation over three seeds",
+    "Fusion minus Moonstone delta per task and head",
+    "Age class support for Train and Val"
+  ],
+  "claims_not_permitted": [
+    "Statistical significance from three seeds",
+    "Any Test or generalisation claim",
+    "Fine-tuning conclusions"
+  ],
+  "test_scored": false
+}
