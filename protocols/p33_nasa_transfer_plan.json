@@ -266,5 +266,39 @@
     "training_determinism": "two independent head-training runs produced identical metrics and identical prediction hashes",
     "test_scored": false,
     "scope": "frozen-feature transfer signal only; no fine-tuning, no Test, no significance claim, no new-class capability"
+  },
+  "feature_ablation_result": {
+    "observed_utc": "2026-11-11T02:00:00+00:00",
+    "status": "FEATURE_ABLATION_COMPLETE",
+    "plan": "protocols/p33_feature_ablation_plan.json",
+    "report": "reports/p3_3_feature_ablation.md",
+    "evidence": "reports/evidence/p33_20261111/feature_ablation_01/verification.json",
+    "cells": {
+      "nasa_pretrained_linear": 0.18851,
+      "nasa_pretrained_mlp": 0.190067,
+      "nasa_pretrained_balanced": 0.196045,
+      "nasa_random_linear": 0.072138,
+      "nasa_random_mlp": 0.059356,
+      "nasa_random_balanced": 0.072525,
+      "moonstone_linear": 0.235176,
+      "moonstone_mlp": 0.225787,
+      "moonstone_balanced": 0.248381
+    },
+    "finding": "In-domain Moonstone pooled tokens beat cross-domain NASA features under the identical budget; the earlier +0.116 gain is over random initialization only",
+    "model_sizes": {
+      "nasa_encoder_parameters": 85348608,
+      "nasa_checkpoint_bytes": 2425755440,
+      "nasa_selected_inference_elements": 85761024,
+      "nasa_linear_head": 37681,
+      "nasa_mlp_head": 209457,
+      "moonstone_linear_head": 12593,
+      "moonstone_mlp_head": 78385
+    },
+    "efficiency": {
+      "nasa_extraction_forwards": 12580,
+      "nasa_extraction_seconds": 287.07,
+      "matrix_seconds": 123.4
+    },
+    "test_scored": false
   }
 }

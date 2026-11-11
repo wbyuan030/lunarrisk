@@ -1,0 +1,155 @@
+{
+  "protocol": "P33_FEATURE_ABLATION_V1",
+  "status": "FEATURE_ABLATION_COMPLETE",
+  "report": "reports/p3_3_feature_ablation.md",
+  "plan": "protocols/p33_feature_ablation_plan.json",
+  "script": "scripts/p33_feature_ablation.py",
+  "tests": {
+    "synthetic_ablation_tests": "4 PASS, zero skips",
+    "focused_p33_suite": "111 PASS, zero skips"
+  },
+  "commands": {
+    "run": "$PRIVATE_PYTHON -I -B scripts/p33_feature_ablation.py --nasa-cache outputs/p33/frozen_probe_02/features --moonstone-cache outputs/p32/context_03 --outdir outputs/p33/feature_ablation_04"
+  },
+  "cells": {
+    "nasa_pretrained/linear": {
+      "mean": 0.18851020113352338,
+      "sample_std": 0.008293318329597378,
+      "accuracy_mean": 0.4432900432900433,
+      "parameters": 37681,
+      "values": [
+        0.18655252381468157,
+        0.18137086551836107,
+        0.19760721406752754
+      ]
+    },
+    "nasa_pretrained/mlp": {
+      "mean": 0.19006703353695928,
+      "sample_std": 0.005625289856094784,
+      "accuracy_mean": 0.4496392496392496,
+      "parameters": 209457,
+      "values": [
+        0.19629966604670496,
+        0.18853489055667755,
+        0.1853665440074953
+      ]
+    },
+    "nasa_pretrained/linear_balanced": {
+      "mean": 0.1960446300640654,
+      "sample_std": 0.00017562117559438806,
+      "accuracy_mean": 0.41645021645021646,
+      "parameters": 37681,
+      "values": [
+        0.19608115142792945,
+        0.19619911902700507,
+        0.19585361973726173
+      ]
+    },
+    "nasa_random/linear": {
+      "mean": 0.07213817192289153,
+      "sample_std": 0.0017628547580975124,
+      "accuracy_mean": 0.33881673881673885,
+      "parameters": 37681,
+      "values": [
+        0.07415856729638179,
+        0.0713428202257097,
+        0.07091312824658312
+      ]
+    },
+    "nasa_random/mlp": {
+      "mean": 0.05935621969833097,
+      "sample_std": 0.0007658023518806652,
+      "accuracy_mean": 0.3428571428571429,
+      "parameters": 209457,
+      "values": [
+        0.05988343800998587,
+        0.05847780660543271,
+        0.05970741447957435
+      ]
+    },
+    "nasa_random/linear_balanced": {
+      "mean": 0.0725249880708686,
+      "sample_std": 0.0007747752828001421,
+      "accuracy_mean": 0.2886002886002886,
+      "parameters": 37681,
+      "values": [
+        0.07340832162243527,
+        0.07196056903911618,
+        0.07220607355105434
+      ]
+    },
+    "moonstone/linear": {
+      "mean": 0.23517614410398846,
+      "sample_std": 0.0042104324972116434,
+      "accuracy_mean": 0.47388167388167385,
+      "parameters": 12593,
+      "values": [
+        0.23073501881363667,
+        0.2356835090284899,
+        0.23910990446983882
+      ]
+    },
+    "moonstone/mlp": {
+      "mean": 0.22578745839189499,
+      "sample_std": 0.005489824022757539,
+      "accuracy_mean": 0.46147186147186153,
+      "parameters": 78385,
+      "values": [
+        0.2217330045376661,
+        0.22359458807382748,
+        0.23203478256419136
+      ]
+    },
+    "moonstone/linear_balanced": {
+      "mean": 0.24838131820893705,
+      "sample_std": 0.009622601810307652,
+      "accuracy_mean": 0.455988455988456,
+      "parameters": 12593,
+      "values": [
+        0.2417725579460682,
+        0.25942118031893496,
+        0.24395021636180803
+      ]
+    }
+  },
+  "nasa_manifest_sha256": "e81d56f6eb9a279abddb5f5d09421bfd4494782810c2812d4ee40ffd27aa0df2",
+  "moonstone_cache_sha256": {
+    "42": "09a5a34061ac711bd4498769bd36a3603ea3c8d0758fa0c0e2395d5a77107d43",
+    "43": "84cecee9b7e17c9628451f8be4200edf749196521d0bc03ef4b341c180de6138",
+    "44": "38a06f49546d0f524a56fe5ee01e8a843a18feb3ed47b3584c64025075bb05f0"
+  },
+  "elapsed_seconds": 123.3747270469903,
+  "test_scored": false,
+  "model_sizes": {
+    "nasa_encoder_parameters": 85348608,
+    "nasa_adapters": 4,
+    "nasa_linear_head": 37681,
+    "nasa_mlp_head": 209457,
+    "nasa_checkpoint_bytes": 2425755440,
+    "nasa_selected_inference_elements": 85761024,
+    "moonstone_pooled_width": 256,
+    "moonstone_linear_head": 12593,
+    "moonstone_mlp_head": 78385,
+    "moonstone_encoder_checkpoint": "not present locally; only the authenticated 16x256 token caches are available"
+  },
+  "efficiency": {
+    "nasa_extraction_forwards": 12580,
+    "nasa_extraction_seconds": 287.07,
+    "nasa_forwards_per_second": 43.8,
+    "head_run_seconds": [
+      3.4,
+      8.6
+    ],
+    "head_run_samples_per_second": "approximately 1000-1500",
+    "matrix_seconds": 123.4
+  },
+  "cohort_checks": "Moonstone H5 ordered ids and geology targets were required to equal the NASA cache manifest for every seed before any cell ran",
+  "artifacts": {
+    "summary.json": {
+      "bytes": 83678,
+      "sha256": "d26de1ebe254382f6d919156eb472062424f4a36e6ec8a7ee65bf13801048393"
+    }
+  },
+  "script_sha256": "9b6d078c59e165b3d353dd5d3748c84df9caacee3d37d08650e6b04d3e87734c",
+  "plan_sha256": "d651fc12be1ada64e806bbef6ad4ee0c4c74178ffeab2c5a5b5b801505b60b23"
+}

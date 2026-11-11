@@ -1,0 +1,62 @@
+{
+  "protocol": "P33_FEATURE_ABLATION_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION",
+  "created_date": "2026-11-11",
+  "question": "Which feature source and head capacity explains the frozen-probe gain: in-domain Moonstone pooled tokens, cross-domain README NASA tokens, and does a wider head or class-balanced loss change it?",
+  "feature_sets": {
+    "nasa_pretrained": {
+      "path": "outputs/p33/frozen_probe_02/features/pretrained_{split}.f32",
+      "shape": [6290, 768],
+      "source": "verified NASA base encoder, frozen, mean-pooled 512x768 tokens"
+    },
+    "nasa_random": {
+      "path": "outputs/p33/frozen_probe_02/features/random_{split}.f32",
+      "shape": [6290, 768],
+      "source": "identical architecture and seed without pretrained weights"
+    },
+    "moonstone_pooled": {
+      "path": "outputs/p32/context_03/context_seed{seed}.h5",
+      "shape": [6290, 256],
+      "source": "authenticated P3.2 frozen Geology encoder pooled tokens; cache seed matches head seed"
+    }
+  },
+  "heads": {
+    "linear": "Linear(d, 49)",
+    "mlp": "Linear(d, 256) + ReLU + Dropout(0.2) + Linear(256, 49)",
+    "linear_balanced": "Linear(d, 49) with inverse-frequency class weights in the cross-entropy"
+  },
+  "budget": {
+    "epochs": 20,
+    "patience": 5,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "optimizer": "AdamW",
+    "schedule": "constant",
+    "seeds": [42, 43, 44],
+    "selection": "val_macro_f1_full_earliest_tie",
+    "test_scored": false,
+    "epoch_permutation": "torch.randperm with Generator().manual_seed(seed + epoch)"
+  },
+  "grid": "3 feature sets x 3 heads x 3 seeds = 27 runs, all with the identical budget and permutation rule",
+  "acceptance": [
+    "Feature caches authenticate against their recorded SHA256",
+    "Ordered Train/Val IDs and targets agree between the NASA manifest and the Moonstone H5 caches",
+    "Two runs of one cell reproduce identical metrics",
+    "No Test ID is read or scored"
+  ],
+  "reporting": [
+    "Val macro-F1 full49 per run and per cell mean/sample std",
+    "Head parameter counts and feature widths",
+    "Wall-clock per run for efficiency comparison"
+  ],
+  "claims_not_permitted": [
+    "Statistical significance from three seeds",
+    "Fine-tuning or encoder-gradient conclusions",
+    "Test performance or generalisation outside Moonstone"
+  ],
+  "model_execution": "authorized",
+  "training": "authorized for frozen feature heads only",
+  "test_scored": false
+}
