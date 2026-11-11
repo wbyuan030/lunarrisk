@@ -1,0 +1,49 @@
+{
+  "protocol": "P33_COMPOSITION_LABELS_V1",
+  "status": "LABELS_EXTRACTED",
+  "report": "reports/p3_3_composition_regression.md",
+  "plan": "protocols/p33_composition_regression_plan.json",
+  "script": "scripts/p33_composition_labels.py",
+  "tests": "tests/test_p33_nasa_composition.py",
+  "raster_sha256": {
+    "feo": "1a984808ace64909cdf604a179357a7cc5e215e6580f8846b5cdb02b78f88e6f",
+    "tio2": "ebaee6c5ccf82f2dbe24b50ada94311922e088fcb7a50d5a26de548deb7290af"
+  },
+  "raster_bytes": {
+    "feo": 86012479,
+    "tio2": 108829989
+  },
+  "rows": 6290,
+  "feo": {
+    "count": 6290,
+    "missing": 0,
+    "mean": 0.07354230449706084,
+    "std": 0.051330172661007645,
+    "min": 0.021285715264326655,
+    "max": 0.27712621306932306,
+    "median_finite_pixels": 65536.0,
+    "fully_finite_rows": 6290
+  },
+  "tio2": {
+    "count": 6290,
+    "missing": 0,
+    "mean": 0.01022585193900151,
+    "std": 0.014277663303453321,
+    "min": 0.0,
+    "max": 0.0975405277218897,
+    "median_finite_pixels": 65536.0,
+    "fully_finite_rows": 6290
+  },
+  "elapsed_seconds": 3.8640251709730364,
+  "scope": "Train/Val tiles only; every window fully finite; no Test tile sampled",
+  "artifacts": {
+    "labels.csv": {
+      "bytes": 715233,
+      "sha256": "aaefe16bfaa59a3c3e84b54cf8aa1804899a1942a77a1c8a36b533dcbf3e0cf9"
+    },
+    "summary.json": {
+      "bytes": 797,
+      "sha256": "9981e99e7ef926e8ab0325995c31f1c17550ddc5f3d41919fa8dd849bf92914f"
+    }
+  }
+}

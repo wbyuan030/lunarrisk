@@ -345,5 +345,35 @@
       ]
     },
     "test_scored": false
+  },
+  "composition_regression_result": {
+    "observed_utc": "2026-11-11T05:10:00+00:00",
+    "status": "COMPOSITION_REGRESSION_COMPLETE",
+    "plan": "protocols/p33_composition_regression_plan.json",
+    "report": "reports/p3_3_composition_regression.md",
+    "evidence": "reports/evidence/p33_20261111/composition_regression_01/verification.json",
+    "labels": "per-tile mean of finite LPGRS FeO/TiO2, 6,290 Train/Val tiles, every window fully finite",
+    "cells": {
+      "moonstone_feo_rmse": 0.00675,
+      "moonstone_tio2_rmse": 0.00511,
+      "nasa_feo_rmse": 0.01942,
+      "nasa_tio2_rmse": 0.00937,
+      "fusion_feo_rmse": 0.00685,
+      "fusion_tio2_rmse": 0.00494
+    },
+    "r2": {
+      "moonstone_feo": 0.9854,
+      "moonstone_tio2": 0.9161,
+      "nasa_feo": 0.8795,
+      "nasa_tio2": 0.7221,
+      "fusion_feo": 0.985,
+      "fusion_tio2": 0.9217
+    },
+    "baseline_rmse": {
+      "feo": 0.05603,
+      "tio2": 0.01786
+    },
+    "finding": "Composition regression does not benefit from fusion (FeO slightly worse, TiO2 within seed noise); Moonstone scores are leakage-inflated because its 28-channel pretraining consumes these LPGRS rasters and the P3.2 encoder was Geology-supervised on the same cohort",
+    "test_scored": false
   }
 }

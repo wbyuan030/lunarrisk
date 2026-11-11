@@ -1,0 +1,47 @@
+{
+  "protocol": "P33_COMPOSITION_REGRESSION_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION",
+  "created_date": "2026-11-11",
+  "question": "Do frozen features predict patch-mean FeO and TiO2, and does the fusion of in-domain and cross-domain features beat each alone on a regression task?",
+  "labels": {
+    "source": "published aligned LPGRS FeO and TiO2 rasters at revision 53099efd, sampled only over the fixed Train/Val tiles",
+    "computation": "mean of finite pixels inside each 256x256 window; every selected tile was fully finite",
+    "feo_raster_sha256": "1a984808ace64909cdf604a179357a7cc5e215e6580f8846b5cdb02b78f88e6f",
+    "tio2_raster_sha256": "ebaee6c5ccf82f2dbe24b50ada94311922e088fcb7a50d5a26de548deb7290af",
+    "target_scaling": "z-score using Train means and standard deviations; metrics reported on the original scale"
+  },
+  "feature_sets": {
+    "moonstone_256": "P3.2 pooled tokens",
+    "nasa_768": "verified NASA pretrained pooled tokens",
+    "fusion_1024": "concatenation of the two"
+  },
+  "model": "Linear(d, 2) shared trunk, MSE loss",
+  "budget": {
+    "epochs": 20,
+    "patience": 5,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "optimizer": "AdamW",
+    "schedule": "constant",
+    "seeds": [42, 43, 44],
+    "selection": "val_mean_rmse_over_both_targets_earliest_tie",
+    "test_scored": false
+  },
+  "baselines": [
+    "predict the Train mean for each target",
+    "linear regression on the Moonstone features only"
+  ],
+  "acceptance": [
+    "All 6,290 selected tiles have fully finite LPGRS windows",
+    "Labels are computed only for Train/Val tiles",
+    "No Test ID is read or scored"
+  ],
+  "claims_not_permitted": [
+    "Test performance or operational geochemistry claims",
+    "Statistical significance from three seeds",
+    "Causal or regional interpretation of correlations"
+  ],
+  "test_scored": false
+}
