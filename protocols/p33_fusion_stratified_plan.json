@@ -1,0 +1,43 @@
+{
+  "protocol": "P33_FUSION_STRATIFIED_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION",
+  "created_date": "2026-11-12",
+  "questions": [
+    "Does the fusion gain over Moonstone alone persist inside latitude bands, or is it carried by one region?",
+    "If the two feature blocks are given learnable scalar weights instead of a fixed 1.0, what weights does the model choose and does that beat plain concatenation?"
+  ],
+  "bands": {
+    "equatorial": "center latitude 9 to 30 degrees (355 Val rows)",
+    "mid": "center latitude 30 to 60 degrees (450 Val rows)",
+    "polar": "center latitude 60 to 90 degrees (350 Val rows)"
+  },
+  "cells": {
+    "stratified": "features (moonstone_256, fusion_1024) x heads (linear, linear_balanced) x 3 seeds",
+    "gated": "learnable scalar gate w1 for the Moonstone block and w2 for the NASA block, initialised at 1.0, then the same linear heads, 3 seeds"
+  },
+  "budget": {
+    "epochs": 20,
+    "patience": 5,
+    "batch_size": 8,
+    "lr": 0.001,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+    "optimizer": "AdamW",
+    "schedule": "constant",
+    "seeds": [42, 43, 44],
+    "selection": "val_macro_f1_full_earliest_tie",
+    "test_scored": false
+  },
+  "metric": "macro-F1 over the full 49 classes computed inside each latitude band, plus the overall value as a consistency check",
+  "acceptance": [
+    "Latitude comes only from the authenticated metadata export keyed by patch id",
+    "Overall per-cell values must reproduce the earlier fusion matrix",
+    "No Test ID is read or scored"
+  ],
+  "claims_not_permitted": [
+    "Regional or geological interpretation of the band differences",
+    "Statistical significance: bands hold 350-450 Val rows and three seeds",
+    "Any Test result"
+  ],
+  "test_scored": false
+}

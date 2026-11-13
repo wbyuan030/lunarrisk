@@ -375,5 +375,58 @@
     },
     "finding": "Composition regression does not benefit from fusion (FeO slightly worse, TiO2 within seed noise); Moonstone scores are leakage-inflated because its 28-channel pretraining consumes these LPGRS rasters and the P3.2 encoder was Geology-supervised on the same cohort",
     "test_scored": false
+  },
+  "fusion_stratified_result": {
+    "observed_utc": "2026-11-12T23:30:00+00:00",
+    "status": "FUSION_STRATIFIED_COMPLETE",
+    "plan": "protocols/p33_fusion_stratified_plan.json",
+    "report": "reports/p3_3_fusion_stratified.md",
+    "evidence": "reports/evidence/p33_20261112/fusion_stratified_01/verification.json",
+    "band_sizes": {
+      "equatorial": 355,
+      "mid": 450,
+      "polar": 350
+    },
+    "band_means": {
+      "moonstone": {
+        "equatorial": 0.190933,
+        "mid": 0.129616,
+        "polar": 0.114087
+      },
+      "fusion": {
+        "equatorial": 0.206086,
+        "mid": 0.143631,
+        "polar": 0.131967
+      },
+      "gated": {
+        "equatorial": 0.20583,
+        "mid": 0.144312,
+        "polar": 0.131462
+      }
+    },
+    "fusion_minus_moonstone": {
+      "equatorial": 0.015152,
+      "mid": 0.014015,
+      "polar": 0.017879
+    },
+    "per_seed_sign": {
+      "equatorial": "2/3 positive",
+      "mid": "3/3 positive",
+      "polar": "2/3 positive"
+    },
+    "learned_weights": {
+      "moonstone_block": [
+        1.566,
+        1.652,
+        1.624
+      ],
+      "nasa_block": [
+        0.745,
+        0.661,
+        0.845
+      ],
+      "finding": "the gate keeps both blocks but down-weights NASA to roughly 0.75 against Moonstone 1.62; gated overall 0.2695 does not beat plain concatenation 0.2683"
+    },
+    "test_scored": false
   }
 }
