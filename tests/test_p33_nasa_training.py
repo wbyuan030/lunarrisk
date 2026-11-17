@@ -15,7 +15,8 @@ if torch is not None:
     from test_p33_nasa_torch import TinyBackbone
     from test_p33_nasa_runner import budget
     from lunarrisk.nasa_transfer.training import (make_arm, train_arm, replay_arm, evaluate,
-                                                 state_digest, release_device_memory)
+                                                 state_digest, release_device_memory,
+                                                 REPLAY_MEMORY_TOLERANCE)
 
     class TinyTerrain:
         def __init__(self, split):
@@ -105,15 +106,38 @@ class TestNasaTrainingEngine(unittest.TestCase):
                       arm="random", device="cpu", outdir=self.root / "bad", identity={}, coverage=coverage)
         self.assertFalse((self.root / "bad").exists())
 
-    def test_gpu_cache_released_before_replay_and_live_tensors_block(self):
+    def test_gpu_release_tolerance_and_live_tensor_guard(self):
         with patch.object(torch.cuda, "synchronize"), patch.object(torch.cuda, "empty_cache") as empty, \
-             patch.object(torch.cuda, "memory_allocated", return_value=0):
-            release_device_memory("cuda", 0)
+             patch.object(torch.cuda, "memory_allocated", return_value=REPLAY_MEMORY_TOLERANCE), \
+             patch("lunarrisk.nasa_transfer.training.gc.collect") as collect:
+            receipt = release_device_memory("cuda", 0)
+            self.assertTrue(receipt["within_tolerance"])
+            self.assertTrue(receipt["live_references_within_tolerance"])
+            self.assertEqual(receipt["tolerance_bytes"], REPLAY_MEMORY_TOLERANCE)
+            collect.assert_called_once()
             empty.assert_called_once()
         with patch.object(torch.cuda, "synchronize"), patch.object(torch.cuda, "empty_cache"), \
-             patch.object(torch.cuda, "memory_allocated", return_value=1024):
+             patch.object(torch.cuda, "memory_allocated",
+                          return_value=1024 + REPLAY_MEMORY_TOLERANCE):
+            receipt = release_device_memory("cuda", 1024)
+            self.assertTrue(receipt["within_tolerance"])
+        with patch.object(torch.cuda, "synchronize"), patch.object(torch.cuda, "empty_cache"), \
+             patch.object(torch.cuda, "memory_allocated",
+                          return_value=1024 + REPLAY_MEMORY_TOLERANCE + 1):
             with self.assertRaisesRegex(RuntimeError, "remain live"):
-                release_device_memory("cuda", 0)
+                release_device_memory("cuda", 1024)
+
+    def test_report_contains_no_live_tensor_references(self):
+        _, _, report, _ = self.run_arm()
+        def has_tensor(value):
+            if isinstance(value, torch.Tensor):
+                return True
+            if isinstance(value, dict):
+                return any(has_tensor(item) for item in value.values())
+            if isinstance(value, (list, tuple)):
+                return any(has_tensor(item) for item in value)
+            return False
+        self.assertFalse(has_tensor(report))
 
 
 if __name__ == "__main__":

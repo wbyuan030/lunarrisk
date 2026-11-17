@@ -13,6 +13,14 @@
   ],
   "question": "Does a two-parameter-per-modality affine input adapter recover frozen NASA-encoder accuracy lost to the Moonstone-native256 input distribution, beyond what the same head-only probe achieves?",
   "why_this_question": "Every P3.3 frozen result feeds the encoder raw Moonstone-native256 elevation/slope under the audited NASA normalization, but the encoder was pretrained under the NASA pre_resize512 pipeline. The adapter is the cheapest way to ask whether input-domain shift, rather than the representation itself, is the binding constraint. It does not train the encoder: only 2 scalars per modality (4 total) plus the ordinary 49-way head receive gradients; the encoder weights and buffers stay frozen.",
+  "nodata_policy": {
+    "value": "cohort_all_finite_no_observed_sentinels_upstream_unverified",
+    "date": "2026-11-17",
+    "scope": "Fixed 6,290 Train/Val crops were measured all-finite; slopes bounded; four explored candidate sentinels had zero matches; cohort equals the published product bitwise; published masks declare no non-finite terrain.",
+    "not_asserted": "Absence of an undeclared finite sentinel in the upstream LOLA/SLDEM rasters or intermediates; completeness of historical source NoData metadata.",
+    "evidence": "reports/p3_3_finite_sentinel_evidence.md",
+    "residual_risk": "An undeclared finite sentinel or missing source NoData declaration could survive; interpolation/blending could transform a contaminated value. This is a bounded-risk cohort-level policy, not global source validity."
+  },
   "design": {
     "architecture": "TerrainTransfer: official pinned NASA base encoder + Conv2d(1,1,1) identity-initialized adapter per modality (weight=1, bias=0) + mean-pooled 768-d tokens + Linear(768,49)",
     "adaptation_arms": {
@@ -109,6 +117,7 @@
   },
   "acceptance_gates": [
     "M0 offline: both budget files pass validate_budget; protocol IDs and file paths resolve; compileall passes; no GPU touched",
+    "M0b provenance: the locked provenance carries nodata_policy=cohort_all_finite_no_observed_sentinels_upstream_unverified and records the upstream sentinel limitation; the weaker policy is not described as global source validity",
     "M1a real preflight: new paired input_affine forward/backward on authenticated Train2705 under moonstone_native256_v1, same config SHA256, device cuda and torch version; adapter gradients finite and nonzero; encoder gradients absent; receipt records adaptation=input_affine",
     "M1b memory/time pilot: 8 pre-declared Train samples, forward/backward, no optimizer step; record peak device bytes and seconds; resolve batch size via the pre-registered ladder before any lock",
     "M2 lock: two immutable manifests (frozen, input_affine) over identical assets/cohort/runtime with only adaptation differing; lock both before any task score; record both SHA256 digests",
@@ -226,6 +235,10 @@
     {
       "date": "2026-11-16",
       "change": "Initial pre-registration. No scores observed; thresholds, arms, budget, gates and leakage boundaries fixed before any execution."
+    },
+    {
+      "date": "2026-11-17",
+      "change": "Nodata policy amended from finite_only_no_finite_sentinels to cohort_all_finite_no_observed_sentinels_upstream_unverified after the finite-sentinel evidence review. The weaker policy asserts the 6,290 crops are all-finite with no observed sentinels and explicitly records unverified upstream sentinel absence. No scores had been observed; budget and arms unchanged."
     }
   ]
 }

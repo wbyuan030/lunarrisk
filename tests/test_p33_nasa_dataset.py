@@ -105,9 +105,11 @@ class TestTerrainDataset(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "do not silently resize"):
             ds[0]
 
-    def test_no_finite_sentinel_assertion_is_mandatory(self):
+    def test_cohort_finite_policy_is_mandatory_and_exact(self):
+        self.assertEqual(module.NODATA_POLICY,
+                         "cohort_all_finite_no_observed_sentinels_upstream_unverified")
         _, _, domains, provenance = fixture()
-        for flag in (None, "finite_only", True):
+        for flag in (None, "finite_only", True, "finite_only_no_finite_sentinels"):
             provenance["nodata_policy"] = flag
             with self.assertRaisesRegex(ValueError, "NoData policy"):
                 module.TerrainDataset(RawSource(), {"a": 2, "b": 3}, domains, provenance)

@@ -166,6 +166,29 @@
     "Select and lock an explicit actual paired budget before any task score; the example is not a frozen actual budget",
     "Training requires separate authorization after these gates; no completed preflight/tests need repeating, no automatic new execution is authorized, and Test remains HOLD"
   ],
+  "finite_sentinel_policy_update": {
+    "observed_date": "2026-11-17",
+    "report": "reports/p3_3_finite_sentinel_evidence.md",
+    "assessment": "reports/evidence/p33_20261117/finite_sentinel_01/assessment.json",
+    "old_policy": "finite_only_no_finite_sentinels",
+    "new_policy": "cohort_all_finite_no_observed_sentinels_upstream_unverified",
+    "status": "WEAKER_COHORT_LEVEL_POLICY_ACCEPTED; UPSTREAM_SENTINEL_ABSENCE_NOT_ESTABLISHED",
+    "proven": [
+      "fixed cohort terrain is bitwise identical to the published product",
+      "all 824,442,880 compared terrain pixels are finite; published masks have zero non-finite bits",
+      "slopes are within [0, 90] degrees; finite zeros retained",
+      "four explored candidate sentinel values have zero matches",
+      "pinned code maps declared src.nodata to NaN and propagates NaN through slope"
+    ],
+    "not_proven": [
+      "absence of an undeclared finite sentinel in upstream rasters",
+      "completeness/correctness of historical source NoData declarations",
+      "exact historical raster/intermediate identities and build execution",
+      "that interpolation/blending did not transform a sentinel into a plausible finite value"
+    ],
+    "residual_risk": "An undeclared finite sentinel or missing source NoData declaration could survive. The policy is a bounded-risk cohort-level convention, not global source validity.",
+    "training": "No training may start until the lock uses the new policy and the guard remains unchanged otherwise; Test HOLD."
+  },
   "science_claim": "PRETRAINED_TRANSFER_BENEFIT_NOT_ESTABLISHED",
   "no_paid_compute": true,
   "no_four_gpu": true,

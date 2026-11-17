@@ -60,7 +60,7 @@ The local follow-up at `f74af37` passes75 focused and701 full tests with zero sk
 ## Current remaining gates
 
 - [129 locked dependencies are installed](../reports/evidence/p33_20261106/rocm72_runtime_01/verification.json); normal NASA import and the frozen paired preflight have passed. This is not a long-duration training-stability or vendor-certification result.
-- Establish valid raw-source lineage and NoData provenance for all 5,135 Train / 1,155 Val samples. `nodata_policy=finite_only_no_finite_sentinels` must be justified by source evidence; a finite scan alone does not rule out unknown finite sentinels.
+- Establish valid raw-source lineage and NoData provenance for all 5,135 Train / 1,155 Val samples. **2026-11-17:** the accepted cohort-level policy is `nodata_policy=cohort_all_finite_no_observed_sentinels_upstream_unverified`: the 6,290 crops were measured all-finite with no observed sentinels, but upstream raster sentinel absence remains unverified. This is a weaker, explicitly bounded policy, not a global source-validity claim. See [the evidence review](../reports/p3_3_finite_sentinel_evidence.md).
 - Then scan the complete unchanged cohort without scores and lock an explicit actual paired budget. No filtering, fake masks, imputation or policy change is allowed by this protocol.
 - Training requires separate authorization; this status update grants no new execution permission. Transfer benefit remains NOT_ESTABLISHED, Test remains HOLD, and previous P3.2 results/budgets are preserved. See the [current plan](../protocols/p33_nasa_transfer_plan.json).
 

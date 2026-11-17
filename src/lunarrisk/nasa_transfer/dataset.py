@@ -18,7 +18,13 @@ from ..benchmarks.prefix import PrefixClassifierDataset, _signature
 from .cohort import load_authoritative_cohorts
 from .contracts import file_sha256, fingerprint, prepare_terrain, validate_domain, validate_provenance, spatial_policy_receipt, STRICT_SPATIAL_POLICY
 
-NODATA_POLICY = "finite_only_no_finite_sentinels"
+# Cohort-level weaker policy (2026-11-17): the fixed 6,290 Train/Val crops were
+# measured all-finite, slopes were bounded, four explored candidate sentinel
+# values had zero matches, and the cohort equals the published product bitwise.
+# The absence of an undeclared finite sentinel in the upstream LOLA/SLDEM
+# rasters and intermediates is NOT established; that residual limit is part of
+# the policy name and must remain visible in provenance.
+NODATA_POLICY = "cohort_all_finite_no_observed_sentinels_upstream_unverified"
 
 
 class TerrainDataset:
@@ -33,7 +39,7 @@ class TerrainDataset:
         spatial_policy_receipt(spatial_policy, config_sha256)
         validate_provenance(provenance, spatial_policy=spatial_policy)
         if provenance.get("nodata_policy") != NODATA_POLICY:
-            raise ValueError("audited finite-only NoData policy asserting no finite sentinels required")
+            raise ValueError("cohort NoData policy must assert all 6,290 cohort crops finite with no observed sentinels and record unverified upstream sentinel absence")
         for key in ("dtm", "slope"):
             validate_domain(domains[key], spatial_policy=spatial_policy)
         if source.split not in (0, 1) or isinstance(source.split, bool):
@@ -83,6 +89,10 @@ def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
 
     `domains` must come from the caller's authenticated actual NASA config, and
     `provenance` must be audited, including nodata_policy == NODATA_POLICY.
+    NODATA_POLICY is the cohort-level weaker policy: it records that the fixed
+    6,290 Train/Val crops were measured all-finite with no observed sentinels,
+    and that upstream raster sentinel absence remains unverified. It is not a
+    claim of global source validity.
     Both are deep copied and fingerprinted. Prefix, stats, map, metadata and
     cached-range report are authenticated against the repository-pinned plan.
     The existing reader independently verifies all referenced range checksums
@@ -96,7 +106,7 @@ def open_datasets(*, data_path, stats_path, class_map_path, metadata_path,
     policy_receipt = spatial_policy_receipt(spatial_policy, config_sha256)
     validate_provenance(provenance, spatial_policy=spatial_policy)
     if provenance.get("nodata_policy") != NODATA_POLICY:
-        raise ValueError("audited finite-only NoData policy asserting no finite sentinels required")
+        raise ValueError("cohort NoData policy must assert all 6,290 cohort crops finite with no observed sentinels and record unverified upstream sentinel absence")
     for key in ("dtm", "slope"):
         validate_domain(domains[key], spatial_policy=spatial_policy)
     paths = {"sha256": data_path, "stats_sha256": stats_path,

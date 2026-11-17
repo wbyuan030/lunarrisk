@@ -49,6 +49,15 @@
     "Actual paired forward/backward with same device, adaptation and policy",
     "Full unchanged Train/Val scan and actual budget lock before task scores"
   ],
+  "nodata_policy_update": {
+    "observed_date": "2026-11-17",
+    "old_policy": "finite_only_no_finite_sentinels",
+    "new_policy": "cohort_all_finite_no_observed_sentinels_upstream_unverified",
+    "report": "reports/p3_3_finite_sentinel_evidence.md",
+    "assessment": "reports/evidence/p33_20261117/finite_sentinel_01/assessment.json",
+    "scope": "The fixed 6,290 Train/Val crops were measured all-finite with no observed sentinels; upstream raster sentinel absence remains unverified.",
+    "test_access": "HOLD"
+  },
   "scientific_boundary": "Exploratory Moonstone-native-grid transfer, not NASA preprocessing/physical-scale equivalence or established transfer benefit. No new scores exist.",
   "test_access": "HOLD",
   "source_evidence": {

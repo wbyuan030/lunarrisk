@@ -24,6 +24,10 @@ from .contracts import file_sha256
 from .experiment import probability_metrics, validate_budget
 from .torch_adapter import TerrainTransfer
 
+# A few bytes may remain in the CUDA caching allocator after explicit cleanup;
+# this tolerance is far below one training batch and must not hide a live model.
+REPLAY_MEMORY_TOLERANCE = 1 << 20
+
 
 def write_new_json(path, value):
     text = json.dumps(value, indent=2, allow_nan=False) + "\n"
@@ -93,18 +97,30 @@ def prepare_device(name, seed):
     return device
 
 
-def release_device_memory(device, baseline_allocated=0):
-    """Let the fresh replay process use memory reserved by the training process."""
+def release_device_memory(device, baseline_allocated=0, tolerance_bytes=REPLAY_MEMORY_TOLERANCE):
+    """Release cached GPU memory and require the live allocation to return to baseline.
+
+    A fresh-process replay is used for the actual replay; this guard only checks
+    that this process no longer holds training tensors.  The explicit cleanup in
+    train_arm drops optimizer/input/loss references, and gc.collect() breaks any
+    remaining cycles before the allocator is queried.  A small tolerance covers
+    allocator bookkeeping, not a live model: one training batch is much larger.
+    """
     gc.collect()
     device = torch.device(device)
     if device.type == "cuda":
         torch.cuda.synchronize(device)
         torch.cuda.empty_cache()
         remaining = torch.cuda.memory_allocated(device)
-        if remaining > baseline_allocated:
+        limit = baseline_allocated + tolerance_bytes
+        if remaining > limit:
             raise RuntimeError("training GPU tensors remain live before fresh-process replay")
-        return {"allocated_after_release": remaining, "baseline_allocated": baseline_allocated}
-    return {"allocated_after_release": None, "baseline_allocated": None}
+        return {"allocated_after_release": remaining, "baseline_allocated": baseline_allocated,
+                "tolerance_bytes": tolerance_bytes, "within_tolerance": True,
+                "live_references_within_tolerance": True}
+    return {"allocated_after_release": None, "baseline_allocated": None,
+            "tolerance_bytes": None, "within_tolerance": None,
+            "live_references_within_tolerance": None}
 
 
 def _loader(dataset, batch_size, indices=None):
@@ -230,6 +246,20 @@ def train_arm(model, datasets, *, budget, seed, arm, device, outdir, identity, c
               "process_peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024,
               "memory_scope": "process high-water RSS; device peak includes model, batches and training"}
     write_new_json(outdir / "report.json", report)
+    # Drop every GPU reference held by this frame before the caller deletes the
+    # model and starts a fresh-process replay.  Rebinding loop locals to None is
+    # deliberate: deleting a fast local through locals() is not reliable.
+    loss = None
+    labels = None
+    batch = None
+    del optimizer
+    del parameters
+    if best_state is not None:
+        del best_state
+    gc.collect()
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
+        torch.cuda.empty_cache()
     return report
 
 

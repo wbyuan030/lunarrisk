@@ -231,6 +231,10 @@ def main(argv=None):
                 report = train_arm(model, datasets, budget=budget, seed=seed, arm=arm, device=args.device,
                                    outdir=directory, identity=identity(seed, arm), coverage=coverage)
                 del model
+                gc.collect()
+                if args.device == "cuda":
+                    torch.cuda.synchronize()
+                    torch.cuda.empty_cache()
                 memory_release = release_device_memory(args.device, baseline_allocated)
                 command = replay_command(args, directory, args.outdir / (name + "_replay"), seed, arm)
                 with (args.outdir / (name + "_replay.log")).open("x") as log:

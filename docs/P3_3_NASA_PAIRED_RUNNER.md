@@ -33,10 +33,10 @@ Only raw `elevation` and `slope` reach `prepare_terrain`. Reading two channel sl
 The common physical provenance JSON must contain the existing audited fields plus:
 
 ```json
-{"nodata_policy": "finite_only_no_finite_sentinels"}
+{"nodata_policy": "cohort_all_finite_no_observed_sentinels_upstream_unverified"}
 ```
 
-Use that assertion only after actually verifying the source has no finite NoData sentinels. The current tier rejects any missing pixel, unexpected unit/scaler or noncanonical spatial shape. It never filters IDs, imputes unknown terrain or resizes implicitly. If the complete historical cohort fails, this run is **BLOCKED**. A narrower cohort, missing-data handling or spatial adapter requires a separate explicit protocol/code update before scores, not a bypass flag.
+**2026-11-17 policy amendment:** this cohort-level policy asserts only that the fixed 6,290 Train/Val crops were measured all-finite (slopes bounded), that the published product/masks declare no non-finite terrain, and that four explored candidate sentinel values had zero matches. It explicitly records that upstream LOLA/SLDEM raster sentinel absence is **not established**; it is not a claim of global source validity. See [the evidence review](../reports/p3_3_finite_sentinel_evidence.md). The current tier still rejects any missing pixel, unexpected unit/scaler or noncanonical spatial shape. It never filters IDs, imputes unknown terrain or resizes implicitly. If the complete historical cohort fails, this run is **BLOCKED**. A narrower cohort, missing-data handling or spatial adapter requires a separate explicit protocol/code update before scores, not a bypass flag.
 
 `lock` reads every Train/Val sample before any model score. Prefix SHA256 is streamed once per process, not once per epoch; subsequent reads retain mutation checks. Each fresh replay process independently authenticates the prefix again, so this strict approach has extra I/O cost.
 
