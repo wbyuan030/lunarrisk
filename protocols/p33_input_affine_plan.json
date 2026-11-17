@@ -1,0 +1,231 @@
+{
+  "protocol": "P33_INPUT_AFFINE_ADAPTER_V1",
+  "status": "PRE_REGISTERED_BEFORE_EXECUTION_NOT_RUN",
+  "preregistration_label": "Author-declared pre-score plan: committed before any execution, no scores, no post-hoc threshold changes in this file. Per the 2026-11-17 audit (reports/p3_3_experiment_audit.md), the repository cannot independently prove chronology for plans without an earlier committed snapshot; future amendments must be recorded in revision_log.",
+  "created_date": "2026-11-16",
+  "evidence_reports_before_this_plan": [
+    "reports/p3_3_transfer_evidence_summary.md",
+    "reports/p3_3_frozen_probe.md",
+    "reports/p3_3_feature_ablation.md",
+    "reports/p3_3_feature_fusion.md",
+    "reports/p3_3_fusion_stratified.md",
+    "reports/p3_3_real_nasa_preflight.md"
+  ],
+  "question": "Does a two-parameter-per-modality affine input adapter recover frozen NASA-encoder accuracy lost to the Moonstone-native256 input distribution, beyond what the same head-only probe achieves?",
+  "why_this_question": "Every P3.3 frozen result feeds the encoder raw Moonstone-native256 elevation/slope under the audited NASA normalization, but the encoder was pretrained under the NASA pre_resize512 pipeline. The adapter is the cheapest way to ask whether input-domain shift, rather than the representation itself, is the binding constraint. It does not train the encoder: only 2 scalars per modality (4 total) plus the ordinary 49-way head receive gradients; the encoder weights and buffers stay frozen.",
+  "design": {
+    "architecture": "TerrainTransfer: official pinned NASA base encoder + Conv2d(1,1,1) identity-initialized adapter per modality (weight=1, bias=0) + mean-pooled 768-d tokens + Linear(768,49)",
+    "adaptation_arms": {
+      "frozen": "adapters are fixed at identity and receive no gradients; head only (37,681 trainable parameters)",
+      "input_affine": "adapters trainable (2 parameters per modality, 4 total) and gradients pass THROUGH the frozen encoder; encoder parameters/buffers receive no gradients and are never updated (37,685 trainable parameters)"
+    },
+    "initialization_arms": {
+      "pretrained": "verified NASA checkpoint strictly loaded",
+      "random": "identical architecture, same seed, no pretrained weights"
+    },
+    "four_cells": [
+      "frozen / pretrained",
+      "frozen / random",
+      "input_affine / pretrained",
+      "input_affine / random"
+    ],
+    "inputs": [
+      "elevation (dtm), raw physical metres",
+      "slope, raw physical degrees"
+    ],
+    "input_pipeline": "authenticated prefix -> prepare_terrain with the unchanged audited NASA YAML normalization",
+    "spatial_policy": "moonstone_native256_v1",
+    "cohort": {
+      "train": 5135,
+      "val": 1155,
+      "test": "HOLD; never constructed, read or scored"
+    },
+    "task": "49-class Geology macro-F1 over all 49 classes including absent ones",
+    "selection": "val macro-F1 full, strictly greater, earliest epoch wins ties",
+    "loss": "plain cross-entropy only; the class-balanced-CE variant is out of scope for this plan and would require a separate code + protocol change",
+    "code_path": "scripts/p33_train_pair.py lock/run/replay with src/lunarrisk/nasa_transfer/{torch_adapter,training,experiment}.py; no new model code is introduced by this plan"
+  },
+  "budget": {
+    "control_budget_file": "protocols/p33_input_affine_control_budget.json",
+    "adapter_budget_file": "protocols/p33_input_affine_budget.json",
+    "fields": {
+      "epochs": 20,
+      "patience": 5,
+      "batch_size": 8,
+      "lr": 0.001,
+      "weight_decay": 0.01,
+      "grad_clip": 1.0,
+      "seeds": [42, 43, 44],
+      "precision": "fp32",
+      "optimizer": "AdamW",
+      "schedule": "constant",
+      "selection": "val_macro_f1_full_earliest_tie",
+      "test_scored": false
+    },
+    "runs": "2 adaptations x 2 initialization arms x 3 seeds = 12 training runs, each followed by a fresh-process replay",
+    "no_post_hoc_tuning": "No learning-rate groups, no adapter-specific learning rate, no class weights, no architecture or budget change after any score is observed",
+    "batch_size_resolution": "Batch 8 is the pre-registered preferred value for comparability with the frozen probe. Before lock, a no-score pilot measures peak device memory at batch 8 on 8 pre-declared Train samples. If batch 8 is infeasible (OOM or peak > 12 GiB) the pre-registered ladder is 4 then 2; the first feasible value is used for BOTH adaptations and all arms. This decision uses memory only, never scores, and is recorded in the locked manifest."
+  },
+  "primary_estimand": {
+    "name": "affine_minus_frozen_pretrained",
+    "definition": "For each seed s, delta_s = val_macro_f1_full(input_affine, pretrained, s) - val_macro_f1_full(frozen, pretrained, s). Report mean(delta_s) and sample standard deviation over the three seeds.",
+    "decision_rule": {
+      "SUPPORTED": "mean delta >= +0.010 AND all three per-seed deltas > 0",
+      "WEAK_OR_INCONCLUSIVE": "either +0.005 <= mean delta < +0.010, or mean delta >= +0.010 with any seed delta <= 0",
+      "NULL": "mean delta < +0.005",
+      "HARM": "mean delta <= -0.010 AND all three per-seed deltas < 0"
+    },
+    "threshold_rationale": "+0.010 is roughly 1.2x the frozen-probe seed sample standard deviation (0.0083) and is comparable to the smaller descriptive fusion macro-F1 deltas (+0.022 to +0.038, reused-Val; see reports/p3_3_experiment_audit.md for their boundary). It was fixed before execution as a practical-effect threshold, not a significance test. Three seeds give a sample standard deviation, never a confidence interval."
+  },
+  "secondary_estimands": [
+    {
+      "name": "affine_minus_frozen_random",
+      "definition": "Same per-seed contrast on the random-init arms",
+      "role": "descriptive; if only the random arm gains, the adapter is compensating initialization/training dynamics rather than the pretrained domain shift"
+    },
+    {
+      "name": "difference_in_differences",
+      "definition": "(input_affine pretrained - frozen pretrained) - (input_affine random - frozen random), computed per seed",
+      "role": "descriptive mechanism check only; not a success gate and not a significance claim"
+    },
+    {
+      "name": "learned_adapter_state",
+      "definition": "Final learned weight and bias for dtm and slope per seed, and the distance from identity",
+      "role": "diagnostic; large deviation shows the adapter is doing real rescaling, near-identity shows the optimizer did not move it. Neither direction alone proves a mechanism."
+    },
+    {
+      "name": "frozen_control_sanity",
+      "definition": "The newly run frozen pretrained arm must beat the newly run frozen random arm in 3/3 seeds",
+      "role": "engineering sanity gate for the runner path; the historical frozen probe is prior evidence, not an assumed control"
+    }
+  ],
+  "reproducibility_and_controls": {
+    "paired_initialization": "Both arms within a seed share the same adapter and head initialization; the runner enforces identity before scoring",
+    "paired_order": "Identical epoch permutations and minibatch orders across arms within a seed; the runner enforces identical training-order hashes",
+    "encoder_freeze_proof": "Backbone state digest must be unchanged after training; any encoder gradient aborts the run",
+    "fresh_process_replay": "Every one of the 12 runs is replayed in a new process; prediction CSV and metric equality are required",
+    "historical_frozen_probe": "0.188510 +/- 0.008293 (pretrained) and 0.072138 +/- 0.001763 (random) are cited as prior evidence only. The runner constructs the head through TerrainTransfer rather than a standalone Linear, so the head RNG stream differs and exact numerical reproduction is not expected or required",
+    "no_repeat_of_completed_work": "No terrain scan, product-identity check, preflight from 2026-11-06, P3.2 18-run matrix or frozen-feature matrix is repeated"
+  },
+  "acceptance_gates": [
+    "M0 offline: both budget files pass validate_budget; protocol IDs and file paths resolve; compileall passes; no GPU touched",
+    "M1a real preflight: new paired input_affine forward/backward on authenticated Train2705 under moonstone_native256_v1, same config SHA256, device cuda and torch version; adapter gradients finite and nonzero; encoder gradients absent; receipt records adaptation=input_affine",
+    "M1b memory/time pilot: 8 pre-declared Train samples, forward/backward, no optimizer step; record peak device bytes and seconds; resolve batch size via the pre-registered ladder before any lock",
+    "M2 lock: two immutable manifests (frozen, input_affine) over identical assets/cohort/runtime with only adaptation differing; lock both before any task score; record both SHA256 digests",
+    "M3 frozen matrix: 6 runs + 6 fresh-process replays; paired initialization/order PASS; backbone digest unchanged; frozen pretrained > frozen random in 3/3 seeds; otherwise BLOCKED, do not start the adapter matrix",
+    "M4 adapter matrix: 6 runs + 6 fresh-process replays under the same gates",
+    "M5 analysis: per-seed deltas, decision rule applied as written, realized epochs/visits, timings, memory, adapter state and hashes reported",
+    "No Test tile is selected, compared, scored or fed to the model; metadata ID tables may be read in full by existing loaders, which is not Test scoring; no cloud compute; no encoder retraining or unfreezing"
+  ],
+  "run_order": [
+    {
+      "milestone": "M0",
+      "goal": "offline static validation",
+      "actions": "python3 -c validate_budget on both budget files; compileall; confirm pinned asset hashes and plan paths",
+      "scores": "none",
+      "approval": "none beyond normal repository checks"
+    },
+    {
+      "milestone": "M1a",
+      "goal": "real input_affine preflight",
+      "actions": "reuse the authenticated Train2705 batch and existing runner recipe with --adapt-inputs --forward-backward; write a new receipt, never overwrite the 2026-11-06 frozen receipt",
+      "scores": "none",
+      "approval": "requires explicit user authorization for model execution and gradient through the frozen encoder"
+    },
+    {
+      "milestone": "M1b",
+      "goal": "batch-size and throughput feasibility",
+      "actions": "forward/backward on 8 pre-declared ordered Train samples at batch 8, no optimizer step; resolve 8 -> 4 -> 2 by peak memory only",
+      "scores": "none",
+      "approval": "same authorization as M1a"
+    },
+    {
+      "milestone": "M2",
+      "goal": "freeze both actual budgets",
+      "actions": "run p33_train_pair.py --mode lock twice (frozen control, input_affine) with the matching preflight receipts; record manifest SHA256 values",
+      "scores": "none",
+      "approval": "user confirms the two manifests are the intended spend"
+    },
+    {
+      "milestone": "M3",
+      "goal": "frozen control matrix",
+      "actions": "run 6 frozen runs + replays; apply the frozen-control sanity gate",
+      "scores": "Val only",
+      "approval": "training authorization required"
+    },
+    {
+      "milestone": "M4",
+      "goal": "input_affine matrix",
+      "actions": "run 6 input_affine runs + replays under the unchanged lock",
+      "scores": "Val only",
+      "approval": "conditional go after M3 passes; no budget edits"
+    },
+    {
+      "milestone": "M5",
+      "goal": "analysis and report",
+      "actions": "apply the pre-registered decision rule; write reports/evidence with every per-seed number, hash and timing",
+      "scores": "Val only",
+      "approval": "none; report PASS/FAIL/BLOCKED as measured"
+    }
+  ],
+  "cost_estimate": {
+    "measured_component": "43.8 encoder forwards/s including HDF5 decode (287.07 s for 12,580 forwards) under the frozen-feature phase",
+    "unmeasured_component": "forward+backward-through-encoder multiplier on this ROCm stack; not measured before this plan",
+    "planning_multiplier": "2.5x to 4x for train steps; validation steps have no backward pass",
+    "frozen_control": "up to 616,200 train sample-visits at 20 epochs plus ~138,600 validation forwards = about 4.8 h at the measured forward rate",
+    "input_affine": "up to 616,200 train sample-visits x 2.5-4x = about 9.8-15.7 h plus ~0.9 h validation",
+    "replays": "12 fresh-process final evaluations over Train+Val = 75,480 forwards = about 0.5 h",
+    "total_upper_bound": "about 15-22 GPU-hours on the single local RX 7900 XT; hard stop and re-scope if the pilot implies more than 30 h",
+    "disk": "negligible: per-epoch task-state checkpoints hold 37,681-37,685 parameters; prediction CSVs are tens of MB",
+    "cloud": "NONE; no paid compute, no additional GPU"
+  },
+  "leakage_boundaries": [
+    "The NASA encoder's pretraining data may geographically overlap the fixed Train/Val cohort; overlap cannot be excluded. This plan measures frozen-transfer under permitted overlap, not generalization.",
+    "The P3.2 Moonstone encoder was Geology-supervised on the same Train split and consumes LPGRS FeO/TiO2 channels; it is never used as a leakage-free comparator in this plan and no Moonstone claim is attached.",
+    "Val has already been reused for early stopping and selection across P3.3 and other phases; all numbers are exploratory and mildly optimistic. Test remains HOLD.",
+    "Only the 4 adapter scalars and the 49-way head are trainable. This is not fine-tuning, LoRA, partial unfreezing, representation adaptation or a new encoder.",
+    "No new labels, no composition targets, no external data and no new channels enter this experiment; inputs remain exactly elevation and slope.",
+    "Adapter weights are learned on Train only. Val is used only for early stopping/selection under the published rule.",
+    "A positive result says input rescaling helps this frozen probe; it does not show that NASA pretraining dominates in-domain supervision, and it does not revise the fusion or Moonstone conclusions.",
+    "If adapter parameters move far from identity, report the magnitude but do not claim a physical meaning for the learned scale/shift."
+  ],
+  "claims_permitted": [
+    "A paired Val result for the input_affine adapter versus the frozen probe on the fixed cohort, with per-seed deltas and sample standard deviation",
+    "A statement that the input-domain shift does or does not cost measurable frozen-transfer accuracy within this probe",
+    "A statement that the adapter leaves encoder weights unchanged and adds only 4 trainable scalars beyond the head"
+  ],
+  "claims_not_permitted": [
+    "Fine-tuning, full-backbone adaptation or LoRA conclusions",
+    "Test performance, new-class capability, landing safety, global lunar or generalization claims",
+    "Statistical significance from three seeds or a confidence interval",
+    "Any claim that input_affine resolves the in-domain leakage problem or proves NASA features superior to Moonstone",
+    "Any revision of the fusion, composition, latitude-stratified or learned-gate results",
+    "Any claim of NASA preprocessing or physical-scale equivalence (the native256 policy is deliberately not the NASA pipeline)"
+  ],
+  "preconditions_not_yet_met": [
+    "No real input_affine preflight receipt exists; the 2026-11-06 receipt is frozen_probe adaptation",
+    "Neither actual budget is locked; both budget files are proposals until M2",
+    "No training for this plan has run; no scores exist",
+    "Model execution and gradient through the frozen encoder require explicit user authorization"
+  ],
+  "inputs": {
+    "nasa_code_revision": "d54c67aad513cb9daca444afa425cfb278e4fbf8",
+    "nasa_model_revision": "b657bdfe6fc4c0445d918f77a2d7b919805f3bce",
+    "nasa_config_sha256": "fd94d20eb2b1cd4379516da3d2c1912a56a8684e1952ee9331abd63e7c59e619",
+    "nasa_checkpoint_sha256": "5843824dfa56f89552b37b5295aa865ed28777c5f2b33286db2ef81b4cf08e5b",
+    "nasa_checkpoint_bytes": 2425755440,
+    "train_plan_sha256": "a5f57da8ded63e8ba1aa43dd883564947ac3f2c70efe800601500d228d7933c4",
+    "metadata_archive_sha256": "1c971c5d6c8ea245ba34dfdf5b929917c77a366713645bb9c2a3e53ae74bf0",
+    "spatial_policy_id": "moonstone_native256_v1",
+    "runtime": "private Python3.12.9, torch2.12.1+rocm7.2, RX7900XT gfx1100, deterministic algorithms, no network"
+  },
+  "actual_budget": "NOT_LOCKED",
+  "training": "NOT_AUTHORIZED_BY_THIS_PLAN",
+  "test_scored": false,
+  "revision_log": [
+    {
+      "date": "2026-11-16",
+      "change": "Initial pre-registration. No scores observed; thresholds, arms, budget, gates and leakage boundaries fixed before any execution."
+    }
+  ]
+}

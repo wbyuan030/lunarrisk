@@ -1,0 +1,81 @@
+# P3.3 report revision log (post-audit wording correction)
+
+**Date:** 2026-11-17
+**Trigger:** [external integrity audit](p3_3_experiment_audit.md), Material failures 1-7 and the claim-impact table.
+**Scope:** wording and boundary corrections only in the four audited reports. No stored number was changed; no `summary.json`/`verification.json` was edited; no experiment, GPU run, training, Test access or new data was added. Conclusion directions are preserved: fusion remains positive, the learned gate still has no established meaningful gain, and Moonstone still beats NASA on the audited ablation.
+
+**Line numbers in the “Original” column refer to the pre-correction files at commit `3eac2c6`.** After correction, line numbers may shift. The audit read those exact versions.
+
+## `reports/p3_3_feature_fusion.md`
+
+| # | Original (line) | Correction | Basis |
+|---|---|---|---|
+| F0 | Title: “NASA features are complementary even though weaker alone” (L1) | “NASA features add predictive information even though weaker alone” | Audit Q1: “complementary” is an interpretation; the supported statement is an additive predictive gain. |
+| F1 | “gives the best frozen-feature result on both tasks” (L3) | “best macro-F1 among the tested frozen-feature cells on both tasks (descriptive, reused-Val)” | Audit C/claim table; the stored matrix is the comparison set, not a general benchmark. |
+| F2 | “The two encoders are complementary, not redundant … Cross-domain representations carry information the in-domain encoder does not” (L14) | “Under this head procedure, NASA features add predictive information to the Moonstone block … This is an observed additive gain on reused Val, not a clean comparison of pretraining domains” | `scripts/p32_cache_context.py:58`, `:68`; `src/lunarrisk/benchmarks/moonstone.py:27`; audit Q1. |
+| F3 | “Coarser targets benefit more from the transfer, which is consistent with cross-domain features encoding broad terrain context rather than fine lithology” (L15) | “The reason for this task difference is not established by these runs; the ‘broad terrain context rather than fine lithology’ explanation was not tested” | Fusion deltas are larger on Geology than Age (`reports/p3_3_feature_fusion.md:10`); audit claim table. |
+| F4 | “+0.008 to +0.019 in every feature set and task” (L16) | “+0.007534 to +0.020680 across the tested feature sets and tasks” | `reports/evidence/p33_20261111/feature_fusion_01/summary.json:312`, `:337`; audit C3. |
+| F5 | “Test was never read.” (L20) | “No Test tile was selected, compared, scored or used for training/selection; the metadata ID table includes Test IDs, but no Test pixels or targets entered the evaluation.” | `scripts/p33_fusion_stratified.py:32`; audit C4. |
+| F6 | Caveats omitted same-Train Moonstone supervision and LPGRS inputs (L28) | Added: Moonstone was Geology-supervised on this Train split and consumes 28 channels including LPGRS FeO/TiO2; internal additive observation stands, cross-encoder interpretation does not | `scripts/p32_cache_context.py:58`, `:68`; `src/lunarrisk/benchmarks/moonstone.py:27`; audit Q1. |
+| F7 | “Concatenation doubles the head input width” (L29) | “widens the head input to 1024 dimensions (4x Moonstone’s 256; 4/3x NASA’s 768)” | Arithmetic against the stored widths; audit claim table. |
+| F8 | Caveats did not record missing predictions or late cache hashing (L28-29) | Added auditability limitation: only the summary was retained; per-seed predictions and head states were not saved; cache hashes were recorded after evaluation | `scripts/p33_feature_fusion.py:165`, `:179`, `:183`; audit A/C5. |
+| F9 | “NASA extraction 287 s” and “protocol pre-registered” (L33) | “287 s, covering both arms = 12,580 forwards”; “author-declared pre-score plan; chronology independently unverified” | `scripts/p33_frozen_probe.py:189`, `:199`; `reports/evidence/p33_20261110/frozen_probe_01/cache_manifest.json:12620`; git commits `e75695a`, `7634980`, `ae3fc37`, `74cfac9`; audit Q4. |
+
+## `reports/p3_3_fusion_stratified.md`
+
+| # | Original (line) | Correction | Basis |
+|---|---|---|---|
+| S1 | “The fusion gain is not carried by one region” (L3) | “The fusion gain is positive on average in all three Val latitude bands … a coarse robustness check, not proof of regional uniformity” | Band means and per-seed signs in `reports/evidence/p33_20261112/fusion_stratified_01/summary.json:21`, `:30`, `:69`; audit Q3. |
+| S2 | “does not improve on plain concatenation (overall 0.2695 vs 0.2683)” (L3) | “shows no established meaningful improvement … overall 0.269538 vs 0.268314; observed difference +0.001224” | `reports/evidence/p33_20261112/fusion_stratified_01/summary.json:67`, `:106`; audit C1. |
+| S3 | Implied gate scalars show relative weight / equal partnership (L3) | Added: “Those scalars are parameter values only and are not identifiable as relative feature importance.” | `scripts/p33_fusion_stratified.py:43-49`; audit Q2. |
+| S4 | “only the deltas should be compared across rows” (L12) | “each band has a different class support, so band values and deltas are descriptive and not directly comparable effect sizes across rows” | `scripts/p33_fusion_stratified.py:102`; audit Q3. |
+| S5 | “The complementary signal is not a single-region artefact” (L16) | “The additive fusion gain is positive on average in all three broad bands … a coarse robustness check, not proof that the effect is uniform or absent from any single region” | Audit Q3 class-support recount; band sizes 355/450/350. |
+| S6 | “Learning the block weights adds nothing … lands within 0.001 … Moonstone block deserves about twice the weight … not an equal partner” (L17) | “does not establish a meaningful improvement … +0.001224 … a difference of the same order as seed noise … scalars are not identifiable as relative feature importance or contribution percentages” | `reports/evidence/p33_20261112/fusion_stratified_01/summary.json:67`, `:106`, `:138`; `scripts/p33_fusion_stratified.py:43-49`; audit C1/C2. |
+| S7 | “only the deltas should be compared” and “dominated by many sparse classes” (L12/L18) | Added explicit class-sparsity counts: 21/24/30 of 49 absent in equatorial/mid/polar; full-class macro-F1 on subsets is non-additive | Audit Q3 metadata recount. |
+| S8 | “No Test ID is read or scored.” (L22) | “No Test tile was selected, compared, scored or used for training/selection; the metadata export contains all 16,200 IDs, including 2,400 Test IDs, and was read as a full ID table.” | `scripts/p33_fusion_stratified.py:32`; audit C4. |
+| S9 | “the overall per-cell values reproduce the earlier matrix exactly, which validates the re-run” (L22) | “the retained overall means and best epochs reproduce the earlier matrix, though per-seed overall scores and prediction hashes were not retained” | Audit C5; only aggregates are stored. |
+| S10 | “its supervision … still inflates its side of every comparison here” (L28) | Precise confounding: same-Train Geology supervision and LPGRS inputs; Train-label supervision is not validation-target leakage by itself; internal additive observation stands, cross-encoder interpretation does not | `scripts/p32_cache_context.py:58`, `:68`; `src/lunarrisk/benchmarks/moonstone.py:27`; audit Q1. |
+| S11 | Caveats did not record prediction retention or protocol deviation (L24-30) | Added: only aggregates/scalars retained, no per-seed predictions/confusion/head states; plan declared `(linear, linear_balanced)` but only unweighted cells ran (9 runs vs 12 planned); protocol author-declared/unverified | `scripts/p33_fusion_stratified.py:69`, `:145`, `:152`, `:168`; `protocols/p33_fusion_stratified_plan.json:15`; git `74cfac9`; audit C5/Q4. |
+
+## `reports/p3_3_transfer_evidence_summary.md`
+
+| # | Original (line) | Correction | Basis |
+|---|---|---|---|
+| T1 | “Every number below is a frozen-feature result … Test has never been read or scored” (L3) | “The table mixes terrain-product identity, a model preflight and frozen-feature results … No Test tile was selected, compared, scored or used for training/selection; the metadata ID table contains all 16,200 IDs, including 2,400 Test IDs, and metadata/whole-file byte access is not Test scoring.” | `reports/evidence/p33_20261110/mmap_linkage_01/verification.json:115`; `scripts/p33_fusion_stratified.py:32`; audit C4/E. |
+| T2 | “Balanced CE helps everywhere (+0.0075 to +0.019); wider MLP heads do not” (L13) | “+0.007534 to +0.020680; the tested wider MLP shows no reliable benefit (slightly higher on NASA pretrained, lower on Moonstone/random)” | `reports/evidence/p33_20261111/feature_fusion_01/summary.json:312`, `:337`; audit C3/claim table. |
+| T3 | “Are the two encoders complementary? Yes for classification” (L14) | “Do NASA features add predictive information to the Moonstone block? Yes, descriptively for classification” | `scripts/p32_cache_context.py:58`, `:68`; audit Q1. |
+| T4 | “Composition … No: FeO 0.00685 vs 0.00675, TiO2 0.00494 vs 0.00511 (within seed noise)” (L15) | “No reliable benefit: FeO slightly worse, TiO2 slightly better (within seed noise)” | `reports/evidence/p33_20261111/composition_regression_01/summary.json:71`, `:135`; audit claim table. |
+| T5 | “Is the fusion gain one-region? No” (L16) | “Is the fusion gain positive across broad bands? Yes on average … a coarse robustness check, not regional uniformity” | Band means and signs; audit Q3. |
+| T6 | “Does learned weighting beat concatenation? No (0.2695 vs 0.2683); the gate settles at Moonstone 1.62 vs NASA 0.75” (L17) | “Is a meaningful improvement over concatenation established? No: observed difference +0.001224 (0.269538 vs 0.268314). The gate scalars … are non-identifiable parameter values, not importance weights” | `reports/evidence/p33_20261112/fusion_stratified_01/summary.json:67`, `:106`, `:138`; `scripts/p33_fusion_stratified.py:43-49`; audit C1/C2. |
+| T7 | “Pretraining transfers” (L21) | “Pretraining transfers in this probe … fixed cohort, possible pretraining/Val geography overlap, Val-selected epochs, one encoder realization per arm; not a generalization result” | `scripts/p33_frozen_probe.py:155`, `:245`; audit E. |
+| T8 | “Transfer and in-domain features are complementary … gain appears in all three latitude bands” (L22) | “NASA features add predictive information to the Moonstone block … descriptive, reused-Val … positive on average in three broad bands. No capacity-matched or clean domain comparison establishes why.” | Audit Q1/Q3; `scripts/p32_cache_context.py:58`, `:68`. |
+| T9 | “The cross-domain block is a minority partner … weights NASA at about 45%” (L23) | “The learned gate does not establish a meaningful gain … scalars are not identifiable as relative feature importance or contribution percentages; there is no ‘minority partner’ claim.” | `summary.json:138`; `scripts/p33_fusion_stratified.py:43-49`; audit C2. |
+| T10 | “Task dependence is real … Moonstone-only is already at the leakage ceiling” (L24) | “Task dependence is observed but limited … two classification tasks and one leakage-affected regression do not establish a general task law or a ‘leakage ceiling’” | `reports/evidence/p33_20261111/composition_regression_01/summary.json:71`, `:135`; audit claim table. |
+| T11 | “Its side of every comparison is therefore inflated; the NASA arm is the honest self-supervised measurement” (L28) | Precise confounding; NASA arm is cleaner on target-source leakage but still subject to geographic overlap and Val selection | `scripts/p32_cache_context.py:58`, `:68`; audit Q1. |
+| T12 | “No Test, no new classes, no operational claims …” (L30) | Added explicit no-Test-tile wording and metadata/byte-access distinction | `scripts/p33_fusion_stratified.py:32`; `reports/evidence/p33_20261110/mmap_linkage_01/verification.json:115`; audit C4. |
+| T13 | “one ~5-minute GPU pass per arm … best frozen classification accuracy” (L34) | “one ~5-minute pass for both arms (287 s, 12,580 forwards) … best frozen classification macro-F1 among tested cells (not necessarily accuracy; Age linear accuracy is slightly lower for fusion)” | `scripts/p33_frozen_probe.py:189`, `:199`; `reports/evidence/p33_20261111/feature_fusion_01/verification.json:39`, `:127`; audit claim table. |
+| T14 | “No fine-tuning or adapters” paragraph included an unmeasured “roughly 0.1 s/sample” cost (L29) | Removed the unmeasured cost figure; kept “requires gradient through the encoder and separate authorisation” | Audit E; no measured input_affine timing exists. |
+| T15 | “What is not established” omitted auditability and protocol deviations (L26-30) | Added: fusion/stratification retained only aggregates; ablation used inverse-square-root vs protocol inverse-frequency; stratified balanced cells not run (9 vs 12); protocols author-declared/unverified | `scripts/p33_feature_fusion.py:165`, `:183`; `scripts/p33_fusion_stratified.py:152`, `:168`; `scripts/p33_feature_ablation.py:82`; `protocols/p33_feature_ablation_plan.json:26`; `protocols/p33_fusion_stratified_plan.json:15`; git commits; audit C5/Q4. |
+| T16 | Table cells “Yes” for the frozen probe and “No” for the ablation (L11-12) | “Yes, in this probe” and “No, descriptively … unequal supervision/input histories prevent a clean domain comparison” | `scripts/p33_frozen_probe.py:155`, `:245`; `scripts/p32_cache_context.py:58`, `:68`; audit E/Q1. |
+
+## `reports/p3_3_feature_ablation.md`
+
+| # | Original (line) | Correction | Basis |
+|---|---|---|---|
+| A0 | Title: “in-domain beats cross-domain” (L1) | “in-domain features lead this frozen-feature matrix” | Audit Q1: the Moonstone arm is task-supervised and composition-consuming; this is not a clean domain comparison. |
+| A1 | “authenticated Moonstone pooled tokens” (L3) | “Moonstone pooled tokens from the recorded P3.2 caches” | Audit A: cache hashes are recorded, not checked against pinned expected hashes before evaluation. |
+| A2 | “Feature source dominates head design” (L19) | “Feature source and supervision history dominate this comparison … not a clean source-only comparison” | `scripts/p32_cache_context.py:58`, `:68`; audit Q1. |
+| A3 | “the trade is F1 for calibration-style balance” (L20) | “No calibration analysis was run, so ‘calibration-style balance’ is not supported.” | Audit claim table. |
+| A4 | “Wider heads do not help … the frozen features, not head capacity, are the limit” (L21) | “The tested wider MLP does not show a reliable benefit … One MLP design does not establish that head capacity is the limiting factor.” | Table values; audit claim table. |
+| A5 | “3.4-8.6 s per 20-epoch run” (L34) | “2.053-8.6 s per 20-epoch run” | `reports/evidence/p33_20261111/feature_ablation_01/summary.json:1898`; audit claim table. |
+| A6 | “one ~5-minute pass over the cohort (per arm)” (L36) | “one ~5-minute pass over the cohort for both arms (287 s, 12,580 forwards)” | `scripts/p33_frozen_probe.py:189`, `:199`; `reports/evidence/p33_20261110/frozen_probe_01/cache_manifest.json:12620`. |
+| A7 | “protocol pre-registered” (L46) | “author-declared pre-score plan; chronology independently unverified” | git `7634980`; audit Q4. |
+| A8 | Caveats omitted the weighting implementation deviation (L38-44) | Added: plan specifies inverse-frequency, implementation uses inverse-square-root frequency; reported numbers are from the implementation as run | `protocols/p33_feature_ablation_plan.json:26`; `scripts/p33_feature_ablation.py:82`; audit C6. |
+| A9 | Report had no Test-access statement (L38-44) | Added: no Test tile was selected, compared, scored or used for training/selection; metadata ID table contains Test IDs, but no Test pixels/targets entered this matrix | `scripts/p33_fusion_stratified.py:32`; audit C4. |
+
+## What was deliberately not changed
+
+- No value in any `summary.json`, `verification.json`, prediction CSV or report table was edited.
+- No direction was flipped: fusion still shows a positive additive result; the learned gate still shows no established meaningful gain; Moonstone still beats NASA in the audited ablation cells; latitude averages remain positive with the same per-seed signs.
+- No new experiment, GPU run, training, Test access or data was added.
+- The four dedicated protocols were not rewritten; the reports now label them author-declared and record the implementation deviations.
